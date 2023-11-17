@@ -1,0 +1,8 @@
+font name: Renner-Black
+font link: http://indestructibletype.com/BuyRenner.html
+
+fontColor: {"hex":"#422F75"}
+bgColor: {"hex":"#ECE9F4"}
+iconColor: {"hex":"#422F75"}
+
+      
