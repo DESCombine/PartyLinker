@@ -1,7 +1,7 @@
 <!DOCTYPE html>
     <html lang="it">
         <head>
-            <title>Home</title>
+            <title><?php echo $templateParams["title"]; ?></title>
             <meta charset="UTF-8"/>
             <link rel="stylesheet" type="text/css" href="css/homepage.css"/>
             <meta name="viewport" content="width=device-width, initial-scale=1">
