@@ -1,0 +1,7 @@
+header img {
+    width: 20%
+}
+
+main li > img {
+    width: 10%;
+}
