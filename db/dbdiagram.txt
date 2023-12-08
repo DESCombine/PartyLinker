@@ -1,5 +1,4 @@
-// Use DBML to define your database structure
-// Docs: https://dbml.dbdiagram.io/docs
+// Site used: https://dbdiagram.io
 
 Table user {
   // login info
@@ -12,7 +11,6 @@ Table user {
   birth_date date [not null]
   photo varchar(128)
   bio varchar(512)
-  phone varchar(16)
 }
 
 Table user_settings {
