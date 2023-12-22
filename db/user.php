@@ -14,7 +14,7 @@ class User implements DBTable {
     public function __construct() {
         $this->password = null;
     }
-    public static function from_data( string $username, string $email, string $name, string $surname, string $birth_date, string $photo, string $bio, string $phone, string $password = "" ){
+    public static function from_form( string $username, string $email, string $name, string $surname, string $birth_date, string $photo, string $bio, string $phone, string $password = "" ){
         $user = new self();
         $user->username = $username;
         $user->email = $email;
@@ -30,7 +30,8 @@ class User implements DBTable {
         return $user;
     }
 
-    public static function from_db_with_username( DBDriver $driver, string $username ){
+    public static function from_db_with_username( 
+         $driver, string $username ){
         $user = new self();
         $user->username = $username;
         $sql = "SELECT * FROM user WHERE username = ?";
@@ -54,6 +55,35 @@ class User implements DBTable {
             return null;
         }
         return $user;
+    }
+
+    public static function from_db_with_username_like( DBDriver $driver, string $username ): array{
+        $user = new self();
+        $user->username = $username;
+        $sql = "SELECT * FROM user WHERE username LIKE ?";
+
+        try {
+            $result = $driver->query($sql, "%".$username."%");
+        } catch (Exception $e) {
+            throw new Exception("Error while querying the database: " . $e->getMessage());
+        }
+        $users = array();
+        if ($result->num_rows > 0) {
+            for($i = 0; $i < $result->num_rows; $i++){
+                $row = $result->fetch_array();
+                $user = new self();
+                $user->username = $row["username"];
+                $user->email = $row["email"];
+                $user->name = $row["name"];
+                $user->surname = $row["surname"];
+                $user->birth_date = $row["birth_date"];
+                $user->photo = $row["photo"];
+                $user->bio = $row["bio"];
+                $user->phone = $row["phone"];
+                array_push($users, $user);
+            }
+        }
+        return $users;
     }
 
     public static function from_db_with_email(DBDriver $driver, string $email ){
@@ -106,8 +136,8 @@ class User implements DBTable {
 
     }
 
-    public function json_serialize(): string {
-        return json_encode(array(
+    public function jsonSerialize() {
+        return [
             "username" => $this->username,
             "email" => $this->email,
             "name" => $this->name,
@@ -116,7 +146,7 @@ class User implements DBTable {
             "photo" => $this->photo,
             "bio" => $this->bio,
             "phone" => $this->phone
-        ));
+        ];
     }
     public function create_password(string $password) {
         $this->password = password_hash($password, PASSWORD_DEFAULT);
@@ -128,7 +158,7 @@ class User implements DBTable {
         }
         $sql = "INSERT INTO user (username, email, name, surname, birth_date, photo, bio, phone, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
-            $driver->query($sql, $this->username, $this->email, $this->name, $this->surname, $this->birth_date, $this->photo, $this->bio, $this->phone, $this->password);
+            $driver->query($sql, $this->username, $this->email, $this->name, $this->surname, date($this->birth_date), $this->photo, $this->bio, $this->phone, $this->password);
         } catch (Exception $e) {
             throw new Exception("Error while querying the database: " . $e->getMessage());
         }

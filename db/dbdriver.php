@@ -20,12 +20,11 @@ class DBDriver {
         }
     }
     // Should a transaction be started here or in the function that uses this function?
-    public function query(string $sql, ...$params): mysqli_result{
+    public function query(string $sql, ...$params): mysqli_result|bool{
         if (!$this->conn) {
             throw new Exception("Currently not connected to a database");
         }
         $stmt = $this->conn->prepare($sql);
-        print_r($params);
         $success = $stmt->execute($params);
         if (!$success) {
             throw new Exception("". mysqli_error($this->conn));
@@ -33,6 +32,11 @@ class DBDriver {
         $result = $stmt->get_result();
         $stmt->close();
         return $result;
+    }
+
+    public function close_connection() {
+        mysqli_close($this->conn);
+        $this->conn = null;
     }
 }
 ?>
