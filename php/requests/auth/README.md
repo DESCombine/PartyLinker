@@ -3,7 +3,7 @@ This directory contains the authentication requests for the API.
 
 ## auth.php
 This file contains the authentication request for the API. It is used to authenticate a user and return a token.
-
+### POST
 Sample request:
 ```json
 {
@@ -19,13 +19,12 @@ Sample response:
 }
 ```
 ## token.php
+### GET
 This file contains the token request for the API. It is used to validate a token and return the info of the user.
 
-Sample request:
-```json
-{
-    "token": "jwt_token"
-}
+The request must contain the token in the header as follows:
+```
+Authorization: Bearer jwt_token
 ```
 
 Sample response:
