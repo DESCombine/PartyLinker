@@ -38,6 +38,7 @@ Find the `<Directory>` tag in the httpd.conf file and write the following
     SetEnv PL_JWTKEY [jwt key]
 
 Next for the additional package you'll need to install composer
+
 After you've installed it simply run
 
     composer install
