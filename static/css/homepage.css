@@ -1,0 +1,20 @@
+h1, h2 {
+    font-family: 'Renner*';
+    color: #422F75;
+}
+
+header h1 {
+    font-weight: bold;
+}
+
+#online-users img {
+    height: 5%;
+}
+
+#us-post img {
+    height: 10%;
+}
+
+#img-post {
+    height: 50%;
+}

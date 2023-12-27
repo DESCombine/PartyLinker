@@ -1,2 +1,5 @@
 .vscode
 api/
+# this are files needed for local development
+default.php
+bt.php
