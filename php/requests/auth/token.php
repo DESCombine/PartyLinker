@@ -18,8 +18,7 @@
     }
     global $driver;
     $token = $matches[1];
-    $decoded = JWT::decode($token, new Key(getenv("PL_JWTKEY"), 'HS256'));
-    $username = ((array) $decoded)["username"];
+    $username = UserUtility::retrieve_username_from_token($token);
     $user = UserUtility::from_db_with_username($driver, $username);
     if( $user == null ){
         http_response_code(401);

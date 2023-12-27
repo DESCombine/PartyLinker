@@ -2,6 +2,8 @@
 
 namespace User{
     require("dbtable.php");
+    use Firebase\JWT\JWT;
+    use Firebase\JWT\Key;
     class DBUser implements \DBTable {
         private $username;
         private $email;
@@ -174,6 +176,11 @@ namespace User{
                     throw new PhoneTaken("Phone already taken");
                 }
             }
+        }
+
+        public static function retrieve_username_from_token($token): string {
+            $decoded = JWT::decode($token, new Key(getenv("PL_JWTKEY"), 'HS256'));
+            return ((array) $decoded)["username"];
         }
     }
     class UsernameTaken extends \Exception {}
