@@ -179,8 +179,13 @@ namespace User{
         }
 
         public static function retrieve_username_from_token($token): string {
-            $decoded = JWT::decode($token, new Key(getenv("PL_JWTKEY"), 'HS256'));
-            return ((array) $decoded)["username"];
+            if(preg_match("/Bearer\s(\S+)/", $token, $matches) !== 1){
+                throw new \Exception("Invalid token");
+            } else {
+                $token = $matches[1];
+                $decoded = JWT::decode($token, new Key(getenv("PL_JWTKEY"), 'HS256'));
+                return ((array) $decoded)["username"];
+            }
         }
     }
     class UsernameTaken extends \Exception {}
