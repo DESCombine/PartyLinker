@@ -1,7 +1,7 @@
 <?php
     
-    require_once($_SERVER["DOCUMENT_ROOT"]."../../db/user.php");
-    require_once($_SERVER["DOCUMENT_ROOT"]."../../php/bootstrap.php");
+    require_once(getenv("PL_ROOTDIRECTORY")."db/user.php");
+    require_once(getenv("PL_ROOTDIRECTORY")."php/bootstrap.php");
     header('Content-Type: application/json');
 
     $query = $_GET['query'];

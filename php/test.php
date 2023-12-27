@@ -1,6 +1,6 @@
 <?php 
-require_once($_SERVER['DOCUMENT_ROOT'] . "/php/bootstrap.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/db/user.php");
+require_once(getenv("PL_ROOTDIRECTORY"). "php/bootstrap.php");
+require_once(getenv("PL_ROOTDIRECTORY"). "db/user.php");
 //echo "Connected to database <br />";
 global $driver;
 //use the User::from_data method with some test data
