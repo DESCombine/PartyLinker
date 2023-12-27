@@ -7,7 +7,7 @@
     $query = $_GET['query'];
     global $driver;
     
-    $users = User::from_db_with_username_like($driver, $query);
+    $users = User\UserUtility::from_db_with_username_like($driver, $query);
     echo json_encode($users, JSON_PRETTY_PRINT);
     $driver->close_connection();
 ?>
