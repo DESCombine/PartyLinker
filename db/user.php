@@ -51,6 +51,7 @@ class User implements DBTable {
             $user->photo = $row["photo"];
             $user->bio = $row["bio"];
             $user->phone = $row["phone"];
+            $user->password = $row["password"];
         } else {
             return null;
         }
@@ -163,6 +164,10 @@ class User implements DBTable {
             throw new Exception("Error while querying the database: " . $e->getMessage());
         }
 
+    }
+
+    public function check_password(string $password) {
+        return password_verify($password, $this->password);
     }
 }
 
