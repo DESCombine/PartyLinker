@@ -8,13 +8,13 @@ header h1 {
 }
 
 #online-users img {
-    height: 5%;
+    height: 15%;
 }
 
-#us-post img {
-    height: 10%;
+#feed-user-photo {
+    height: 50%;
 }
 
-#img-post {
+#feed-photo {
     height: 50%;
 }

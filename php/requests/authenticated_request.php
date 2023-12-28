@@ -1,7 +1,6 @@
 <?php
     use User\UserUtility;
     require_once(getenv("PL_ROOTDIRECTORY")."db/user.php");
-    require_once(getenv("PL_ROOTDIRECTORY")."php/bootstrap.php");
     header('Content-Type: application/json');
     $headers = apache_request_headers();
     if(!isset($headers["Authorization"])){
