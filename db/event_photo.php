@@ -8,14 +8,17 @@
             private $event_id;	
             private $poster;
             private $photo;
+            private $description;
             private $posted;
             private $like;
 
-            public function __construct($photo_id = null, $event_id = null, $poster = null, $photo = null, $posted = null, $like = null) {
+            public function __construct($photo_id = null, $event_id = null, $poster = null, $photo = null, 
+                    $description = null, $posted = null, $like = null) {
                 $this->photo_id = $photo_id;
                 $this->event_id = $event_id;
                 $this->poster = $poster;
                 $this->photo = $photo;
+                $this->description = $description;
                 $this->posted = $posted;
                 $this->like = $like;
             }
@@ -26,15 +29,17 @@
                     "event_id" => $this->event_id,
                     "poster" => $this->poster,
                     "photo" => $this->photo,
+                    "description" => $this->description,
                     "posted" => $this->posted,
                     "like" => $this->like
                 ];
             }
 
             public function db_serialize($driver) {
-                $sql = "INSERT INTO event_photo (photo_id, event_id, poster, photo, posted, like) VALUES (?, ?, ?, ?, ?, ?)";
+                $sql = "INSERT INTO event_photo (photo_id, event_id, poster, photo, description, posted, like) VALUES (?, ?, ?, ?, ?, ?, ?)";
                 try {
-                    $driver->query($sql, $this->photo_id, $this->event_id, $this->poster, $this->photo, $this->posted, $this->like);
+                    $driver->query($sql, $this->photo_id, $this->event_id, $this->poster, $this->photo, 
+                            $this->description, $this->posted, $this->like);
                 } catch (\Exception $e) {
                     throw new \Exception("Error while querying the database: " . $e->getMessage());
                 }
@@ -85,7 +90,8 @@
                     return null;
                 }
                 $row = $result->fetch_assoc();
-                return new DBEventPhoto($row["photo_id"], $row["event_id"], $row["poster"], $row["photo"], $row["posted"], $row["like"]);
+                return new DBEventPhoto($row["photo_id"], $row["event_id"], $row["poster"], $row["photo"], 
+                        $row["description"], $row["posted"], $row["like"]);
             }
 
             public static function from_db_with_poster(\DBDriver $driver, $poster) {
@@ -99,7 +105,8 @@
                 if ($result->num_rows > 0) {
                     for($i = 0; $i < $result->num_rows; $i++){
                         $row = $result->fetch_array();
-                        $photo = new DBEventPhoto($row["photo_id"], $row["event_id"], $row["poster"], $row["photo"], $row["posted"], $row["like"]);
+                        $photo = new DBEventPhoto($row["photo_id"], $row["event_id"], $row["poster"], $row["photo"], 
+                                $row["description"], $row["posted"], $row["like"]);
                         array_push($photos, $photo);
                     }
                 }
@@ -124,7 +131,8 @@
                 if ($result->num_rows > 0) {
                     for($i = 0; $i < $result->num_rows; $i++){
                         $row = $result->fetch_array();
-                        $photo = new DBEventPhoto($row["photo_id"], $row["event_id"], $row["poster"], $row["photo"], $row["posted"], $row["like"]);
+                        $photo = new DBEventPhoto($row["photo_id"], $row["event_id"], $row["poster"], $row["photo"], 
+                                $row["description"], $row["posted"], $row["like"]);
                         array_push($photos, $photo);
                     }
                 }
@@ -147,7 +155,6 @@
                     }
                 }
                 return $comments;
-
             }
         }
     }

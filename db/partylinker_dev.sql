@@ -56,6 +56,7 @@ CREATE TABLE `event_photo` (
   `event_id` int NOT NULL,
   `poster` varchar(30) NOT NULL,
   `photo` varchar(128) NOT NULL,
+  `description` varchar(255) NOT NULL,
   `posted` timestamp NOT NULL,
   `like` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

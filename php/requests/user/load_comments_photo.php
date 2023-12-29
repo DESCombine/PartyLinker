@@ -6,5 +6,5 @@
     $photo = $_GET['photo'];
     $comments = EventPhotoUtility::comments_with_photo($driver, $photo);
     header('Content-Type: application/json');
-    echo json_encode($photos, JSON_PRETTY_PRINT);
+    echo json_encode($comments, JSON_PRETTY_PRINT);
 ?>
