@@ -1,6 +1,6 @@
 async function search() {
     const search_query = document.getElementById("searchbar").value;
-    const response = await fetch("https://api.partylinker.live/search_user.php?query=" + search_query);
+    const response = await fetch("https://api.partylinker.live/user/search_user.php?query=" + search_query);
     const users = await response.json();
     showSearchResults(users);
 }
