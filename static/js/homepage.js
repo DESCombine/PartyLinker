@@ -42,29 +42,32 @@ async function showFeed() {
     let event = events[event_index];
     while (photo_index < photos.length && event_index < events.length) {
         if (photo.date_posted > event.date_posted) {
-            addNewPost(feed, await loadUserImage(photo.poster), photo.poster, photo.photo, photo.description);
+            addNewPost(feed, photo.photo_id, await loadUserImage(photo.poster), photo.poster, photo.photo, photo.description);
             photo_index++;
             photo = photos[photo_index];
         } else {
-            addNewPost(feed, await loadUserImage(event.organizer), event.name, event.image, event.description);
-            addEventDescription(feed, event);
+            addNewPost(feed, event.event_id, await loadUserImage(event.organizer), event.name, event.image, event.description, event);
             event_index++;
             event = events[event_index];
         }
     }
 }
 
-function addNewPost(feed, user_photo, name, image, description) {
+function addNewPost(feed, post_id, user_photo, name, image, description, event = null) {
     let template = document.getElementById("post-template");
     let clone = document.importNode(template.content, true);
     clone.querySelector("#post-user-photo").src = user_photo;
     clone.querySelector("#post-name").innerHTML = name;
     clone.querySelector("#post-photo").src = image;
+    clone.querySelector("#comments-button").action = "showComments(post_id)";
     clone.querySelector("#post-description").innerHTML = description;
+    if (event) {
+        addEventDescription(clone, event);
+    }
     feed.appendChild(clone);
 }
 
-function addEventDescription(feed, event) {
+function addEventDescription(post, event) {
     let template = document.getElementById("description-template");
     let clone = document.importNode(template.content, true);
     clone.querySelector("#event-place").innerHTML = event.place;
@@ -74,7 +77,37 @@ function addEventDescription(feed, event) {
     clone.querySelector("#event-people").innerHTML = event.max_people;
     clone.querySelector("#event-price").innerHTML = event.price;
     clone.querySelector("#event-age").innerHTML = event.min_age;
-    feed.appendChild(clone);
+    post.appendChild(clone);
 }
 
-showFeed();
+async function loadPhotoComments(photo_index) {
+    const response = await fetch("https://api.partylinker.live/load_comments_photo?photo=" + photos[photo_index].id);
+    const comments = await response.json();
+    return comments;
+}
+
+async function loadEventComments(event_index) {
+    const response = await fetch("https://api.partylinker.live/load_comments_event?event=" + photos[event_index].id);
+    const comments = await response.json();
+    return comments;
+}
+
+async function showComments(id_post) {
+    const comments = document.getElementById("comments");
+    const photo_comments = await loadPhotoComments(id_post);
+    const event_comments = await loadEventComments(id_post);
+    if (photo_comments.length == 0) {
+        comments_to_show = event_comments;
+    } else {
+        comments_to_show = photo_comments;
+    }
+    let template = document.getElementById("comment-template");
+    let clone = document.importNode(template.content, true);
+    for (let i = 0; i < comments_to_show.length; i++) {
+        let comment = comments_to_show[i];
+        clone.querySelector("#comment-user-photo").src = await loadUserImage(comment.poster);
+        clone.querySelector("#comment-name").textContent = comment.poster;
+        clone.querySelector("#comment-content").textContent = comment.content;
+        comments.appendChild(clone);
+    }
+}

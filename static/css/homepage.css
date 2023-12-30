@@ -8,13 +8,21 @@ header h1 {
 }
 
 #online-users img {
-    height: 15%;
+    height: 50%;
 }
 
 #feed-user-photo {
-    height: 50%;
+    height: 25%;
 }
 
 #feed-photo {
     height: 50%;
+}
+
+#comments-dialog {
+    align-items: flex-end;
+}
+
+#comments-dialog img {
+    height: 5%;
 }
