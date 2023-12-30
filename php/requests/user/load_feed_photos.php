@@ -1,5 +1,6 @@
 <?php
     use EventPhoto\EventPhotoUtility;
+    require_once(getenv("PL_ROOTDIRECTORY")."php/requests/cors.php");
     require_once(getenv("PL_ROOTDIRECTORY")."php/bootstrap.php");
     require_once(getenv("PL_ROOTDIRECTORY")."php/requests/authenticated_request.php");
     require_once(getenv("PL_ROOTDIRECTORY")."db/event_photo.php");

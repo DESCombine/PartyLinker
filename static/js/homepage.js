@@ -59,7 +59,8 @@ function addNewPost(feed, post_id, user_photo, name, image, description, event =
     clone.querySelector("#post-user-photo").src = user_photo;
     clone.querySelector("#post-name").innerHTML = name;
     clone.querySelector("#post-photo").src = image;
-    clone.querySelector("#comments-button").action = "showComments(post_id)";
+    clone.querySelector("#comments-button").onclick = "showComments(" + post_id + ")";
+    clone.querySelector("#partecipations-button").onclick = "showPartecipations(" + post_id + ")";
     clone.querySelector("#post-description").innerHTML = description;
     if (event) {
         addEventDescription(clone, event);
@@ -80,14 +81,14 @@ function addEventDescription(post, event) {
     post.appendChild(clone);
 }
 
-async function loadPhotoComments(photo_index) {
-    const response = await fetch("https://api.partylinker.live/load_comments_photo?photo=" + photos[photo_index].id);
+async function loadPhotoComments(photo_id) {
+    const response = await fetch("https://api.partylinker.live/load_comments_photo?photo=" + photo_id);
     const comments = await response.json();
     return comments;
 }
 
-async function loadEventComments(event_index) {
-    const response = await fetch("https://api.partylinker.live/load_comments_event?event=" + photos[event_index].id);
+async function loadEventComments(event_id) {
+    const response = await fetch("https://api.partylinker.live/load_comments_event?event=" + event_id);
     const comments = await response.json();
     return comments;
 }
@@ -109,5 +110,24 @@ async function showComments(id_post) {
         clone.querySelector("#comment-name").textContent = comment.poster;
         clone.querySelector("#comment-content").textContent = comment.content;
         comments.appendChild(clone);
+    }
+}
+
+async function loadPartecipations(event_id) {
+    const response = await fetch("https://api.partylinker.live/load_partecipations?event=" + event_id);
+    const partecipations = await response.json();
+    return partecipations;
+}
+
+async function showPartecipations(event_id) {
+    const partecipations = document.getElementById("partecipations");
+    const partecipations_list = await loadPartecipations(event_id);
+    let template = document.getElementById("partecipation-template");
+    let clone = document.importNode(template.content, true);
+    for (let i = 0; i < partecipations_list.length; i++) {
+        let partecipation = partecipations_list[i];
+        clone.querySelector("#partecipation-user-photo").src = await loadUserImage(partecipation.partecipant);
+        clone.querySelector("#partecipation-name").textContent = partecipation.partecipant;
+        partecipations.appendChild(clone);
     }
 }

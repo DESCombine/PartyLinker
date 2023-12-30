@@ -61,6 +61,32 @@ namespace User{
         }
     }
 
+    class DBPartecipation implements \DBTable {
+        private $event_id;
+        private $partecipant;
+
+        public function __construct($event_id = null, $partecipant = null) {
+            $this->event_id = $event_id;
+            $this->partecipant = $partecipant;
+        }
+
+        public function jsonSerialize() {
+            return [
+                "event_id" => $this->event_id,
+                "partecipant" => $this->partecipant
+            ];
+        }
+
+        public function db_serialize(\DBDriver $driver) {
+            $sql = "INSERT INTO partecipation (event_id, partecipant) VALUES (?, ?)";
+            try {
+                $driver->query($sql, $this->event_id, $this->partecipant);
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+        }
+    }
+
     class UserUtility {
         public static function from_form( string $username, string $email, string $name, string $surname, string $birth_date, string $photo, string $bio, string $phone, string $password = "" ){
             $user = new DBUser($username, $email, $name, $surname, $birth_date, $photo, $bio, $phone);
@@ -186,6 +212,24 @@ namespace User{
                 $decoded = JWT::decode($token, new Key(getenv("PL_JWTKEY"), 'HS256'));
                 return ((array) $decoded)["username"];
             }
+        }
+
+        public static function retrieve_partecipation($driver, $event_id) {
+            $sql = "SELECT * FROM event_partecipation WHERE event_id = ?";
+            try {
+                $result = $driver->query($sql, $event_id);
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+            $partecipations = array();
+            if ($result->num_rows > 0) {
+                for($i = 0; $i < $result->num_rows; $i++){
+                    $row = $result->fetch_array();
+                    $partecipation = new DBPartecipation($row["event_id"], $row["partecipant"]);
+                    array_push($partecipations, $partecipation);
+                }
+            }
+            return $partecipations;
         }
     }
     class UsernameTaken extends \Exception {}
