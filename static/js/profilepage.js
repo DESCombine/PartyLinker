@@ -33,6 +33,21 @@ async function getPostedPosts() {
     
 }
 
+function addNewPost(feed, post_id, user_photo, name, image, description, event = null) {
+    let template = document.getElementById("post-template");
+    let clone = document.importNode(template.content, true);
+    clone.querySelector("#post-user-photo").src = user_photo;
+    clone.querySelector("#post-name").innerHTML = name;
+    clone.querySelector("#post-photo").src = image;
+    clone.querySelector("#comments-button").onclick = "showComments(" + post_id + ")";
+    clone.querySelector("#partecipations-button").onclick = "showPartecipations(" + post_id + ")";
+    clone.querySelector("#post-description").innerHTML = description;
+    if (event) {
+        addEventDescription(clone, event);
+    }
+    feed.appendChild(clone);
+}
+
 async function showFeed() {
     const feed = document.getElementById("feed");
     const photos = await loadPhotos();
