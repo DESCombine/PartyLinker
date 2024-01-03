@@ -3,28 +3,30 @@
         <head>
             <title>PartyLinker - Home</title>
             <meta charset="UTF-8"/>
-            <link rel="stylesheet" type="text/css" href="static/css/homepage.css"/>
+            <link rel="stylesheet" type="text/css" href="../static/css/homepage.css"/>
             <!-- Font Renner import -->
             <link rel="stylesheet" href="https://indestructibletype-fonthosting.github.io/renner.css" type="text/css" charset="utf-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <!-- Bootstrap import -->
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
             <!-- JS import -->
-            <script src="static/js/homepage.js" type="text/javascript"></script>
+            <script src="../static/js/homepage.js" type="text/javascript"></script>
         </head>
-        <body onload="showFeed()">
+        <body>
             <div class="container-fluid pt-0 overflow-hidden">
                 <header class="text-center pt-1">
                     <h1>PartyLinker</h1>
                 </header>
                 <main class="container-fluid mt-3">
-                    <div class="row justify-content-start" id="online-users">
+                    <div class="row justify-content-start">
                         <h2>&#128101Online Users</h2>
                         <div class="me-1">
-                            <ul class="list-group list-group-flush list-group-horizontal">
-                                <li class="list-group-item">
-                                    <img src="static/img/default-profile.png" alt="" class="img-fluid img-thumbnail">
-                                </li>
+                            <ul class="list-group list-group-flush list-group-horizontal"  id="online-users">
+                                <script type="text/template" id="online-template">
+                                    <li class="list-group-item">
+                                        <img id="online-image" src="../static/img/default-profile.png" alt="" class="img-fluid img-thumbnail">
+                                    </li>
+                                </script>
                             </ul>
                         </div>
                     </div>
@@ -33,7 +35,7 @@
                             <li class="container-fluid list-group-item">
                                 <div class="row justify-content-start">
                                     <div class="col-1">
-                                        <img id="post-user-photo" src="static/img/default-profile.png" alt="" class="img-fluid float-start img-thumbnail">
+                                        <img id="post-user-photo" src="../static/img/default-profile.png" alt="" class="img-fluid float-start img-thumbnail">
                                     </div>
                                     <div class="col-1">
                                         <h2 id="post-name">Username</h2>
@@ -41,7 +43,7 @@
                                 </div>
                                 <div class="container-fluid mb-3">
                                     <div class="justify-content-center">
-                                        <img id="post-photo" src="static/img/default-image.png" alt="" class="img-fluid mx-auto d-block">
+                                        <img id="post-photo" src="../static/img/default-image.png" alt="" class="img-fluid mx-auto d-block">
                                     </div>
                                 </div>
                                 <ol class="list-group list-group-flush list-group-horizontal">
@@ -97,13 +99,13 @@
                             <a class="nav-link" href="homepage.html">&#127968</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="../search/searchpage.html">&#128269</a>
+                            <a class="nav-link" href="search/searchpage.html">&#128269</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="../map/mappage.html">&#128506</a>
+                            <a class="nav-link" href="map/mappage.html">&#128506</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="../profile/profilepage.html">&#128100</a>
+                            <a class="nav-link" href="profile/profilepage.html">&#128100</a>
                         </li>
                     </ol>
                 </nav>
@@ -122,7 +124,7 @@
                             <ol class="list-group list-group-flush my-1" id="comments">
                                 <script type="text/template" id="comment-template">
                                     <li class="container-fluid list-group-item">
-                                        <img id="comment-user-photo" src="static/img/default-profile.png" alt="" class="img-fluid float-start img-thumbnail">
+                                        <img id="comment-user-photo" src="../static/img/default-profile.png" alt="" class="img-fluid float-start img-thumbnail">
                                         <h6 id="comment-name">Username</h6>
                                         <p id="comment-content">Comment</p>
                                         <form action="#">
@@ -156,7 +158,7 @@
                             <ol class="list-group list-group-flush my-1" id="partecipants">
                                 <script type="text/template" id="partecipant-template">
                                     <li class="container-fluid list-group-item">
-                                        <img id="partecipant-user-photo" src="static/img/default-profile.png" alt="" class="img-fluid float-start img-thumbnail">
+                                        <img id="partecipant-user-photo" src="../static/img/default-profile.png" alt="" class="img-fluid float-start img-thumbnail">
                                         <h6 id="partecipant-name">Username</h6>
                                     </li>
                                 </script>

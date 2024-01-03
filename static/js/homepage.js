@@ -1,3 +1,22 @@
+async function loadOnlineUsers() {
+    const response = await fetch("https://api.partylinker.live/load_online_users");
+    const users = await response.json();
+    return users;
+}
+
+async function showOnlineUsers() {
+    const online_users = document.getElementById("online-users");
+    const users = await loadOnlineUsers();
+    let template = document.getElementById("online-user-template");
+    let clone = document.importNode(template.content, true);
+    for (let i = 0; i < users.length; i++) {
+        let user = users[i];
+        clone.querySelector("#online-image").src = await loadUserImage(user);
+        clone.querySelector("#online-image").alt = user;
+        online_users.appendChild(clone);
+    }
+}
+
 async function loadPhotos() {
     // !TODO: Load the auth token from cookies
     const user_auth = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImRhbmlsby5tYWdsaWEifQ.ygTbgkYa-T0pt-PWvklf9eszCDxIudhjyNPN5m3npmo"
@@ -131,3 +150,6 @@ async function showPartecipations(event_id) {
         partecipations.appendChild(clone);
     }
 }
+
+showOnlineUsers();
+showFeed();
