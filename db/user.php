@@ -119,6 +119,24 @@ namespace User{
             }
             return $user;
         }
+/*
+        public static function from_db_followed($driver, string $username){
+            $sql = "SELECT u.*, COUNT(*) as followed FROM user u, relationship r WHERE u.username = r.follows AND u.username = ? GROUP BY u.username";
+            try {
+                $result = $driver->query($sql, $username);
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+            
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $user = new DBUser($row["username"], null, $row["name"], $row["surname"], 
+                        null, $row["photo"], $row["bio"], null, null, null);
+            } else {
+                return null;
+            }
+            return $user;
+        }*/
 
         public static function from_db_with_username_like( \DBDriver $driver, string $username ): array{
             $sql = "SELECT * FROM user WHERE username LIKE ?";
