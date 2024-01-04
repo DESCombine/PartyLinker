@@ -19,7 +19,7 @@ function showSearchResults(users) {
         user_div.innerHTML = `
         <div class="result row">
             <div class="col-2">
-                <img src="${user.photo}" alt="placeholder" class="img-fluid result-profile-img"> 
+                <img src="/static/img/uploads/${user.photo}" alt="placeholder" class="img-fluid result-profile-img"> 
             </div> 
             <div class="col-9"> 
                 <span>${user.username}</span>  
