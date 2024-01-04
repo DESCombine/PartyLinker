@@ -1,0 +1,20 @@
+header > #profileImage {
+    width: 50px !important;
+    margin-top: -10% !important;
+    margin-left: -80% !important;
+    border-radius: 50% !important;
+}
+
+main #description {
+    font-size : 10px !important;
+}
+
+main #profileInfo {
+    margin-top: -10% !important;
+}
+
+main #modifyIcon {
+    margin-left: 0px !important;
+    padding-left: 0px !important;
+
+}

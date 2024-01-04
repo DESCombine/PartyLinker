@@ -12,19 +12,21 @@
             <!-- JS import -->
             <script src="/static/js/homepage.js" type="text/javascript"></script>
         </head>
-        <body onload="showFeed()">
+        <body>
             <div class="container-fluid pt-0 overflow-hidden">
                 <header class="text-center pt-1">
                     <h1>PartyLinker</h1>
                 </header>
                 <main class="container-fluid mt-3">
-                    <div class="row justify-content-start" id="online-users">
+                    <div class="row justify-content-start">
                         <h2>&#128101Online Users</h2>
                         <div class="me-1">
-                            <ul class="list-group list-group-flush list-group-horizontal">
-                                <li class="list-group-item">
-                                    <img src="/static/img/default-profile.png" alt="" class="img-fluid img-thumbnail">
-                                </li>
+                            <ul class="list-group list-group-flush list-group-horizontal"  id="online-users">
+                                <script type="text/template" id="online-template">
+                                    <li class="list-group-item">
+                                        <img id="online-image" src="/static/img/default-profile.png" alt="" class="img-fluid img-thumbnail">
+                                    </li>
+                                </script>
                             </ul>
                         </div>
                     </div>
@@ -51,12 +53,14 @@
                                         </form>
                                     </li>
                                     <li class="list-group-item">
-                                        <button class="btn" data-bs-toggle="modal" data-bs-target="#comments-modal">
+                                        <button id="comments-button" class="btn" onclick="" data-bs-toggle="modal" data-bs-target="#comments-modal">
                                             &#128172
                                         </button>
                                     </li>
                                     <li class="list-group-item">
-                                        <a href="partecipants.html">&#128111</a>
+                                        <button id="partecipants-button" class="btn" onclick="" data-bs-toggle="modal" data-bs-target="#partecipants-modal">
+                                            &#128111
+                                        </button>
                                     </li>
                                 </ol>
                                 <p id="post-description">Post description</p>
@@ -135,6 +139,35 @@
                                 <label for="write-comment">&#128172</label>
                                 <input type="text" name="write-comment" value="Write your message...">
                                 <input type="submit" name="submit-comment" value="&#128284">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Partecipants modal -->
+            <div class="modal fade" id="partecipants-modal" tabindex="-1" aria-labelledby="partecipantsModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" style="align-items: flex-end;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="text-center">
+                                <h5 class="modal-title" id="partecipantsModalLabel">&#128111Partecipants</h5>
+                            </div>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <ol class="list-group list-group-flush my-1" id="partecipants">
+                                <script type="text/template" id="partecipant-template">
+                                    <li class="container-fluid list-group-item">
+                                        <img id="partecipant-user-photo" src="../static/img/default-profile.png" alt="" class="img-fluid float-start img-thumbnail">
+                                        <h6 id="partecipant-name">Username</h6>
+                                    </li>
+                                </script>
+                            </ol>
+                        </div>
+                        <div class="modal-footer">
+                            <form action="#">
+                                <input type="submit" class="form-control" name="sumbit-partecipantion" value=";)">
+                                <input type="submit" class="form-control" name="sumbit-busy" value=":(">
                             </form>
                         </div>
                     </div>

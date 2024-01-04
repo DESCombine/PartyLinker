@@ -1,3 +1,16 @@
+async function loadPosts () {
+    const response = await fetch("https://api.partylinker.live/load_posts");
+    const posts = await response.json();
+    return posts;
+
+}
+
+async function loadProfileInfos() {
+    const response = await fetch("https://api.partylinker.live/load_profile_infos");
+    const infos = await response.json();
+    return infos;
+}
+
 async function loadOnlineUsers() {
     const response = await fetch("https://api.partylinker.live/load_online_users");
     const users = await response.json();
@@ -49,27 +62,6 @@ async function loadUserImage(user_id) {
     const response = await fetch("https://api.partylinker.live/load_user_image?user=" + user_id);
     const image = await response.json();
     return image;
-}
-
-async function showFeed() {
-    const feed = document.getElementById("feed");
-    const photos = await loadPhotos();
-    const events = await loadEvents();
-    let photo_index = 0;
-    let event_index = 0;
-    let photo = photos[photo_index];
-    let event = events[event_index];
-    while (photo_index < photos.length && event_index < events.length) {
-        if (photo.date_posted > event.date_posted) {
-            addNewPost(feed, photo.photo_id, await loadUserImage(photo.poster), photo.poster, photo.photo, photo.description);
-            photo_index++;
-            photo = photos[photo_index];
-        } else {
-            addNewPost(feed, event.event_id, await loadUserImage(event.organizer), event.name, event.image, event.description, event);
-            event_index++;
-            event = events[event_index];
-        }
-    }
 }
 
 function addNewPost(feed, post_id, user_photo, name, image, description, event = null) {
@@ -153,3 +145,33 @@ async function showPartecipations(event_id) {
 
 showOnlineUsers();
 showFeed();
+
+
+async function showPostedPosts() {
+    const feed = document.getElementById("posts");
+    const photos = await loadPhotos();
+    const events = await loadEvents();
+    let photo_index = 0;
+    let event_index = 0;
+    let photo = photos[photo_index];
+    let event = events[event_index];
+    while (photo_index < photos.length && event_index < events.length) {
+        if (photo.date_posted > event.date_posted) {
+            addNewPost(feed, photo.photo_id, await loadUserImage(photo.poster), photo.poster, photo.photo, photo.description);
+            photo_index++;
+            photo = photos[photo_index];
+        } else {
+            addNewPost(feed, event.event_id, await loadUserImage(event.organizer), event.name, event.image, event.description, event);
+            event_index++;
+            event = events[event_index];
+        }
+    }
+}
+
+async function showProfileInfos() {
+    const infos = await loadProfileInfos();
+    let template = document.getElementById("profileinfo");
+    let clone = document.importNode(template.content, true);
+    clone.querySelector('#username').innerHTML = infos.username;
+    clone.querySelector('#description').innerHTML = infos.description;
+}

@@ -14,9 +14,11 @@ namespace User{
         private $bio;
         private $phone;
         private $password;
+        private $online;
         
         // TODO: add relationship to other user
-        public function __construct($username = null, $email = null, $name = null, $surname = null, $birth_date = null, $photo = null, $bio = null, $phone = null, $password = null) {
+        public function __construct($username = null, $email = null, $name = null, $surname = null, 
+                $birth_date = null, $photo = null, $bio = null, $phone = null, $password = null, $online = null) {
             $this->username = $username;
             $this->email = $email;
             $this->name = $name;
@@ -26,6 +28,7 @@ namespace User{
             $this->bio = $bio;
             $this->phone = $phone;
             $this->password = $password;
+            $this->online = $online;
         }
         public function jsonSerialize() {
             return [
@@ -36,7 +39,8 @@ namespace User{
                 "birth_date" => $this->birth_date,
                 "photo" => $this->photo,
                 "bio" => $this->bio,
-                "phone" => $this->phone
+                "phone" => $this->phone,
+                "online" => $this->online
             ];
         }
         public function create_password(string $password) {
@@ -47,9 +51,11 @@ namespace User{
             if ($this->password == null) {
                 throw new \Exception("Password not set");
             }
-            $sql = "INSERT INTO user (username, email, name, surname, birth_date, photo, bio, phone, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO user (username, email, name, surname, birth_date, photo, bio, phone, password, online) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             try {
-                $driver->query($sql, $this->username, $this->email, $this->name, $this->surname, date($this->birth_date), $this->photo, $this->bio, $this->phone, $this->password);
+                $driver->query($sql, $this->username, $this->email, $this->name, $this->surname, date($this->birth_date), 
+                        $this->photo, $this->bio, $this->phone, $this->password, $this->online);
             } catch (\Exception $e) {
                 throw new \Exception("Error while querying the database: " . $e->getMessage());
             }
@@ -58,6 +64,32 @@ namespace User{
 
         public function check_password(string $password) {
             return password_verify($password, $this->password);
+        }
+    }
+
+    class DBPartecipation implements \DBTable {
+        private $event_id;
+        private $partecipant;
+
+        public function __construct($event_id = null, $partecipant = null) {
+            $this->event_id = $event_id;
+            $this->partecipant = $partecipant;
+        }
+
+        public function jsonSerialize() {
+            return [
+                "event_id" => $this->event_id,
+                "partecipant" => $this->partecipant
+            ];
+        }
+
+        public function db_serialize(\DBDriver $driver) {
+            $sql = "INSERT INTO partecipation (event_id, partecipant) VALUES (?, ?)";
+            try {
+                $driver->query($sql, $this->event_id, $this->partecipant);
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
         }
     }
 
@@ -70,10 +102,8 @@ namespace User{
             return $user;
         }
 
-        public static function from_db_with_username( 
-            $driver, string $username ){
+        public static function from_db_with_username($driver, string $username){
             $sql = "SELECT * FROM user WHERE username = ?";
-
             try {
                 $result = $driver->query($sql, $username);
             } catch (\Exception $e) {
@@ -82,12 +112,31 @@ namespace User{
             
             if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
-                $user = new DBUser($row["username"], $row["email"], $row["name"], $row["surname"], $row["birth_date"], $row["photo"], $row["bio"], $row["phone"], $row["password"]);
+                $user = new DBUser($row["username"], $row["email"], $row["name"], $row["surname"], 
+                        $row["birth_date"], $row["photo"], $row["bio"], $row["phone"], $row["password"], $row["online"]);
             } else {
                 return null;
             }
             return $user;
         }
+/*
+        public static function from_db_followed($driver, string $username){
+            $sql = "SELECT u.*, COUNT(*) as followed FROM user u, relationship r WHERE u.username = r.follows AND u.username = ? GROUP BY u.username";
+            try {
+                $result = $driver->query($sql, $username);
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+            
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $user = new DBUser($row["username"], null, $row["name"], $row["surname"], 
+                        null, $row["photo"], $row["bio"], null, null, null);
+            } else {
+                return null;
+            }
+            return $user;
+        }*/
 
         public static function from_db_with_username_like( \DBDriver $driver, string $username ): array{
             $sql = "SELECT * FROM user WHERE username LIKE ?";
@@ -101,7 +150,8 @@ namespace User{
             if ($result->num_rows > 0) {
                 for($i = 0; $i < $result->num_rows; $i++){
                     $row = $result->fetch_array();
-                    $user = new DBUser($row["username"], $row["email"], $row["name"], $row["surname"], $row["birth_date"], $row["photo"], $row["bio"], $row["phone"], $row["password"]);
+                    $user = new DBUser($row["username"], $row["email"], $row["name"], $row["surname"], $row["birth_date"], 
+                            $row["photo"], $row["bio"], $row["phone"], $row["password"], $row["online"]);
                     array_push($users, $user);
                 }
             }
@@ -118,7 +168,8 @@ namespace User{
             }
             if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
-                $user = new DBUser($row["username"], $row["email"], $row["name"], $row["surname"], $row["birth_date"], $row["photo"], $row["bio"], $row["phone"], $row["password"]);
+                $user = new DBUser($row["username"], $row["email"], $row["name"], $row["surname"], $row["birth_date"], 
+                        $row["photo"], $row["bio"], $row["phone"], $row["password"], $row["online"]);
             } else {
                 return null;
             }
@@ -136,7 +187,8 @@ namespace User{
             }
             if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
-                $user = new DBUser($row["username"], $row["email"], $row["name"], $row["surname"], $row["birth_date"], $row["photo"], $row["bio"], $row["phone"], $row["password"]);
+                $user = new DBUser($row["username"], $row["email"], $row["name"], $row["surname"], $row["birth_date"], 
+                        $row["photo"], $row["bio"], $row["phone"], $row["password"], $row["online"]);
             } else {
                 return null;
             }
@@ -186,6 +238,43 @@ namespace User{
                 $decoded = JWT::decode($token, new Key(getenv("PL_JWTKEY"), 'HS256'));
                 return ((array) $decoded)["username"];
             }
+        }
+
+        public static function retrieve_partecipation($driver, $event_id) {
+            $sql = "SELECT * FROM event_partecipation WHERE event_id = ?";
+            try {
+                $result = $driver->query($sql, $event_id);
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+            $partecipations = array();
+            if ($result->num_rows > 0) {
+                for($i = 0; $i < $result->num_rows; $i++){
+                    $row = $result->fetch_array();
+                    $partecipation = new DBPartecipation($row["event_id"], $row["partecipant"]);
+                    array_push($partecipations, $partecipation);
+                }
+            }
+            return $partecipations;
+        }
+
+        public static function retrieve_online($driver) {
+            $sql = "SELECT * FROM user WHERE online = 1";
+            try {
+                $result = $driver->query($sql);
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+            $users = array();
+            if ($result->num_rows > 0) {
+                for($i = 0; $i < $result->num_rows; $i++){
+                    $row = $result->fetch_array();
+                    $user = new DBUser($row["username"], $row["email"], $row["name"], $row["surname"], $row["birth_date"], 
+                            $row["photo"], $row["bio"], $row["phone"], $row["password"], $row["online"]);
+                    array_push($users, $user);
+                }
+            }
+            return $users;
         }
     }
     class UsernameTaken extends \Exception {}
