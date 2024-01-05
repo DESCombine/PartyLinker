@@ -1,7 +1,7 @@
 <?php
+    require_once(getenv("PL_ROOTDIRECTORY")."php/bootstrap.php");
     use Firebase\JWT\JWT;
     require_once(getenv("PL_ROOTDIRECTORY")."db/user.php");
-    require_once(getenv("PL_ROOTDIRECTORY")."php/bootstrap.php");
     require_once(getenv("PL_ROOTDIRECTORY")."php/requests/cors.php");
     header('Content-Type: application/json');
     $key = getenv("PL_JWTKEY");

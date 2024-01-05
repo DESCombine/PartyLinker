@@ -1,6 +1,6 @@
 <?php
-    use Event\EventUtility;
     require_once(getenv("PL_ROOTDIRECTORY")."php/bootstrap.php");
+    use Event\EventUtility;
     require_once(getenv("PL_ROOTDIRECTORY")."db/post.php");
     require_once(getenv("PL_ROOTDIRECTORY")."php/requests/cors.php");
     global $driver;
