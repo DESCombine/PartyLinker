@@ -27,7 +27,14 @@
     $cookie_name = "token";
     $cookie_value = $jwt;
 
-    setcookie($cookie_name, $cookie_value, time() + (86400 * 365), "/", ".partylinker.live");
+    setcookie($cookie_name, $cookie_value, [
+        'expires' => time() + 86400 * 365,
+        'path' => '/',
+        'domain' => '.partylinker.live',
+        'secure' => false,
+        'httponly' => false,
+        'samesite' => 'None',
+    ]);
     echo json_encode(array("message" => "success"), JSON_PRETTY_PRINT);
     $driver->close_connection();
 ?>
