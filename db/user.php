@@ -258,10 +258,11 @@ namespace User{
             return $partecipations;
         }
 
-        public static function retrieve_online($driver) {
-            $sql = "SELECT * FROM user WHERE online = 1";
+        public static function retrieve_online_followed($driver, $username) {
+            $sql = "SELECT u.* FROM user u, relationship r 
+                    WHERE u.username = r.follows AND r.follower = ? AND u.online = 1";
             try {
-                $result = $driver->query($sql);
+                $result = $driver->query($sql, $username);
             } catch (\Exception $e) {
                 throw new \Exception("Error while querying the database: " . $e->getMessage());
             }
@@ -269,8 +270,8 @@ namespace User{
             if ($result->num_rows > 0) {
                 for($i = 0; $i < $result->num_rows; $i++){
                     $row = $result->fetch_array();
-                    $user = new DBUser($row["username"], $row["email"], $row["name"], $row["surname"], $row["birth_date"], 
-                            $row["photo"], $row["bio"], $row["phone"], $row["password"], $row["online"]);
+                    $user = new DBUser($row["username"], null, $row["name"], $row["surname"], 
+                            null, $row["photo"], $row["bio"], null, null, null);
                     array_push($users, $user);
                 }
             }

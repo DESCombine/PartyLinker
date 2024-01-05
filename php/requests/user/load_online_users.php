@@ -6,7 +6,7 @@
     require_once(getenv("PL_ROOTDIRECTORY")."php/requests/cors.php");
     global $driver;
     global $username;
-    $users = UserUtility::retrieve_online($driver);
+    $users = UserUtility::retrieve_online_followed($driver, $username);
     header('Content-Type: application/json');
     echo json_encode($posts, JSON_PRETTY_PRINT);
 ?>
