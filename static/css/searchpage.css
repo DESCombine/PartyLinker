@@ -1,0 +1,35 @@
+
+#searchbar {
+    width: 100%;
+    height: 5rem;
+    border-radius: 2rem;
+    padding: 2rem;
+}
+
+#searchbutton {
+    width: 100%;
+}
+
+#searchresults {
+    overflow-y: hidden;
+    border-width: 2px;
+}
+
+.result-profile-img {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+}
+
+.result {
+    align-items: center;
+    margin-top: 1rem;
+}
+
+#page {
+    margin-top: 4rem;
+}
+
+body {
+    font-size: 40px;
+}
