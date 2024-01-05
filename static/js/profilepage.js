@@ -1,18 +1,18 @@
 async function loadPosts () {
-    const response = await fetch("https://api.partylinker.live/load_posts");
+    const response = await fetch("https://api.partylinker.live/load_posts.php");
     const posts = await response.json();
     return posts;
 
 }
 
 async function loadProfileInfos() {
-    const response = await fetch("https://api.partylinker.live/load_profile_infos");
+    const response = await fetch("https://api.partylinker.live/load_profile_infos.php");
     const infos = await response.json();
     return infos;
 }
 
 async function loadOnlineUsers() {
-    const response = await fetch("https://api.partylinker.live/load_online_users");
+    const response = await fetch("https://api.partylinker.live/load_online_users.php");
     const users = await response.json();
     return users;
 }
@@ -33,7 +33,7 @@ async function showOnlineUsers() {
 async function loadPhotos() {
     // !TODO: Load the auth token from cookies
     const user_auth = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImRhbmlsby5tYWdsaWEifQ.ygTbgkYa-T0pt-PWvklf9eszCDxIudhjyNPN5m3npmo"
-    const response = await fetch("https://api.partylinker.live/load_feed_photos", {
+    const response = await fetch("https://api.partylinker.live/load_feed_photos.php", {
         method: "GET",
         headers: {
             "Authorization": "Bearer " + user_auth,
@@ -47,7 +47,7 @@ async function loadPhotos() {
 async function loadEvents() {
     // !TODO: Load the auth token from cookies
     const user_auth = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImRhbmlsby5tYWdsaWEifQ.ygTbgkYa-T0pt-PWvklf9eszCDxIudhjyNPN5m3npmo"
-    const response = await fetch("https://api.partylinker.live/load_feed_posts", {
+    const response = await fetch("https://api.partylinker.live/load_feed_posts.php", {
         method: "GET",
         headers: {
             "Authorization": "Bearer " + user_auth,
@@ -59,7 +59,7 @@ async function loadEvents() {
 }
 
 async function loadUserImage(user_id) {
-    const response = await fetch("https://api.partylinker.live/load_user_image?user=" + user_id);
+    const response = await fetch("https://api.partylinker.live/load_user_image.php?user=" + user_id);
     const image = await response.json();
     return image;
 }
@@ -93,13 +93,13 @@ function addEventDescription(post, event) {
 }
 
 async function loadPhotoComments(photo_id) {
-    const response = await fetch("https://api.partylinker.live/load_comments_photo?photo=" + photo_id);
+    const response = await fetch("https://api.partylinker.live/load_comments_photo.php?photo=" + photo_id);
     const comments = await response.json();
     return comments;
 }
 
 async function loadEventComments(event_id) {
-    const response = await fetch("https://api.partylinker.live/load_comments_event?event=" + event_id);
+    const response = await fetch("https://api.partylinker.live/load_comments_event.php?event=" + event_id);
     const comments = await response.json();
     return comments;
 }
@@ -125,7 +125,7 @@ async function showComments(id_post) {
 }
 
 async function loadPartecipations(event_id) {
-    const response = await fetch("https://api.partylinker.live/load_partecipations?event=" + event_id);
+    const response = await fetch("https://api.partylinker.live/load_partecipations.php?event=" + event_id);
     const partecipations = await response.json();
     return partecipations;
 }
@@ -175,3 +175,6 @@ async function showProfileInfos() {
     clone.querySelector('#username').innerHTML = infos.username;
     clone.querySelector('#description').innerHTML = infos.description;
 }
+
+showProfileInfos();
+showPostedPosts();
