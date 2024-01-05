@@ -2,7 +2,7 @@ async function tryLogin() {
     username = document.getElementById("username").value
     password = document.getElementById("password").value
     //fetch("https://api.partylinker.live/auth/auth.php", {
-    const response = await fetch("http://localhost/php/requests/auth/auth.php", {
+    const response = await fetch("https://api.partylinker.live/auth/auth.php", {
         method: "POST",
         credentials: "include",
         header: {
