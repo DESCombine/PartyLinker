@@ -253,7 +253,7 @@ namespace User{
 
         public static function retrieve_online_followed($driver, $username) {
             $sql = "SELECT u.* FROM user u, relationship r 
-                    WHERE u.username = r.follows AND r.follower = ? AND u.online = 1";
+                    WHERE u.username = r.followed AND r.follows = ? AND u.online = 1";
             try {
                 $result = $driver->query($sql, $username);
             } catch (\Exception $e) {
@@ -263,8 +263,8 @@ namespace User{
             if ($result->num_rows > 0) {
                 for($i = 0; $i < $result->num_rows; $i++){
                     $row = $result->fetch_array();
-                    $user = new DBUser($row["username"], null, $row["name"], $row["surname"], 
-                            null, $row["photo"], $row["bio"], null, null, null);
+                    $user = new DBUser($row["username"], $row["email"], $row["name"], $row["surname"], $row["birth_date"], 
+                            $row["photo"], $row["bio"], $row["phone"], $row["password"], $row["online"]);
                     array_push($users, $user);
                 }
             }

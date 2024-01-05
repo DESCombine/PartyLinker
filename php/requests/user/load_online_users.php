@@ -8,5 +8,5 @@
     global $username;
     $users = UserUtility::retrieve_online_followed($driver, $username);
     header('Content-Type: application/json');
-    echo json_encode($posts, JSON_PRETTY_PRINT);
+    echo json_encode($users, JSON_PRETTY_PRINT);
 ?>

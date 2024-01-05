@@ -125,8 +125,8 @@
                         FROM post
                         WHERE username IN (
                             SELECT followed
-                            FROM follow
-                            WHERE follower = ?)
+                            FROM relationship
+                            WHERE follows = ?)
                         ORDER BY posted DESC
                         LIMIT ?";
                 try {
