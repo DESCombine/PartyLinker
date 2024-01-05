@@ -9,6 +9,7 @@
     $request = json_decode(file_get_contents('php://input'), true);
     $username = $request["username"];
     $password = $request["password"];
+    echo $username;
     global $driver;
     $user = User\UserUtility::from_db_with_username($driver, $username);
     if( $user == null ){
