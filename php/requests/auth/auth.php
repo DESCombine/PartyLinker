@@ -31,8 +31,8 @@
         'expires' => time() + 86400 * 365,
         'path' => '/',
         'domain' => '.partylinker.live',
-        'secure' => false,
-        'httponly' => false,
+        'secure' => true,
+        'httponly' => true,
         'samesite' => 'None',
     ]);
     echo json_encode(array("message" => "success"), JSON_PRETTY_PRINT);
