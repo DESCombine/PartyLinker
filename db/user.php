@@ -15,10 +15,13 @@ namespace User{
         private $phone;
         private $password;
         private $online;
+        private $follows;
+        private $followers;
+
         
         // TODO: add relationship to other user
         public function __construct($username = null, $email = null, $name = null, $surname = null, 
-                $birth_date = null, $photo = null, $bio = null, $phone = null, $password = null, $online = null) {
+                $birth_date = null, $photo = null, $bio = null, $phone = null, $password = null, $online = null, $follows = null, $followers = null) {
             $this->username = $username;
             $this->email = $email;
             $this->name = $name;
@@ -29,6 +32,8 @@ namespace User{
             $this->phone = $phone;
             $this->password = $password;
             $this->online = $online;
+            $this->follows = $follows;
+            $this->followers = $followers;
         }
         public function jsonSerialize() {
             return [
@@ -40,7 +45,9 @@ namespace User{
                 "photo" => $this->photo,
                 "bio" => $this->bio,
                 "phone" => $this->phone,
-                "online" => $this->online
+                "online" => $this->online,
+                "followed" => $this->follows,
+                "followers" => $this->followers
             ];
         }
         public function create_password(string $password) {
@@ -103,9 +110,13 @@ namespace User{
         }
 
         public static function from_db_with_username($driver, string $username){
-            $sql = "SELECT * FROM user WHERE username = ?";
+            $sql = "SELECT u.*, 
+            (SELECT COUNT(*) FROM relationship WHERE followed = ?) as follower,
+            (SELECT COUNT(*) FROM relationship WHERE follows = ?) as follows
+            FROM user u 
+            WHERE u.username = ?;";
             try {
-                $result = $driver->query($sql, $username);
+                $result = $driver->query($sql, $username, $username, $username);
             } catch (\Exception $e) {
                 throw new \Exception("Error while querying the database: " . $e->getMessage());
             }
@@ -113,30 +124,12 @@ namespace User{
             if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
                 $user = new DBUser($row["username"], $row["email"], $row["name"], $row["surname"], 
-                        $row["birth_date"], $row["photo"], $row["bio"], $row["phone"], $row["password"], $row["online"]);
+                        $row["birth_date"], $row["photo"], $row["bio"], $row["phone"], $row["password"], $row["online"], $row["follower"], $row["follows"]);
             } else {
                 return null;
             }
             return $user;
         }
-/*
-        public static function from_db_followed($driver, string $username){
-            $sql = "SELECT u.*, COUNT(*) as followed FROM user u, relationship r WHERE u.username = r.follows AND u.username = ? GROUP BY u.username";
-            try {
-                $result = $driver->query($sql, $username);
-            } catch (\Exception $e) {
-                throw new \Exception("Error while querying the database: " . $e->getMessage());
-            }
-            
-            if ($result->num_rows > 0) {
-                $row = $result->fetch_assoc();
-                $user = new DBUser($row["username"], null, $row["name"], $row["surname"], 
-                        null, $row["photo"], $row["bio"], null, null, null);
-            } else {
-                return null;
-            }
-            return $user;
-        }*/
 
         public static function from_db_with_username_like( \DBDriver $driver, string $username ): array{
             $sql = "SELECT * FROM user WHERE username LIKE ?";
