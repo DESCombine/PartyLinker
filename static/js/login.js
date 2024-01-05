@@ -15,7 +15,7 @@ async function tryLogin() {
     })
     const data = await response.json()
     if(!data.hasOwnProperty("error")) {
-        //window.location.href = "/"
+        window.location.href = "/"
     } else {
         //TODO: Show error message
     }
