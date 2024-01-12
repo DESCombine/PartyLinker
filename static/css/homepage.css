@@ -3,18 +3,6 @@ h1, h2 {
     color: #422F75;
 }
 
-header h1 {
-    font-weight: bold;
-}
-
-#post-user-photo {
-    height: 10%;
-}
-
-#feed-photo {
-    height: 50%;
-}
-
 #comments-dialog {
     align-items: flex-end;
 }
