@@ -5,10 +5,9 @@
     require_once(getenv("PL_ROOTDIRECTORY")."php/requests/cors.php");
     header('Content-Type: application/json');
     $key = getenv("PL_JWTKEY");
-    $request = json_decode(file_get_contents('php://input'), true);
-    $username = $request["username"];
-    $password = $request["password"];
-    global $driver;
+    //$request = json_decode(file_get_contents('php://input'), true);
+    $username = $_POST["username"];
+    $password = $_POST["password"];
     $user = User\UserUtility::from_db_with_username($driver, $username);
     if( $user == null ){
         http_response_code(401);
@@ -36,5 +35,6 @@
         'samesite' => 'None',
     ]);
     echo json_encode(array("message" => "success"), JSON_PRETTY_PRINT);
+    header("Location: https://partylinker.live");
     $driver->close_connection();
 ?>
