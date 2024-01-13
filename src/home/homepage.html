@@ -19,16 +19,16 @@
                     <div class="container-fluid">
                         <h2>&#128101Online Users</h2>
                         <ul class="list-group list-group-flush list-group-horizontal overflow-x-auto border-top border-bottom border-dark"  id="online-users">
-                            <script type="text/template" id="online-template">
+                            <!-- <script type="text/template" id="online-template"> -->
                                 <li class="list-group-item col-3">
                                     <img id="online-image" src="/static/img/default-profile.png" alt="" class="rounded-circle img-thumbnail">
                                 </li>
-                            </script>
+                            <!-- </script> -->
                         </ul>
                     </div>
                     <div class="container-fluid">
                         <ol class="list-group list-group-flush my-1" id="feed">
-                            <script type="text/template" id="post-template">
+                            <!-- <script type="text/template" id="post-template"> -->
                                 <li class="list-group-item">
                                     <div class="row justify-content-start mt-3">
                                         <div class="col-2">
@@ -43,9 +43,9 @@
                                     </div>
                                     <ol class="list-group list-group-flush list-group-horizontal">
                                         <li class="list-group-item">
-                                            <form id="likes-button" action="#">
-                                                <input type="submit" class="form-control" name="sumbit-like-post" value="&#129293">
-                                            </form>
+                                            <button id="likes-button" class="btn" onclick="">
+                                                &#129293
+                                            </button>
                                         </li>
                                         <li class="list-group-item">
                                             <button id="comments-button" class="btn" onclick="" data-bs-toggle="modal" data-bs-target="#comments-modal">
@@ -62,43 +62,41 @@
                                         </li>
                                     </ol>
                                     <p id="post-description">Post description</p>
-                                    <script type="text/template" id="description-template">
+                                    <!-- <script type="text/template" id="description-template"> -->
                                         <div class="text-center">
                                             <h4 id="event-name">Event Name</h4>
                                         </div>
-                                        <div class="container">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <ol class="list-group list-group-flush">
-                                                        <li class="list-group-item">
-                                                            <p id="event-place">Place</p>
-                                                        </li>
-                                                        <li class="list-group-item">
-                                                            <p id="event-date">Date</p>
-                                                        </li>
-                                                        <li class="list-group-item">
-                                                            <p id="event-vips">Vips</p>
-                                                        </li>
-                                                    </ol>
-                                                </div>
-                                                <div class="col">
-                                                    <ol class="list-group list-group-flush">
-                                                        <li class="list-group-item">
-                                                            <p id="event-people">Max-People</p>
-                                                        </li>
-                                                        <li class="list-group-item">
-                                                            <p id="event-price">Price</p>
-                                                        </li>
-                                                        <li class="list-group-item">
-                                                            <p id="event-age">Minimum age</p>
-                                                        </li>
-                                                    </ol>
-                                                </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <ol class="list-group list-group-flush">
+                                                    <li class="list-group-item">
+                                                        <p id="event-place">Place</p>
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        <p id="event-date">Date</p>
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        <p id="event-vips">Vips</p>
+                                                    </li>
+                                                </ol>
+                                            </div>
+                                            <div class="col">
+                                                <ol class="list-group list-group-flush">
+                                                    <li class="list-group-item">
+                                                        <p id="event-people">Max-People</p>
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        <p id="event-price">Price</p>
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        <p id="event-age">Minimum age</p>
+                                                    </li>
+                                                </ol>
                                             </div>
                                         </div>
-                                    </script>
+                                    <!-- </script> -->
                                 </li>
-                            </script>
+                            <!-- </script> -->
                         </ol>
                     </div>
                 </main>
@@ -121,34 +119,60 @@
             </div>
             <!-- Comments Modal -->
             <div class="modal fade" id="comments-modal" tabindex="-1" aria-labelledby="commentsModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" style="align-items: flex-end;">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <div class="text-center">
-                                <h5 class="modal-title" id="commentsModalLabel">&#128172Comments</h5>
-                            </div>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="modal-header justify-content-center">
+                            <h4 class="modal-title" id="commentsModalLabel">&#128172Comments</h4>
                         </div>
                         <div class="modal-body">
-                            <ol class="list-group list-group-flush my-1" id="comments">
-                                <script type="text/template" id="comment-template">
-                                    <li class="container-fluid list-group-item">
-                                        <img id="comment-user-photo" src="/static/img/default-profile.png" alt="" class="img-fluid float-start img-thumbnail">
-                                        <h6 id="comment-name">Username</h6>
-                                        <p id="comment-content">Comment</p>
-                                        <form action="#">
-                                            <p id="comment-likes">0</p>
-                                            <input type="submit" class="form-control" name="sumbit-like-comment" value="&#128077">
-                                        </form>
-                                    </li>
-                                </script>
-                            </ol>
+                            <div class="container-fluid">
+                                <ol class="list-group list-group-flush my-1 overflow-y-auto" id="comments">
+                                    <!-- <script type="text/template" id="comment-template"> -->
+                                        <li class="list-group-item">
+                                            <div class="row justify-content-start">
+                                                <div class="col-2">
+                                                    <img id="comment-user-photo" src="/static/img/default-profile.png" alt="" class="img-fluid img-thumbnail">
+                                                </div>
+                                                <div class="col">
+                                                    <h5 id="comment-name">Username</h5>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex">
+                                                <div class="flex-grow-1">
+                                                    <p id="comment-content">Comment</p>
+                                                </div>
+                                                <div>
+                                                    <button id="comment-trash" class="btn" onclick="">
+                                                        &#128465
+                                                    </button>
+                                                </div>
+                                                <div>
+                                                    <button id="comment-like" class="btn" onclick="">
+                                                        &#128077
+                                                    </button>
+                                                </div>
+                                                <div class="ms-3 pt-2">
+                                                    <p id="comment-likes">0</p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    <!-- </script> -->
+                                </ol>
+                            </div>
                         </div>
-                        <div class="modal-footer">
-                            <form action="#">
-                                <label for="write-comment">&#128172</label>
-                                <input type="text" name="write-comment" value="Write your message...">
-                                <input type="submit" name="submit-comment" value="&#128284">
+                        <div class="modal-footer border-top border-black">
+                            <form class="row">
+                                <div class="col-1">
+                                    <label for="write-comment" class="col-form-label">&#128172</label>
+                                </div>
+                                <div class="col-9">
+                                    <input type="text" name="write-comment" class="form-control border-dark" value="Write your message...">
+                                </div>
+                                <div class="col-2">
+                                    <button type="submit" class="btn" name="submit-comment">
+                                        &#128284
+                                    </button>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -156,29 +180,44 @@
             </div>
             <!-- Partecipants modal -->
             <div class="modal fade" id="partecipants-modal" tabindex="-1" aria-labelledby="partecipantsModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" style="align-items: flex-end;">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <div class="text-center">
-                                <h5 class="modal-title" id="partecipantsModalLabel">&#128111Partecipants</h5>
-                            </div>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="modal-header justify-content-center">
+                            <h4 class="modal-title" id="partecipantsModalLabel">&#128111Partecipants</h4>
                         </div>
                         <div class="modal-body">
-                            <ol class="list-group list-group-flush my-1" id="partecipants">
-                                <script type="text/template" id="partecipant-template">
-                                    <li class="container-fluid list-group-item">
-                                        <img id="partecipant-user-photo" src="../static/img/default-profile.png" alt="" class="img-fluid float-start img-thumbnail">
-                                        <h6 id="partecipant-name">Username</h6>
-                                    </li>
-                                </script>
-                            </ol>
+                            <div class="container-fluid">
+                                <ul class="list-group list-group-flush my-1 overflow-y-auto" id="partecipants">
+                                    <!-- <script type="text/template" id="partecipant-template"> -->
+                                        <li class="list-group-item">
+                                            <div class="row justify-content-start">
+                                                <div class="col-2">
+                                                    <img id="partecipant-user-photo" src="../static/img/default-profile.png" alt="" class="img-fluid img-thumbnail">
+                                                </div>
+                                                <div class="col">
+                                                    <h5 id="partecipant-name">Username</h5>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    <!-- </script> -->
+                                </ul>
+                            </div>
                         </div>
-                        <div class="modal-footer">
-                            <form action="#">
-                                <input type="submit" class="form-control" name="sumbit-partecipantion" value=";)">
-                                <input type="submit" class="form-control" name="sumbit-busy" value=":(">
-                            </form>
+                        <div class="modal-footer border-top border-black">
+                            <div class="container-fluid text-center">
+                                <div class="row">
+                                    <div class="col border border-dark mx-1">
+                                        <button id="sumbit-partecipantion" class="btn" onclick="">
+                                            Partecipate ;)
+                                        </button>
+                                    </div>
+                                    <div class="col border border-dark mx-1">
+                                        <button id="submit-busy" class="btn" onclick="">
+                                            I'm busy :(
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

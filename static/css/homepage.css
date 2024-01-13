@@ -3,10 +3,10 @@ h1, h2 {
     color: #422F75;
 }
 
-#comments-dialog {
+#comments-modal > .modal-dialog, #partecipants-modal > .modal-dialog {
     align-items: flex-end;
 }
 
-#comments-dialog img {
-    height: 5%;
+.modal-content {
+    height: 50%;
 }
