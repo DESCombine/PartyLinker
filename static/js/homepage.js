@@ -1,6 +1,8 @@
+import { request_path } from "/static/js/config.js";
+
 async function loadOnlineUsers() {
     const user_auth = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImRhbmlsby5tYWdsaWEifQ.ygTbgkYa-T0pt-PWvklf9eszCDxIudhjyNPN5m3npmo"
-    const response = await fetch("https://api.partylinker.live/user/load_online_users.php", {
+    const response = await fetch(request_path + "/user/load_online_users.php", {
         method: "GET",
         headers: {
             "Authorization": "Bearer " + user_auth,
@@ -26,26 +28,26 @@ async function showOnlineUsers() {
 
 async function loadPosts() {
     // !TODO: Load the auth token from cookies
-    const user_auth = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImRhbmlsby5tYWdsaWEifQ.ygTbgkYa-T0pt-PWvklf9eszCDxIudhjyNPN5m3npmo"
-    const response = await fetch("https://api.partylinker.live/user/load_feed.php", {
+    const response = await fetch(request_path + "/user/load_feed.php", {
         method: "GET",
         headers: {
-            "Authorization": "Bearer " + user_auth,
+            //"Authorization": "Bearer " + user_auth,
             "Content-Type": "application/json"
-        }
+        },
+        credentials: "include"
     });
     const posts = await response.json();
     return posts;
 }
 
 async function loadUserImage(user_id) {
-    const response = await fetch("https://api.partylinker.live/user/load_user_image.php?user=" + user_id);
+    const response = await fetch(request_path + "/user/load_user_image.php?user=" + user_id);
     const image = await response.json();
     return image;
 }
 
 async function loadEvent(event_id) {
-    const response = await fetch("https://api.partylinker.live/user/load_event.php?event=" + event_id);
+    const response = await fetch(request_path + "/user/load_event.php?event=" + event_id);
     const event = await response.json();
     return event;
 }
@@ -92,7 +94,7 @@ function addEventDescription(post, event) {
 }
 
 async function loadComments(post_id) {
-    const response = await fetch("https://api.partylinker.live/user/load_comments.php?post=" + post_id);
+    const response = await fetch(request_path + "/user/load_comments.php?post=" + post_id);
     const comments = await response.json();
     return comments;
 }
@@ -113,7 +115,7 @@ async function showComments(post_id) {
 }
 
 async function loadPartecipations(event_id) {
-    const response = await fetch("https://api.partylinker.live/user/load_partecipations.php?event=" + event_id);
+    const response = await fetch(request_path + "/user/load_partecipations.php?event=" + event_id);
     const partecipations = await response.json();
     return partecipations;
 }

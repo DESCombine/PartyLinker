@@ -1,3 +1,5 @@
+import { request_path } from "/static/js/config.js";
+
 const searchbar = document.getElementById("searchbar");
 searchbar.addEventListener("keyup", function(event) {
     if (event.key === 'Enter') {
@@ -6,7 +8,7 @@ searchbar.addEventListener("keyup", function(event) {
 });
 
 async function search(query) {
-    const response = await fetch("https://api.partylinker.live/user/search_user.php?query=" + query);
+    const response = await fetch(request_path + "/user/search_user.php?query=" + query);
     const users = await response.json();
     showSearchResults(users);
 }
