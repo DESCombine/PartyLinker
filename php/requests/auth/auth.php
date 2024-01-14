@@ -24,14 +24,14 @@
     );
     $jwt = JWT::encode($payload, $key, 'HS256');
     $cookie_name = "token";
-    $cookie_value = $jwt;
+    $cookie_value = "Bearer ".$jwt;
     echo $_SERVER["HTTP_ORIGIN"];
     if($_SERVER["HTTP_ORIGIN"] == "http://localhost") {
         setcookie($cookie_name, $cookie_value, [
             'expires' => time() + 86400 * 365,
             'path' => '/',
             'secure' => true,
-            'httponly' => true,
+            //'httponly' => true,
             'samesite' => 'None',
         ]);
     } else {
