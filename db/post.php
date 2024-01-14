@@ -163,6 +163,15 @@
                 }
                 return $comments;
             }
+
+            public static function like_post(\DBDriver $driver, $post_id) {
+                $sql = "UPDATE post SET likes = likes + 1 WHERE post_id = ?";
+                try {
+                    $driver->query($sql, $post_id);
+                } catch (\Exception $e) {
+                    throw new \Exception("Error while querying the database: " . $e->getMessage());
+                }
+            }
         }
     }
 ?>

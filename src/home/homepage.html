@@ -29,7 +29,7 @@
                     <div class="container-fluid">
                         <ol class="list-group list-group-flush my-1" id="feed">
                             <template id="post-template">
-                                <li class="list-group-item">
+                                <li class="list-group-item" id="post-id">
                                     <div class="row justify-content-start mt-3">
                                         <div class="col-2">
                                             <img id="post-user-photo" src="/static/img/default-profile.png" alt="" class="img-fluid img-thumbnail">
@@ -53,11 +53,11 @@
                                             </button>
                                         </li>
                                         <li class="list-group-item">
-                                            <button id="partecipants-button" class="btn" onclick="" data-bs-toggle="modal" data-bs-target="#partecipants-modal">
+                                            <button id="partecipants-button" class="btn invisible" onclick="" data-bs-toggle="modal" data-bs-target="#partecipants-modal">
                                                 &#128111
                                             </button>
                                         </li>
-                                        <li class="list-group-item ms-5">
+                                        <li class="list-group-item ms-5 pt-3">
                                             <p id="post-likes">0</p>
                                         </li>
                                     </ol>
@@ -66,34 +66,26 @@
                                         <div class="text-center">
                                             <h4 id="event-name">Event Name</h4>
                                         </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                <ol class="list-group list-group-flush">
-                                                    <li class="list-group-item">
-                                                        <p id="event-place">Place</p>
-                                                    </li>
-                                                    <li class="list-group-item">
-                                                        <p id="event-date">Date</p>
-                                                    </li>
-                                                    <li class="list-group-item">
-                                                        <p id="event-vips">Vips</p>
-                                                    </li>
-                                                </ol>
-                                            </div>
-                                            <div class="col">
-                                                <ol class="list-group list-group-flush">
-                                                    <li class="list-group-item">
-                                                        <p id="event-people">Max-People</p>
-                                                    </li>
-                                                    <li class="list-group-item">
-                                                        <p id="event-price">Price</p>
-                                                    </li>
-                                                    <li class="list-group-item">
-                                                        <p id="event-age">Minimum age</p>
-                                                    </li>
-                                                </ol>
-                                            </div>
-                                        </div>
+                                        <ol class="list-group list-group-flush">
+                                            <li class="list-group-item">
+                                                <p id="event-place">Place</p>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <p id="event-date">Date</p>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <p id="event-vips">Vips</p>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <p id="event-people">Max-People</p>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <p id="event-price">Price</p>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <p id="event-age">Minimum age</p>
+                                            </li>
+                                        </ol>
                                     </template>
                                 </li>
                             </template>
@@ -168,7 +160,7 @@
                                     <label for="write-comment" class="col-form-label">&#128172</label>
                                 </div>
                                 <div class="col-9">
-                                    <input type="text" name="write-comment" class="form-control border-dark" value="Write your message...">
+                                    <input type="text" name="write-comment" class="form-control border-dark" placeholder="Write your message...">
                                 </div>
                                 <div class="col-2">
                                     <button type="submit" class="btn" name="submit-comment">

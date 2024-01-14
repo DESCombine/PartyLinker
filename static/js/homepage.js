@@ -55,24 +55,26 @@ async function showFeed() {
     let template = document.getElementById("post-template");
     for (let i = 0; i < posts.length; i++) {
         let post = posts[i];
-        addNewPost(template, feed, post.post_id, await loadUserImage(post.username), 
+        addNewPost(template, feed, post.post_id, post.event_id, await loadUserImage(post.username), 
                 post.username, post.image, post.description, post.likes, post.event_post);
     }
 }
 
-async function addNewPost(template, feed, post_id, user_photo, username, image, 
-            description, likes, event) {
+async function addNewPost(template, feed, post_id, event_id, user_photo, username,
+    image, description, likes, event) {
     let clone = document.importNode(template.content, true);
-    clone.querySelector("#post-user-photo").src = user_photo;
+    clone.querySelector("#post-id").setAttribute("name", post_id);
+    clone.querySelector("#post-user-photo").src = "/static/img/uploads/" + user_photo;
     clone.querySelector("#post-name").innerHTML = username;
     clone.querySelector("#post-photo").src = "/static/img/uploads/" + image;
-    clone.querySelector("#likes-button").onclick = "likePost(" + post_id + ")";
-    clone.querySelector("#comments-button").onclick = "showComments(" + post_id + ")";
-    clone.querySelector("#partecipants-button").onclick = "showPartecipations(" + post_id + ")";
+    clone.querySelector("#likes-button").onclick = function() { likePost(post_id); };
+    clone.querySelector("#comments-button").onclick = function() { showComments(post_id); }
     clone.querySelector("#post-likes").innerHTML = likes;
     clone.querySelector("#post-description").innerHTML = description;
     if (event) {
-        addEventDescription(clone, await loadEvent(post.event_id));
+        clone.querySelector("#partecipants-button").onclick = function() { showPartecipations(event_id); }
+        clone.querySelector("#partecipants-button").class = "btn visible";
+        addEventDescription(clone, await loadEvent(event_id));
     }
     feed.appendChild(clone);
 }
@@ -81,13 +83,22 @@ function addEventDescription(post, event) {
     let template = document.getElementById("description-template");
     let clone = document.importNode(template.content, true);
     clone.querySelector("#event-name").innerHTML = event.name;
-    clone.querySelector("#event-place").innerHTML = event.location;
-    clone.querySelector("#event-date").innerHTML = event.starting_date + " - " + event.ending_date;
-    clone.querySelector("#event-vips").innerHTML = event.vip;
-    clone.querySelector("#event-people").innerHTML = event.max_people;
-    clone.querySelector("#event-price").innerHTML = event.price;
-    clone.querySelector("#event-age").innerHTML = event.minimum_age;
+    clone.querySelector("#event-place").innerHTML = "Place: " + event.location;
+    clone.querySelector("#event-date").innerHTML = "Date: " + event.starting_date + " - " + event.ending_date;
+    clone.querySelector("#event-vips").innerHTML = "Vips: " + event.vips;
+    clone.querySelector("#event-people").innerHTML = "Available places:" + event.max_people;
+    clone.querySelector("#event-price").innerHTML = "Price: " + event.price;
+    clone.querySelector("#event-age").innerHTML = "Required age: " + event.minimum_age;
     post.appendChild(clone);
+}
+
+async function likePost(post_id) {
+    const response = await fetch(request_path + "/user/like_post.php?post=" + post_id, {
+        method: "GET",
+    });
+    const post = document.getElementsByName(post_id)[0];
+    const likes = post.querySelector("#post-likes");
+    likes.innerHTML = parseInt(likes.innerHTML) + 1;
 }
 
 async function loadComments(post_id) {
