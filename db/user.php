@@ -270,6 +270,21 @@ namespace User{
             }
             return $users;
         }
+
+        public static function retrieve_profile_picture($driver, $username) {
+            $sql = "SELECT photo FROM user WHERE username = ?";
+            try {
+                $result = $driver->query($sql, $username);
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                return $row["photo"];
+            } else {
+                return null;
+            }
+        }
     }
     class UsernameTaken extends \Exception {}
     class EmailTaken extends \Exception {}

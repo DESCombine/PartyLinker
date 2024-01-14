@@ -19,16 +19,16 @@
                     <div class="container-fluid">
                         <h2>&#128101Online Users</h2>
                         <ul class="list-group list-group-flush list-group-horizontal overflow-x-auto border-top border-bottom border-dark"  id="online-users">
-                            <!-- <script type="text/template" id="online-template"> -->
+                            <template id="online-template">
                                 <li class="list-group-item col-3">
                                     <img id="online-image" src="/static/img/default-profile.png" alt="" class="rounded-circle img-thumbnail">
                                 </li>
-                            <!-- </script> -->
+                            </template>
                         </ul>
                     </div>
                     <div class="container-fluid">
                         <ol class="list-group list-group-flush my-1" id="feed">
-                            <!-- <script type="text/template" id="post-template"> -->
+                            <template id="post-template">
                                 <li class="list-group-item">
                                     <div class="row justify-content-start mt-3">
                                         <div class="col-2">
@@ -62,7 +62,7 @@
                                         </li>
                                     </ol>
                                     <p id="post-description">Post description</p>
-                                    <!-- <script type="text/template" id="description-template"> -->
+                                    <template id="description-template">
                                         <div class="text-center">
                                             <h4 id="event-name">Event Name</h4>
                                         </div>
@@ -94,28 +94,30 @@
                                                 </ol>
                                             </div>
                                         </div>
-                                    <!-- </script> -->
+                                    </template>
                                 </li>
-                            <!-- </script> -->
+                            </template>
                         </ol>
                     </div>
                 </main>
-                <nav class="bg-light fixed-bottom border-top border-black">
-                    <ol class="nav nav-fill my-2">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/">&#127968</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/search/">&#128269</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/map/">&#128506</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/profile/">&#128100</a>
-                        </li>
-                    </ol>
-                </nav>
+                <footer class="mt-5">
+                    <nav class="bg-light fixed-bottom border-top border-black">
+                        <ol class="nav nav-fill my-2">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="/">&#127968</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/search/">&#128269</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/map/">&#128506</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/profile/">&#128100</a>
+                            </li>
+                        </ol>
+                    </nav>
+                </footer>
             </div>
             <!-- Comments Modal -->
             <div class="modal fade" id="comments-modal" tabindex="-1" aria-labelledby="commentsModalLabel" aria-hidden="true">
@@ -127,7 +129,7 @@
                         <div class="modal-body">
                             <div class="container-fluid">
                                 <ol class="list-group list-group-flush my-1 overflow-y-auto" id="comments">
-                                    <!-- <script type="text/template" id="comment-template"> -->
+                                    <template id="comment-template">
                                         <li class="list-group-item">
                                             <div class="row justify-content-start">
                                                 <div class="col-2">
@@ -156,7 +158,7 @@
                                                 </div>
                                             </div>
                                         </li>
-                                    <!-- </script> -->
+                                    </template>
                                 </ol>
                             </div>
                         </div>
@@ -188,7 +190,7 @@
                         <div class="modal-body">
                             <div class="container-fluid">
                                 <ul class="list-group list-group-flush my-1 overflow-y-auto" id="partecipants">
-                                    <!-- <script type="text/template" id="partecipant-template"> -->
+                                    <template id="partecipant-template">
                                         <li class="list-group-item">
                                             <div class="row justify-content-start">
                                                 <div class="col-2">
@@ -199,7 +201,7 @@
                                                 </div>
                                             </div>
                                         </li>
-                                    <!-- </script> -->
+                                    </template>
                                 </ul>
                             </div>
                         </div>
