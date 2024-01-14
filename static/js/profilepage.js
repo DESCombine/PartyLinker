@@ -19,9 +19,10 @@ async function loadProfileInfos() {
     const response = await fetch("https://api.partylinker.live/user/load_profile_infos.php", {
         method: "GET",
         headers: {
-            "Authorization": "Bearer " + user_auth,
+            //"Authorization": "Bearer " + user_auth,
             "Content-Type": "application/json"
-        }
+        },
+        credentials: "include"
     });
     const infos = await response.json();
     return infos;

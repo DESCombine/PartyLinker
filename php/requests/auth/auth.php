@@ -25,16 +25,28 @@
     $jwt = JWT::encode($payload, $key, 'HS256');
     $cookie_name = "token";
     $cookie_value = $jwt;
+    echo $_SERVER["HTTP_ORIGIN"];
+    if($_SERVER["HTTP_ORIGIN"] == "http://localhost") {
+        setcookie($cookie_name, $cookie_value, [
+            'expires' => time() + 86400 * 365,
+            'path' => '/',
+            'secure' => true,
+            'httponly' => true,
+            'samesite' => 'None',
+        ]);
+    } else {
+        setcookie($cookie_name, $cookie_value, [
+            'expires' => time() + 86400 * 365,
+            'path' => '/',
+            'domain' => '.partylinker.live',
+            'secure' => true,
+            'httponly' => true,
+            'samesite' => 'None',
+        ]);
+    }
 
-    setcookie($cookie_name, $cookie_value, [
-        'expires' => time() + 86400 * 365,
-        'path' => '/',
-        'domain' => '.partylinker.live',
-        'secure' => true,
-        'httponly' => true,
-        'samesite' => 'None',
-    ]);
+
     echo json_encode(array("message" => "success"), JSON_PRETTY_PRINT);
-    header("Location: https://partylinker.live");
+    //header("Location: https://partylinker.live");
     $driver->close_connection();
 ?>
