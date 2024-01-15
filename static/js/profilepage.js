@@ -1,4 +1,6 @@
 import { request_path } from "/static/js/config.js";
+import { loadUserImage, loadEvent, addNewPost, addEventDescription, likePost, loadComments, showComments, loadPartecipations, showPartecipations } from "/static/js/utils.js";
+
 
 async function loadPosts() {
     const response = await fetch(request_path + "/user/load_posted.php", {
@@ -33,20 +35,20 @@ async function showPostedPosts() {
     let photo = photos[photo_index];
     //let event = events[event_index];
     let photosDiv = document.getElementById("photos");
-    if(photos.length == 0 /*&& events.length == 0*/) {
+    if (photos.length == 0 /*&& events.length == 0*/) {
         posts.innerHTML = "No posts to show";
-        console.log("No posts to show");   
+        console.log("No posts to show");
     } else {
         while (photo_index < photos.length /*&& event_index < events.length*/ && photo.event_post == 0) {
             //if (photo.date_posted > event.date_posted) {
-                //addNewPost(posts, photo.photo_id, await loadUserImage(photo.poster), photo.poster, photo.photo, photo.description);
-                photosDiv.getElementsByTagName('div').item(photo_index).getElementsByTagName('img').item(0).src = "/static/img/uploads/" + photo.image;
-                /*let img = posts.getElementsByTagName('div').item(2);//.getElementsByTagName('img').item(0);
-                console.log(img);
-                img.src = "/static/img/uploads/" + photo.photo;*/
-                photo_index++;
-                photo = photos[photo_index];
-                console.log(photo_index);
+            //addNewPost(posts, photo.photo_id, await loadUserImage(photo.poster), photo.poster, photo.photo, photo.description);
+            photosDiv.getElementsByTagName('div').item(photo_index).getElementsByTagName('img').item(0).src = "/static/img/uploads/" + photo.image;
+            /*let img = posts.getElementsByTagName('div').item(2);//.getElementsByTagName('img').item(0);
+            console.log(img);
+            img.src = "/static/img/uploads/" + photo.photo;*/
+            photo_index++;
+            photo = photos[photo_index];
+            console.log(photo_index);
             /*} else {
                 addNewPost(posts, event.event_id, await loadUserImage(event.organizer), event.name, event.image, event.description, event);
                 event_index++;
