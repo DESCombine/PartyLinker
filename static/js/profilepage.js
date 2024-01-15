@@ -132,7 +132,7 @@ async function showPostedPosts() {
         while (photo_index < photos.length /*&& event_index < events.length*/) {
             //if (photo.date_posted > event.date_posted) {
                 //addNewPost(posts, photo.photo_id, await loadUserImage(photo.poster), photo.poster, photo.photo, photo.description);
-                photosDiv.getElementsByTagName('div').item(photo_index).getElementsByTagName('img').item(0).src = "/static/img/uploads/" + photo.photo;
+                photosDiv.getElementsByTagName('div').item(photo_index).getElementsByTagName('img').item(0).src = "/static/img/uploads/" + photo.image;
                 /*let img = posts.getElementsByTagName('div').item(2);//.getElementsByTagName('img').item(0);
                 console.log(img);
                 img.src = "/static/img/uploads/" + photo.photo;*/
