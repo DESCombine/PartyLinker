@@ -45,7 +45,7 @@ export function addEventDescription(post, event) {
 }
 
 export async function likePost(post_id) {
-    const response = await fetch(request_path + "/user/like_post.php?post=" + post_id, {
+    await fetch(request_path + "/user/like_post.php?post=" + post_id, {
         method: "GET",
     });
     const post = document.getElementsByName(post_id)[0];
@@ -63,10 +63,10 @@ export async function showComments(post_id) {
     const comments = document.getElementById("comments");
     const comments_to_show = await loadComments(post_id);
     let template = document.getElementById("comment-template");
-    let clone = document.importNode(template.content, true);
     for (let i = 0; i < comments_to_show.length; i++) {
         let comment = comments_to_show[i];
-        clone.querySelector("#comment-user-photo").src = "/static/img/uploads/" + await loadUserImage(comment.username);
+        let clone = document.importNode(template.content, true);
+        clone.querySelector("#comment-user-photo").src = "/static/img/uploads/" + comment.profile_photo;
         clone.querySelector("#comment-name").textContent = comment.username;
         clone.querySelector("#comment-content").textContent = comment.content;
         clone.querySelector("#comment-likes").innerHTML = comment.likes;
@@ -81,14 +81,14 @@ export async function loadPartecipations(event_id) {
 }
 
 export async function showPartecipations(event_id) {
-    const partecipations = document.getElementById("partecipations");
+    const partecipations = document.getElementById("partecipants");
     const partecipations_list = await loadPartecipations(event_id);
-    let template = document.getElementById("partecipation-template");
-    let clone = document.importNode(template.content, true);
+    let template = document.getElementById("partecipants-template");
     for (let i = 0; i < partecipations_list.length; i++) {
         let partecipation = partecipations_list[i];
-        clone.querySelector("#partecipation-user-photo").src = "/static/img/uploads/" + await loadUserImage(partecipation.partecipant);
-        clone.querySelector("#partecipation-name").textContent = partecipation.partecipant;
+        let clone = document.importNode(template.content, true);
+        clone.querySelector("#partecipants-photo").src = "/static/img/uploads/" + partecipation.profile_photo;
+        clone.querySelector("#partecipants-name").textContent = partecipation.username;
         partecipations.appendChild(clone);
     }
 }

@@ -54,13 +54,16 @@
             private $comment_id;
             private $post_id;
             private $username;
+            private $profile_photo;
             private $content;
             private $likes;
 
-            public function __construct($comment_id = null, $post_id = null, $username = null, $content = null, $likes = null) {
+            public function __construct($comment_id = null, $post_id = null, $username = null, 
+                    $profile_photo = null, $content = null, $likes = null) {
                 $this->comment_id = $comment_id;
                 $this->post_id = $post_id;
                 $this->username = $username;
+                $this->profile_photo = $profile_photo;
                 $this->content = $content;
                 $this->likes = $likes;
             }
@@ -70,6 +73,7 @@
                     "comment_id" => $this->comment_id,
                     "post_id" => $this->post_id,
                     "username" => $this->username,
+                    "profile_photo" => $this->profile_photo,
                     "content" => $this->content,
                     "likes" => $this->likes
                 ];
@@ -147,7 +151,10 @@
             }
 
             public static function comments_with_post(\DBDriver $driver, $post_id) {
-                $sql = "SELECT * FROM comment WHERE post_id = ?";
+                $sql = "SELECT C.*, U.profile_photo
+                        FROM comment C, user U
+                        WHERE C.post_id = ?
+                        AND C.username = U.username";
                 try {
                     $result = $driver->query($sql, $post_id);
                 } catch (\Exception $e) {
@@ -157,7 +164,8 @@
                 if ($result->num_rows > 0) {
                     for($i = 0; $i < $result->num_rows; $i++){
                         $row = $result->fetch_array();
-                        $comment = new DBComment($row["comment_id"], $row["post_id"], $row["username"], $row["content"], $row["likes"]);
+                        $comment = new DBComment($row["comment_id"], $row["post_id"], $row["username"], 
+                                $row["profile_photo"], $row["content"], $row["likes"]);
                         array_push($comments, $comment);
                     }
                 }
