@@ -4,8 +4,9 @@
     require_once(getenv("PL_ROOTDIRECTORY")."db/event.php");
     
     global $driver;
+    global $username;
     $event = $_GET['event'];
-    $comments = EventUtility::retrieve_partecipations($driver, $event);
+    $comments = EventUtility::retrieve_partecipations($driver, $event, $username);
     header('Content-Type: application/json');
     echo json_encode($comments, JSON_PRETTY_PRINT);
 ?>

@@ -57,18 +57,21 @@
             private $event_id;
             private $username;
             private $profile_photo;
+            private $current_user;
 
-            public function __construct($event_id = null, $username = null, $profile_photo = null) {
+            public function __construct($event_id = null, $username = null, $profile_photo = null, $current_user = null) {
                 $this->event_id = $event_id;
                 $this->username = $username;
                 $this->profile_photo = $profile_photo;
+                $this->current_user = $current_user;
             }
 
             public function jsonSerialize() {
                 return [
                     "event_id" => $this->event_id,
                     "username" => $this->username,
-                    "profile_photo" => $this->profile_photo
+                    "profile_photo" => $this->profile_photo,
+                    "current_user" => $this->current_user
                 ];
             }
 
@@ -117,7 +120,7 @@
                 return $events;
             }
 
-            public static function retrieve_partecipations($driver, $event_id) {
+            public static function retrieve_partecipations($driver, $event_id, $username) {
                 $sql = "SELECT P.*, U.profile_photo
                         FROM partecipation P, user U
                         WHERE P.event_id = ?
@@ -131,11 +134,25 @@
                 if ($result->num_rows > 0) {
                     for ($i = 0; $i < $result->num_rows; $i++) {
                         $row = $result->fetch_array();
-                        $partecipation = new DBPartecipation($row["event_id"], $row["username"], $row["profile_photo"]);
+                        $partecipation = new DBPartecipation($row["event_id"], $row["username"], $row["profile_photo"], $row["username"] == $username);
                         array_push($partecipations, $partecipation);
                     }
                 }
                 return $partecipations;
+            }
+
+            public static function insert_partecipation($driver, $event_id, $username) {
+                $part = new DBPartecipation($event_id, $username);
+                $part->db_serialize($driver);
+            }
+
+            public static function delete_partecipation($driver, $event_id, $username) {
+                $sql = "DELETE FROM partecipation WHERE event_id = ? AND username = ?";
+                try {
+                    $driver->query($sql, $event_id, $username);
+                } catch (\Exception $e) {
+                    throw new \Exception("Error while querying the database: " . $e->getMessage());
+                }
             }
         }
     }
