@@ -61,15 +61,7 @@ async function loadEvents() {
 }
 
 async function loadUserImage(user_id) {
-    // !TODO: Load the auth token from cookies
-    const user_auth = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImRhbmlsby5tYWdsaWEifQ.ygTbgkYa-T0pt-PWvklf9eszCDxIudhjyNPN5m3npmo";
-    const response = await fetch(request_path + "/user/load_user_image.php?user=" + user_id, {
-        method: "GET",
-        headers: {
-            "Authorization": "Bearer " + user_auth,
-            "Content-Type": "application/json"
-        }
-    });
+    const response = await fetch(request_path + "/user/load_user_img.php?user=" + user_id);
     const image = await response.json();
     return image;
 }
@@ -176,10 +168,12 @@ async function showPostedPosts() {
 
 async function showProfileInfos() {
     const infos = await loadProfileInfos();
-    let template = document.getElementById("profileinfo");
-    let clone = document.importNode(template.content, true);
-    clone.querySelector('#username').innerHTML = infos.username;
-    clone.querySelector('#description').innerHTML = infos.description;
+    document.getElementById("username").innerHTML = infos.username;
+    document.getElementById("description").innerHTML = infos.bio;
+    document.getElementById("followers").innerHTML = infos.followers;
+    document.getElementById("followed").innerHTML = infos.followed;
+    document.getElementById("profileImage").src = "/static/img/uploads/" + await loadUserImage(infos.username);
+    //document.getElementById("bannerImage").src = "/static/img/uploads/" + infos.banner;
 }
 
 showProfileInfos();

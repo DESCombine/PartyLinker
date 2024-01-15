@@ -2,6 +2,7 @@ header > #profileImage {
     width: 50px !important;
     margin-top: -10% !important;
     margin-left: -80% !important;
+    margin-bottom : 10% !important;
     border-radius: 50% !important;
 }
 
@@ -16,5 +17,4 @@ main #profileInfo {
 main #modifyIcon {
     margin-left: 0px !important;
     padding-left: 0px !important;
-
 }
