@@ -73,7 +73,7 @@ async function addNewPost(template, feed, post_id, event_id, user_photo, usernam
     clone.querySelector("#post-description").innerHTML = description;
     if (event) {
         clone.querySelector("#partecipants-button").onclick = function() { showPartecipations(event_id); }
-        clone.querySelector("#partecipants-button").class = "btn visible";
+        clone.querySelector("#partecipants-button").classList.remove("invisible");
         addEventDescription(clone, await loadEvent(event_id));
     }
     feed.appendChild(clone);
@@ -84,9 +84,9 @@ function addEventDescription(post, event) {
     let clone = document.importNode(template.content, true);
     clone.querySelector("#event-name").innerHTML = event.name;
     clone.querySelector("#event-place").innerHTML = "Place: " + event.location;
-    clone.querySelector("#event-date").innerHTML = "Date: " + event.starting_date + " - " + event.ending_date;
+    clone.querySelector("#event-date").innerHTML = "Starting Date: " + event.starting_date + "<br>Ending Date: " + event.ending_date;
     clone.querySelector("#event-vips").innerHTML = "Vips: " + event.vips;
-    clone.querySelector("#event-people").innerHTML = "Available places:" + event.max_people;
+    clone.querySelector("#event-people").innerHTML = "Available places: " + event.max_capacity;
     clone.querySelector("#event-price").innerHTML = "Price: " + event.price;
     clone.querySelector("#event-age").innerHTML = "Required age: " + event.minimum_age;
     post.appendChild(clone);
