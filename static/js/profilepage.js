@@ -1,5 +1,5 @@
 import { request_path } from "/static/js/config.js";
-import { loadUserImage, loadEvent, addNewPost, addEventDescription, likePost, loadComments, showComments, loadPartecipations, showPartecipations } from "/static/js/utils.js";
+import { loadUserImage } from "/static/js/utils.js";
 
 
 async function loadPosts() {

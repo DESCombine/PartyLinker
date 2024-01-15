@@ -1,4 +1,5 @@
 import { request_path } from "/static/js/config.js";
+import { loadUserImage, addNewPost } from "/static/js/utils.js";
 
 async function loadOnlineUsers() {
     const response = await fetch(request_path + "/user/load_online_users.php", {
@@ -19,7 +20,7 @@ async function showOnlineUsers() {
     for (let i = 0; i < users.length; i++) {
         let user = users[i];
         let clone = document.importNode(template.content, true);
-        clone.querySelector("#online-image").src = "/static/img/uploads/" + user.photo;
+        clone.querySelector("#online-image").src = "/static/img/uploads/" + user.profile_photo;
         clone.querySelector("#online-image").alt = user.username;
         online_users.appendChild(clone);
     }
@@ -47,10 +48,6 @@ async function showFeed() {
                 post.username, post.image, post.description, post.likes, post.event_post);
     }
 }
-
-
-
-
 
 showOnlineUsers();
 showFeed();
