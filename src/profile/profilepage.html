@@ -55,7 +55,7 @@
             </div>
             <!--Posts-->
             <div id="posts">
-                <div class="row">
+                <div class="row" id="buttons">
                     <div class="col">
                         <p class="text-center border border-black p-2 mb-2">Posted Photos</p>
                     </div>
@@ -64,15 +64,11 @@
                     </div>
                 </div>
                 <div class="row justify-content-center" id="photos">
-                    <div class="col-4">
-                        <img src="/static/img/default-image.png" alt="" class="img-fluid mx-auto d-block">
-                    </div>
-                    <div class="col-4">
-                        <img src="/static/img/default-image.png" alt="" class="img-fluid mx-auto d-block">
-                    </div>
-                    <div class="col-4">
-                        <img src="/static/img/default-image.png" alt="" class="img-fluid mx-auto d-block">
-                    </div>
+                    <template id ="template-photos">
+                        <div class="col-4">
+                            <img src="/static/img/default-image.png" alt="" class="img-fluid mx-auto d-block m-2" id="photo-id">
+                        </div>
+                    </template>
                 </div>
             </div>
         </main>
