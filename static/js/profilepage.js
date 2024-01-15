@@ -1,24 +1,18 @@
 import { request_path } from "/static/js/config.js";
 
-async function loadPosts () {
-    // !TODO: Load the auth token from cookies
-    const user_auth = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImRhbmlsby5tYWdsaWEifQ.ygTbgkYa-T0pt-PWvklf9eszCDxIudhjyNPN5m3npmo"
-    const response = await fetch(request_path + "/user/load_posts.php", {
+async function loadPhotos() {
+    const response = await fetch(request_path + "/user/load_posted_photos.php", {
         method: "GET",
         headers: {
-            //"Authorization": "Bearer " + user_auth,
             "Content-Type": "application/json"
         },
         credentials: "include"
     });
-    
     const posts = await response.json();
     return posts;
 }
 
 async function loadProfileInfos() {
-    // !TODO: Load the auth token from cookies
-    const user_auth = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImRhbmlsby5tYWdsaWEifQ.ygTbgkYa-T0pt-PWvklf9eszCDxIudhjyNPN5m3npmo"
     const response = await fetch(request_path + "/user/load_profile_infos.php", {
         method: "GET",
         headers: {
@@ -31,33 +25,10 @@ async function loadProfileInfos() {
     return infos;
 }
 
-async function loadPhotos() {
-    // !TODO: Load the auth token from cookies
-    const user_auth = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImRhbmlsby5tYWdsaWEifQ.ygTbgkYa-T0pt-PWvklf9eszCDxIudhjyNPN5m3npmo"
-    const response = await fetch(request_path + "/user/load_feed_photos.php", {
-        method: "GET",
-        headers: {
-            //"Authorization": "Bearer " + user_auth,
-            "Content-Type": "application/json"
-        },
-        credentials: "include"
-    });
-    const photos = await response.json();
-    return photos;
-}
-
-async function loadEvents() {
-    // !TODO: Load the auth token from cookies
-    const user_auth = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImRhbmlsby5tYWdsaWEifQ.ygTbgkYa-T0pt-PWvklf9eszCDxIudhjyNPN5m3npmo"
-    const response = await fetch(request_path + "/user/load_feed_posts.php", {
-        method: "GET",
-        headers: {
-            "Authorization": "Bearer " + user_auth,
-            "Content-Type": "application/json"
-        }
-    });
-    const events = await response.json();
-    return events;
+async function loadEvents(event_id) {
+    const response = await fetch(request_path + "/user/load_event.php?event=" + event_id);
+    const event = await response.json();
+    return event;
 }
 
 async function loadUserImage(user_id) {
@@ -146,22 +117,34 @@ async function showPartecipations(event_id) {
 }
 
 async function showPostedPosts() {
-    const feed = document.getElementById("posts");
+    const posts = document.getElementById("posts");
     const photos = await loadPhotos();
-    const events = await loadEvents();
+    //const events = await loadEvents();
     let photo_index = 0;
-    let event_index = 0;
+    //let event_index = 0;
     let photo = photos[photo_index];
-    let event = events[event_index];
-    while (photo_index < photos.length && event_index < events.length) {
-        if (photo.date_posted > event.date_posted) {
-            addNewPost(feed, photo.photo_id, await loadUserImage(photo.poster), photo.poster, photo.photo, photo.description);
-            photo_index++;
-            photo = photos[photo_index];
-        } else {
-            addNewPost(feed, event.event_id, await loadUserImage(event.organizer), event.name, event.image, event.description, event);
-            event_index++;
-            event = events[event_index];
+    //let event = events[event_index];
+    let photosDiv = document.getElementById("photos");
+    if(photos.length == 0 /*&& events.length == 0*/) {
+        posts.innerHTML = "No posts to show";
+        console.log("No posts to show");   
+    } else {
+        while (photo_index < photos.length /*&& event_index < events.length*/) {
+            //if (photo.date_posted > event.date_posted) {
+                //addNewPost(posts, photo.photo_id, await loadUserImage(photo.poster), photo.poster, photo.photo, photo.description);
+                photosDiv.getElementsByTagName('div').item(photo_index).getElementsByTagName('img').item(0).src = "/static/img/uploads/" + photo.photo;
+                /*let img = posts.getElementsByTagName('div').item(2);//.getElementsByTagName('img').item(0);
+                console.log(img);
+                img.src = "/static/img/uploads/" + photo.photo;*/
+                photo_index++;
+                photo = photos[photo_index];
+                console.log(photo_index);
+            /*} else {
+                addNewPost(posts, event.event_id, await loadUserImage(event.organizer), event.name, event.image, event.description, event);
+                event_index++;
+                event = events[event_index];
+                console.log(event_index);
+            }*/
         }
     }
 }
