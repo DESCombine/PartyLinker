@@ -59,41 +59,30 @@ function openModal() {
     alert("Modal opened");
 }
 
+async function showEvents() {
+    
+}
+
 async function showPostedPosts() {
     const posts = document.getElementById("posts");
     const photos = await loadPosts();
-    //const events = await loadEvents();
     let photo_index = 0;
-    //let event_index = 0;
     let photo = photos[photo_index];
-    //let event = events[event_index];
     let photosDiv = document.getElementById("photos");
     let template = document.getElementById("template-photos");
     console.log(template);
-    if (photos.length == 0 /*&& events.length == 0*/) {
+    if (photos.length == 0) {
         posts.innerHTML = "No posts to show";
         console.log("No posts to show");
     } else {
-        while (photo_index < photos.length /*&& event_index < events.length*/ && photo.event_post == 0) {
-            //if (photo.date_posted > event.date_posted) {
-            //addNewPost(posts, photo.photo_id, await loadUserImage(photo.poster), photo.poster, photo.photo, photo.description);
+        while (photo_index < photos.length && photo.event_post == 0) {
             let clone = document.importNode(template.content, true);
             clone.querySelector("#photo-id").src = "/static/img/uploads/" + photo.image;
             clone.querySelector("#photo-id").onclick = openModal;
-            //clone.getElementsByTagName('div').item(photo_index).getElementsByTagName('img').item(0).src = "/static/img/uploads/" + photo.image;
-            /*let img = posts.getElementsByTagName('div').item(2);//.getElementsByTagName('img').item(0);
-            console.log(img);
-            img.src = "/static/img/uploads/" + photo.photo;*/
             photo_index++;
             photo = photos[photo_index];
             console.log(photo_index);
             photosDiv.appendChild(clone);
-            /*} else {
-                addNewPost(posts, event.event_id, await loadUserImage(event.organizer), event.name, event.image, event.description, event);
-                event_index++;
-                event = events[event_index];
-                console.log(event_index);
-            }*/
         }
         let i = 0;
         if(photos.length % 3 == 1) {
