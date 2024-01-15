@@ -25,7 +25,7 @@ async function showOnlineUsers() {
     }
 }
 
-async function loadPosts() {
+async function loadFeed() {
     const response = await fetch(request_path + "/user/load_feed.php", {
         method: "GET",
         headers: {
@@ -51,7 +51,7 @@ async function loadEvent(event_id) {
 
 async function showFeed() {
     const feed = document.getElementById("feed");
-    const posts = await loadPosts();
+    const posts = await loadFeed();
     let template = document.getElementById("post-template");
     for (let i = 0; i < posts.length; i++) {
         let post = posts[i];
