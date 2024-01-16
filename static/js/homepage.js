@@ -7,7 +7,7 @@ async function loadOnlineUsers() {
         headers: {
             "Content-Type": "application/json"
         },
-        include: "credentials"
+        credentials: "include"
     });
     const users = await response.json();
     return users;
