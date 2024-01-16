@@ -1,5 +1,6 @@
 <?php
     require_once(getenv("PL_ROOTDIRECTORY")."php/bootstrap.php");
+    require_once(getenv("PL_ROOTDIRECTORY")."php/requests/authenticated_request.php");
     use Event\EventUtility;
     require_once(getenv("PL_ROOTDIRECTORY")."db/event.php");
 
