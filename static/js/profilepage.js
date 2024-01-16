@@ -10,16 +10,18 @@ postButton.style.pointerEvents = "none";
 
 
 function changeView(button) {
+    let type = 0;
     removeAll();
     if(button === "post") {
         postButton.style.pointerEvents = "none";
         eventButton.style.pointerEvents = "auto";
-        showPostedPosts();
+        type = 0;
     } else if(button === "event"){
         eventButton.style.pointerEvents = "none";
         postButton.style.pointerEvents = "auto";
-        showEvents();
+        type = 1;
     }
+    showPhotos(type)
 }
 
 function removeAll() {
@@ -69,9 +71,9 @@ async function getType(type) {
     return returnarray;
 }
 
-async function showEvents() {
+async function showPhotos(type) {
     const posts = document.getElementById("posts");
-    let photos = (await getType(1));
+    let photos = (await getType(type));
     let photo = photos[0];
     let photosDiv = document.getElementById("photos");
     let template = document.getElementById("template-photos");
@@ -81,40 +83,6 @@ async function showEvents() {
     } else {
         let dim = 0;
         for (let photo_index = 0; photo_index < photos.length; photo_index++) {
-            let clone = document.importNode(template.content, true);
-            clone.querySelector("#photo-id").src = "/static/img/uploads/" + photo.image;
-            clone.querySelector("#photo-id").onclick = openModal;
-            photo = photos[photo_index];
-            photosDiv.appendChild(clone);
-            dim++;
-        }
-        let i = 0;
-        if(dim % 3 == 1) {
-            i = 2;
-        } else if (dim % 3 == 2){
-            i = 1;
-        }
-        for (let j = 0; j < i; j++) {
-            let clone = document.importNode(template.content, true);
-            clone.querySelector("#photo-id").src = "/static/img/default-image.png";
-            clone.querySelector("#photo-id").style.visibility = "hidden";   
-            photosDiv.appendChild(clone);
-        }
-    }
-}
-
-async function showPostedPosts() {
-    const posts = document.getElementById("posts");
-    let photos = (await getType(0));
-    let photo = photos[0];
-    let photosDiv = document.getElementById("photos");
-    let template = document.getElementById("template-photos");
-    if (photos.length == 0) {
-        posts.innerHTML = "No posts to show";
-        console.log("No posts to show");
-    } else {
-        let dim = 0;
-        for (let photo_index = 0; photo_index < photos.length && photo.event_post == 0; photo_index++) {
             let clone = document.importNode(template.content, true);
             clone.querySelector("#photo-id").src = "/static/img/uploads/" + photo.image;
             clone.querySelector("#photo-id").onclick = openModal;
@@ -148,4 +116,4 @@ async function showProfileInfos() {
 }
 
 showProfileInfos();
-showPostedPosts();
+showPhotos(0);
