@@ -19,6 +19,6 @@ main #modifyIcon {
     padding-left: 0px !important;
 }
 
-main #post-modal {
-    background-color: #ad3737 !important;
+.modal-header:hover {
+    background-color: #f1f1f1 !important;
 }
