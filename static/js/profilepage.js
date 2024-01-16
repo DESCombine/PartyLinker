@@ -68,7 +68,7 @@ async function loadProfileInfos() {
 
 function openModal(post) {
     cleanModal();
-    addNewPost(document.getElementById("post-template"), document.getElementById("post-modal"), post.id, post.event_id, post.user_photo, post.username, post.image, post.description, post.likes, post.event);
+    addNewPost(document.getElementById("post-template"), document.getElementById("post-modal"), post.id, post.event_id, post.user_photo, post.username, post.image, post.description, post.hearts, post.event);
 }
 
 async function getType(type) {
