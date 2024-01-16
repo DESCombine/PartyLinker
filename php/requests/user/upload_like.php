@@ -5,7 +5,7 @@
 
     global $driver; 
     try {
-        $post = $_GET["post"];
+        $post = $_POST["post_id"];
         PostUtility::like_post($driver, $post);
     } catch (\Exception $e) {
         http_response_code(500);
