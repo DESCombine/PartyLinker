@@ -20,10 +20,10 @@ export async function addNewPost(template, feed, post_id, event_id, user_photo, 
     clone.querySelector("#post-name").innerHTML = username;
     clone.querySelector("#post-photo").src = "/static/img/uploads/" + image;
     const heartButton = clone.querySelector("#hearts-button");
-    heartButton.addEventListener("click", function() { heartPost(post_id); });
+    heartButton.addEventListener("click", function() { addHeartPost(post_id); });
     if (hearted) {
+        heartButton.addEventListener("click", function() { removeHeartPost(post_id); });
         heartButton.innerHTML = "&#10084";
-        heartButton.disabled = true;
     }
     clone.querySelector("#comments-button").addEventListener("click", function() { showComments(post_id); });
     clone.querySelector("#post-hearts").innerHTML = hearts;
@@ -49,7 +49,7 @@ function addEventDescription(post, event) {
     post.appendChild(clone);
 }
 
-async function heartPost(post_id) {
+async function addHeartPost(post_id) {
     await fetch(request_path + "/user/upload_post_heart.php", {
         method: "POST",
         credentials: "include",
@@ -62,10 +62,35 @@ async function heartPost(post_id) {
     });
     const post = document.getElementsByName(post_id)[0];
     const hearts = post.querySelector("#post-hearts");
-    hearts.innerHTML = parseInt(hearts.innerHTML) + 1;
     const heartButton = post.querySelector("#hearts-button");
-    heartButton.innerHTML = "&#128172";
-    heartButton.disabled = true;
+    updateHeart(hearts, heartButton, 1, function() { removeHeartPost(post_id); });
+}
+
+async function removeHeartPost(post_id) {
+    await fetch(request_path + "/user/remove_post_heart.php", {
+        method: "POST",
+        credentials: "include",
+        header: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            "post_id": post_id
+        })
+    });
+    const post = document.getElementsByName(post_id)[0];
+    const hearts = post.querySelector("#post-hearts");
+    const heartButton = post.querySelector("#hearts-button");
+    updateHeart(hearts, heartButton, -1, function() { addHeartPost(post_id); });
+}
+
+function updateHeart(hearts, button, addOrRemove, fun) {
+    hearts.innerHTML = parseInt(hearts.innerHTML) + addOrRemove;
+    if (addOrRemove == 1) {
+        button.innerHTML = "&#128172";
+    } else {
+        button.innerHTML = "&#10084";
+    }
+    button.addEventListener("click", fun);
 }
 
 async function postComment(post_id, content) {
