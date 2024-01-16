@@ -18,3 +18,7 @@ main #modifyIcon {
     margin-left: 0px !important;
     padding-left: 0px !important;
 }
+
+main #post-modal {
+    background-color: #ad3737 !important;
+}

@@ -1,34 +1,45 @@
+import { addNewPost } from "./utils.js";
 import { request_path } from "/static/js/config.js";
 import { loadUserImage } from "/static/js/utils.js";
 
 const postButton = document.getElementById("buttons").getElementsByTagName("div").item(0)
 const eventButton = document.getElementById("buttons").getElementsByTagName("div").item(1);
-postButton.addEventListener("click", changePosted);
-eventButton.addEventListener("click", changeEvents);
+const templatePost = document.importNode(document.getElementById("template-photos"), true);
+const templateModal = document.importNode(document.getElementById("post-template"), true);
+postButton.addEventListener("click", function(){ changeView("post"); });
+eventButton.addEventListener("click", function(){ changeView("event"); });
+postButton.style.pointerEvents = "none";
 
-let posted = true;
-let events = false;
 
-function changePosted() {
-    posted = !posted;
-    postButton.style.pointerEvents = "none";
-    changeView();
-    eventButton.style.pointerEvents = "auto";
-}
-
-function changeEvents() {
-    eventButton.style.pointerEvents = "none";
-    events = !events;
-    postButton.style.pointerEvents = "auto";
-}
-
-function changeView() {
+function changeView(button) {
+    let type = 0;
     removeAll();
-    if(posted) {
-        showPostedPosts();
-    } else if (events) {
-        showEvents();
+    if(button === "post") {
+        postButton.style.pointerEvents = "none";
+        eventButton.style.pointerEvents = "auto";
+        type = 0;
+    } else if(button === "event"){
+        eventButton.style.pointerEvents = "none";
+        postButton.style.pointerEvents = "auto";
+        type = 1;
     }
+    showPhotos(type)
+}
+
+function removeAll() {
+    const photosDiv = document.getElementById("photos");
+    while (photosDiv.firstElementChild != null) {
+        photosDiv.removeChild(photosDiv.firstChild);
+    }
+    photosDiv.appendChild(templatePost);
+}
+
+function cleanModal() {
+    const modal = document.getElementById("post-modal");
+    while (modal.firstElementChild != null) {
+        modal.removeChild(modal.firstChild);
+    }
+    modal.appendChild(templateModal);
 }
 
 async function loadPosts() {
@@ -55,39 +66,45 @@ async function loadProfileInfos() {
     return infos;
 }
 
-function openModal() {
-    alert("Modal opened");
+function openModal(post) {
+    cleanModal();
+    addNewPost(document.getElementById("post-template"), document.getElementById("post-modal"), post.id, post.event_id, post.user_photo, post.username, post.image, post.description, post.likes, post.event);
 }
 
-async function showEvents() {
-    
-}
-
-async function showPostedPosts() {
-    const posts = document.getElementById("posts");
+async function getType(type) {
     const photos = await loadPosts();
-    let photo_index = 0;
-    let photo = photos[photo_index];
+    const returnarray = [];
+    photos.forEach(element => {
+        if(element.event_post == type) {
+            returnarray.push(element);
+        }
+    });
+    return returnarray;
+}
+
+async function showPhotos(type) {
+    const posts = document.getElementById("posts");
+    let photos = (await getType(type));
+    let photo = photos[0];
     let photosDiv = document.getElementById("photos");
     let template = document.getElementById("template-photos");
-    console.log(template);
     if (photos.length == 0) {
         posts.innerHTML = "No posts to show";
         console.log("No posts to show");
     } else {
-        while (photo_index < photos.length && photo.event_post == 0) {
+        let dim = 0;
+        for (let photo_index = 0; photo_index < photos.length; photo_index++) {
             let clone = document.importNode(template.content, true);
             clone.querySelector("#photo-id").src = "/static/img/uploads/" + photo.image;
-            clone.querySelector("#photo-id").onclick = openModal;
-            photo_index++;
+            clone.querySelector("#photo-id").addEventListener("click", function(){ openModal(photo); });
             photo = photos[photo_index];
-            console.log(photo_index);
             photosDiv.appendChild(clone);
+            dim++;
         }
         let i = 0;
-        if(photos.length % 3 == 1) {
+        if(dim % 3 == 1) {
             i = 2;
-        } else if (photos.length % 3 == 2){
+        } else if (dim % 3 == 2){
             i = 1;
         }
         for (let j = 0; j < i; j++) {
@@ -110,4 +127,4 @@ async function showProfileInfos() {
 }
 
 showProfileInfos();
-showPostedPosts();
+showPhotos(0);
