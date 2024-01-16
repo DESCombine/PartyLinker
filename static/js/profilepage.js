@@ -1,9 +1,11 @@
+import { addNewPost } from "./utils.js";
 import { request_path } from "/static/js/config.js";
 import { loadUserImage } from "/static/js/utils.js";
 
 const postButton = document.getElementById("buttons").getElementsByTagName("div").item(0)
 const eventButton = document.getElementById("buttons").getElementsByTagName("div").item(1);
-const template = document.importNode(document.getElementById("template-photos"), true);
+const templatePost = document.importNode(document.getElementById("template-photos"), true);
+const templateModal = document.importNode(document.getElementById("post-template"), true);
 postButton.addEventListener("click", function(){ changeView("post"); });
 eventButton.addEventListener("click", function(){ changeView("event"); });
 postButton.style.pointerEvents = "none";
@@ -29,7 +31,15 @@ function removeAll() {
     while (photosDiv.firstElementChild != null) {
         photosDiv.removeChild(photosDiv.firstChild);
     }
-    photosDiv.appendChild(template);
+    photosDiv.appendChild(templatePost);
+}
+
+function cleanModal() {
+    const modal = document.getElementById("post-modal");
+    while (modal.firstElementChild != null) {
+        modal.removeChild(modal.firstChild);
+    }
+    modal.appendChild(templateModal);
 }
 
 async function loadPosts() {
@@ -56,8 +66,9 @@ async function loadProfileInfos() {
     return infos;
 }
 
-function openModal() {
-    alert("Modal opened");
+function openModal(post) {
+    cleanModal();
+    addNewPost(document.getElementById("post-template"), document.getElementById("post-modal"), post.id, post.event_id, post.user_photo, post.username, post.image, post.description, post.likes, post.event);
 }
 
 async function getType(type) {
@@ -85,7 +96,7 @@ async function showPhotos(type) {
         for (let photo_index = 0; photo_index < photos.length; photo_index++) {
             let clone = document.importNode(template.content, true);
             clone.querySelector("#photo-id").src = "/static/img/uploads/" + photo.image;
-            clone.querySelector("#photo-id").onclick = openModal;
+            clone.querySelector("#photo-id").addEventListener("click", function(){ openModal(photo); });
             photo = photos[photo_index];
             photosDiv.appendChild(clone);
             dim++;
