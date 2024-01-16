@@ -57,13 +57,13 @@
             private $event_id;
             private $username;
             private $profile_photo;
-            private $current_user;
+            private $partecipating;
 
-            public function __construct($event_id = null, $username = null, $profile_photo = null, $current_user = null) {
+            public function __construct($event_id = null, $username = null, $profile_photo = null, $partecipating = null) {
                 $this->event_id = $event_id;
                 $this->username = $username;
                 $this->profile_photo = $profile_photo;
-                $this->current_user = $current_user;
+                $this->partecipating = $partecipating;
             }
 
             public function jsonSerialize() {
@@ -71,7 +71,7 @@
                     "event_id" => $this->event_id,
                     "username" => $this->username,
                     "profile_photo" => $this->profile_photo,
-                    "current_user" => $this->current_user
+                    "partecipating" => $this->partecipating
                 ];
             }
 
