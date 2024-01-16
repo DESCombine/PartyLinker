@@ -23,7 +23,6 @@ function changeView(button) {
 }
 
 function removeAll() {
-    console.log(template);
     const photosDiv = document.getElementById("photos");
     while (photosDiv.firstElementChild != null) {
         photosDiv.removeChild(photosDiv.firstChild);
@@ -59,33 +58,74 @@ function openModal() {
     alert("Modal opened");
 }
 
-async function showEvents() {
-    
+async function getType(type) {
+    const photos = await loadPosts();
+    const returnarray = [];
+    photos.forEach(element => {
+        if(element.event_post == type) {
+            returnarray.push(element);
+        }
+    });
+    return returnarray;
 }
 
-async function showPostedPosts() {
+async function showEvents() {
     const posts = document.getElementById("posts");
-    const photos = await loadPosts();
-    let photo_index = 0;
-    let photo = photos[photo_index];
+    let photos = (await getType(1));
+    let photo = photos[0];
     let photosDiv = document.getElementById("photos");
     let template = document.getElementById("template-photos");
     if (photos.length == 0) {
         posts.innerHTML = "No posts to show";
         console.log("No posts to show");
     } else {
-        while (photo_index < photos.length && photo.event_post == 0) {
+        let dim = 0;
+        for (let photo_index = 0; photo_index < photos.length; photo_index++) {
             let clone = document.importNode(template.content, true);
             clone.querySelector("#photo-id").src = "/static/img/uploads/" + photo.image;
             clone.querySelector("#photo-id").onclick = openModal;
-            photo_index++;
             photo = photos[photo_index];
             photosDiv.appendChild(clone);
+            dim++;
         }
         let i = 0;
-        if(photos.length % 3 == 1) {
+        if(dim % 3 == 1) {
             i = 2;
-        } else if (photos.length % 3 == 2){
+        } else if (dim % 3 == 2){
+            i = 1;
+        }
+        for (let j = 0; j < i; j++) {
+            let clone = document.importNode(template.content, true);
+            clone.querySelector("#photo-id").src = "/static/img/default-image.png";
+            clone.querySelector("#photo-id").style.visibility = "hidden";   
+            photosDiv.appendChild(clone);
+        }
+    }
+}
+
+async function showPostedPosts() {
+    const posts = document.getElementById("posts");
+    let photos = (await getType(0));
+    let photo = photos[0];
+    let photosDiv = document.getElementById("photos");
+    let template = document.getElementById("template-photos");
+    if (photos.length == 0) {
+        posts.innerHTML = "No posts to show";
+        console.log("No posts to show");
+    } else {
+        let dim = 0;
+        for (let photo_index = 0; photo_index < photos.length && photo.event_post == 0; photo_index++) {
+            let clone = document.importNode(template.content, true);
+            clone.querySelector("#photo-id").src = "/static/img/uploads/" + photo.image;
+            clone.querySelector("#photo-id").onclick = openModal;
+            photo = photos[photo_index];
+            photosDiv.appendChild(clone);
+            dim++;
+        }
+        let i = 0;
+        if(dim % 3 == 1) {
+            i = 2;
+        } else if (dim % 3 == 2){
             i = 1;
         }
         for (let j = 0; j < i; j++) {
