@@ -3,31 +3,29 @@ import { loadUserImage } from "/static/js/utils.js";
 
 const postButton = document.getElementById("buttons").getElementsByTagName("div").item(0)
 const eventButton = document.getElementById("buttons").getElementsByTagName("div").item(1);
-postButton.addEventListener("click", changePosted);
-eventButton.addEventListener("click", changeEvents);
+postButton.addEventListener("click", changeView("post"));
+eventButton.addEventListener("click", changeView("event"));
+postButton.style.pointerEvents = "none";
 
-let posted = true;
-let events = false;
-
-function changePosted() {
-    posted = !posted;
-    postButton.style.pointerEvents = "none";
-    changeView();
-    eventButton.style.pointerEvents = "auto";
-}
-
-function changeEvents() {
-    eventButton.style.pointerEvents = "none";
-    events = !events;
-    postButton.style.pointerEvents = "auto";
-}
-
-function changeView() {
+function changeView(button) {
+    console.log("changeView");
     removeAll();
-    if(posted) {
-        showPostedPosts();
-    } else if (events) {
-        showEvents();
+    if(button === "post") {
+        console.log("post");
+        postButton.style.pointerEvents = "none";
+        eventButton.style.pointerEvents = "auto";
+    } else if(button === "event"){
+        console.log("event");
+        eventButton.style.pointerEvents = "none";
+        postButton.style.pointerEvents = "auto";
+    }
+}
+
+function removeAll() {
+    const photosDiv = document.getElementById("photos");
+    const template = document.getElementById("template-photos");
+    while (photosDiv.firstChild && photosDiv.firstChild.id != "template-photos") {
+        photosDiv.removeChild(photosDiv.firstChild);
     }
 }
 
@@ -70,7 +68,6 @@ async function showPostedPosts() {
     let photo = photos[photo_index];
     let photosDiv = document.getElementById("photos");
     let template = document.getElementById("template-photos");
-    console.log(template);
     if (photos.length == 0) {
         posts.innerHTML = "No posts to show";
         console.log("No posts to show");
@@ -81,7 +78,6 @@ async function showPostedPosts() {
             clone.querySelector("#photo-id").onclick = openModal;
             photo_index++;
             photo = photos[photo_index];
-            console.log(photo_index);
             photosDiv.appendChild(clone);
         }
         let i = 0;
