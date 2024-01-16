@@ -13,13 +13,18 @@ async function loadEvent(event_id) {
 }
 
 export async function addNewPost(template, feed, post_id, event_id, user_photo, username,
-    image, description, hearts, event) {
+    image, description, hearts, event, hearted) {
     let clone = document.importNode(template.content, true);
     clone.querySelector("#post-id").setAttribute("name", post_id);
     clone.querySelector("#post-user-photo").src = "/static/img/uploads/" + user_photo;
     clone.querySelector("#post-name").innerHTML = username;
     clone.querySelector("#post-photo").src = "/static/img/uploads/" + image;
-    clone.querySelector("#hearts-button").addEventListener("click", function() { heartPost(post_id); });
+    const heartButton = clone.querySelector("#hearts-button");
+    heartButton.addEventListener("click", function() { heartPost(post_id); });
+    if (hearted) {
+        heartButton.innerHTML = "&#10084";
+        heartButton.disabled = true;
+    }
     clone.querySelector("#comments-button").addEventListener("click", function() { showComments(post_id); });
     clone.querySelector("#post-hearts").innerHTML = hearts;
     clone.querySelector("#post-description").innerHTML = description;
@@ -58,6 +63,9 @@ async function heartPost(post_id) {
     const post = document.getElementsByName(post_id)[0];
     const hearts = post.querySelector("#post-hearts");
     hearts.innerHTML = parseInt(hearts.innerHTML) + 1;
+    const heartButton = post.querySelector("#hearts-button");
+    heartButton.innerHTML = "&#128172";
+    heartButton.disabled = true;
 }
 
 async function postComment(post_id, content) {
