@@ -3,30 +3,32 @@ import { loadUserImage } from "/static/js/utils.js";
 
 const postButton = document.getElementById("buttons").getElementsByTagName("div").item(0)
 const eventButton = document.getElementById("buttons").getElementsByTagName("div").item(1);
-postButton.addEventListener("click", changeView("post"));
-eventButton.addEventListener("click", changeView("event"));
+const template = document.importNode(document.getElementById("template-photos"), true);
+postButton.addEventListener("click", function(){ changeView("post"); });
+eventButton.addEventListener("click", function(){ changeView("event"); });
 postButton.style.pointerEvents = "none";
 
+
 function changeView(button) {
-    console.log("changeView");
     removeAll();
     if(button === "post") {
-        console.log("post");
         postButton.style.pointerEvents = "none";
         eventButton.style.pointerEvents = "auto";
+        showPostedPosts();
     } else if(button === "event"){
-        console.log("event");
         eventButton.style.pointerEvents = "none";
         postButton.style.pointerEvents = "auto";
+        showEvents();
     }
 }
 
 function removeAll() {
+    console.log(template);
     const photosDiv = document.getElementById("photos");
-    const template = document.getElementById("template-photos");
-    while (photosDiv.firstChild && photosDiv.firstChild.id != "template-photos") {
+    while (photosDiv.firstElementChild != null) {
         photosDiv.removeChild(photosDiv.firstChild);
     }
+    photosDiv.appendChild(template);
 }
 
 async function loadPosts() {
