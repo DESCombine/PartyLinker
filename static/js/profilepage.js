@@ -33,10 +33,19 @@ async function loadProfileInfos() {
     return infos;
 }
 
-function openModal(post) {
-    cleanModal();
-    addNewPost(document.getElementById("post-template"), document.getElementById("post-modal"), post.id, post.event_id, post.user_photo, 
-            post.username, post.image, post.description, post.hearts, post.event, post.hearted);
+function changeView(button) {
+    let type = 0;
+    removeAll();
+    if (button === "post") {
+        postButton.style.pointerEvents = "none";
+        eventButton.style.pointerEvents = "auto";
+        type = 0;
+    } else if (button === "event") {
+        eventButton.style.pointerEvents = "none";
+        postButton.style.pointerEvents = "auto";
+        type = 1;
+    }
+    showPhotos(type);
 }
 
 async function getType(type) {
