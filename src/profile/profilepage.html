@@ -91,88 +91,84 @@
         </nav>
     </div>
     <!-- Post Modal -->
-    <div class="modal fade" id="post-modal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
-        <template id="template-modal">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                <div class="modal-content">
-                    <div class="modal-header justify-content-center">
-                        <h1 class="modal-title" id="postModalLabel">Post</h1>
-                        <div class="row justify-content-start mt-3">
-                            <div class="col-2">
-                                <img id="post-user-photo" src="/static/img/default-profile.png" alt=""
-                                    class="img-fluid img-thumbnail">
-                            </div>
-                            <div class="col">
-                                <h3 id="post-name">Username</h3>
-                            </div>
-                            <div class="col-2">
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
+    <div class="modal fade" id="post-modal" tabindex="-1" aria-labelledby="post-name" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header justify-content-center">
+                    <div class="row justify-content-start mt-3">
+                        <div class="col">
+                            <img id="post-user-photo" src="/static/img/default-profile.png" alt=""
+                                class="img-fluid img-thumbnail">
                         </div>
-                    </div>
-                    <div class="modal-body">
-                        <div>
-                            <li class="list-group-item" id="post-id">
-                                <div class="text-center">
-                                    <img id="post-photo" src="/static/img/default-image.png" alt="" class="img-fluid">
-                                </div>
-                                <ol class="list-group list-group-flush list-group-horizontal">
-                                    <li class="list-group-item">
-                                        <button id="likes-button" class="btn" onclick="">
-                                            &#129293
-                                        </button>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <button id="comments-button" class="btn" onclick="" data-bs-toggle="modal"
-                                            data-bs-target="#comments-modal">
-                                            &#128172
-                                        </button>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <button id="partecipants-button" class="btn invisible" onclick=""
-                                            data-bs-toggle="modal" data-bs-target="#partecipants-modal">
-                                            &#128111
-                                        </button>
-                                    </li>
-                                    <li class="list-group-item ms-5 pt-3">
-                                        <p id="post-likes">0</p>
-                                    </li>
-                                </ol>
-                            </li>
+                        <div class="col">
+                            <h3 id="post-name">Username</h3>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <p id="post-description">Post description</p>
-                        <template id="description-template">
-                            <div class="text-center">
-                                <h4 id="event-name">Event Name</h4>
-                            </div>
-                            <ol class="list-group list-group-flush">
-                                <li class="list-group-item">
-                                    <p id="event-place">Place</p>
-                                </li>
-                                <li class="list-group-item">
-                                    <p id="event-date">Date</p>
-                                </li>
-                                <li class="list-group-item">
-                                    <p id="event-vips">Vips</p>
-                                </li>
-                                <li class="list-group-item">
-                                    <p id="event-people">Max-People</p>
-                                </li>
-                                <li class="list-group-item">
-                                    <p id="event-price">Price</p>
-                                </li>
-                                <li class="list-group-item">
-                                    <p id="event-age">Minimum age</p>
-                                </li>
-                            </ol>
-                        </template>
+                        <div class="col">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
                     </div>
                 </div>
+                <div class="modal-body">
+                    <div>
+                        <li class="list-group-item" id="post-id">
+                            <div class="text-center">
+                                <img id="post-photo" src="/static/img/default-image.png" alt="" class="img-fluid">
+                            </div>
+                            <ol class="list-group list-group-flush list-group-horizontal">
+                                <li class="list-group-item">
+                                    <button id="likes-button" class="btn" onclick="">
+                                        &#129293
+                                    </button>
+                                </li>
+                                <li class="list-group-item">
+                                    <button id="comments-button" class="btn" onclick="" data-bs-toggle="modal"
+                                        data-bs-target="#comments-modal">
+                                        &#128172
+                                    </button>
+                                </li>
+                                <li class="list-group-item">
+                                    <button id="partecipants-button" class="btn invisible" onclick=""
+                                        data-bs-toggle="modal" data-bs-target="#partecipants-modal">
+                                        &#128111
+                                    </button>
+                                </li>
+                                <li class="list-group-item ms-5 pt-3">
+                                    <p id="post-likes">0</p>
+                                </li>
+                            </ol>
+                        </li>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <p id="post-description">Post description</p>
+                    <template id="description-template">
+                        <div class="text-center">
+                            <h4 id="event-name">Event Name</h4>
+                        </div>
+                        <ol class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <p id="event-place">Place</p>
+                            </li>
+                            <li class="list-group-item">
+                                <p id="event-date">Date</p>
+                            </li>
+                            <li class="list-group-item">
+                                <p id="event-vips">Vips</p>
+                            </li>
+                            <li class="list-group-item">
+                                <p id="event-people">Max-People</p>
+                            </li>
+                            <li class="list-group-item">
+                                <p id="event-price">Price</p>
+                            </li>
+                            <li class="list-group-item">
+                                <p id="event-age">Minimum age</p>
+                            </li>
+                        </ol>
+                    </template>
+                </div>
             </div>
-        </template>
+        </div>
     </div>
 
     <!-- Comments Modal -->

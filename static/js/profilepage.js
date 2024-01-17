@@ -5,7 +5,6 @@ import { loadUserImage } from "/static/js/utils.js";
 const postButton = document.getElementById("buttons").getElementsByTagName("div").item(0)
 const eventButton = document.getElementById("buttons").getElementsByTagName("div").item(1);
 const templatePost = document.importNode(document.getElementById("template-photos"), true);
-const templateModal = document.importNode(document.getElementById("template-modal"), true);
 postButton.addEventListener("click", function () { changeView("post"); });
 eventButton.addEventListener("click", function () { changeView("event"); });
 postButton.style.pointerEvents = "none";
@@ -71,7 +70,7 @@ function removeAll() {
 function openModal(post) {
     //console.log(post);
     const modal = document.getElementById("post-modal");
-    showModalPost(templateModal, modal, post.id, post.event_id, post.user_photo, post.username, post.image, post.description, post.likes, post.event);
+    showModalPost(modal, post.id, post.event_id, post.user_photo, post.username, post.image, post.description, post.likes, post.event);
 }
 
 async function showPhotos(type) {
@@ -118,25 +117,20 @@ async function showProfileInfos() {
     //document.getElementById("bannerImage").src = "/static/img/uploads/" + infos.banner;
 }
 
-async function showModalPost(template, modal, post_id, event_id, user_photo, username,
+async function showModalPost(modal, post_id, event_id, user_photo, username,
     image, description, likes, event) {
-    let clone = document.importNode(template.content, true);
-    clone.querySelector('#post-user-photo').src = "/static/img/uploads/" + user_photo;
-    clone.querySelector('#post-name').innerHTML = username;
-    clone.querySelector('#post-photo').src = "/static/img/uploads/" + image;
-    clone.querySelector("#likes-button").onclick = function () { likePost(post_id); };
-    clone.querySelector("#comments-button").onclick = function () { showComments(post_id); }
-    clone.querySelector("#post-likes").innerHTML = likes;
-    clone.querySelector("#post-description").innerHTML = description;
+    document.getElementById("post-user-photo").src = "/static/img/uploads/" + user_photo;
+    document.getElementById("post-name").innerHTML = username;
+    document.getElementById("post-photo").src = "/static/img/uploads/" + image;
+    document.getElementById("likes-button").addEventListener("click", function () { likePost(post_id); });
+    document.getElementById("comments-button").addEventListener("click", function () { showComments(post_id); })
+    document.getElementById("post-likes").innerHTML = likes;
+    document.getElementById("post-description").innerHTML = description;
     if (event) {
-        clone.querySelector("#partecipants-button").addEventListener("click", function () { showPartecipations(event_id); });
-        clone.querySelector("#partecipants-button").classList.remove("invisible");
-        addEventDescription(clone, await loadEvent(event_id));
+        document.getElementById("partecipants-button").addEventListener("click", function () { showPartecipations(event_id); })
+        document.getElementById("partecipants-button").ddEventListener("click", function () { showPartecipations(event_id); });
+        document.getElementById("partecipants-button").classList.remove("invisible");
     }
-    modal.appendChild(clone);
-    // remove template from modal
-    // modal.removeChild(modal.firstChild);
-    // modal.removeChild(modal.firstChild);
 
 }
 
