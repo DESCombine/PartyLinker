@@ -49,7 +49,7 @@ function addEventDescription(post, event) {
     post.appendChild(clone);
 }
 
-async function heartPost(post_id) {
+export async function heartPost(post_id) {
     await fetch(request_path + "/user/upload_post_heart.php", {
         method: "POST",
         credentials: "include",
@@ -118,7 +118,7 @@ async function loadComments(post_id) {
     return comments;
 }
 
-async function showComments(post_id) {
+export async function showComments(post_id) {
     const comments = document.getElementById("comments");
     const comments_to_show = await loadComments(post_id);
     let template = document.getElementById("comment-template");
@@ -139,7 +139,7 @@ async function loadPartecipations(event_id) {
     return partecipations;
 }
 
-async function showPartecipations(event_id) {
+export async function showPartecipations(event_id) {
     const partecipations = document.getElementById("partecipants");
     const partecipations_list = await loadPartecipations(event_id);
     let template = document.getElementById("partecipants-template");

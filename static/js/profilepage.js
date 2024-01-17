@@ -1,6 +1,5 @@
-import { addNewPost } from "./utils.js";
 import { request_path } from "/static/js/config.js";
-import { loadUserImage } from "/static/js/utils.js";
+import { loadUserImage, heartPost, showComments, showPartecipations } from "/static/js/utils.js";
 
 const postButton = document.getElementById("buttons").getElementsByTagName("div").item(0)
 const eventButton = document.getElementById("buttons").getElementsByTagName("div").item(1);
@@ -122,9 +121,9 @@ async function showModalPost(modal, post_id, event_id, user_photo, username,
     document.getElementById("post-user-photo").src = "/static/img/uploads/" + await loadUserImage(username);
     document.getElementById("post-name").innerHTML = username;
     document.getElementById("post-photo").src = "/static/img/uploads/" + image;
-    document.getElementById("likes-button").addEventListener("click", function () { likePost(post_id); });
+    document.getElementById("hearts-button").addEventListener("click", function () { heartPost(post_id); });
     document.getElementById("comments-button").addEventListener("click", function () { showComments(post_id); })
-    document.getElementById("post-likes").innerHTML = likes;
+    document.getElementById("post-hearts").innerHTML = likes;
     document.getElementById("post-description").innerHTML = description;
     if (event) {
         document.getElementById("partecipants-button").addEventListener("click", function () { showPartecipations(event_id); })
