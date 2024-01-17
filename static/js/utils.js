@@ -133,7 +133,7 @@ export async function showComments(post_id) {
     }
 }
 
-async function loadPartecipations(event_id) {
+export async function loadPartecipations(event_id) {
     const response = await fetch(request_path + "/user/load_partecipations.php?event=" + event_id);
     const partecipations = await response.json();
     return partecipations;

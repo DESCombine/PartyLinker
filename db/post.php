@@ -137,6 +137,41 @@
                         $row["description"], $row["posted"], $row["hearts"], $row["event_post"]);
             }
 
+            public static function from_db_all_posts_with_event_id(\DBDriver $driver, $event_id) {
+                $sql = "SELECT * FROM post WHERE event_id = ?";
+                try {
+                    $result = $driver->query($sql, $event_id);
+                } catch (\Exception $e) {
+                    throw new \Exception("Error while querying the database: " . $e->getMessage());
+                }
+                if ($result->num_rows == 0) {
+                    return null;
+                }
+                $posts = array();
+                for($i = 0; $i < $result->num_rows; $i++){
+                    $row = $result->fetch_array();
+                    $post = new DBPost($row["post_id"], $row["event_id"], $row["username"], $row["image"], 
+                            $row["description"], $row["posted"], $row["hearts"], $row["event_post"]);
+                    array_push($posts, $post);
+                }
+                return $posts;
+            }
+ 
+            public static function poster_from_db_with_event_id(\DBDriver $driver, $event_id) {
+                $sql = "SELECT * FROM post WHERE event_id = ? AND event_post = 1";
+                try {
+                    $result = $driver->query($sql, $event_id);
+                } catch (\Exception $e) {
+                    throw new \Exception("Error while querying the database: " . $e->getMessage());
+                }
+                if ($result->num_rows == 0) {
+                    return null;
+                }
+                $row = $result->fetch_assoc();
+                return new DBPost($row["post_id"], $row["event_id"], $row["username"], $row["image"], 
+                        $row["description"], $row["posted"], $row["hearts"], $row["event_post"]);
+            }
+
             public static function from_db_with_username(\DBDriver $driver, $username) {
                 $sql = "SELECT * FROM post WHERE username = ?";
                 try {

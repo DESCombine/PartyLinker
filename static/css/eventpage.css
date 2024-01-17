@@ -1,7 +1,13 @@
-header { 
-    padding-bottom: 10% !important;; 
+header {
+    padding-bottom: 10% !important;
+    ;
 }
 
 .nav {
     background-color: white !important;
+}
+
+#partecipant-photo {
+    border-radius: 50% !important;
+    width: 50% !important;
 }
