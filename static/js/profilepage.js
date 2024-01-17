@@ -1,7 +1,7 @@
 import { request_path } from "/static/js/config.js";
 import { loadUserImage, heartPost, showComments, showPartecipations } from "/static/js/utils.js";
 
-const postButton = document.getElementById("buttons").getElementsByTagName("div").item(0)
+const postButton = document.getElementById("buttons").getElementsByTagName("div").item(0);
 const eventButton = document.getElementById("buttons").getElementsByTagName("div").item(1);
 const templatePost = document.importNode(document.getElementById("template-photos"), true);
 postButton.addEventListener("click", function () { changeView("post"); });
@@ -35,13 +35,23 @@ async function loadProfileInfos() {
 function changeView(button) {
     let type = 0;
     removeAll();
+    const postP = postButton.getElementsByTagName("p").item(0);
+    const eventP = eventButton.getElementsByTagName("p").item(0);
     if (button === "post") {
         postButton.style.pointerEvents = "none";
         eventButton.style.pointerEvents = "auto";
+        postP.classList.add("border");
+        postP.classList.add("border-black");
+        eventP.classList.remove("border");
+        eventP.classList.remove("border-black");
         type = 0;
     } else if (button === "event") {
         eventButton.style.pointerEvents = "none";
         postButton.style.pointerEvents = "auto";
+        eventP.classList.add("border");
+        eventP.classList.add("border-black");
+        postP.classList.remove("border");
+        postP.classList.remove("border-black");
         type = 1;
     }
     showPhotos(type);
@@ -126,6 +136,7 @@ async function showModalPost(modal, post_id, event_id, user_photo, username,
     document.getElementById("post-hearts").innerHTML = hearts;
     document.getElementById("post-description").innerHTML = description;
     if (event) {
+        document.getElementById("post-photo").addEventListener("click", function () { window.location.replace(request_path + "/event.html?id=" + post_id); });
         document.getElementById("partecipants-button").addEventListener("click", function () { showPartecipations(event_id); })
         document.getElementById("partecipants-button").addEventListener("click", function () { showPartecipations(event_id); });
         document.getElementById("partecipants-button").classList.remove("invisible");
