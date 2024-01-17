@@ -1,54 +1,33 @@
 import { request_path } from "/static/js/config.js";
-import { loadEvent } from "/static/js/utils.js";
-const posterA = document.getElementById("nav-poster");
-const photosA = document.getElementById("nav-photos");
-const peopleA = document.getElementById("nav-people");
-const posterDiv = document.getElementById("poster");
-const photosDiv = document.getElementById("photos");
-const peopleDiv = document.getElementById("people");
+import { loadEvent, heartPost, showComments } from "/static/js/utils.js";
 
-posterA.addEventListener("click", function () { changeView("poster"); });
-photosA.addEventListener("click", function () { changeView("photos"); });
-peopleA.addEventListener("click", function () { changeView("people"); });
-
-async function changeView(button) {
-    let type = 0;
-    //removeAll();
-    if (button === "poster") {
-        posterA.classList.add("active");
-        peopleA.classList.remove("active");
-        photosA.classList.remove("active");
-        posterDiv.classList.remove("invisible");
-        photosDiv.classList.add("invisible");
-        peopleDiv.classList.add("invisible");
-        type = 0;
-    } else if (button === "photos") {
-        photosA.classList.add("active");
-        posterA.classList.remove("active");
-        peopleA.classList.remove("active");
-        posterDiv.classList.add("invisible");
-        photosDiv.classList.remove("invisible");
-        peopleDiv.classList.add("invisible");
-        type = 1;
-    } else if (button === "people") {
-        peopleA.classList.add("active");
-        posterA.classList.remove("active");
-        photosA.classList.remove("active");
-        posterDiv.classList.add("invisible");
-        photosDiv.classList.add("invisible");
-        peopleDiv.classList.remove("invisible");
-        type = 2;
-    }
-    showContent(type);
+async function loadPoster() {
+    const response = await fetch(request_path + "/user/load_event_poster.php?event=" + "12345");
+    const poster = await response.json();
+    return poster;
 }
 
-async function showContent(type) {
-    if(type === 0) {
-        //showPosts();
-        let poster = await loadEvent(event_id);
-    } else if(type === 1) {
-        showPhotos();
-    } else if(type === 2) {
-        showPeople();
-    }
+async function showContent() {
+    // poster
+    let post = await loadPoster();
+    console.log(post);
+    document.getElementById("photo-id").src = "/static/img/uploads/" + post.image;
+    document.getElementById("hearts-button").addEventListener("click", function () { heartPost(post_id); });
+    document.getElementById("comments-button").addEventListener("click", function () { showComments(post_id); })
+    let event = await loadEvent(12345);
+    console.log(event);
+    document.getElementById("event-name").innerHTML = event.name;
+    document.getElementById("event-day").innerHTML = event.starting_date.split(" ")[0];
+    document.getElementById("event-time").innerHTML = event.starting_date.split(" ")[1];
+    document.getElementById("event-vip").innerHTML = event.vip;
+    document.getElementById("event-maxpeople").innerHTML = event.max_capacity;
+    document.getElementById("event-price").innerHTML = event.price;
+    document.getElementById("event-min-age").innerHTML = event.minimum_age;
+    document.getElementById("event-description").innerHTML = post.description;
+    // photos
+    //showPhotos();
+    // partecipants
+    //showPeople();
 }
+
+showContent();

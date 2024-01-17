@@ -4,7 +4,7 @@
 <head>
     <title>PartyLinker - Event</title>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" type="text/css" href="/static/css/event.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/eventpage.css" />
     <!-- Font Renner import -->
     <link rel="stylesheet" href="https://indestructibletype-fonthosting.github.io/renner.css" type="text/css"
         charset="utf-8" />
@@ -28,8 +28,8 @@
     </header>
     <div class="container-fluid pt-0 overflow-hidden">
         <main>
-            <div data-bs-spy="scroll" data-bs-target="#navbar" data-bs-smooth-scroll="true"
-                class="scrollspy-example-2" tabindex="0">
+            <div data-bs-spy="scroll" data-bs-target="#navbar" data-bs-smooth-scroll="true" class="scrollspy-example-2"
+                tabindex="0">
                 <div class="container-fluid pt-0 overflow-hidden" id="poster">
                     <div class="row justify-content-center" id="poster-photo">
                         <img src="/static/img/default-image.png" alt="" class="img-fluid mx-auto d-block m-2"
@@ -38,12 +38,12 @@
                     <div class="row justify-content-center" id="photo-buttons">
                         <div class="d-flex mb-3">
                             <div class="p-2">
-                                <button id="hearts-button" class="btn" onclick="">
+                                <button id="hearts-button" class="btn">
                                     &#129293
                                 </button>
                             </div>
                             <div class="p-2">
-                                <button id="comments-button" class="btn" onclick="" data-bs-toggle="modal"
+                                <button id="comments-button" class="btn" data-bs-toggle="modal"
                                     data-bs-target="#comments-modal">
                                     &#128172
                                 </button>
@@ -95,13 +95,77 @@
                 </div>
             </div>
         </main>
+        <!-- Comments Modal -->
+        <div class="modal fade" id="comments-modal" tabindex="-1" aria-labelledby="commentsModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header justify-content-center">
+                        <h4 class="modal-title" id="commentsModalLabel">&#128172Comments</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <ol class="list-group list-group-flush my-1 overflow-y-auto" id="comments">
+                                <template id="comment-template">
+                                    <li class="list-group-item">
+                                        <div class="row justify-content-start">
+                                            <div class="col-2">
+                                                <img id="comment-user-photo" src="/static/img/default-profile.png"
+                                                    alt="" class="img-fluid img-thumbnail">
+                                            </div>
+                                            <div class="col">
+                                                <h5 id="comment-name">Username</h5>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex">
+                                            <div class="flex-grow-1">
+                                                <p id="comment-content">Comment</p>
+                                            </div>
+                                            <div>
+                                                <button id="comment-trash" class="btn">
+                                                    &#128465
+                                                </button>
+                                            </div>
+                                            <div>
+                                                <button id="comment-heart" class="btn">
+                                                    &#128077
+                                                </button>
+                                            </div>
+                                            <div class="ms-3 pt-2">
+                                                <p id="comment-hearts">0</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </template>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-top border-black">
+                        <form class="row">
+                            <div class="col-1">
+                                <label for="write-comment" class="col-form-label">&#128172</label>
+                            </div>
+                            <div class="col-9">
+                                <input type="text" name="write-comment" class="form-control border-dark"
+                                    placeholder="Write your message...">
+                            </div>
+                            <div class="col-2">
+                                <button type="submit" class="btn" name="submit-comment">
+                                    &#128284
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- Bootstrap import -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
     <!-- JS import-->
-    <script src="/static/js/event.js" type="module"></script>
+    <script src="/static/js/eventpage.js" type="module"></script>
 
 </body>
 
