@@ -1,4 +1,5 @@
 # List for what It's still missing in the project
+- [ ] Fix partylinker.live query that work on local
 - [ ] Cool graphics
 - [ ] Cooments forms
 - [ ] Like button
