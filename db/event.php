@@ -57,21 +57,18 @@
             private $event_id;
             private $username;
             private $profile_photo;
-            private $partecipating;
 
-            public function __construct($event_id = null, $username = null, $profile_photo = null, $partecipating = null) {
+            public function __construct($event_id = null, $username = null, $profile_photo = null) {
                 $this->event_id = $event_id;
                 $this->username = $username;
                 $this->profile_photo = $profile_photo;
-                $this->partecipating = $partecipating;
             }
 
             public function jsonSerialize() {
                 return [
                     "event_id" => $this->event_id,
                     "username" => $this->username,
-                    "profile_photo" => $this->profile_photo,
-                    "partecipating" => $this->partecipating
+                    "profile_photo" => $this->profile_photo
                 ];
             }
 
@@ -134,7 +131,7 @@
                 if ($result->num_rows > 0) {
                     for ($i = 0; $i < $result->num_rows; $i++) {
                         $row = $result->fetch_array();
-                        $partecipation = new DBPartecipation($row["event_id"], $row["username"], $row["profile_photo"], $row["username"] == $username);
+                        $partecipation = new DBPartecipation($row["event_id"], $row["username"], $row["profile_photo"]);
                         array_push($partecipations, $partecipation);
                     }
                 }
