@@ -129,7 +129,7 @@ async function showModalPost(template, modal, post_id, event_id, user_photo, use
     clone.querySelector("#post-likes").innerHTML = likes;
     clone.querySelector("#post-description").innerHTML = description;
     if (event) {
-        clone.querySelector("#partecipants-button").onclick = function () { showPartecipations(event_id); }
+        clone.querySelector("#partecipants-button").addEventListener("click", function () { showPartecipations(event_id); });
         clone.querySelector("#partecipants-button").classList.remove("invisible");
         addEventDescription(clone, await loadEvent(event_id));
     }
