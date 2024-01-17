@@ -13,21 +13,21 @@ async function loadEvent(event_id) {
 }
 
 export async function addNewPost(template, feed, post_id, event_id, user_photo, username,
-    image, description, hearts, event, hearted) {
+    image, description, likes, event, liked) {
     let clone = document.importNode(template.content, true);
     clone.querySelector("#post-id").setAttribute("name", post_id);
     clone.querySelector("#post-user-photo").src = "/static/img/uploads/" + user_photo;
     clone.querySelector("#post-name").innerHTML = username;
     clone.querySelector("#post-photo").src = "/static/img/uploads/" + image;
-    const heartButton = clone.querySelector("#hearts-button");
-    if (hearted) {
-        heartButton.addEventListener("click", function() { removeHeart(post_id, 'post'); });
-        heartButton.innerHTML = "&#10084";
+    const likeButton = clone.querySelector("#likes-button");
+    if (liked) {
+        likeButton.addEventListener("click", function() { removelike(post_id, 'post'); });
+        likeButton.innerHTML = "&#10084";
     } else {
-        heartButton.addEventListener("click", function() { addHeart(post_id, 'post'); });
+        likeButton.addEventListener("click", function() { addlike(post_id, 'post'); });
     }
     clone.querySelector("#comments-button").addEventListener("click", function() { showComments(post_id, username); });
-    clone.querySelector("#post-hearts").innerHTML = hearts;
+    clone.querySelector("#post-likes").innerHTML = likes;
     clone.querySelector("#post-description").innerHTML = description;
     if (event) {
         clone.querySelector("#partecipants-button").addEventListener("click", function() { showPartecipations(event_id); });
@@ -50,15 +50,15 @@ function addEventDescription(post, event) {
     post.appendChild(clone);
 }
 
-async function addHeart(heart_id, type) {
-    heart(heart_id, type, "/user/upload_heart.php", 1);
+async function addlike(like_id, type) {
+    like(like_id, type, "/user/upload_like.php", 1);
 }
 
-async function removeHeart(heart_id, type) {
-    heart(heart_id, type, "/user/remove_heart.php", -1);
+async function removelike(like_id, type) {
+    like(like_id, type, "/user/remove_like.php", -1);
 }
 
-async function heart(heart_id, type, request, addOrRemove) {
+async function like(like_id, type, request, addOrRemove) {
     await fetch(request_path + request, {
         method: "POST",
         credentials: "include",
@@ -66,37 +66,37 @@ async function heart(heart_id, type, request, addOrRemove) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            "heart_id": heart_id,
+            "like_id": like_id,
             "type": type
         })
     });
-    let hearts;
-    let heartButton;
-    const element = document.getElementsByName(heart_id)[0];
+    let likes;
+    let likeButton;
+    const element = document.getElementsByName(like_id)[0];
     switch (type) {
         case 'post':
-            hearts = element.querySelector("#post-hearts");
-            heartButton = element.querySelector("#hearts-button");
+            likes = element.querySelector("#post-likes");
+            likeButton = element.querySelector("#likes-button");
             break;
         case 'comment':
-            hearts = element.querySelector("#comment-hearts");
-            heartButton = element.querySelector("#comment-heart-bt");
+            likes = element.querySelector("#comment-likes");
+            likeButton = element.querySelector("#comment-like-bt");
             break;
     }
-    hearts.innerHTML = parseInt(hearts.innerHTML) + addOrRemove;
+    likes.innerHTML = parseInt(likes.innerHTML) + addOrRemove;
     let addFun;
     let removeFun;
     if (addOrRemove == 1) {
-        heartButton.innerHTML = "&#10084";
-        addFun = function() { removeHeart(heart_id, type); };
-        removeFun = function() { addHeart(heart_id, type); };
+        likeButton.innerHTML = "&#10084";
+        addFun = function() { removelike(like_id, type); };
+        removeFun = function() { addlike(like_id, type); };
     } else {
-        heartButton.innerHTML = "&#129293";
-        addFun = function() { addHeart(heart_id, type); };
-        removeFun = function() { removeHeart(heart_id, type); };
+        likeButton.innerHTML = "&#129293";
+        addFun = function() { addlike(like_id, type); };
+        removeFun = function() { removelike(like_id, type); };
     }
-    heartButton.removeEventListener("click", removeFun);
-    heartButton.addEventListener("click", addFun);
+    likeButton.removeEventListener("click", removeFun);
+    likeButton.addEventListener("click", addFun);
 }
 
 async function submitComment(post_id, content) {
@@ -191,14 +191,14 @@ export async function showComments(post_id, poster) {
             clone.querySelector("#comment-trash").classList.remove("invisible");
             clone.querySelector("#comment-trash").addEventListener("click", function() { removeComment(comment.comment_id); })
         }
-        const heartButton = clone.querySelector("#comment-heart-bt");
-        if (comment.hearted) {
-            heartButton.addEventListener("click", function() { removeHeart(comment.comment_id, 'comment'); });
-            heartButton.innerHTML = "&#10084";
+        const likeButton = clone.querySelector("#comment-like-bt");
+        if (comment.liked) {
+            likeButton.addEventListener("click", function() { removelike(comment.comment_id, 'comment'); });
+            likeButton.innerHTML = "&#10084";
         } else {
-            heartButton.addEventListener("click", function() { addHeart(comment.comment_id, 'comment'); });
+            likeButton.addEventListener("click", function() { addlike(comment.comment_id, 'comment'); });
         }
-        clone.querySelector("#comment-hearts").innerHTML = comment.hearts;
+        clone.querySelector("#comment-likes").innerHTML = comment.likes;
         comments.appendChild(clone);
     }
     const comment_button = document.querySelector("#submit-comment");

@@ -1,5 +1,5 @@
 import { request_path } from "/static/js/config.js";
-import { loadUserImage, heartPost, showComments, showPartecipations } from "/static/js/utils.js";
+import { loadUserImage, likePost, showComments, showPartecipations } from "/static/js/utils.js";
 
 const postButton = document.getElementById("buttons").getElementsByTagName("div").item(0);
 const eventButton = document.getElementById("buttons").getElementsByTagName("div").item(1);
@@ -79,7 +79,7 @@ function removeAll() {
 function openModal(post) {
     console.log(post);
     const modal = document.getElementById("post-modal");
-    showModalPost(modal, post.id, post.event_id, post.user_photo, post.username, post.image, post.description, post.hearts, post.event_post);
+    showModalPost(modal, post.id, post.event_id, post.user_photo, post.username, post.image, post.description, post.likes, post.event_post);
 }
 
 async function showPhotos(type) {
@@ -127,13 +127,13 @@ async function showProfileInfos() {
 }
 
 async function showModalPost(modal, post_id, event_id, user_photo, username,
-    image, description, hearts, event) {
+    image, description, likes, event) {
     document.getElementById("post-user-photo").src = "/static/img/uploads/" + await loadUserImage(username);
     document.getElementById("post-name").innerHTML = username;
     document.getElementById("post-photo").src = "/static/img/uploads/" + image;
-    document.getElementById("hearts-button").addEventListener("click", function () { heartPost(post_id); });
+    document.getElementById("likes-button").addEventListener("click", function () { likePost(post_id); });
     document.getElementById("comments-button").addEventListener("click", function () { showComments(post_id); })
-    document.getElementById("post-hearts").innerHTML = hearts;
+    document.getElementById("post-likes").innerHTML = likes;
     document.getElementById("post-description").innerHTML = description;
     if (event) {
         document.getElementById("post-photo").addEventListener("click", function () { window.location.replace(request_path + "/event.html?id=" + post_id); });

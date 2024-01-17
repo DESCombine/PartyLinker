@@ -12,10 +12,10 @@
             private $posted;
             private $likes;
             private $event_post;
-            private $likeed;
+            private $liked;
 
             public function __construct($post_id = null, $event_id = null, $username = null, $image = null, 
-                    $description = null, $posted = null, $likes = null, $event_post = null, $likeed = null) {
+                    $description = null, $posted = null, $likes = null, $event_post = null, $liked = null) {
                 $this->post_id = $post_id;
                 $this->event_id = $event_id;
                 $this->username = $username;
@@ -24,7 +24,7 @@
                 $this->posted = $posted;
                 $this->likes = $likes;
                 $this->event_post = $event_post;
-                $this->likeed = $likeed;
+                $this->liked = $liked;
             }
 
             public function jsonSerialize() {
@@ -37,7 +37,7 @@
                     "posted" => $this->posted,
                     "likes" => $this->likes,
                     "event_post" => $this->event_post,
-                    "likeed" => $this->likeed
+                    "liked" => $this->liked
                 ];
             }
 
@@ -60,17 +60,17 @@
             private $profile_photo;
             private $content;
             private $likes;
-            private $likeed;
+            private $liked;
 
             public function __construct($comment_id = null, $post_id = null, $username = null, 
-                    $profile_photo = null, $content = null, $likes = null, $likeed = null) {
+                    $profile_photo = null, $content = null, $likes = null, $liked = null) {
                 $this->comment_id = $comment_id;
                 $this->post_id = $post_id;
                 $this->username = $username;
                 $this->profile_photo = $profile_photo;
                 $this->content = $content;
                 $this->likes = $likes;
-                $this->likeed = $likeed;
+                $this->liked = $liked;
             }
 
             public function jsonSerialize() {
@@ -81,7 +81,7 @@
                     "profile_photo" => $this->profile_photo,
                     "content" => $this->content,
                     "likes" => $this->likes,
-                    "likeed" => $this->likeed
+                    "liked" => $this->liked
                 ];
             }
 
@@ -95,55 +95,70 @@
             }
         }
 
-        class DBlike implements \DBTable {
-            private $like_id;
+        class DBPostLike implements \DBTable {
+            private $post_id;
             private $username;
 
-            public function __construct($like_id = null, $username = null) {
-                $this->like_id = $like_id;
+            public function __construct($post_id = null, $username = null) {
+                $this->post_id = $post_id;
                 $this->username = $username;
             }
 
             public function jsonSerialize() {
                 return [
-                    "like_id" => $this->like_id,
+                    "post_id" => $this->post_id,
                     "username" => $this->username
                 ];
             }
 
-            public function db_serialize($driver, $type) {
-                $sql = "INSERT INTO";
-                switch ($type) {
-                    case "post":
-                        $sql = $sql . " post_like (post_id, username) VALUES (?, ?)";
-                        break;
-                    case "comment":
-                        $sql = $sql . " comment_like (comment_id, username) VALUES (?, ?)";
-                        break;
-                    default:
-                        throw new \Exception("Invalid type: " . $type);
-                }
+            public function db_serialize($driver) {
+                $sql = "INSERT INTO post_like (post_id, username) VALUES (?, ?)";
                 try {
-                    $driver->query($sql, $this->like_id, $this->username);
+                    $driver->query($sql, $this->post_id, $this->username);
                 } catch (\Exception $e) {
                     throw new \Exception("Error while querying the database: " . $e->getMessage());
                 }
             }
 
-            public function db_delete($driver, $type) {
-                $sql = "DELETE FROM";
-                switch ($type) {
-                    case "post":
-                        $sql = $sql . " post_like WHERE post_id = ? AND username = ?";
-                        break;
-                    case "comment":
-                        $sql = $sql . " comment_like WHERE comment_id = ? AND username = ?";
-                        break;
-                    default:
-                        throw new \Exception("Invalid type: " . $type);
-                }
+            public function db_delete($driver) {
+                $sql = "DELETE FROM post_like WHERE post_id = ? AND username = ?";
                 try {
-                    $driver->query($sql, $this->like_id, $this->username);
+                    $driver->query($sql, $this->post_id, $this->username);
+                } catch (\Exception $e) {
+                    throw new \Exception("Error while querying the database: " . $e->getMessage());
+                }
+            }
+        }
+
+        class DBCommentLike implements \DBTable {
+            private $comment_id;
+            private $username;
+
+            public function __construct($comment_id = null, $username = null) {
+                $this->comment_id = $comment_id;
+                $this->username = $username;
+            }
+
+            public function jsonSerialize() {
+                return [
+                    "comment_id" => $this->comment_id,
+                    "username" => $this->username
+                ];
+            }
+
+            public function db_serialize($driver) {
+                $sql = "INSERT INTO comment_like (comment_id, username) VALUES (?, ?)";
+                try {
+                    $driver->query($sql, $this->comment_id, $this->username);
+                } catch (\Exception $e) {
+                    throw new \Exception("Error while querying the database: " . $e->getMessage());
+                }
+            }
+
+            public function db_delete($driver) {
+                $sql = "DELETE FROM comment_like WHERE comment_id = ? AND username = ?";
+                try {
+                    $driver->query($sql, $this->comment_id, $this->username);
                 } catch (\Exception $e) {
                     throw new \Exception("Error while querying the database: " . $e->getMessage());
                 }
@@ -203,14 +218,14 @@
                 if ($result->num_rows > 0) {
                     for($i = 0; $i < $result->num_rows; $i++){
                         $row = $result->fetch_array();
-                        $sql = "SELECT * FROM post_like WHERE comment_id = ? AND username = ?";
+                        $sql = "SELECT * FROM post_like WHERE post_id = ? AND username = ?";
                         try {
-                            $likeed = $driver->query($sql, $row["post_id"], $username)->num_rows > 0;
+                            $liked = $driver->query($sql, $row["post_id"], $username)->num_rows > 0;
                         } catch (\Exception $e) {
                             throw new \Exception("Error while querying the database: " . $e->getMessage());
                         }
                         $post = new DBPost($row["post_id"], $row["event_id"], $row["username"], $row["image"], 
-                                $row["description"], $row["posted"], $row["likes"], $row["event_post"], $likeed);
+                                $row["description"], $row["posted"], $row["likes"], $row["event_post"], $liked);
                         array_push($posts, $post);
                     }
                 }
@@ -231,14 +246,14 @@
                 if ($result->num_rows > 0) {
                     for($i = 0; $i < $result->num_rows; $i++){
                         $row = $result->fetch_array();
-                        $sql = "SELECT * FROM comment_like WHERE post_id = ? AND username = ?";
+                        $sql = "SELECT * FROM comment_like WHERE comment_id = ? AND username = ?";
                         try {
-                            $likeed = $driver->query($sql, $row["comment_id"], $username)->num_rows > 0;
+                            $liked = $driver->query($sql, $row["comment_id"], $username)->num_rows > 0;
                         } catch (\Exception $e) {
                             throw new \Exception("Error while querying the database: " . $e->getMessage());
                         }
                         $comment = new DBComment($row["comment_id"], $row["post_id"], $row["username"], 
-                                $row["profile_photo"], $row["content"], $row["likes"], $likeed);
+                                $row["profile_photo"], $row["content"], $row["likes"], $liked);
                         array_push($comments, $comment);
                     }
                 }
@@ -255,15 +270,17 @@
             }
 
             public static function insert_like(\DBDriver $driver, $like_id, $username, $type) {
-                $like = new DBlike($like_id, $username);
-                $like->db_serialize($driver, $type);
                 $sql = "UPDATE";
                 try {
                     switch ($type) {
                         case "post":
+                            $like = new DBPostLike($like_id, $username);
+                            $like->db_serialize($driver);
                             $sql = $sql . " post SET likes = likes + 1 WHERE post_id = ?";
                             break;
                         case "comment":
+                            $like = new DBCommentLike($like_id, $username);
+                            $like->db_serialize($driver);
                             $sql = $sql . " comment SET likes = likes + 1 WHERE comment_id = ?";
                             break;
                         default:
@@ -276,15 +293,17 @@
             }
 
             public static function delete_like(\DBDriver $driver, $like_id, $username, $type) {
-                $like = new DBlike($like_id, $username);
-                $like->db_delete($driver, $type);
                 $sql = "UPDATE";
                 try {
                     switch ($type) {
                         case "post":
+                            $like = new DBPostLike($like_id, $username);
+                            $like->db_delete($driver);
                             $sql = $sql . " post SET likes = likes - 1 WHERE post_id = ?";
                             break;
                         case "comment":
+                            $like = new DBCommentLike($like_id, $username);
+                            $like->db_delete($driver);
                             $sql = $sql . " comment SET likes = likes - 1 WHERE comment_id = ?";
                             break;
                         default:

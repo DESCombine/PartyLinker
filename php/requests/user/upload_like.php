@@ -8,9 +8,9 @@
     global $username;
     try {
         $request = json_decode(file_get_contents('php://input'), true);
-        $heart = $request["heart_id"];
+        $like = $request["like_id"];
         $type = $request["type"];
-        PostUtility::delete_heart($driver, $heart, $username, $type);
+        PostUtility::insert_like($driver, $like, $username, $type);
     } catch (\Exception $e) {
         http_response_code(500);
         echo json_encode(array("message" => "Error while liking post: " . $e->getMessage()));
