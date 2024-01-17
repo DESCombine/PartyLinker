@@ -19,6 +19,7 @@ main #modifyIcon {
     padding-left: 0px !important;
 }
 
-.modal-header:hover {
-    background-color: #f1f1f1 !important;
+#post-user-photo {
+    border-radius: 50% !important;
+    width: 50% !important;
 }

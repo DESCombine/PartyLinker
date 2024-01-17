@@ -119,7 +119,7 @@ async function showProfileInfos() {
 
 async function showModalPost(modal, post_id, event_id, user_photo, username,
     image, description, likes, event) {
-    document.getElementById("post-user-photo").src = "/static/img/uploads/" + user_photo;
+    document.getElementById("post-user-photo").src = "/static/img/uploads/" + await loadUserImage(username);
     document.getElementById("post-name").innerHTML = username;
     document.getElementById("post-photo").src = "/static/img/uploads/" + image;
     document.getElementById("likes-button").addEventListener("click", function () { likePost(post_id); });
