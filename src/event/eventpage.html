@@ -30,15 +30,17 @@
         <main>
             <div data-bs-spy="scroll" data-bs-target="#navbar" data-bs-smooth-scroll="true" class="scrollspy-example-2"
                 tabindex="0">
+                <h1>Poster</h1>
                 <div class="container-fluid pt-0 overflow-hidden" id="poster">
                     <div class="row justify-content-center" id="poster-photo">
+
                         <img src="/static/img/default-image.png" alt="" class="img-fluid mx-auto d-block m-2"
                             id="photo-id">
                     </div>
                     <div class="row justify-content-center" id="photo-buttons">
                         <div class="d-flex mb-3">
                             <div class="p-2">
-                                <button id="hearts-button" class="btn">
+                                <button id="likes-button" class="btn">
                                     &#129293
                                 </button>
                             </div>
@@ -63,7 +65,9 @@
                         </div>
                     </div>
                 </div>
+                <h1>Photos</h1>
                 <div class="row justify-content-center" id="photos" data-bs-toggle="modal" data-bs-target="#post-modal">
+
                     <template id="template-photos">
                         <div class="col-4">
                             <img src="/static/img/default-image.png" alt="" class="img-fluid mx-auto d-block m-2"
@@ -71,12 +75,18 @@
                         </div>
                     </template>
                 </div>
+                <h1>Partecipants</h1>
                 <div class="container-fluid pt-0 overflow-hidden" id="people">
+
                     <template id="template-partecipants">
                         <div class="row justify-content-center" id="partecipant-photo">
-                            <img src="/static/img/default-profile.png" alt="" class="img-fluid mx-auto d-block m-2"
-                                id="photo-id">
-                            <p>Default</p>
+                            <div class="col-3 text-center">
+                                <img src="/static/img/default-profile.png" alt="" class="img-fluid mx-auto d-block m-2"
+                                    id="photo-id">
+                            </div>
+                            <div class="col-9">
+                                <p id="partecipant-name">Default</p>
+                            </div>
                         </div>
                     </template>
                 </div>
@@ -109,7 +119,7 @@
                                 </div>
                                 <ol class="list-group list-group-flush list-group-horizontal">
                                     <li class="list-group-item">
-                                        <button id="hearts-button" class="btn" onclick="">
+                                        <button id="likes-button" class="btn" onclick="">
                                             &#129293
                                         </button>
                                     </li>
@@ -126,7 +136,7 @@
                                         </button>
                                     </li>
                                     <li class="list-group-item ms-5 pt-3">
-                                        <p id="post-hearts">0</p>
+                                        <p id="post-likes">0</p>
                                     </li>
                                 </ol>
                             </li>
@@ -196,12 +206,12 @@
                                                 </button>
                                             </div>
                                             <div>
-                                                <button id="comment-heart" class="btn">
+                                                <button id="comment-like" class="btn">
                                                     &#128077
                                                 </button>
                                             </div>
                                             <div class="ms-3 pt-2">
-                                                <p id="comment-hearts">0</p>
+                                                <p id="comment-likes">0</p>
                                             </div>
                                         </div>
                                     </li>

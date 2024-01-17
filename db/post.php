@@ -195,7 +195,7 @@
                 for($i = 0; $i < $result->num_rows; $i++){
                     $row = $result->fetch_array();
                     $post = new DBPost($row["post_id"], $row["event_id"], $row["username"], $row["image"], 
-                            $row["description"], $row["posted"], $row["hearts"], $row["event_post"]);
+                            $row["description"], $row["posted"], $row["likes"], $row["event_post"]);
                     array_push($posts, $post);
                 }
                 return $posts;
@@ -213,7 +213,7 @@
                 }
                 $row = $result->fetch_assoc();
                 return new DBPost($row["post_id"], $row["event_id"], $row["username"], $row["image"], 
-                        $row["description"], $row["posted"], $row["hearts"], $row["event_post"]);
+                        $row["description"], $row["posted"], $row["likes"], $row["event_post"]);
             }
 
             public static function from_db_with_username(\DBDriver $driver, $username) {

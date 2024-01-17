@@ -1,5 +1,5 @@
 import { request_path } from "/static/js/config.js";
-import { loadEvent, heartPost, showComments, loadPartecipations } from "/static/js/utils.js";
+import { loadEvent, showComments, loadPartecipations, showPartecipations } from "/static/js/utils.js";
 
 async function loadPoster() {
     const response = await fetch(request_path + "/user/load_event_poster.php?event=" + "12345");
@@ -16,17 +16,17 @@ async function loadPhotos() {
 function openModal(post) {
     console.log(post);
     const modal = document.getElementById("post-modal");
-    showModalPost(modal, post.id, post.event_id, post.user_photo, post.username, post.image, post.description, post.hearts, post.event_post);
+    showModalPost(modal, post.id, post.event_id, post.user_photo, post.username, post.image, post.description, post.likes, post.event_post);
 }
 
 async function showModalPost(modal, post_id, event_id, user_photo, username,
-    image, description, hearts, event) {
+    image, description, likes, event) {
     document.getElementById("post-user-photo").src = "/static/img/uploads/" + await loadUserImage(username);
     document.getElementById("post-name").innerHTML = username;
     document.getElementById("post-photo").src = "/static/img/uploads/" + image;
-    document.getElementById("hearts-button").addEventListener("click", function () { heartPost(post_id); });
+    document.getElementById("likes-button").addEventListener("click", function () { addLike(post_id); });
     document.getElementById("comments-button").addEventListener("click", function () { showComments(post_id); })
-    document.getElementById("post-hearts").innerHTML = hearts;
+    document.getElementById("post-likes").innerHTML = likes;
     document.getElementById("post-description").innerHTML = description;
     if (event) {
         document.getElementById("post-photo").addEventListener("click", function () { window.location.replace(request_path + "/event.html"/*?id=" + post_id*/); });
@@ -41,7 +41,7 @@ async function showContent() {
     // poster
     let post = await loadPoster();
     document.getElementById("photo-id").src = "/static/img/uploads/" + post.image;
-    document.getElementById("hearts-button").addEventListener("click", function () { heartPost(post_id); });
+    document.getElementById("likes-button").addEventListener("click", function () { likePost(post_id); });
     document.getElementById("comments-button").addEventListener("click", function () { showComments(post_id); })
     let event = await loadEvent(12345);
     document.getElementById("event-name").innerHTML = "Title: " + event.name;
@@ -89,7 +89,7 @@ async function showContent() {
     // partecipants
     let partecipants = await loadPartecipations("12345");
     console.log(partecipants);
-    let partecipantsDiv = document.getElementById("partecipants");
+    let partecipantsDiv = document.getElementById("people");
     template = document.getElementById("template-partecipants");
     if (partecipants.length == 0) {
         partecipantsDiv.innerHTML = "No partecipants to show";

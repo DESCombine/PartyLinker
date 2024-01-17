@@ -7,7 +7,7 @@ header {
     background-color: white !important;
 }
 
-#partecipant-photo {
+#partecipant-photo #photo-id {
     border-radius: 50% !important;
     width: 50% !important;
 }
