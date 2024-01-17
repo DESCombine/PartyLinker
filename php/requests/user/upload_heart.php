@@ -5,10 +5,12 @@
     require_once(getenv("PL_ROOTDIRECTORY")."db/post.php");
 
     global $driver; 
-    global $user;
+    global $username;
     try {
-        $post = $_POST["post_id"];
-        PostUtility::heart_post($driver, $post, $username);
+        $request = json_decode(file_get_contents('php://input'), true);
+        $heart = $request["heart_id"];
+        $type = $request["type"];
+        PostUtility::insert_heart($driver, $heart, $username, $type);
     } catch (\Exception $e) {
         http_response_code(500);
         echo json_encode(array("message" => "Error while liking post: " . $e->getMessage()));

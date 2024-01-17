@@ -122,7 +122,7 @@
                             <div class="container-fluid">
                                 <ol class="list-group list-group-flush my-1 overflow-y-auto" id="comments">
                                     <template id="comment-template">
-                                        <li class="list-group-item">
+                                        <li class="list-group-item"  id="comment-id">
                                             <div class="row justify-content-start">
                                                 <div class="col-2">
                                                     <img id="comment-user-photo" src="/static/img/default-profile.png" alt="" class="img-fluid img-thumbnail">
@@ -136,13 +136,13 @@
                                                     <p id="comment-content">Comment</p>
                                                 </div>
                                                 <div>
-                                                    <button id="comment-trash" class="btn">
+                                                    <button id="comment-trash" class="btn invisible">
                                                         &#128465
                                                     </button>
                                                 </div>
                                                 <div>
-                                                    <button id="comment-heart" class="btn">
-                                                        &#128077
+                                                    <button id="comment-heart-bt" class="btn">
+                                                        &#129293
                                                     </button>
                                                 </div>
                                                 <div class="ms-3 pt-2">
@@ -157,10 +157,10 @@
                         <div class="modal-footer border-top border-black">
                             <form class="row">
                                 <div class="col-1">
-                                    <label for="write-comment" class="col-form-label">&#128172</label>
+                                    <label for="comment-input" class="col-form-label">&#128172</label>
                                 </div>
                                 <div class="col-9">
-                                    <input type="text" name="write-comment" class="form-control border-dark" placeholder="Write your message...">
+                                    <input type="text" id="comment-input" name="comment-input" class="form-control border-dark" placeholder="Write your message...">
                                 </div>
                                 <div class="col-2">
                                     <button type="submit" class="btn" name="submit-comment">

@@ -216,23 +216,56 @@
                 return $comments;
             }
 
-            public static function heart_post(\DBDriver $driver, $post_id, $username) {
-                $heart = new DBHeart($post_id, $username);
-                $heart->db_serialize($driver);
-                $sql = "UPDATE post SET hearts = hearts + 1 WHERE post_id = ?";
+            public static function delete_comment(\DBDriver $driver, $comment_id) {
+                $sql = "DELETE FROM comment WHERE comment_id = ?";
                 try {
-                    $driver->query($sql, $post_id);
+                    $driver->query($sql, $comment_id);
                 } catch (\Exception $e) {
                     throw new \Exception("Error while querying the database: " . $e->getMessage());
                 }
             }
 
-            public static function heart_comment(\DBDriver $driver, $comment_id, $username) {
-                $heart = new DBHeart($comment_id, $username);
+            public static function insert_heart(\DBDriver $driver, $heart_id, $username, $type) {
+                $heart = new DBHeart($heart_id, $username);
                 $heart->db_serialize($driver);
-                $sql = "UPDATE comment SET hearts = hearts + 1 WHERE comment_id = ?";
+                $sql = "UPDATE";
                 try {
-                    $driver->query($sql, $comment_id);
+                    switch ($type) {
+                        case "post":
+                            $sql = $sql . " post SET hearts = hearts + 1 WHERE post_id = ?";
+                            break;
+                        case "comment":
+                            $sql = $sql . " comment SET hearts = hearts + 1 WHERE comment_id = ?";
+                            break;
+                        default:
+                            throw new \Exception("Invalid type: " . $type);
+                    }
+                    $driver->query($sql, $heart_id);
+                } catch (\Exception $e) {
+                    throw new \Exception("Error while querying the database: " . $e->getMessage());
+                }
+            }
+
+            public static function delete_heart(\DBDriver $driver, $heart_id, $username, $type) {
+                $sql = "DELETE FROM heart WHERE heart_id = ? AND username = ?";
+                try {
+                    $driver->query($sql, $heart_id, $username);
+                } catch (\Exception $e) {
+                    throw new \Exception("Error while querying the database: " . $e->getMessage());
+                }
+                $sql = "UPDATE";
+                try {
+                    switch ($type) {
+                        case "post":
+                            $sql = $sql . " post SET hearts = hearts - 1 WHERE post_id = ?";
+                            break;
+                        case "comment":
+                            $sql = $sql . " comment SET hearts = hearts - 1 WHERE comment_id = ?";
+                            break;
+                        default:
+                            throw new \Exception("Invalid type: " . $type);
+                    }
+                    $driver->query($sql, $heart_id);
                 } catch (\Exception $e) {
                     throw new \Exception("Error while querying the database: " . $e->getMessage());
                 }
