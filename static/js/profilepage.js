@@ -68,7 +68,7 @@ function removeAll() {
 }
 
 function openModal(post) {
-    console.log(post);
+    //console.log(post);
     const modal = document.getElementById("post-modal");
     showModalPost(modal, post.id, post.event_id, post.user_photo, post.username, post.image, post.description, post.likes, post.event);
 }
@@ -87,7 +87,7 @@ async function showPhotos(type) {
         for (let photo_index = 0; photo_index < photos.length; photo_index++) {
             let clone = document.importNode(template.content, true);
             clone.querySelector("#photo-id").src = "/static/img/uploads/" + photo.image;
-            clone.querySelector("#photo-id").addEventListener("click", function () { openModal(photos[photo_index]); });
+            clone.querySelector("#photo-id").addEventListener("click", function () { openModal(photo); });
             photo = photos[photo_index];
             photosDiv.appendChild(clone);
             dim++;
