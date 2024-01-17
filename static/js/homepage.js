@@ -7,7 +7,7 @@ async function loadOnlineUsers() {
         headers: {
             "Content-Type": "application/json"
         },
-        include: "credentials"
+        credentials: "include"
     });
     const users = await response.json();
     return users;
@@ -45,7 +45,7 @@ async function showFeed() {
     for (let i = 0; i < posts.length; i++) {
         let post = posts[i];
         addNewPost(template, feed, post.post_id, post.event_id, await loadUserImage(post.username), 
-                post.username, post.image, post.description, post.likes, post.event_post);
+                post.username, post.image, post.description, post.hearts, post.event_post, post.hearted);
     }
 }
 

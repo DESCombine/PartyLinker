@@ -6,32 +6,37 @@ export async function loadUserImage(user_id) {
     return image;
 }
 
-export async function loadEvent(event_id) {
+async function loadEvent(event_id) {
     const response = await fetch(request_path + "/user/load_event.php?event=" + event_id);
     const event = await response.json();
     return event;
 }
 
 export async function addNewPost(template, feed, post_id, event_id, user_photo, username,
-    image, description, likes, event) {
+    image, description, hearts, event, hearted) {
     let clone = document.importNode(template.content, true);
     clone.querySelector("#post-id").setAttribute("name", post_id);
     clone.querySelector("#post-user-photo").src = "/static/img/uploads/" + user_photo;
     clone.querySelector("#post-name").innerHTML = username;
     clone.querySelector("#post-photo").src = "/static/img/uploads/" + image;
-    clone.querySelector("#likes-button").onclick = function() { likePost(post_id); };
-    clone.querySelector("#comments-button").onclick = function() { showComments(post_id); }
-    clone.querySelector("#post-likes").innerHTML = likes;
+    const heartButton = clone.querySelector("#hearts-button");
+    heartButton.addEventListener("click", function() { heartPost(post_id); });
+    if (hearted) {
+        heartButton.innerHTML = "&#10084";
+        heartButton.disabled = true;
+    }
+    clone.querySelector("#comments-button").addEventListener("click", function() { showComments(post_id); });
+    clone.querySelector("#post-hearts").innerHTML = hearts;
     clone.querySelector("#post-description").innerHTML = description;
     if (event) {
-        clone.querySelector("#partecipants-button").onclick = function() { showPartecipations(event_id); }
+        clone.querySelector("#partecipants-button").addEventListener("click", function() { showPartecipations(event_id); });
         clone.querySelector("#partecipants-button").classList.remove("invisible");
         addEventDescription(clone, await loadEvent(event_id));
     }
     feed.appendChild(clone);
 }
 
-export function addEventDescription(post, event) {
+function addEventDescription(post, event) {
     let template = document.getElementById("description-template");
     let clone = document.importNode(template.content, true);
     clone.querySelector("#event-name").innerHTML = event.name;
@@ -44,51 +49,115 @@ export function addEventDescription(post, event) {
     post.appendChild(clone);
 }
 
-export async function likePost(post_id) {
-    const response = await fetch(request_path + "/user/like_post.php?post=" + post_id, {
-        method: "GET",
+async function heartPost(post_id) {
+    await fetch(request_path + "/user/upload_post_heart.php", {
+        method: "POST",
+        credentials: "include",
+        header: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            "post_id": post_id
+        })
     });
     const post = document.getElementsByName(post_id)[0];
-    const likes = post.querySelector("#post-likes");
-    likes.innerHTML = parseInt(likes.innerHTML) + 1;
+    const hearts = post.querySelector("#post-hearts");
+    hearts.innerHTML = parseInt(hearts.innerHTML) + 1;
+    const heartButton = post.querySelector("#hearts-button");
+    heartButton.innerHTML = "&#128172";
+    heartButton.disabled = true;
 }
 
-export async function loadComments(post_id) {
+async function postComment(post_id, content) {
+    await fetch(request_path + "/user/upload_comment.php", {
+        method: "POST",
+        credentials: "include",
+        header: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            "post_id": post_id,
+            "content": content
+        })
+    });
+}
+
+async function submitPartecipation(event_id) {
+    await fetch(request_path + "/user/upload_partecipation.php", {
+        method: "POST",
+        credentials: "include",
+        header: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            "event_id": event_id
+        })
+    });
+    document.querySelector("#submit-partecipation").disabled = true;
+    document.querySelector("#submit-busy").disabled = false;
+}
+
+async function submitBusy(event_id) {
+    await fetch(request_path + "/user/remove_partecipation.php", {
+        method: "POST",
+        credentials: "include",
+        header: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            "event_id": event_id
+        })
+    });
+    document.querySelector("#submit-partecipation").disabled = true;
+    document.querySelector("#submit-busy").disabled = false;
+}
+
+async function loadComments(post_id) {
     const response = await fetch(request_path + "/user/load_comments.php?post=" + post_id);
     const comments = await response.json();
     return comments;
 }
 
-export async function showComments(post_id) {
+async function showComments(post_id) {
     const comments = document.getElementById("comments");
     const comments_to_show = await loadComments(post_id);
     let template = document.getElementById("comment-template");
-    let clone = document.importNode(template.content, true);
     for (let i = 0; i < comments_to_show.length; i++) {
         let comment = comments_to_show[i];
-        clone.querySelector("#comment-user-photo").src = "/static/img/uploads/" + await loadUserImage(comment.username);
+        let clone = document.importNode(template.content, true);
+        clone.querySelector("#comment-user-photo").src = "/static/img/uploads/" + comment.profile_photo;
         clone.querySelector("#comment-name").textContent = comment.username;
         clone.querySelector("#comment-content").textContent = comment.content;
-        clone.querySelector("#comment-likes").innerHTML = comment.likes;
+        clone.querySelector("#comment-hearts").innerHTML = comment.hearts;
         comments.appendChild(clone);
     }
 }
 
-export async function loadPartecipations(event_id) {
+async function loadPartecipations(event_id) {
     const response = await fetch(request_path + "/user/load_partecipations.php?event=" + event_id);
     const partecipations = await response.json();
     return partecipations;
 }
 
-export async function showPartecipations(event_id) {
-    const partecipations = document.getElementById("partecipations");
+async function showPartecipations(event_id) {
+    const partecipations = document.getElementById("partecipants");
     const partecipations_list = await loadPartecipations(event_id);
-    let template = document.getElementById("partecipation-template");
-    let clone = document.importNode(template.content, true);
+    let template = document.getElementById("partecipants-template");
+    let isUserPartecipating = false;
     for (let i = 0; i < partecipations_list.length; i++) {
         let partecipation = partecipations_list[i];
-        clone.querySelector("#partecipation-user-photo").src = "/static/img/uploads/" + await loadUserImage(partecipation.partecipant);
-        clone.querySelector("#partecipation-name").textContent = partecipation.partecipant;
+        if (partecipation.current_user) {
+            isUserPartecipating = true;
+        }
+        let clone = document.importNode(template.content, true);
+        clone.querySelector("#partecipants-photo").src = "/static/img/uploads/" + partecipation.profile_photo;
+        clone.querySelector("#partecipants-name").textContent = partecipation.username;
         partecipations.appendChild(clone);
     }
+    const partecipants_button = document.querySelector("#submit-partecipation");
+    const busy_button = document.querySelector("#submit-busy");
+    partecipants_button.addEventListener("click", function() { submitPartecipation(event_id); });
+    busy_button.addEventListener("click", function() { submitBusy(event_id); });
+    partecipants_button.disabled = isUserPartecipating;
+    busy_button.disabled = !isUserPartecipating;
 }

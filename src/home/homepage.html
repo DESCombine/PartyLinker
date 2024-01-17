@@ -43,22 +43,22 @@
                                     </div>
                                     <ol class="list-group list-group-flush list-group-horizontal">
                                         <li class="list-group-item">
-                                            <button id="likes-button" class="btn" onclick="">
+                                            <button id="hearts-button" class="btn">
                                                 &#129293
                                             </button>
                                         </li>
                                         <li class="list-group-item">
-                                            <button id="comments-button" class="btn" onclick="" data-bs-toggle="modal" data-bs-target="#comments-modal">
+                                            <button id="comments-button" class="btn"  data-bs-toggle="modal" data-bs-target="#comments-modal">
                                                 &#128172
                                             </button>
                                         </li>
                                         <li class="list-group-item">
-                                            <button id="partecipants-button" class="btn invisible" onclick="" data-bs-toggle="modal" data-bs-target="#partecipants-modal">
+                                            <button id="partecipants-button" class="btn invisible"  data-bs-toggle="modal" data-bs-target="#partecipants-modal">
                                                 &#128111
                                             </button>
                                         </li>
                                         <li class="list-group-item ms-5 pt-3">
-                                            <p id="post-likes">0</p>
+                                            <p id="post-hearts">0</p>
                                         </li>
                                     </ol>
                                     <p id="post-description">Post description</p>
@@ -136,17 +136,17 @@
                                                     <p id="comment-content">Comment</p>
                                                 </div>
                                                 <div>
-                                                    <button id="comment-trash" class="btn" onclick="">
+                                                    <button id="comment-trash" class="btn">
                                                         &#128465
                                                     </button>
                                                 </div>
                                                 <div>
-                                                    <button id="comment-like" class="btn" onclick="">
+                                                    <button id="comment-heart" class="btn">
                                                         &#128077
                                                     </button>
                                                 </div>
                                                 <div class="ms-3 pt-2">
-                                                    <p id="comment-likes">0</p>
+                                                    <p id="comment-hearts">0</p>
                                                 </div>
                                             </div>
                                         </li>
@@ -182,14 +182,14 @@
                         <div class="modal-body">
                             <div class="container-fluid">
                                 <ul class="list-group list-group-flush my-1 overflow-y-auto" id="partecipants">
-                                    <template id="partecipant-template">
+                                    <template id="partecipants-template">
                                         <li class="list-group-item">
                                             <div class="row justify-content-start">
                                                 <div class="col-2">
-                                                    <img id="partecipant-user-photo" src="../static/img/default-profile.png" alt="" class="img-fluid img-thumbnail">
+                                                    <img id="partecipants-photo" src="/static/img/default-profile.png" alt="" class="img-fluid img-thumbnail">
                                                 </div>
                                                 <div class="col">
-                                                    <h5 id="partecipant-name">Username</h5>
+                                                    <h5 id="partecipants-name">Username</h5>
                                                 </div>
                                             </div>
                                         </li>
@@ -199,17 +199,13 @@
                         </div>
                         <div class="modal-footer border-top border-black">
                             <div class="container-fluid text-center">
-                                <div class="row">
-                                    <div class="col border border-dark mx-1">
-                                        <button id="sumbit-partecipantion" class="btn" onclick="">
-                                            Partecipate ;)
-                                        </button>
-                                    </div>
-                                    <div class="col border border-dark mx-1">
-                                        <button id="submit-busy" class="btn" onclick="">
-                                            I'm busy :(
-                                        </button>
-                                    </div>
+                                <div class="d-inline-flex gap-2">
+                                    <button id="submit-partecipation" class="btn btn-secondary me-3">
+                                        Partecipate ;)
+                                    </button>
+                                    <button id="submit-busy" class="btn btn-secondary ms-3 px-4"  disabled>
+                                        I'm busy :(
+                                    </button>
                                 </div>
                             </div>
                         </div>

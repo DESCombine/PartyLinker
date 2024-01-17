@@ -31,7 +31,7 @@
             'expires' => time() + 86400 * 365,
             'path' => '/',
             'secure' => true,
-            //'httponly' => true,
+            'httponly' => true,
             'samesite' => 'None',
         ]);
     } else {
