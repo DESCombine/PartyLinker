@@ -6,7 +6,7 @@ export async function loadUserImage(user_id) {
     return image;
 }
 
-async function loadEvent(event_id) {
+export async function loadEvent(event_id) {
     const response = await fetch(request_path + "/user/load_event.php?event=" + event_id);
     const event = await response.json();
     return event;

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <title>PartyLinker - Event</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/static/css/event.css" />
+    <!-- Font Renner import -->
+    <link rel="stylesheet" href="https://indestructibletype-fonthosting.github.io/renner.css" type="text/css"
+        charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap import -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+
+<body>
+    <header>
+        <div class="row">
+            <nav id="navbar" class="fixed-top h-100 flex-row align-items-stretch pe-4 border-end">
+                <nav class="nav nav-pills nav-fill flex-row">
+                    <a class="nav-link" href="#poster">Item 1</a>
+                    <a class="nav-link" href="#photos">Item 2</a>
+                    <a class="nav-link" href="#people">Item 3</a>
+                </nav>
+            </nav>
+        </div>
+    </header>
+    <div class="container-fluid pt-0 overflow-hidden">
+        <main>
+            <div data-bs-spy="scroll" data-bs-target="#navbar" data-bs-smooth-scroll="true"
+                class="scrollspy-example-2" tabindex="0">
+                <div class="container-fluid pt-0 overflow-hidden" id="poster">
+                    <div class="row justify-content-center" id="poster-photo">
+                        <img src="/static/img/default-image.png" alt="" class="img-fluid mx-auto d-block m-2"
+                            id="photo-id">
+                    </div>
+                    <div class="row justify-content-center" id="photo-buttons">
+                        <div class="d-flex mb-3">
+                            <div class="p-2">
+                                <button id="hearts-button" class="btn" onclick="">
+                                    &#129293
+                                </button>
+                            </div>
+                            <div class="p-2">
+                                <button id="comments-button" class="btn" onclick="" data-bs-toggle="modal"
+                                    data-bs-target="#comments-modal">
+                                    &#128172
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center" id="photo-description">
+                        <div class="col-10">
+                            <ul>
+                                <li>
+                                    <p id="event-name">Default</p>
+                                </li>
+                                <li>
+                                    <p id="event-day">Default</p>
+                                </li>
+                                <li>
+                                    <p id="event-time">Default</p>
+                                </li>
+                                <li>
+                                    <p id="event-vip">Default</p>
+                                </li>
+                                <li>
+                                    <p id="event-maxpeople">Default</p>
+                                </li>
+                                <li>
+                                    <p id="event-price">Default</p>
+                                </li>
+                                <li>
+                                    <p id="event-min-age">Default</p>
+                                </li>
+                                <li>
+                                    <p id="event-description">Default</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid pt-0 overflow-hidden" id="photos">
+                    <div class="row justify-content-center" id="photo">
+                        <img src="/static/img/default-image.png" alt="" class="img-fluid mx-auto d-block m-2"
+                            id="photo-id">
+                    </div>
+                </div>
+                <div class="container-fluid pt-0 overflow-hidden" id="people">
+                    <div class="row justify-content-center" id="photo">
+                        <img src="/static/img/default-image.png" alt="" class="img-fluid mx-auto d-block m-2"
+                            id="photo-id">
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <!-- Bootstrap import -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <!-- JS import-->
+    <script src="/static/js/event.js" type="module"></script>
+
+</body>
+
+</html>
