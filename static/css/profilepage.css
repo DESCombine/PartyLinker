@@ -19,6 +19,7 @@ main #modifyIcon {
     padding-left: 0px !important;
 }
 
-main #post-modal {
-    background-color: #ad3737 !important;
+#post-user-photo {
+    border-radius: 50% !important;
+    width: 50% !important;
 }
