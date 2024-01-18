@@ -12,32 +12,7 @@ export async function loadEvent(event_id) {
     return event;
 }
 
-export async function addNewPost(template, feed, post_id, event_id, user_photo, username,
-    image, description, likes, event, liked) {
-    let clone = document.importNode(template.content, true);
-    clone.querySelector("#post-id").setAttribute("name", post_id);
-    clone.querySelector("#post-user-photo").src = "/static/img/uploads/" + user_photo;
-    clone.querySelector("#post-name").innerHTML = username;
-    clone.querySelector("#post-photo").src = "/static/img/uploads/" + image;
-    const likeButton = clone.querySelector("#likes-button");
-    if (liked) {
-        likeButton.addEventListener("click", function() { removelike(post_id, 'post'); });
-        likeButton.innerHTML = "&#10084";
-    } else {
-        likeButton.addEventListener("click", function() { addlike(post_id, 'post'); });
-    }
-    clone.querySelector("#comments-button").addEventListener("click", function() { showComments(post_id, username); });
-    clone.querySelector("#post-likes").innerHTML = likes;
-    clone.querySelector("#post-description").innerHTML = description;
-    if (event) {
-        clone.querySelector("#partecipants-button").addEventListener("click", function() { showPartecipations(event_id); });
-        clone.querySelector("#partecipants-button").classList.remove("invisible");
-        addEventDescription(clone, await loadEvent(event_id));
-    }
-    feed.appendChild(clone);
-}
-
-function addEventDescription(post, event) {
+export function addEventDescription(post, event) {
     let template = document.getElementById("description-template");
     let clone = document.importNode(template.content, true);
     clone.querySelector("#event-name").innerHTML = event.name;
@@ -72,7 +47,7 @@ async function like(like_id, type, request, addOrRemove) {
     });
     let likes;
     let likeButton;
-    const element = document.getElementsByName(like_id)[0];
+    const element = document.getElementsByName(type+like_id)[0];
     switch (type) {
         case 'post':
             likes = element.querySelector("#post-likes");
@@ -83,6 +58,7 @@ async function like(like_id, type, request, addOrRemove) {
             likeButton = element.querySelector("#comment-like-bt");
             break;
     }
+    console.log(element);
     likes.innerHTML = parseInt(likes.innerHTML) + addOrRemove;
     let fun;
     if (addOrRemove == 1) {
@@ -98,8 +74,8 @@ async function like(like_id, type, request, addOrRemove) {
     newButton.addEventListener("click", fun);
 }
 
-async function submitComment(post_id, content) {
-    content = content.value;
+async function submitComment(post_id) {
+    const content = document.querySelector("#comment-input").value;
     await fetch(request_path + "/user/upload_comment.php", {
         method: "POST",
         credentials: "include",
@@ -182,11 +158,11 @@ export async function showComments(post_id, poster) {
     for (let i = 0; i < comments_to_show.length; i++) {
         let comment = comments_to_show[i];
         let clone = document.importNode(template.content, true);
-        clone.querySelector("#comment-id").setAttribute("name", comment.comment_id);
+        clone.querySelector("#comment-id").setAttribute("name", "comment"+comment.comment_id);
         clone.querySelector("#comment-user-photo").src = "/static/img/uploads/" + comment.profile_photo;
         clone.querySelector("#comment-name").textContent = comment.username;
         clone.querySelector("#comment-content").textContent = comment.content;
-        if (comment.username == current_user || poster == current_user) {
+        if (comment.username === current_user || poster === current_user) {
             clone.querySelector("#comment-trash").classList.remove("invisible");
             clone.querySelector("#comment-trash").addEventListener("click", function() { removeComment(comment.comment_id); })
         }
@@ -201,8 +177,7 @@ export async function showComments(post_id, poster) {
         comments.appendChild(clone);
     }
     const comment_button = document.querySelector("#submit-comment");
-    const comment_input = document.querySelector("#comment-input");
-    comment_button.addEventListener("click", function() { submitComment(post_id, comment_input); });
+    comment_button.addEventListener("click", function() { submitComment(post_id); });
 }
 
 export async function loadPartecipations(event_id) {
