@@ -6,7 +6,7 @@ export async function loadUserImage(user_id) {
     return image;
 }
 
-async function loadEvent(event_id) {
+export async function loadEvent(event_id) {
     const response = await fetch(request_path + "/user/load_event.php?event=" + event_id);
     const event = await response.json();
     return event;
@@ -50,11 +50,11 @@ function addEventDescription(post, event) {
     post.appendChild(clone);
 }
 
-async function addlike(like_id, type) {
+export async function addlike(like_id, type) {
     like(like_id, type, "/user/upload_like.php", 1);
 }
 
-async function removelike(like_id, type) {
+export async function removelike(like_id, type) {
     like(like_id, type, "/user/remove_like.php", -1);
 }
 
@@ -205,7 +205,7 @@ export async function showComments(post_id, poster) {
     comment_button.addEventListener("click", function() { submitComment(post_id, comment_input); });
 }
 
-async function loadPartecipations(event_id) {
+export async function loadPartecipations(event_id) {
     const response = await fetch(request_path + "/user/load_partecipations.php?event=" + event_id);
     const partecipations = await response.json();
     return partecipations;

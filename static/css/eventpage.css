@@ -1,0 +1,13 @@
+header {
+    padding-bottom: 10% !important;
+    ;
+}
+
+.nav {
+    background-color: white !important;
+}
+
+#partecipant-photo #photo-id {
+    border-radius: 50% !important;
+    width: 50% !important;
+}
