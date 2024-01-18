@@ -136,7 +136,7 @@ async function showModalPost(modal, post_id, event_id, user_photo, username,
     document.getElementById("post-likes").innerHTML = likes;
     document.getElementById("post-description").innerHTML = description;
     if (event) {
-        document.getElementById("post-photo").addEventListener("click", function () { window.location.replace(request_path + "/event.html"/*?id=" + post_id*/); });
+        document.getElementById("post-photo").addEventListener("click", function () { window.location.replace("../event/eventpage.html?id=" + event_id); });
         document.getElementById("partecipants-button").addEventListener("click", function () { showPartecipations(event_id); })
         document.getElementById("partecipants-button").addEventListener("click", function () { showPartecipations(event_id); });
         document.getElementById("partecipants-button").classList.remove("invisible");
