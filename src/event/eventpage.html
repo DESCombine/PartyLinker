@@ -16,81 +16,88 @@
 
 <body>
     <header>
-        <div class="row">
-            <nav id="navbar" class="fixed-top h-100 flex-row align-items-stretch pe-4 border-end">
-                <nav class="nav nav-pills nav-fill flexp-row">
-                    <a class="nav-link" href="#poster">Poster</a>
-                    <a class="nav-link" href="#photos">Photos</a>
-                    <a class="nav-link" href="#people">People</a>
-                </nav>
-            </nav>
-        </div>
     </header>
     <main>
         <div class="container-fluid pt-0 overflow-hidden">
-            <div data-bs-spy="scroll" data-bs-target="#navbar" data-bs-smooth-scroll="true" class="scrollspy-example-2"
-                tabindex="0">
-                <h1>Poster</h1>
-                <div class="container-fluid pt-0 overflow-hidden" id="poster">
-                    <div class="row justify-content-center" id="poster-photo">
-                        <img src="/static/img/default-image.png" alt="" class="img-fluid mx-auto d-block m-2"
-                            id="poster-id">
-                    </div>
-                    <div class="row justify-content-center" id="photo-buttons">
-                        <div class="d-flex mb-3">
-                            <div class="p-2">
-                                <button id="likes-button" class="btn">
-                                    &#129293
-                                </button>
-                            </div>
-                            <div class="p-2">
-                                <button id="comments-button" class="btn" data-bs-toggle="modal"
-                                    data-bs-target="#comments-modal">
-                                    &#128172
-                                </button>
-                            </div>
+            <h1>Poster</h1>
+            <div class="container-fluid pt-0 overflow-hidden" id="poster">
+                <div class="row justify-content-center" id="poster-photo">
+                    <img src="/static/img/default-image.png" alt="" class="img-fluid mx-auto d-block m-2"
+                        id="poster-id">
+                </div>
+                <div class="row justify-content-center" id="photo-buttons">
+                    <div class="d-flex mb-3">
+                        <div class="p-2">
+                            <button id="likes-button" class="btn">
+                                &#129293
+                            </button>
                         </div>
-                    </div>
-                    <div class="row justify-content-center" id="photo-description">
-                        <div class="col-10">
-                            <p id="event-name">Default</p>
-                            <p id="event-day">Default</p>
-                            <p id="event-time">Default</p>
-                            <p id="event-vip">Default</p>
-                            <p id="event-maxpeople">Default</p>
-                            <p id="event-price">Default</p>
-                            <p id="event-min-age">Default</p>
-                            <p id="event-description">Default</p>
+                        <div class="p-2">
+                            <button id="comments-button" class="btn" data-bs-toggle="modal"
+                                data-bs-target="#comments-modal">
+                                &#128172
+                            </button>
                         </div>
                     </div>
                 </div>
-                <h1>Photos</h1>
-                <div class="row justify-content-center" id="photos" data-bs-toggle="modal" data-bs-target="#post-modal">
-                    <template id="template-photos">
-                        <div class="col-4">
-                            <img src="/static/img/default-image.png" alt="" class="img-fluid mx-auto d-block m-2"
-                                id="photo-id">
-                        </div>
-                    </template>
-                </div>
-                <h1>Partecipants</h1>
-                <div class="container-fluid pt-0 overflow-hidden" id="people">
-
-                    <template id="template-partecipants">
-                        <div class="row justify-content-center" id="partecipant-photo">
-                            <div class="col-3 text-center">
-                                <img src="/static/img/default-profile.png" alt="" class="img-fluid mx-auto d-block m-2"
-                                    id="photo-id">
-                            </div>
-                            <div class="col-9">
-                                <p id="partecipant-name">Default</p>
-                            </div>
-                        </div>
-                    </template>
+                <div class="row justify-content-center" id="photo-description">
+                    <div class="col-10">
+                        <p id="event-name">Default</p>
+                        <p id="event-day">Default</p>
+                        <p id="event-time">Default</p>
+                        <p id="event-vip">Default</p>
+                        <p id="event-maxpeople">Default</p>
+                        <p id="event-price">Default</p>
+                        <p id="event-min-age">Default</p>
+                        <p id="event-description">Default</p>
+                    </div>
                 </div>
             </div>
+            <h1>Photos</h1>
+            <div class="row justify-content-center" id="photos" data-bs-toggle="modal" data-bs-target="#post-modal">
+                <template id="template-photos">
+                    <div class="col-4">
+                        <img src="/static/img/default-image.png" alt="" class="img-fluid mx-auto d-block m-2"
+                            id="photo-id">
+                    </div>
+                </template>
+            </div>
+            <h1>Partecipants</h1>
+            <div class="container-fluid pt-0 overflow-hidden" id="people">
+
+                <template id="template-partecipants">
+                    <div class="row justify-content-center" id="partecipant-photo">
+                        <div class="col-3 text-center">
+                            <img src="/static/img/default-profile.png" alt="" class="img-fluid mx-auto d-block m-2"
+                                id="photo-id">
+                        </div>
+                        <div class="col-9">
+                            <p id="partecipant-name">Default</p>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
         </div>
     </main>
+    <footer>
+        <nav class="bg-light fixed-bottom">
+            <ol class="nav nav-fill my-2">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/">&#127968</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/search/">&#128269</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/map/">&#128506</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="/profile/">&#128100</a>
+                </li>
+            </ol>
+        </nav>
+    </footer>
     <!-- Post Modal -->
     <div class="modal fade" id="post-modal" tabindex="-1" aria-labelledby="post-name" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -234,7 +241,6 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
     <!-- Bootstrap import -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
