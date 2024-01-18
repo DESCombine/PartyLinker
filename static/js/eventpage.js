@@ -1,7 +1,7 @@
 import { request_path } from "/static/js/config.js";
 import { loadEvent, showComments, loadPartecipations, showPartecipations, addlike, removelike, loadUserImage } from "/static/js/utils.js";
 const event_id = new URLSearchParams(window.location.search).get('id');
-console.log(urlParams.get('id'));
+console.log(event_id);
 async function loadPoster() {
     const response = await fetch(request_path + "/user/load_event_poster.php?event=" + event_id);
     const poster = await response.json();
