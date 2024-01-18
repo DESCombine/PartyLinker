@@ -84,19 +84,18 @@ async function like(like_id, type, request, addOrRemove) {
             break;
     }
     likes.innerHTML = parseInt(likes.innerHTML) + addOrRemove;
-    let addFun;
-    let removeFun;
+    let fun;
     if (addOrRemove == 1) {
         likeButton.innerHTML = "&#10084";
-        addFun = function() { removelike(like_id, type); };
-        removeFun = function() { addlike(like_id, type); };
+        fun = function() { removelike(like_id, type); };
     } else {
         likeButton.innerHTML = "&#129293";
-        addFun = function() { addlike(like_id, type); };
-        removeFun = function() { removelike(like_id, type); };
+        fun = function() { addlike(like_id, type); };
     }
-    likeButton.removeEventListener("click", removeFun);
-    likeButton.addEventListener("click", addFun);
+    const oldButton = likeButton;
+    const newButton = oldButton.cloneNode(true);
+    oldButton.parentNode.replaceChild(newButton, oldButton);
+    newButton.addEventListener("click", fun);
 }
 
 async function submitComment(post_id, content) {
