@@ -1,14 +1,15 @@
 import { request_path } from "/static/js/config.js";
 import { loadEvent, showComments, loadPartecipations, showPartecipations, addlike, removelike, loadUserImage } from "/static/js/utils.js";
-
+const event_id = new URLSearchParams(window.location.search).get('id');
+console.log(event_id);
 async function loadPoster() {
-    const response = await fetch(request_path + "/user/load_event_poster.php?event=" + "12345");
+    const response = await fetch(request_path + "/user/load_event_poster.php?event=" + event_id);
     const poster = await response.json();
     return poster;
 }
 
 async function loadPhotos() {
-    const response = await fetch(request_path + "/user/load_event_posts.php?event=" + "12345");
+    const response = await fetch(request_path + "/user/load_event_posts.php?event=" + event_id);
     const photos = await response.json();
     return photos;
 }
@@ -34,13 +35,6 @@ async function showModalPost(modal, post_id, event_id, user_photo, username,
     document.getElementById("comments-button").addEventListener("click", function () { showComments(post_id); })
     document.getElementById("post-likes").innerHTML = likes;
     document.getElementById("post-description").innerHTML = description;
-    if (event) {
-        document.getElementById("post-photo").addEventListener("click", function () { window.location.replace(request_path + "/event.html"/*?id=" + post_id*/); });
-        document.getElementById("partecipants-button").addEventListener("click", function () { showPartecipations(event_id); })
-        document.getElementById("partecipants-button").addEventListener("click", function () { showPartecipations(event_id); });
-        document.getElementById("partecipants-button").classList.remove("invisible");
-    }
-
 }
 
 async function showContent() {
@@ -99,7 +93,7 @@ async function showContent() {
     }
 
     // partecipants
-    let partecipants = await loadPartecipations("12345");
+    let partecipants = await loadPartecipations(event_id);
     console.log(partecipants);
     let partecipantsDiv = document.getElementById("people");
     template = document.getElementById("template-partecipants");
