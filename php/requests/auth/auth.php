@@ -47,6 +47,7 @@
 
 
     echo json_encode(array("message" => "success"), JSON_PRETTY_PRINT);
-    header("Location: https://partylinker.live");
+    header("Location: localhost");
+    //header("Location: https://partylinker.live");
     $driver->close_connection();
 ?>
