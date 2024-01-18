@@ -86,9 +86,18 @@
             }
 
             public function db_serialize($driver) {
-                $sql = "INSERT INTO post_comment (comment_id, post_id, username, content, likes) VALUES (?, ?, ?, ?, ?)";
+                $sql = "INSERT INTO comment (post_id, username, content) VALUES (?, ?, ?)";
                 try {
-                    $driver->query($sql, $this->comment_id, $this->post_id, $this->username, $this->content, $this->likes);
+                    $driver->query($sql, $this->post_id, $this->username, $this->content);
+                } catch (\Exception $e) {
+                    throw new \Exception("Error while querying the database: " . $e->getMessage());
+                }
+            }
+
+            public function db_delete($driver) {
+                $sql = "DELETE FROM comment WHERE comment_id = ?";
+                try {
+                    $driver->query($sql, $this->comment_id);
                 } catch (\Exception $e) {
                     throw new \Exception("Error while querying the database: " . $e->getMessage());
                 }
@@ -295,13 +304,14 @@
                 return $comments;
             }
 
+            public static function insert_comment(\DBDriver $driver, $post_id, $username, $content) {
+                $comment = new DBComment(null, $post_id, $username, null, $content);
+                $comment->db_serialize($driver);
+            }
+
             public static function delete_comment(\DBDriver $driver, $comment_id) {
-                $sql = "DELETE FROM comment WHERE comment_id = ?";
-                try {
-                    $driver->query($sql, $comment_id);
-                } catch (\Exception $e) {
-                    throw new \Exception("Error while querying the database: " . $e->getMessage());
-                }
+                $com = new DBComment($comment_id);
+                $com->db_delete($driver);
             }
 
             public static function insert_like(\DBDriver $driver, $like_id, $username, $type) {
