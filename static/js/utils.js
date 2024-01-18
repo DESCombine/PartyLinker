@@ -50,11 +50,11 @@ function addEventDescription(post, event) {
     post.appendChild(clone);
 }
 
-async function addlike(like_id, type) {
+export async function addlike(like_id, type) {
     like(like_id, type, "/user/upload_like.php", 1);
 }
 
-async function removelike(like_id, type) {
+export async function removelike(like_id, type) {
     like(like_id, type, "/user/remove_like.php", -1);
 }
 
