@@ -108,6 +108,44 @@ namespace User {
         }
     }
 
+    class DBSettings implements \DBTable
+    {
+        private $username;
+        private $language;
+        private $notifications;
+        private $twofa;
+        private $organizer;
+
+        public function __construct($username = null, $language = null, $notifications = null, $twofa = null, $organizer = null) {
+            $this->username = $username;
+            $this->language = $language;
+            $this->notifications = $notifications;
+            $this->twofa = $twofa;
+            $this->organizer = $organizer;
+        }
+
+        public function jsonSerialize() {
+            return [
+                "username" => $this->username,
+                "language" => $this->language,
+                "notifications" => $this->notifications,
+                "twofa" => $this->twofa,
+                "organizer" => $this->organizer
+            ];
+        }
+
+        public function db_serialize(\DBDriver $driver) {
+            $sql = "INSERT INTO settings (username, language, notifications, 2fa, organizer) 
+                    VALUES (?, ?, ?, ?, ?)";
+            try {
+                $driver->query($sql, $this->username, $this->language, $this->notifications, $this->twofa, $this->organizer);
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+
+        }
+    }
+
     class UserUtility
     {
         public static function from_form(string $username, string $email, string $name, string $surname, string $birth_date, string $profile_photo, string $background, string $bio, string $phone, string $password = "")
@@ -341,6 +379,23 @@ namespace User {
             } else {
                 return null;
             }
+        }
+
+        public static function retrieve_settings($driver, $username)
+        {
+            $sql = "SELECT * FROM settings WHERE username = ?";
+            try {
+                $result = $driver->query($sql, $username);
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $settings = new DBSettings($row["username"], $row["language"], $row["notifications"], $row["2fa"], $row["organizer"]);
+            } else {
+                return null;
+            }
+            return $settings;
         }
     }
     class UsernameTaken extends \Exception

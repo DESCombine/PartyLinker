@@ -129,6 +129,32 @@
                 return $events;
             }
 
+            public static function from_db_with_name(\DBDriver $driver, $name) {
+                $sql = "SELECT E.event_id, E.name, P.image
+                        FROM event E, post P 
+                        WHERE E.name = ?
+                        AND E.event_id = P.event_id
+                        AND P.event_post = 1";
+                try {
+                    $result = $driver->query($sql, $name);
+                } catch (\Exception $e) {
+                    throw new \Exception("Error while querying the database: " . $e->getMessage());
+                }
+                $events = array();
+                if ($result->num_rows > 0) {
+                    for($i = 0; $i < $result->num_rows; $i++){
+                        $row = $result->fetch_array();
+                        $event = [
+                            "event_id" => $row["event_id"],
+                            "name" => $row["name"],
+                            "image" => $row["image"]
+                        ];
+                        array_push($events, $event);
+                    }
+                }
+                return $events;
+            }
+
             public static function from_db_recents_and_future_events(\DBDriver $driver) {
                 $sql = "SELECT * FROM event WHERE DATE_SUB(NOW(), INTERVAL 1 WEEK) ORDER BY starting_date ASC ";
                 try {
