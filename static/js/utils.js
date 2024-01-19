@@ -12,6 +12,13 @@ export async function loadEvent(event_id) {
     return event;
 }
 
+export async function cleanTemplateList(listId) {
+    const modalList = document.getElementById(listId);
+    while (modalList.getElementsByTagName('li').length > 0) {
+        modalList.removeChild(modalList.lastChild);
+    }
+}
+
 export function addEventDescription(post, event) {
     let template = document.getElementById("description-template");
     let clone = document.importNode(template.content, true);
@@ -132,28 +139,15 @@ async function submitBusy(event_id) {
     document.querySelector("#submit-busy").disabled = false;
 }
 
-async function getCurrentUser() {
-    const response = await fetch(request_path + "/user/load_current_username.php", {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        credentials: "include"
-    });
-    const user = await response.json();
-    return user;
-}
-
 async function loadComments(post_id) {
     const response = await fetch(request_path + "/user/load_comments.php?post=" + post_id);
     const comments = await response.json();
     return comments;
 }
 
-export async function showComments(post_id, poster) {
+export async function showComments(post_id) {
     const comments = document.getElementById("comments");
     const comments_to_show = await loadComments(post_id);
-    const current_user = getCurrentUser();
     let template = document.getElementById("comment-template");
     for (let i = 0; i < comments_to_show.length; i++) {
         let comment = comments_to_show[i];
@@ -162,7 +156,7 @@ export async function showComments(post_id, poster) {
         clone.querySelector("#comment-user-photo").src = "/static/img/uploads/" + comment.profile_photo;
         clone.querySelector("#comment-name").textContent = comment.username;
         clone.querySelector("#comment-content").textContent = comment.content;
-        if (comment.username === current_user || poster === current_user) {
+        if (comment.owner) {
             clone.querySelector("#comment-trash").classList.remove("invisible");
             clone.querySelector("#comment-trash").addEventListener("click", function() { removeComment(comment.comment_id); })
         }

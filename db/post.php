@@ -12,10 +12,11 @@
             private $posted;
             private $likes;
             private $event_post;
+            private $profile_photo;
             private $liked;
 
             public function __construct($post_id = null, $event_id = null, $username = null, $image = null, 
-                    $description = null, $posted = null, $likes = null, $event_post = null, $liked = null) {
+                    $description = null, $posted = null, $likes = null, $event_post = null, $profile_photo = null, $liked = null) {
                 $this->post_id = $post_id;
                 $this->event_id = $event_id;
                 $this->username = $username;
@@ -24,6 +25,7 @@
                 $this->posted = $posted;
                 $this->likes = $likes;
                 $this->event_post = $event_post;
+                $this->profile_photo = $profile_photo;
                 $this->liked = $liked;
             }
 
@@ -37,6 +39,7 @@
                     "posted" => $this->posted,
                     "likes" => $this->likes,
                     "event_post" => $this->event_post,
+                    "profile_photo" => $this->profile_photo,
                     "liked" => $this->liked
                 ];
             }
@@ -61,9 +64,10 @@
             private $content;
             private $likes;
             private $liked;
+            private $owner;
 
             public function __construct($comment_id = null, $post_id = null, $username = null, 
-                    $profile_photo = null, $content = null, $likes = null, $liked = null) {
+                    $profile_photo = null, $content = null, $likes = null, $liked = null, $owner = null) {
                 $this->comment_id = $comment_id;
                 $this->post_id = $post_id;
                 $this->username = $username;
@@ -71,6 +75,7 @@
                 $this->content = $content;
                 $this->likes = $likes;
                 $this->liked = $liked;
+                $this->owner = $owner;
             }
 
             public function jsonSerialize() {
@@ -81,7 +86,8 @@
                     "profile_photo" => $this->profile_photo,
                     "content" => $this->content,
                     "likes" => $this->likes,
-                    "liked" => $this->liked
+                    "liked" => $this->liked,
+                    "owner" => $this->owner
                 ];
             }
 
@@ -245,13 +251,14 @@
             }
 
             public static function recent_posts_followed(\DBDriver $driver, $username, $max_posts) {
-                $sql = "SELECT *
-                        FROM post
-                        WHERE username IN (
+                $sql = "SELECT P.*, U.profile_photo
+                        FROM post P, user U
+                        WHERE P.username IN (
                             SELECT followed
                             FROM relationship
                             WHERE follows = ?)
-                        ORDER BY posted DESC
+                        AND P.username = U.username
+                        ORDER BY P.posted DESC
                         LIMIT ?";
                 try {
                     $result = $driver->query($sql, $username, $max_posts);
@@ -269,7 +276,7 @@
                             throw new \Exception("Error while querying the database: " . $e->getMessage());
                         }
                         $post = new DBPost($row["post_id"], $row["event_id"], $row["username"], $row["image"], 
-                                $row["description"], $row["posted"], $row["likes"], $row["event_post"], $liked);
+                                $row["description"], $row["posted"], $row["likes"], $row["event_post"], $row['profile_photo'], $liked);
                         array_push($posts, $post);
                     }
                 }
@@ -296,8 +303,18 @@
                         } catch (\Exception $e) {
                             throw new \Exception("Error while querying the database: " . $e->getMessage());
                         }
+                        $owner = false;
+                        $sql = "SELECT * FROM post WHERE post_id = ? AND username = ?";
+                        try {
+                            $owner = $driver->query($sql, $post_id, $username)->num_rows > 0;
+                        } catch (\Exception $e) {
+                            throw new \Exception("Error while querying the database: " . $e->getMessage());
+                        }
+                        if (!$owner) {
+                            $owner = $row["username"] == $username;
+                        }
                         $comment = new DBComment($row["comment_id"], $row["post_id"], $row["username"], 
-                                $row["profile_photo"], $row["content"], $row["likes"], $liked);
+                                $row["profile_photo"], $row["content"], $row["likes"], $liked, $owner);
                         array_push($comments, $comment);
                     }
                 }
