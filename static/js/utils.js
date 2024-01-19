@@ -83,6 +83,7 @@ async function like(like_id, type, request, addOrRemove) {
 
 async function submitComment(post_id) {
     const content = document.querySelector("#comment-input").value;
+    document.querySelector("#comment-input").value = "";
     await fetch(request_path + "/user/upload_comment.php", {
         method: "POST",
         credentials: "include",
@@ -94,9 +95,11 @@ async function submitComment(post_id) {
             "content": content
         })
     });
+    cleanTemplateList("comments");
+    showComments(post_id);
 }
 
-async function removeComment(comment_id) {
+async function removeComment(comment_id, post_id) {
     await fetch(request_path + "/user/remove_comment.php", {
         method: "POST",
         credentials: "include",
@@ -107,6 +110,8 @@ async function removeComment(comment_id) {
             "comment_id": comment_id
         })
     });
+    cleanTemplateList("comments");
+    showComments(post_id);
 }
 
 async function submitPartecipation(event_id) {
@@ -158,7 +163,7 @@ export async function showComments(post_id) {
         clone.querySelector("#comment-content").textContent = comment.content;
         if (comment.owner) {
             clone.querySelector("#comment-trash").classList.remove("invisible");
-            clone.querySelector("#comment-trash").addEventListener("click", function() { removeComment(comment.comment_id); })
+            clone.querySelector("#comment-trash").addEventListener("click", function() { removeComment(comment.comment_id, post_id); })
         }
         const likeButton = clone.querySelector("#comment-like-bt");
         if (comment.liked) {
