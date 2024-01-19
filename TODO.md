@@ -3,7 +3,7 @@
 - [ ] Cool graphics
 - [x] Cooments forms
 - [x] Like button
-- [ ] Partecipation button
+- [x] Partecipation button
 - [ ] Profile page modals
 - [ ] Profile page photos
 - [ ] Registration page

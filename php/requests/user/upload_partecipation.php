@@ -7,7 +7,8 @@
     global $driver;
     global $username;
     try {
-        $event = $_POST["event_id"];
+        $request = json_decode(file_get_contents('php://input'), true);
+        $event = $request["event_id"];
         EventUtility::insert_partecipation($driver, $event, $username);
     } catch (\Exception $e) {
         http_response_code(500);

@@ -12,11 +12,18 @@ export async function loadEvent(event_id) {
     return event;
 }
 
-export async function cleanTemplateList(listId) {
+export function cleanTemplateList(listId) {
     const modalList = document.getElementById(listId);
     while (modalList.getElementsByTagName('li').length > 0) {
         modalList.removeChild(modalList.lastChild);
     }
+}
+
+function resetEventListener(oldButton, fun) {
+    const newButton = oldButton.cloneNode(true);
+    oldButton.parentNode.replaceChild(newButton, oldButton);
+    newButton.addEventListener("click", fun);
+    return newButton;
 }
 
 export function addEventDescription(post, event) {
@@ -75,10 +82,7 @@ async function like(like_id, type, request, addOrRemove) {
         likeButton.innerHTML = "&#129293";
         fun = function() { addlike(like_id, type); };
     }
-    const oldButton = likeButton;
-    const newButton = oldButton.cloneNode(true);
-    oldButton.parentNode.replaceChild(newButton, oldButton);
-    newButton.addEventListener("click", fun);
+    resetEventListener(likeButton, fun);
 }
 
 async function submitComment(post_id) {
@@ -125,8 +129,8 @@ async function submitPartecipation(event_id) {
             "event_id": event_id
         })
     });
-    document.querySelector("#submit-partecipation").disabled = true;
-    document.querySelector("#submit-busy").disabled = false;
+    cleanTemplateList("partecipants");
+    showPartecipations(event_id);
 }
 
 async function submitBusy(event_id) {
@@ -140,8 +144,8 @@ async function submitBusy(event_id) {
             "event_id": event_id
         })
     });
-    document.querySelector("#submit-partecipation").disabled = true;
-    document.querySelector("#submit-busy").disabled = false;
+    cleanTemplateList("partecipants");
+    showPartecipations(event_id);
 }
 
 async function loadComments(post_id) {
@@ -176,7 +180,7 @@ export async function showComments(post_id) {
         comments.appendChild(clone);
     }
     const comment_button = document.querySelector("#submit-comment");
-    comment_button.addEventListener("click", function() { submitComment(post_id); });
+    resetEventListener(comment_button, function() { submitComment(post_id); });
 }
 
 export async function loadPartecipations(event_id) {
@@ -188,12 +192,11 @@ export async function loadPartecipations(event_id) {
 export async function showPartecipations(event_id) {
     const partecipations = document.getElementById("partecipants");
     const partecipations_list = await loadPartecipations(event_id);
-    const current_user = getCurrentUser();
     let template = document.getElementById("partecipants-template");
     let isUserPartecipating = false;
     for (let i = 0; i < partecipations_list.length; i++) {
         let partecipation = partecipations_list[i];
-        if (partecipation.username == current_user) {
+        if (partecipation.partecipating) {
             isUserPartecipating = true;
         }
         let clone = document.importNode(template.content, true);
@@ -203,8 +206,6 @@ export async function showPartecipations(event_id) {
     }
     const partecipants_button = document.querySelector("#submit-partecipation");
     const busy_button = document.querySelector("#submit-busy");
-    partecipants_button.addEventListener("click", function() { submitPartecipation(event_id); });
-    busy_button.addEventListener("click", function() { submitBusy(event_id); });
-    partecipants_button.disabled = isUserPartecipating;
-    busy_button.disabled = !isUserPartecipating;
+    resetEventListener(partecipants_button, function() { submitPartecipation(event_id); }).disabled = isUserPartecipating;
+    resetEventListener(busy_button, function() { submitBusy(event_id); }). disabled = !isUserPartecipating;
 }
