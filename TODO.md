@@ -4,8 +4,8 @@
 - [x] Cooments forms
 - [x] Like button
 - [ ] Partecipation button
-- [ ] Profile page modals
-- [ ] Profile page photos
+- [x] Profile page modals
+- [x] Profile page photos
 - [ ] Registration page
 - [ ] Content upload
 - [ ] User tagging
