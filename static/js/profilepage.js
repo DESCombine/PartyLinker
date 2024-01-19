@@ -77,7 +77,7 @@ function removeAll() {
 }
 
 function openModal(post) {
-    console.log(post);
+    //console.log(post);
     const modal = document.getElementById("post-modal");
     showModalPost(modal, post.id, post.event_id, post.user_photo, post.username, post.image, post.description, post.likes, post.event_post);
 }
@@ -96,7 +96,7 @@ async function showPhotos(type) {
         for (let photo_index = 0; photo_index < photos.length; photo_index++) {
             let clone = document.importNode(template.content, true);
             clone.querySelector("#photo-id").src = "/static/img/uploads/" + photo.image;
-            clone.querySelector("#photo-id").addEventListener("click", function () { openModal(photos[photo_index]); });
+            clone.querySelector("#photo-id").addEventListener("click", function () { openModal(photo); });
             photo = photos[photo_index];
             photosDiv.appendChild(clone);
             dim++;
@@ -123,7 +123,11 @@ async function showProfileInfos() {
     document.getElementById("followers").innerHTML = infos.followers;
     document.getElementById("followed").innerHTML = infos.followed;
     document.getElementById("profileImage").src = "/static/img/uploads/" + await loadUserImage(infos.username);
-    //document.getElementById("bannerImage").src = "/static/img/uploads/" + infos.banner;
+    if(infos.banner != null) {
+        document.getElementById("bannerImage").src = "/static/img/uploads/" + infos.background;
+    } else {
+        document.getElementById("bannerImage").src = "/static/img/default-poster.png";
+    }
 }
 
 async function showModalPost(modal, post_id, event_id, user_photo, username,
@@ -136,7 +140,8 @@ async function showModalPost(modal, post_id, event_id, user_photo, username,
     document.getElementById("post-likes").innerHTML = likes;
     document.getElementById("post-description").innerHTML = description;
     if (event) {
-        document.getElementById("post-photo").addEventListener("click", function () { window.location.replace("../event/eventpage.html?id=" + event_id); });
+        document.getElementById("details-button").addEventListener("click", function () { window.location.replace("../event/eventpage.html?id=" + event_id); });
+        document.getElementById("details-button").classList.remove("invisible");
         document.getElementById("partecipants-button").addEventListener("click", function () { showPartecipations(event_id); })
         document.getElementById("partecipants-button").addEventListener("click", function () { showPartecipations(event_id); });
         document.getElementById("partecipants-button").classList.remove("invisible");
