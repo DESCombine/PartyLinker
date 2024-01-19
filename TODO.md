@@ -4,10 +4,6 @@
 - [x] Cooments forms
 - [x] Like button
 - [x] Partecipation button
-- [ ] Profile page modals
-- [ ] Profile page photos
-- [ ] Registration page
-- [ ] Partecipation button
 - [x] Profile page modals
 - [x] Profile page photos
 - [ ] Registration page (backend)
@@ -15,6 +11,8 @@
 - [ ] Content upload
 - [ ] User tagging
 - [ ] Follow button
+- [ ] Researched profile page
+- [ ] Notifications
 # WOW effect
 - [ ] 2F Authentication
 - [ ] Remember me
