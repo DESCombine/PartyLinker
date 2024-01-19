@@ -17,20 +17,20 @@ async function loadPhotos() {
 function openModal(post) {
     console.log(post);
     const modal = document.getElementById("post-modal");
-    showModalPost(modal, post.id, post.event_id, post.user_photo, post.username, post.image, post.description, post.likes, post.event_post);
+    showModalPost(modal, post.id, post.event_id, post.user_photo, post.username, post.image, post.description, post.likes, post.liked, post.event_post);
 }
 
 async function showModalPost(modal, post_id, event_id, user_photo, username,
-    image, description, likes, event) {
+    image, description, likes, liked, event) {
     document.getElementById("post-user-photo").src = "/static/img/uploads/" + await loadUserImage(username);
     document.getElementById("post-name").innerHTML = username;
     document.getElementById("post-photo").src = "/static/img/uploads/" + image;
-    const likeButton =  document.getElementById("likes-button-modal");
-    if (post.liked) {
-        likeButton.addEventListener("click", function() { removelike(post_id, 'post'); });
+    const likeButton = document.getElementById("likes-button-modal");
+    if (liked) {
+        likeButton.addEventListener("click", function () { removelike(post_id, 'post'); });
         likeButton.innerHTML = "&#10084";
     } else {
-        likeButton.addEventListener("click", function() { addlike(post_id, 'post'); });
+        likeButton.addEventListener("click", function () { addlike(post_id, 'post'); });
     }
     document.getElementById("comments-button").addEventListener("click", function () { showComments(post_id); })
     document.getElementById("post-likes").innerHTML = likes;
@@ -41,12 +41,12 @@ async function showContent() {
     // poster
     let post = await loadPoster();
     document.getElementById("poster-id").src = "/static/img/uploads/" + post.image;
-    const likeButton =  document.getElementById("likes-button");
+    const likeButton = document.getElementById("likes-button");
     if (post.liked) {
-        likeButton.addEventListener("click", function() { removelike(post_id, 'post'); });
+        likeButton.addEventListener("click", function () { removelike(post_id, 'post'); });
         likeButton.innerHTML = "&#10084";
     } else {
-        likeButton.addEventListener("click", function() { addlike(post_id, 'post'); });
+        likeButton.addEventListener("click", function () { addlike(post_id, 'post'); });
     }
     document.getElementById("comments-button").addEventListener("click", function () { showComments(post_id); })
     let event = await loadEvent(12345);
