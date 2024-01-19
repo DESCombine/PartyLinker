@@ -1,8 +1,7 @@
-import { addNewPost } from "./utils.js";
-import { request_path } from "/static/js/config.js";
-import { loadUserImage } from "/static/js/utils.js";
+import { request_path } from "/static/js/config.js?v=1";
+import { loadUserImage, addlike, showComments, showPartecipations } from "/static/js/utils.js";
 
-const postButton = document.getElementById("buttons").getElementsByTagName("div").item(0)
+const postButton = document.getElementById("buttons").getElementsByTagName("div").item(0);
 const eventButton = document.getElementById("buttons").getElementsByTagName("div").item(1);
 const templatePost = document.importNode(document.getElementById("template-photos"), true);
 postButton.addEventListener("click", function () { changeView("post"); });
@@ -36,13 +35,23 @@ async function loadProfileInfos() {
 function changeView(button) {
     let type = 0;
     removeAll();
+    const postP = postButton.getElementsByTagName("p").item(0);
+    const eventP = eventButton.getElementsByTagName("p").item(0);
     if (button === "post") {
         postButton.style.pointerEvents = "none";
         eventButton.style.pointerEvents = "auto";
+        postP.classList.add("border");
+        postP.classList.add("border-black");
+        eventP.classList.remove("border");
+        eventP.classList.remove("border-black");
         type = 0;
     } else if (button === "event") {
         eventButton.style.pointerEvents = "none";
         postButton.style.pointerEvents = "auto";
+        eventP.classList.add("border");
+        eventP.classList.add("border-black");
+        postP.classList.remove("border");
+        postP.classList.remove("border-black");
         type = 1;
     }
     showPhotos(type);
@@ -70,7 +79,7 @@ function removeAll() {
 function openModal(post) {
     //console.log(post);
     const modal = document.getElementById("post-modal");
-    showModalPost(modal, post.id, post.event_id, post.user_photo, post.username, post.image, post.description, post.likes, post.event);
+    showModalPost(modal, post.id, post.event_id, post.user_photo, post.username, post.image, post.description, post.likes, post.event_post);
 }
 
 async function showPhotos(type) {
@@ -122,13 +131,14 @@ async function showModalPost(modal, post_id, event_id, user_photo, username,
     document.getElementById("post-user-photo").src = "/static/img/uploads/" + await loadUserImage(username);
     document.getElementById("post-name").innerHTML = username;
     document.getElementById("post-photo").src = "/static/img/uploads/" + image;
-    document.getElementById("likes-button").addEventListener("click", function () { likePost(post_id); });
+    document.getElementById("likes-button").addEventListener("click", function () { addlike(post_id, 1); });
     document.getElementById("comments-button").addEventListener("click", function () { showComments(post_id); })
     document.getElementById("post-likes").innerHTML = likes;
     document.getElementById("post-description").innerHTML = description;
     if (event) {
+        document.getElementById("post-photo").addEventListener("click", function () { window.location.replace("../event/eventpage.html?id=" + event_id); });
         document.getElementById("partecipants-button").addEventListener("click", function () { showPartecipations(event_id); })
-        document.getElementById("partecipants-button").ddEventListener("click", function () { showPartecipations(event_id); });
+        document.getElementById("partecipants-button").addEventListener("click", function () { showPartecipations(event_id); });
         document.getElementById("partecipants-button").classList.remove("invisible");
     }
 

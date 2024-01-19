@@ -1,4 +1,4 @@
-import { request_path } from "/static/js/config.js";
+import { request_path } from "/static/js/config.js?v=1";
 
 const searchbar = document.getElementById("searchbar");
 searchbar.addEventListener("keyup", function(event) {
@@ -17,11 +17,12 @@ function showSearchResults(users) {
     const search_results = document.getElementById("searchresults");
     search_results.innerHTML = "";
     users.forEach(user => {
+        console.log(user)
         const user_div = document.createElement("div");
         user_div.innerHTML = `
         <div class="result row">
             <div class="col-2">
-                <img src="/static/img/uploads/${user.photo}" alt="placeholder" class="img-fluid result-profile-img"> 
+                <img src="/static/img/uploads/${user.profile_photo}" alt="placeholder" class="result-profile-img"> 
             </div> 
             <div class="col-9"> 
                 <span>${user.username}</span>  

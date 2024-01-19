@@ -1,5 +1,5 @@
-import { request_path } from "/static/js/config.js";
-import { loadUserImage, addNewPost } from "/static/js/utils.js";
+import { request_path } from "/static/js/config.js?v=1";
+import { loadUserImage, addEventDescription, loadEvent, showComments, showPartecipations } from "/static/js/utils.js";
 
 async function loadOnlineUsers() {
     const response = await fetch(request_path + "/user/load_online_users.php", {
@@ -44,9 +44,34 @@ async function showFeed() {
     let template = document.getElementById("post-template");
     for (let i = 0; i < posts.length; i++) {
         let post = posts[i];
-        addNewPost(template, feed, post.post_id, post.event_id, await loadUserImage(post.username), 
-                post.username, post.image, post.description, post.hearts, post.event_post, post.hearted);
+        addNewFeedPost(template, feed, post.post_id, post.event_id, await loadUserImage(post.username), 
+                post.username, post.image, post.description, post.likes, post.event_post, post.liked);
     }
+}
+
+async function addNewFeedPost(template, feed, post_id, event_id, user_photo, username,
+    image, description, likes, event, liked) {
+    let clone = document.importNode(template.content, true);
+    clone.querySelector("#post-id").setAttribute("name", "post" + post_id);
+    clone.querySelector("#post-user-photo").src = "/static/img/uploads/" + user_photo;
+    clone.querySelector("#post-name").innerHTML = username;
+    clone.querySelector("#post-photo").src = "/static/img/uploads/" + image;
+    const likeButton = clone.querySelector("#likes-button");
+    if (liked) {
+        likeButton.addEventListener("click", function() { removelike(post_id, 'post'); });
+        likeButton.innerHTML = "&#10084";
+    } else {
+        likeButton.addEventListener("click", function() { addlike(post_id, 'post'); });
+    }
+    clone.querySelector("#comments-button").addEventListener("click", function() { showComments(post_id, username); });
+    clone.querySelector("#post-likes").innerHTML = likes;
+    clone.querySelector("#post-description").innerHTML = description;
+    if (event) {
+        clone.querySelector("#partecipants-button").addEventListener("click", function() { showPartecipations(event_id); });
+        clone.querySelector("#partecipants-button").classList.remove("invisible");
+        addEventDescription(clone, await loadEvent(event_id));
+    }
+    feed.appendChild(clone);
 }
 
 showOnlineUsers();

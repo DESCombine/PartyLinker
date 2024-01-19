@@ -1,21 +1,41 @@
 <!DOCTYPE html>
     <html lang="it">
+        <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" class="">
+            <meta charset="UTF-8">
+            <title>PartyLinker: Map</title>
+            <link href="/static/css/mappage.css?v=1" rel="stylesheet">
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+            <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js'></script>
+            <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet' />
+        </head>
         <body>
-            <nav class="bg-light fixed-bottom">
-                <ol class="nav nav-fill my-2">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">&#127968</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/search/">&#128269</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/map/">&#128506</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/profile/">&#128100</a>
-                    </li>
-                </ol>
-            </nav>
+            <div class="container-fluid" id="page">
+                <!-- Content -->
+                <div class="row-10">
+                    <div id='map'></div>
+                </div>
+                <!-- Footer -->
+                <footer>
+                    <nav class="bg-light border-top border-black fixed-bottom">
+                        <ol class="nav nav-fill my-2">
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="/">&#127968</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/search/">&#128269</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="/map/">&#128506</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/profile/">&#128100</a>
+                            </li>
+                        </ol>
+                    </nav>
+                </footer>
+            </div>
+
+            <script src="/static/js/map.js?v=2" type="module"></script>
         </body>
     </html>

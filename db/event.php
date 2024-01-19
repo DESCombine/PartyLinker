@@ -57,21 +57,18 @@
             private $event_id;
             private $username;
             private $profile_photo;
-            private $partecipating;
 
-            public function __construct($event_id = null, $username = null, $profile_photo = null, $partecipating = null) {
+            public function __construct($event_id = null, $username = null, $profile_photo = null) {
                 $this->event_id = $event_id;
                 $this->username = $username;
                 $this->profile_photo = $profile_photo;
-                $this->partecipating = $partecipating;
             }
 
             public function jsonSerialize() {
                 return [
                     "event_id" => $this->event_id,
                     "username" => $this->username,
-                    "profile_photo" => $this->profile_photo,
-                    "partecipating" => $this->partecipating
+                    "profile_photo" => $this->profile_photo
                 ];
             }
 
@@ -120,6 +117,26 @@
                 return $events;
             }
 
+            public static function from_db_recents_and_future_events(\DBDriver $driver) {
+                $sql = "SELECT * FROM event WHERE DATE_SUB(NOW(), INTERVAL 1 WEEK) ORDER BY starting_date ASC ";
+                try {
+                    $result = $driver->query($sql);
+                } catch (\Exception $e) {
+                    throw new \Exception("Error while querying the database: " . $e->getMessage());
+                }
+                $events = array();
+                if ($result->num_rows > 0) {
+                    for($i = 0; $i < $result->num_rows; $i++){
+                        $row = $result->fetch_array();
+                        $event = new DBEvent($row["event_id"], $row["name"], $row["location"], $row["starting_date"], 
+                                $row["ending_date"], $row["vips"], $row["max_capacity"], $row["price"], $row["minimum_age"]);
+                        array_push($events, $event);
+                    }
+                }
+                return $events;
+
+            }
+
             public static function retrieve_partecipations($driver, $event_id, $username) {
                 $sql = "SELECT P.*, U.profile_photo
                         FROM partecipation P, user U
@@ -134,7 +151,7 @@
                 if ($result->num_rows > 0) {
                     for ($i = 0; $i < $result->num_rows; $i++) {
                         $row = $result->fetch_array();
-                        $partecipation = new DBPartecipation($row["event_id"], $row["username"], $row["profile_photo"], $row["username"] == $username);
+                        $partecipation = new DBPartecipation($row["event_id"], $row["username"], $row["profile_photo"]);
                         array_push($partecipations, $partecipation);
                     }
                 }
