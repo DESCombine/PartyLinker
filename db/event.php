@@ -120,6 +120,26 @@
                 return $events;
             }
 
+            public static function from_db_recents_and_future_events(\DBDriver $driver) {
+                $sql = "SELECT * FROM event WHERE DATE_SUB(NOW(), INTERVAL 1 WEEK) ORDER BY starting_date ASC ";
+                try {
+                    $result = $driver->query($sql);
+                } catch (\Exception $e) {
+                    throw new \Exception("Error while querying the database: " . $e->getMessage());
+                }
+                $events = array();
+                if ($result->num_rows > 0) {
+                    for($i = 0; $i < $result->num_rows; $i++){
+                        $row = $result->fetch_array();
+                        $event = new DBEvent($row["event_id"], $row["name"], $row["location"], $row["starting_date"], 
+                                $row["ending_date"], $row["vips"], $row["max_capacity"], $row["price"], $row["minimum_age"]);
+                        array_push($events, $event);
+                    }
+                }
+                return $events;
+
+            }
+
             public static function retrieve_partecipations($driver, $event_id, $username) {
                 $sql = "SELECT P.*, U.profile_photo
                         FROM partecipation P, user U
