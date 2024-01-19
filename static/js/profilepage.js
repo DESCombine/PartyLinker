@@ -123,7 +123,7 @@ async function showProfileInfos() {
     document.getElementById("followers").innerHTML = infos.followers;
     document.getElementById("followed").innerHTML = infos.followed;
     document.getElementById("profileImage").src = "/static/img/uploads/" + await loadUserImage(infos.username);
-    //document.getElementById("bannerImage").src = "/static/img/uploads/" + infos.banner;
+    document.getElementById("bannerImage").src = "/static/img/uploads/" + infos.banner;
 }
 
 async function showModalPost(modal, post_id, event_id, user_photo, username,
@@ -136,7 +136,8 @@ async function showModalPost(modal, post_id, event_id, user_photo, username,
     document.getElementById("post-likes").innerHTML = likes;
     document.getElementById("post-description").innerHTML = description;
     if (event) {
-        document.getElementById("post-photo").addEventListener("click", function () { window.location.replace("../event/eventpage.html?id=" + event_id); });
+        document.getElementById("details-button").addEventListener("click", function () { window.location.replace("../event/eventpage.html?id=" + event_id); });
+        document.getElementById("details-button").classList.remove("invisible");
         document.getElementById("partecipants-button").addEventListener("click", function () { showPartecipations(event_id); })
         document.getElementById("partecipants-button").addEventListener("click", function () { showPartecipations(event_id); });
         document.getElementById("partecipants-button").classList.remove("invisible");
