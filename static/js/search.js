@@ -1,4 +1,4 @@
-import { request_path } from "/static/js/config.js";
+import { request_path } from "/static/js/config.js?v=1";
 
 const searchbar = document.getElementById("searchbar");
 searchbar.addEventListener("keyup", function(event) {

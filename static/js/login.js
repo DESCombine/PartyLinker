@@ -1,4 +1,4 @@
-import { request_path } from "/static/js/config.js";
+import { request_path } from "/static/js/config.js?v=1";
 
 async function tryLogin() {
     username = document.getElementById("username").value

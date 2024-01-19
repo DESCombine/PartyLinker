@@ -1,4 +1,4 @@
-import { request_path } from "/static/js/config.js";
+import { request_path } from "/static/js/config.js?v=1";
 
 export async function loadUserImage(user_id) {
     const response = await fetch(request_path + "/user/load_user_img.php?user=" + user_id);

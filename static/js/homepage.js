@@ -1,4 +1,4 @@
-import { request_path } from "/static/js/config.js";
+import { request_path } from "/static/js/config.js?v=1";
 import { loadUserImage, addEventDescription, loadEvent, showComments, showPartecipations } from "/static/js/utils.js";
 
 async function loadOnlineUsers() {

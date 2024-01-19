@@ -1,4 +1,4 @@
-import { request_path } from "/static/js/config.js";
+import { request_path } from "/static/js/config.js?v=1";
 import { loadUserImage, addlike, showComments, showPartecipations } from "/static/js/utils.js";
 
 const postButton = document.getElementById("buttons").getElementsByTagName("div").item(0);
