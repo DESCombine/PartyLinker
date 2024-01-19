@@ -123,7 +123,11 @@ async function showProfileInfos() {
     document.getElementById("followers").innerHTML = infos.followers;
     document.getElementById("followed").innerHTML = infos.followed;
     document.getElementById("profileImage").src = "/static/img/uploads/" + await loadUserImage(infos.username);
-    document.getElementById("bannerImage").src = "/static/img/uploads/" + infos.banner;
+    if(infos.banner != null) {
+        document.getElementById("bannerImage").src = "/static/img/uploads/" + infos.background;
+    } else {
+        document.getElementById("bannerImage").src = "/static/img/default-poster.png";
+    }
 }
 
 async function showModalPost(modal, post_id, event_id, user_photo, username,
