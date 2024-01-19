@@ -2,7 +2,13 @@ import { request_path } from "/static/js/config.js?v=1";
 
 
 async function loadEvents() {
-    const response = await fetch(request_path + "/event/load_recent_future_events.php");
+    const response = await fetch(request_path + "/event/load_recent_future_events.php", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        credentials: "include"
+    });
     const events = await response.json();
     let events_location = await Promise.all(events.map(async event => {
         event.location = event.location.replaceAll(" ", "%20");
