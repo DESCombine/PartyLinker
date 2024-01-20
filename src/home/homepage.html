@@ -102,6 +102,11 @@
                                 <a class="nav-link" href="/search/">&#128269</a>
                             </li>
                             <li class="nav-item">
+                                <button id="upload-button" class="btn border border-dark rounded-circle"  data-bs-toggle="modal" data-bs-target="#upload-modal">
+                                    &#10133
+                                </button>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="/map/">&#128506</a>
                             </li>
                             <li class="nav-item">
@@ -110,6 +115,44 @@
                         </ol>
                     </nav>
                 </footer>
+            </div>
+            <!-- Upload Modal -->
+            <div class="modal fade" id="upload-modal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header justify-content-center">
+                            <h4 class="modal-title" id="uploadModalLabel">Upload new picture&#128248</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <input type="text" id="upload-searchbar" class="border-1 rounded" placeholder="Event name...">
+                                </div>
+                                <div class="row">
+                                    <ol class="list-group list-group-flush my-1 overflow-y-auto" id="search-event-results">
+                                        <template id="event-result-template">
+                                            <li class="list-group-item"  id="ev-res-id">
+                                                <div class="row justify-content-start">
+                                                    <div class="col-2">
+                                                        <img id="ev-res-image" src="/static/img/default-image.png" class="img-fluid img-thumbnail">
+                                                    </div>
+                                                    <div class="col">
+                                                        <h5 id="ev-res-name">Event name</h5>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </template>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer border-top border-black justify-content-center">
+                            <button id="new-event" class="btn btn-primary invisible">
+                                Upload a new event&#127881
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- Comments Modal -->
             <div class="modal fade" id="comments-modal" tabindex="-1" aria-labelledby="commentsModalLabel" aria-hidden="true">
@@ -203,7 +246,7 @@
                                     <button id="submit-partecipation" class="btn btn-secondary me-3">
                                         Partecipate ;)
                                     </button>
-                                    <button id="submit-busy" class="btn btn-secondary ms-3 px-4"  disabled>
+                                    <button id="submit-busy" class="btn btn-secondary ms-3 px-4">
                                         I'm busy :(
                                     </button>
                                 </div>
@@ -216,5 +259,6 @@
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
             <!-- JS import -->
             <script src="/static/js/homepage.js" type="module"></script>
+            <script src="/static/js/upload.js" type="module"></script>
         </body>
     </html>

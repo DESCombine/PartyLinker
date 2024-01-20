@@ -3,13 +3,16 @@
 - [ ] Cool graphics
 - [x] Cooments forms
 - [x] Like button
-- [ ] Partecipation button
-- [ ] Profile page modals
-- [ ] Profile page photos
-- [ ] Registration page
+- [x] Partecipation button
+- [x] Profile page modals
+- [x] Profile page photos
+- [ ] Registration page (backend)
+- [ ] Modify profile info
 - [ ] Content upload
 - [ ] User tagging
 - [ ] Follow button
+- [ ] Researched profile page
+- [ ] Notifications
 # WOW effect
 - [ ] 2F Authentication
 - [ ] Remember me

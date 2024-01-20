@@ -12,6 +12,20 @@ export async function loadEvent(event_id) {
     return event;
 }
 
+export function cleanTemplateList(listId) {
+    const modalList = document.getElementById(listId);
+    while (modalList.getElementsByTagName('li').length > 0) {
+        modalList.removeChild(modalList.lastChild);
+    }
+}
+
+function resetEventListener(oldButton, fun) {
+    const newButton = oldButton.cloneNode(true);
+    oldButton.parentNode.replaceChild(newButton, oldButton);
+    newButton.addEventListener("click", fun);
+    return newButton;
+}
+
 export function addEventDescription(post, event) {
     let template = document.getElementById("description-template");
     let clone = document.importNode(template.content, true);
@@ -68,14 +82,12 @@ async function like(like_id, type, request, addOrRemove) {
         likeButton.innerHTML = "&#129293";
         fun = function() { addlike(like_id, type); };
     }
-    const oldButton = likeButton;
-    const newButton = oldButton.cloneNode(true);
-    oldButton.parentNode.replaceChild(newButton, oldButton);
-    newButton.addEventListener("click", fun);
+    resetEventListener(likeButton, fun);
 }
 
 async function submitComment(post_id) {
     const content = document.querySelector("#comment-input").value;
+    document.querySelector("#comment-input").value = "";
     await fetch(request_path + "/user/upload_comment.php", {
         method: "POST",
         credentials: "include",
@@ -87,9 +99,11 @@ async function submitComment(post_id) {
             "content": content
         })
     });
+    cleanTemplateList("comments");
+    showComments(post_id);
 }
 
-async function removeComment(comment_id) {
+async function removeComment(comment_id, post_id) {
     await fetch(request_path + "/user/remove_comment.php", {
         method: "POST",
         credentials: "include",
@@ -100,6 +114,8 @@ async function removeComment(comment_id) {
             "comment_id": comment_id
         })
     });
+    cleanTemplateList("comments");
+    showComments(post_id);
 }
 
 async function submitPartecipation(event_id) {
@@ -113,8 +129,8 @@ async function submitPartecipation(event_id) {
             "event_id": event_id
         })
     });
-    document.querySelector("#submit-partecipation").disabled = true;
-    document.querySelector("#submit-busy").disabled = false;
+    cleanTemplateList("partecipants");
+    showPartecipations(event_id);
 }
 
 async function submitBusy(event_id) {
@@ -128,20 +144,8 @@ async function submitBusy(event_id) {
             "event_id": event_id
         })
     });
-    document.querySelector("#submit-partecipation").disabled = true;
-    document.querySelector("#submit-busy").disabled = false;
-}
-
-async function getCurrentUser() {
-    const response = await fetch(request_path + "/user/load_current_username.php", {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        credentials: "include"
-    });
-    const user = await response.json();
-    return user;
+    cleanTemplateList("partecipants");
+    showPartecipations(event_id);
 }
 
 async function loadComments(post_id) {
@@ -150,10 +154,9 @@ async function loadComments(post_id) {
     return comments;
 }
 
-export async function showComments(post_id, poster) {
+export async function showComments(post_id) {
     const comments = document.getElementById("comments");
     const comments_to_show = await loadComments(post_id);
-    const current_user = getCurrentUser();
     let template = document.getElementById("comment-template");
     for (let i = 0; i < comments_to_show.length; i++) {
         let comment = comments_to_show[i];
@@ -162,9 +165,9 @@ export async function showComments(post_id, poster) {
         clone.querySelector("#comment-user-photo").src = "/static/img/uploads/" + comment.profile_photo;
         clone.querySelector("#comment-name").textContent = comment.username;
         clone.querySelector("#comment-content").textContent = comment.content;
-        if (comment.username === current_user || poster === current_user) {
+        if (comment.owner) {
             clone.querySelector("#comment-trash").classList.remove("invisible");
-            clone.querySelector("#comment-trash").addEventListener("click", function() { removeComment(comment.comment_id); })
+            clone.querySelector("#comment-trash").addEventListener("click", function() { removeComment(comment.comment_id, post_id); })
         }
         const likeButton = clone.querySelector("#comment-like-bt");
         if (comment.liked) {
@@ -177,7 +180,7 @@ export async function showComments(post_id, poster) {
         comments.appendChild(clone);
     }
     const comment_button = document.querySelector("#submit-comment");
-    comment_button.addEventListener("click", function() { submitComment(post_id); });
+    resetEventListener(comment_button, function() { submitComment(post_id); });
 }
 
 export async function loadPartecipations(event_id) {
@@ -189,12 +192,11 @@ export async function loadPartecipations(event_id) {
 export async function showPartecipations(event_id) {
     const partecipations = document.getElementById("partecipants");
     const partecipations_list = await loadPartecipations(event_id);
-    const current_user = getCurrentUser();
     let template = document.getElementById("partecipants-template");
     let isUserPartecipating = false;
     for (let i = 0; i < partecipations_list.length; i++) {
         let partecipation = partecipations_list[i];
-        if (partecipation.username == current_user) {
+        if (partecipation.partecipating) {
             isUserPartecipating = true;
         }
         let clone = document.importNode(template.content, true);
@@ -204,8 +206,6 @@ export async function showPartecipations(event_id) {
     }
     const partecipants_button = document.querySelector("#submit-partecipation");
     const busy_button = document.querySelector("#submit-busy");
-    partecipants_button.addEventListener("click", function() { submitPartecipation(event_id); });
-    busy_button.addEventListener("click", function() { submitBusy(event_id); });
-    partecipants_button.disabled = isUserPartecipating;
-    busy_button.disabled = !isUserPartecipating;
+    resetEventListener(partecipants_button, function() { submitPartecipation(event_id); }).disabled = isUserPartecipating;
+    resetEventListener(busy_button, function() { submitBusy(event_id); }). disabled = !isUserPartecipating;
 }
