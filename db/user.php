@@ -80,7 +80,7 @@ namespace User {
                 throw new \Exception("Password not set");
             }
             $sql = "INSERT INTO user (username, email, name, surname, birth_date, profile_photo, background, bio, phone, password, online) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             try {
                 $driver->query(
                     $sql,

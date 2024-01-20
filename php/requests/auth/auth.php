@@ -47,6 +47,6 @@
 
 
     echo json_encode(array("message" => "success"), JSON_PRETTY_PRINT);
-    // header("Location: localhost");
+    header("Location: http://localhost");
     $driver->close_connection();
 ?>
