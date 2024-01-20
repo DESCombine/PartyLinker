@@ -1,0 +1,8 @@
+h1 {
+    font-family: 'Renner*';
+    color: #422F75;
+}
+
+form > div:first-child {
+    height: 65vh;
+}

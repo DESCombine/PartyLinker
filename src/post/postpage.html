@@ -3,15 +3,176 @@
         <head>
             <title>PartyLinker - Upload Post</title>
             <meta charset="UTF-8"/>
-            <link rel="stylesheet" type="text/css" href="/static/css/homepage.css"/>
+            <link rel="stylesheet" type="text/css" href="/static/css/postpage.css"/>
             <meta name="viewport" content="width=device-width, initial-scale=1">
+            <!-- Font Renner import -->
+            <link rel="stylesheet" href="https://indestructibletype-fonthosting.github.io/renner.css" type="text/css" charset="utf-8" />
             <!-- Bootstrap import -->
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         </head>
         <body>
+            <div class="container-fluid overflow-hidden">
+                <header class="text-center mt-4 mb-4">
+                    <h1>Post new Photo</h1>
+                </header>
+                <main class="border border-black p-3">
+                    <form action="" method="POST">
+                        <div class="overflow-x-hidden">
+                            <div class="row my-4 justify-content-center">
+                                <label for="inputImage" class="col-3 col-form-label">Picture*</label>
+                                <div class="col-7">
+                                    <input type="file" class="form-control" id="inputImage" name="image">
+                                </div>
+                            </div>
+                            <div class="row my-4 justify-content-center">
+                                <label for="inputTags" class="col-3 col-form-label">Tags</label>
+                                <div class="col-7">
+                                    <input type="text" class="form-control" id="inputEvent" name="event">
+                                </div>
+                            </div>
+                            <div class="row my-4 justify-content-center">
+                                <label for="inputDescription" class="col-3 col-form-label">Description*</label>
+                                <div class="col-7">
+                                    <input type="text" class="form-control" id="inputDescription" name="description">
+                                </div>
+                            </div>
+                            <div id="event-inputs" class="invisible">
+                                <div class="row my-4 justify-content-center">
+                                    <label for="inputEvent" class="col-3 col-form-label">Event name*</label>
+                                    <div class="col-7">
+                                        <input type="text" class="form-control" id="inputEvent" name="event">
+                                    </div>
+                                </div>
+                                <div class="row my-4 justify-content-center">
+                                    <label for="inputPlace" class="col-3 col-form-label">Place*</label>
+                                    <div class="col-7">
+                                        <input type="Place" class="form-control" id="inputPlace" name="place">
+                                    </div>
+                                </div>
+                                <div class="row my-4 justify-content-center">
+                                    <label for="inputDate" class="col-3 col-form-label">Date*</label>
+                                    <div class="col-7">
+                                        <input type="date" class="form-control" id="inputDate" name="date">
+                                    </div>
+                                </div>
+                                <div class="row my-4 justify-content-center">
+                                    <label for="inputStartTime" class="col-3 col-form-label">Start time*</label>
+                                    <div class="col-7">
+                                        <input type="time" class="form-control" id="inputStartTime" name="start_time">
+                                    </div>
+                                </div>
+                                <div class="row my-4 justify-content-center">
+                                    <label for="inputEndTime" class="col-3 col-form-label">End time*</label>
+                                    <div class="col-7">
+                                        <input type="time" class="form-control" id="inputEndTime" name="end_time">
+                                    </div>
+                                </div>
+                                <div class="row my-4 justify-content-center">
+                                    <label for="inputVips" class="col-3 col-form-label">Vips</label>
+                                    <div class="col-7">
+                                        <input type="text" class="form-control" id="inputVips" name="vips">
+                                    </div>
+                                </div>
+                                <div class="row my-4 justify-content-center">
+                                    <label for="inputMaxPeople" class="col-3 col-form-label">Max people*</label>
+                                    <div class="col-7">
+                                        <input type="number" class="form-control" id="inputMaxPeople" name="max_people">
+                                    </div>
+                                </div>
+                                <div class="row my-4 justify-content-center">
+                                    <label for="inputPrice" class="col-3 col-form-label">Price</label>
+                                    <div class="col-7">
+                                        <input type="number" class="form-control" id="inputPrice" name="price">
+                                    </div>
+                                </div>
+                                <div class="row my-4 justify-content-center">
+                                    <label for="inputMinAge" class="col-3 col-form-label">Min age</label>
+                                    <div class="col-7">
+                                        <input type="number" class="form-control" id="inputMinAge" name="min_age">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row text-center">
+                            <p>(* marked Labels are mandatory)</p>
+                        </div>
+                        <div class="d-flex gap-5 justify-content-center">
+                                <button type="reset" class="btn btn-secondary btn-lg ms-3">
+                                    Cancel
+                                </button>
+                                <button id="post-button" type="submit" class="btn btn-secondary btn-lg me-3 px-4">
+                                    Post
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </main>
+                <aside class="mt-5">
+                    <nav class="bg-light fixed-bottom border-top border-black">
+                        <ol class="nav nav-fill my-2">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/">&#127968</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/search/">&#128269</a>
+                            </li>
+                            <li class="nav-item">
+                                <button aria-current="page" id="upload-button" class="nav-link active btn border border-2 border-dark rounded"  data-bs-toggle="modal" data-bs-target="#upload-modal">
+                                    &#10133
+                                </button>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/map/">&#128506</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/profile/">&#128100</a>
+                            </li>
+                        </ol>
+                    </nav>
+                </aside>
+            </div>
+            <!-- Upload Modal -->
+            <div class="modal fade" id="upload-modal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header justify-content-center">
+                            <h4 class="modal-title" id="uploadModalLabel">Upload new picture&#128248</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <input type="text" id="upload-searchbar" class="border-1 rounded" placeholder="Event name...">
+                                </div>
+                                <div class="row">
+                                    <ol class="list-group list-group-flush my-1 overflow-y-auto" id="search-event-results">
+                                        <template id="event-result-template">
+                                            <li class="list-group-item"  id="ev-res-id">
+                                                <div class="row justify-content-start">
+                                                    <div class="col-2">
+                                                        <img id="ev-res-image" src="/static/img/default-image.png" class="img-fluid img-thumbnail">
+                                                    </div>
+                                                    <div class="col">
+                                                        <h5 id="ev-res-name">Event name</h5>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </template>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer border-top border-black justify-content-center">
+                            <button id="new-event" class="btn btn-primary invisible">
+                                Upload a new event&#127881
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- Bootstrap import -->
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
             <!-- JS import -->
-            <script src="/static/js/upload.js" type="module"></script>
+            <script src="/static/js/uploadbt.js" type="module"></script>
+            <script src="/static/js/uploadpost.js" type="module"></script>
         </body>
     </html>

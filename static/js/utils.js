@@ -12,6 +12,12 @@ export async function loadEvent(event_id) {
     return event;
 }
 
+export async function checkOrganizer() {
+    const response = await fetch(request_path + "/user/load_settings.php");
+    const settings = await response.json();
+    return settings.organizer;
+}
+
 export function cleanTemplateList(listId) {
     const modalList = document.getElementById(listId);
     while (modalList.getElementsByTagName('li').length > 0) {

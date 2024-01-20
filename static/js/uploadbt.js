@@ -1,13 +1,10 @@
 import { request_path } from "/static/js/config.js?v=1";
+import { checkOrganizer } from "/static/js/utils.js";
 
-let newPostEventId = 0;
+document.getElementById("upload-modal").addEventListener("shown.bs.modal", function() { renderFooter() });
 
-document.getElementById("upload-modal").addEventListener("shown.bs.modal", function() { checkOrganizer() });
-
-async function checkOrganizer() {
-    const response = await fetch(request_path + "/user/load_settings.php");
-    const settings = await response.json();
-    if (settings.organizer == 1) {
+async function renderFooter() {
+    if (checkOrganizer()) {
         document.getElementById("new-event").classList.remove("invisible");
         document.getElementById("new-event").addEventListener("click", function() { selectEvent(0); });
     } else {
@@ -45,6 +42,5 @@ async function showSearchResults(event) {
 }
 
 function selectEvent(event_id) {
-    window.location.replace("../post/postpage.html");
-    newPostEventId = event_id;
+    window.location.replace("../post/postpage.html?event=" + event_id);
 }
