@@ -6,7 +6,7 @@
 - [x] Partecipation button
 - [x] Profile page modals
 - [x] Profile page photos
-- [ ] Registration page (backend)
+- [x] Registration page (backend)
 - [ ] Modify profile info
 - [ ] Content upload
 - [ ] User tagging

@@ -29,6 +29,6 @@ if ($user != null) {
 
 
 echo json_encode(array("message" => "success"), JSON_PRETTY_PRINT);
-header("Location: localhost");
+header("Location: https://partylinker.live/login/login.html");
 $driver->close_connection();
 ?>
