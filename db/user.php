@@ -106,6 +106,46 @@ namespace User {
         {
             return password_verify($password, $this->password);
         }
+
+        public function update_infos(\DBDriver $driver, string $name, string $surname, string $birth_date, string $email, string $phone, string $username, string $password, string $gender, int $organizer, string $profilePhoto, string $bannerPhoto, string $bio, string $language, int $notifications, int $TFA)
+        {
+            $sql = "UPDATE user SET email = ?, name = ?, surname = ?, birth_date = ?, profile_photo = ?, background = ?, bio = ?, phone = ?, password = ? WHERE username = ?";
+            try {
+                $driver->query(
+                    $sql,
+                    $email,
+                    $name,
+                    $surname,
+                    date($birth_date),
+                    $profilePhoto,
+                    $bannerPhoto,
+                    $bio,
+                    $phone,
+                    $password,
+                    $username
+                );
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+            // check if settings exists
+            $sql = "SELECT * FROM settings WHERE username = ?";
+            try {
+                $result = $driver->query($sql, $this->username);
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+            if ($result->num_rows == 0) {
+                $settings = new DBSettings($username, $language, $notifications, $TFA, $organizer);
+                $settings->db_serialize($driver);
+            } else {
+                $sql = "UPDATE settings SET language = ?, notifications = ?, 2fa = ?, organizer = ? WHERE username = ?";
+                try {
+                    $driver->query($sql, $language, $notifications, $TFA, $organizer, $this->username);
+                } catch (\Exception $e) {
+                    throw new \Exception("Error while querying the database: " . $e->getMessage());
+                }
+            }
+        }
     }
 
     class DBSettings implements \DBTable
@@ -116,7 +156,8 @@ namespace User {
         private $twofa;
         private $organizer;
 
-        public function __construct($username = null, $language = null, $notifications = null, $twofa = null, $organizer = null) {
+        public function __construct($username = null, $language = null, $notifications = null, $twofa = null, $organizer = null)
+        {
             $this->username = $username;
             $this->language = $language;
             $this->notifications = $notifications;
@@ -124,7 +165,8 @@ namespace User {
             $this->organizer = $organizer;
         }
 
-        public function jsonSerialize() {
+        public function jsonSerialize()
+        {
             return [
                 "username" => $this->username,
                 "language" => $this->language,
@@ -134,7 +176,8 @@ namespace User {
             ];
         }
 
-        public function db_serialize(\DBDriver $driver) {
+        public function db_serialize(\DBDriver $driver)
+        {
             $sql = "INSERT INTO settings (username, language, notifications, 2fa, organizer) 
                     VALUES (?, ?, ?, ?, ?)";
             try {
