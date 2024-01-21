@@ -1,6 +1,7 @@
 <?php 
     require_once(getenv("PL_ROOTDIRECTORY")."php/bootstrap.php");
     require_once(getenv("PL_ROOTDIRECTORY")."php/requests/authenticated_request.php");
+    require_once(getenv("PL_ROOTDIRECTORY")."php/img_upload_handler.php");
     require_once(getenv("PL_ROOTDIRECTORY")."db/post.php");
     use Post\PostUtility;
     require_once(getenv("PL_ROOTDIRECTORY")."db/event.php");
@@ -10,23 +11,22 @@
     global $driver;
     global $username;
 
-    $request = json_decode(file_get_contents('php://input'), true);
-    $event_id = $request["event_id"];
-    $image = $request["image"];
-    $description = $request["description"];
+    $event_id = $_POST["event-id"];
+    $image = img_handler($_POST["image"]);
+    $description = $_POST["description"];
     $event_post = 0;
     if ($event_id == 0) {
         $event_post = 1;
-        $name = $request["name"];
-        $location = $request["location"];
-        $starting_date = $request["starting_date"];
-        $ending_date = $request["ending_date"];
-        $vips = $request["vips"];
-        $max_capacity = $request["max_capacity"];
-        $price = $request["price"];
-        $minimum_age = $request["minimum_age"];
+        $name = $_POST["event-name"];
+        $location = $_POST["location"];
+        $starting_date = $_POST["starting-date"];
+        $ending_date = $_POST["ending-date"];
+        $vips = $_POST["vips"];
+        $max_capacity = $_POST["max-people"];
+        $price = $_POST["price"];
+        $minimum_age = $_POST["min-age"];
     }
-    
+
     try {
         if ($event_id == 0) {
             $event = EventUtility::from_form($name, $location, $starting_date, $ending_date, $vips, $max_capacity, $price, $minimum_age);

@@ -10,5 +10,5 @@ if (event_id == 0) {
     document.querySelector("form div").classList.add("overflow-y-hidden");
 }
 
-document.getElementsByName("event_id")[0].value = event_id;
-document.getElementsByTagName("form")[0].action = request_path + "/upload_post.php";
+document.getElementsByName("event-id")[0].value = event_id;
+document.getElementsByTagName("form")[0].action = request_path + "/user/upload_post.php";
