@@ -1,7 +1,7 @@
 <?php
 require_once(getenv("PL_ROOTDIRECTORY") . "php/bootstrap.php");
 use Firebase\JWT\JWT;
-
+require_once(getenv("PL_ROOTDIRECTORY")."php/img_upload_handler.php");
 require_once(getenv("PL_ROOTDIRECTORY") . "db/user.php");
 require_once(getenv("PL_ROOTDIRECTORY") . "php/requests/cors.php");
 header('Content-Type: application/json');
@@ -21,8 +21,8 @@ if (is_null($_POST["organizer"])) {
     $organizer = $_POST["organizer"];
 }
 
-$profilePhoto = $_POST["profilePhoto"];
-$bannerPhoto = $_POST["bannerPhoto"];
+$profilePhoto = img_handler($_POST["profilePhoto"]);
+$bannerPhoto = img_handler($_POST["bannerPhoto"]);
 $bio = $_POST["bio"];
 $language = $_POST["language"];
 if (is_null($_POST["notifications"])) {
