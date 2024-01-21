@@ -2,7 +2,7 @@
     require_once(getenv("PL_ROOTDIRECTORY")."php/bootstrap.php");
     require_once(getenv("PL_ROOTDIRECTORY")."php/requests/authenticated_request.php");
     require_once(getenv("PL_ROOTDIRECTORY")."php/img_upload_handler.php");
-    require_once(getenv("PL_ROOTDIRECTORY")."php/requests/email/tag_notifications_handler.php");
+    require_once(getenv("PL_ROOTDIRECTORY")."php/requests/email/tag_notify_handler.php");
     require_once(getenv("PL_ROOTDIRECTORY")."db/post.php");
     use Post\PostUtility;
     require_once(getenv("PL_ROOTDIRECTORY")."db/event.php");
@@ -15,7 +15,7 @@
     $event_id = $_POST["event-id"];
     $image = img_handler($_POST["image"]);
     $description = $_POST["description"];
-    tag_notifications_handler($description);
+    tag_notify_handler($description);
     $event_post = 0;
     if ($event_id == 0) {
         $event_post = 1;

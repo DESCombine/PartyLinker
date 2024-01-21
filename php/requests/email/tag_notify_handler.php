@@ -4,7 +4,7 @@
     require_once(getenv("PL_ROOTDIRECTORY")."db/user.php");
     use User\UserUtility;
 
-    function tag_notifications_handler($text) {
+    function tag_notify_handler($text) {
         global $driver;
         global $username;
 
