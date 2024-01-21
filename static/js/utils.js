@@ -12,6 +12,12 @@ export async function loadEvent(event_id) {
     return event;
 }
 
+export async function checkOrganizer() {
+    const response = await fetch(request_path + "/user/load_settings.php");
+    const settings = await response.json();
+    return settings.organizer;
+}
+
 export function cleanTemplateList(listId) {
     const modalList = document.getElementById(listId);
     while (modalList.getElementsByTagName('li').length > 0) {
@@ -39,11 +45,11 @@ export function addEventDescription(post, event) {
     post.appendChild(clone);
 }
 
-export async function addlike(like_id, type) {
+export async function addLike(like_id, type) {
     like(like_id, type, "/user/upload_like.php", 1);
 }
 
-export async function removelike(like_id, type) {
+export async function removeLike(like_id, type) {
     like(like_id, type, "/user/remove_like.php", -1);
 }
 
@@ -72,15 +78,14 @@ async function like(like_id, type, request, addOrRemove) {
             likeButton = element.querySelector("#comment-like-bt");
             break;
     }
-    console.log(element);
     likes.innerHTML = parseInt(likes.innerHTML) + addOrRemove;
     let fun;
     if (addOrRemove == 1) {
         likeButton.innerHTML = "&#10084";
-        fun = function() { removelike(like_id, type); };
+        fun = function() { removeLike(like_id, type); };
     } else {
         likeButton.innerHTML = "&#129293";
-        fun = function() { addlike(like_id, type); };
+        fun = function() { addLike(like_id, type); };
     }
     resetEventListener(likeButton, fun);
 }
@@ -171,10 +176,10 @@ export async function showComments(post_id) {
         }
         const likeButton = clone.querySelector("#comment-like-bt");
         if (comment.liked) {
-            likeButton.addEventListener("click", function() { removelike(comment.comment_id, 'comment'); });
+            likeButton.addEventListener("click", function() { removeLike(comment.comment_id, 'comment'); });
             likeButton.innerHTML = "&#10084";
         } else {
-            likeButton.addEventListener("click", function() { addlike(comment.comment_id, 'comment'); });
+            likeButton.addEventListener("click", function() { addLike(comment.comment_id, 'comment'); });
         }
         clone.querySelector("#comment-likes").innerHTML = comment.likes;
         comments.appendChild(clone);

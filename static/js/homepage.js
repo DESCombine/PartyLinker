@@ -1,5 +1,5 @@
 import { request_path } from "/static/js/config.js?v=1";
-import { cleanTemplateList, addEventDescription, loadEvent, showComments, showPartecipations } from "/static/js/utils.js";
+import { cleanTemplateList, removeLike, addLike, addEventDescription, loadEvent, showComments, showPartecipations } from "/static/js/utils.js";
 
 async function loadOnlineUsers() {
     const response = await fetch(request_path + "/user/load_online_users.php", {
@@ -60,10 +60,10 @@ async function addNewFeedPost(template, feed, post_id, event_id, user_photo, use
     clone.querySelector("#post-photo").src = "/static/img/uploads/" + image;
     const likeButton = clone.querySelector("#likes-button");
     if (liked) {
-        likeButton.addEventListener("click", function() { removelike(post_id, 'post'); });
+        likeButton.addEventListener("click", function() { removeLike(post_id, 'post'); });
         likeButton.innerHTML = "&#10084";
     } else {
-        likeButton.addEventListener("click", function() { addlike(post_id, 'post'); });
+        likeButton.addEventListener("click", function() { addLike(post_id, 'post'); });
     }
     clone.querySelector("#comments-button").addEventListener("click", function() { showComments(post_id); });
     clone.querySelector("#post-likes").innerHTML = likes;
@@ -72,6 +72,10 @@ async function addNewFeedPost(template, feed, post_id, event_id, user_photo, use
         clone.querySelector("#partecipants-button").addEventListener("click", function() { showPartecipations(event_id); });
         clone.querySelector("#partecipants-button").classList.remove("invisible");
         addEventDescription(clone, await loadEvent(event_id));
+    } else {
+        console.log("No event");
+        clone.querySelector("#event-button").addEventListener("click", function () { window.location.replace("../event/eventpage.html?id=" + event_id); });
+        clone.querySelector("#event-button").classList.remove("invisible");
     }
     feed.appendChild(clone);
 }
