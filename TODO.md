@@ -8,7 +8,7 @@
 - [x] Profile page photos
 - [x] Registration page
 - [ ] Modify profile info (upload images)
-- [ ] Content upload
+- [x] Content upload
 - [ ] User tagging
 - [ ] Follow button
 - [ ] Researched profile page
