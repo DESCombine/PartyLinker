@@ -36,6 +36,7 @@ async function showSearchResults(event) {
         clone.querySelector("#ev-res-id").setAttribute("name", "event"+event.event_id);
         clone.querySelector("#ev-res-image").src = "/static/img/uploads/" + event.image;
         clone.querySelector("#ev-res-name").textContent = event.name;
+        clone.querySelector("#ev-res-date").textContent = event.date;
         clone.querySelector("#ev-res-id").addEventListener("click", function() { selectEvent(event.event_id); });
         searchResults.appendChild(clone);
     }

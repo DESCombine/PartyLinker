@@ -42,11 +42,13 @@
             }
 
             public function db_serialize($driver) {
-                $sql = "INSERT INTO event (event_id, name, location, starting_date, ending_date, vips, max_capacity, price, minimum_age) 
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                $sql = "INSERT INTO event (name, location, starting_date, ending_date, vips, max_capacity, price, minimum_age) 
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
                 try {
-                    $driver->query($sql, $this->event_id, $this->name, $this->location, $this->starting_date, 
+                    $driver->query($sql, $this->name, $this->location, $this->starting_date, 
                             $this->ending_date, $this->vips, $this->max_capacity, $this->price, $this->minimum_age);
+                    // returns the id of the inserted event
+                    return $driver->get_last_inserted_id();
                 } catch (\Exception $e) {
                     throw new \Exception("Error while querying the database: " . $e->getMessage());
                 }
@@ -95,6 +97,10 @@
         }
 
         class EventUtility {
+            public static function from_form($name, $location, $starting_date, $ending_date, $vips, $max_capacity, $price, $minimum_age) {
+                return new DBEvent($name, $location, $starting_date, $ending_date, $vips, $max_capacity, $price, $minimum_age);
+            }
+
             public static function from_db_with_event_id(\DBDriver $driver, $event_id) {
                 $sql = "SELECT * FROM event WHERE event_id = ?";
                 try {
@@ -130,7 +136,7 @@
             }
 
             public static function from_db_with_name(\DBDriver $driver, $name) {
-                $sql = "SELECT E.event_id, E.name, P.image
+                $sql = "SELECT E.event_id, E.name, E.starting_date, P.image
                         FROM event E, post P 
                         WHERE E.name = ?
                         AND E.event_id = P.event_id
@@ -147,7 +153,8 @@
                         $event = [
                             "event_id" => $row["event_id"],
                             "name" => $row["name"],
-                            "image" => $row["image"]
+                            "image" => $row["image"],
+                            "date" => $row["starting_date"]
                         ];
                         array_push($events, $event);
                     }

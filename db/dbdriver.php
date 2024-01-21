@@ -38,5 +38,9 @@ class DBDriver {
         mysqli_close($this->conn);
         $this->conn = null;
     }
+    
+    public function get_last_inserted_id(): int {
+        return mysqli_insert_id($this->conn);
+    }
 }
 ?>

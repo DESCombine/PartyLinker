@@ -18,77 +18,76 @@
                 <main class="border border-black p-3">
                     <form action="" method="POST">
                         <div class="overflow-x-hidden">
-                            <div class="row my-4 justify-content-center">
-                                <label for="inputImage" class="col-3 col-form-label">Picture*</label>
-                                <div class="col-7">
-                                    <input type="file" class="form-control" id="inputImage" name="image">
-                                </div>
+                            <div>
+                                <input type="hidden" name="event-id">
                             </div>
                             <div class="row my-4 justify-content-center">
-                                <label for="inputTags" class="col-3 col-form-label">Tags</label>
-                                <div class="col-7">
+                                <label for="inputImage" class="col-4 col-form-label">Picture*</label>
+                                <div class="col-8">
+                                    <input type="file" class="form-control" id="inputImage" name="image" required>
+                                </div>
+                            </div>
+                            <!--
+                            <div class="row my-4 justify-content-center">
+                                <label for="inputTags" class="col-4 col-form-label">Tags</label>
+                                <div class="col-8">
                                     <input type="text" class="form-control" id="inputEvent" name="event">
                                 </div>
                             </div>
+                            -->
                             <div class="row my-4 justify-content-center">
-                                <label for="inputDescription" class="col-3 col-form-label">Description*</label>
-                                <div class="col-7">
-                                    <input type="text" class="form-control" id="inputDescription" name="description">
+                                <label for="inputDescription" class="col-4 col-form-label">Description*</label>
+                                <div class="col-8">
+                                    <textarea class="form-control" id="inputDescription" name="description" required></textarea>
                                 </div>
                             </div>
                             <div id="event-inputs" class="invisible">
                                 <div class="row my-4 justify-content-center">
-                                    <label for="inputEvent" class="col-3 col-form-label">Event name*</label>
-                                    <div class="col-7">
-                                        <input type="text" class="form-control" id="inputEvent" name="event">
+                                    <label for="inputEvent" class="col-4 col-form-label">Event name*</label>
+                                    <div class="col-8">
+                                        <input type="text" class="form-control" id="inputEvent" name="event-name" required>
                                     </div>
                                 </div>
                                 <div class="row my-4 justify-content-center">
-                                    <label for="inputPlace" class="col-3 col-form-label">Place*</label>
-                                    <div class="col-7">
-                                        <input type="Place" class="form-control" id="inputPlace" name="place">
+                                    <label for="inputLocation" class="col-4 col-form-label">Location*</label>
+                                    <div class="col-8">
+                                        <input type="Location" class="form-control" id="inputLocation" name="location" required>
                                     </div>
                                 </div>
                                 <div class="row my-4 justify-content-center">
-                                    <label for="inputDate" class="col-3 col-form-label">Date*</label>
-                                    <div class="col-7">
-                                        <input type="date" class="form-control" id="inputDate" name="date">
+                                    <label for="inputStartDate" class="col-4 col-form-label">Starting date*</label>
+                                    <div class="col-8">
+                                        <input type="datetime-local" class="form-control" id="inputStartDate" name="starting-date" required>
                                     </div>
                                 </div>
                                 <div class="row my-4 justify-content-center">
-                                    <label for="inputStartTime" class="col-3 col-form-label">Start time*</label>
-                                    <div class="col-7">
-                                        <input type="time" class="form-control" id="inputStartTime" name="start_time">
+                                    <label for="inputEndDate" class="col-4 col-form-label">Ending date*</label>
+                                    <div class="col-8">
+                                        <input type="datetime-local" class="form-control" id="inputEndDate" name="ending-date" required>
                                     </div>
                                 </div>
                                 <div class="row my-4 justify-content-center">
-                                    <label for="inputEndTime" class="col-3 col-form-label">End time*</label>
-                                    <div class="col-7">
-                                        <input type="time" class="form-control" id="inputEndTime" name="end_time">
-                                    </div>
-                                </div>
-                                <div class="row my-4 justify-content-center">
-                                    <label for="inputVips" class="col-3 col-form-label">Vips</label>
-                                    <div class="col-7">
+                                    <label for="inputVips" class="col-4 col-form-label">Vips</label>
+                                    <div class="col-8">
                                         <input type="text" class="form-control" id="inputVips" name="vips">
                                     </div>
                                 </div>
                                 <div class="row my-4 justify-content-center">
-                                    <label for="inputMaxPeople" class="col-3 col-form-label">Max people*</label>
-                                    <div class="col-7">
-                                        <input type="number" class="form-control" id="inputMaxPeople" name="max_people">
+                                    <label for="inputMaxPeople" class="col-4 col-form-label">Max people*</label>
+                                    <div class="col-8">
+                                        <input type="number" class="form-control" id="inputMaxPeople" name="max-people" required>
                                     </div>
                                 </div>
                                 <div class="row my-4 justify-content-center">
-                                    <label for="inputPrice" class="col-3 col-form-label">Price</label>
-                                    <div class="col-7">
+                                    <label for="inputPrice" class="col-4 col-form-label">Price</label>
+                                    <div class="col-8">
                                         <input type="number" class="form-control" id="inputPrice" name="price">
                                     </div>
                                 </div>
                                 <div class="row my-4 justify-content-center">
-                                    <label for="inputMinAge" class="col-3 col-form-label">Min age</label>
-                                    <div class="col-7">
-                                        <input type="number" class="form-control" id="inputMinAge" name="min_age">
+                                    <label for="inputMinAge" class="col-4 col-form-label">Min age</label>
+                                    <div class="col-8">
+                                        <input type="number" class="form-control" id="inputMinAge" name="min-age">
                                     </div>
                                 </div>
                             </div>
@@ -100,7 +99,7 @@
                                 <button type="reset" class="btn btn-secondary btn-lg ms-3">
                                     Cancel
                                 </button>
-                                <button id="post-button" type="submit" class="btn btn-secondary btn-lg me-3 px-4">
+                                <button type="submit" class="btn btn-secondary btn-lg me-3 px-4">
                                     Post
                                 </button>
                             </div>
