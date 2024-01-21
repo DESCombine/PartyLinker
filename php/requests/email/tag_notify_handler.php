@@ -8,8 +8,8 @@
         global $driver;
         global $username;
 
-        $tag_start = strpos($text, '@');
-        if ($tag_start) {
+        while (strpos($text, '@')) {
+            $tag_start = strpos($text, '@');
             $tag_end = strpos($text, ' ', $tag_start);
             if($tag_end === false) {
                 $tag_end = strlen($text);
