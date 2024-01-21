@@ -16,7 +16,7 @@
 # WOW effect
 - [ ] 2F Authentication
 - [ ] Remember me
-- [ ] Map page
+- [x] Map page
 - [ ] Dynamic search bar
 - [ ] Translation button
 # Media queries
