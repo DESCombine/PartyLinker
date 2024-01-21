@@ -23,21 +23,8 @@ namespace User {
 
 
         // TODO: add relationship to other user
-        public function __construct(
-            $username = null,
-            $email = null,
-            $name = null,
-            $surname = null,
-            $birth_date = null,
-            $profile_photo = null,
-            $background = null,
-            $bio = null,
-            $phone = null,
-            $password = null,
-            $online = null,
-            $follows = null,
-            $followers = null
-        ) {
+        public function __construct($username = null, $email = null, $name = null, $surname = null, $birth_date = null, $profile_photo = null, $background = null, $bio = null, $phone = null, 
+                $password = null, $online = null, $follows = null, $followers = null) {
             $this->username = $username;
             $this->email = $email;
             $this->name = $name;
@@ -52,8 +39,7 @@ namespace User {
             $this->follows = $follows;
             $this->followers = $followers;
         }
-        public function jsonSerialize()
-        {
+        public function jsonSerialize() {
             return [
                 "username" => $this->username,
                 "email" => $this->email,
@@ -69,13 +55,11 @@ namespace User {
                 "followers" => $this->followers
             ];
         }
-        public function create_password(string $password)
-        {
+        public function create_password(string $password) {
             $this->password = password_hash($password, PASSWORD_DEFAULT);
         }
         // insert into database
-        public function db_serialize(\DBDriver $driver)
-        {
+        public function db_serialize(\DBDriver $driver) {
             if ($this->password == null) {
                 throw new \Exception("Password not set");
             }
@@ -102,9 +86,16 @@ namespace User {
 
         }
 
-        public function check_password(string $password)
-        {
+        public function check_password(string $password) {
             return password_verify($password, $this->password);
+        }
+
+        public function getUsername() {
+            return $this->username;
+        }
+
+        public function getEmail() {
+            return $this->email;
         }
     }
 
@@ -191,38 +182,6 @@ namespace User {
                 return null;
             }
             return $user;
-        }
-
-        public static function from_db_with_username_like(\DBDriver $driver, string $username): array
-        {
-            $sql = "SELECT * FROM user WHERE username LIKE ?";
-
-            try {
-                $result = $driver->query($sql, "%" . $username . "%");
-            } catch (\Exception $e) {
-                throw new \Exception("Error while querying the database: " . $e->getMessage());
-            }
-            $users = array();
-            if ($result->num_rows > 0) {
-                for ($i = 0; $i < $result->num_rows; $i++) {
-                    $row = $result->fetch_array();
-                    $user = new DBUser(
-                        $row["username"],
-                        $row["email"],
-                        $row["name"],
-                        $row["surname"],
-                        $row["birth_date"],
-                        $row["profile_photo"],
-                        $row["background"],
-                        $row["bio"],
-                        $row["phone"],
-                        $row["password"],
-                        $row["online"]
-                    );
-                    array_push($users, $user);
-                }
-            }
-            return $users;
         }
 
         public static function from_db_with_email(\DBDriver $driver, string $email)
