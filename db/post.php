@@ -45,11 +45,11 @@
             }
 
             public function db_serialize($driver) {
-                $sql = "INSERT INTO post (post_id, event_id, username, image, description, posted, likes, event_post) 
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                $sql = "INSERT INTO post (event_id, username, image, description, event_post) 
+                        VALUES (?, ?, ?, ?, ?)";
                 try {
-                    $driver->query($sql, $this->post_id, $this->event_id, $this->username, $this->image, 
-                            $this->description, $this->posted, $this->likes, $this->event_post);
+                    $driver->query($sql, $this->event_id, $this->username, $this->image, 
+                            $this->description, $this->event_post);
                 } catch (\Exception $e) {
                     throw new \Exception("Error while querying the database: " . $e->getMessage());
                 }
@@ -181,6 +181,10 @@
         }
 
         class PostUtility {
+            public static function from_form($event_id, $username, $image, $description, $event_post) {
+                return new DBPost($event_id, $username, $image, $description, null, null, $event_post);
+            }
+
             public static function from_db_with_event_id(\DBDriver $driver, $event_id) {
                 $sql = "SELECT * FROM post WHERE event_id = ?";
                 try {
