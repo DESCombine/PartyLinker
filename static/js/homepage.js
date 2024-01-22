@@ -73,8 +73,12 @@ async function addNewFeedPost(template, feed, post_id, event_id, user_photo, use
         clone.querySelector("#partecipants-button").classList.remove("invisible");
         addEventDescription(clone, await loadEvent(event_id));
     } else {
+        clone.querySelector("#event-info").innerHTML = "";
         clone.querySelector("#event-button").addEventListener("click", function () { window.location.replace("../event/eventpage.html?id=" + event_id); });
         clone.querySelector("#event-button").classList.remove("invisible");
+        const parent = clone.querySelector("#under-post");
+        parent.insertBefore(parent.lastElementChild, parent.lastElementChild.previousElementSibling);
+        
     }
     feed.appendChild(clone);
 }

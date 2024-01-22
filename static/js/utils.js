@@ -32,9 +32,7 @@ function resetEventListener(oldButton, fun) {
     return newButton;
 }
 
-export function addEventDescription(post, event) {
-    let template = document.getElementById("description-template");
-    let clone = document.importNode(template.content, true);
+export function addEventDescription(clone, event) {
     clone.querySelector("#event-name").innerHTML = event.name;
     clone.querySelector("#event-place").innerHTML = "Place: " + event.location;
     clone.querySelector("#event-date").innerHTML = "Starting Date: " + event.starting_date + "<br>Ending Date: " + event.ending_date;
@@ -42,7 +40,6 @@ export function addEventDescription(post, event) {
     clone.querySelector("#event-people").innerHTML = "Available places: " + event.max_capacity;
     clone.querySelector("#event-price").innerHTML = "Price: " + event.price;
     clone.querySelector("#event-age").innerHTML = "Required age: " + event.minimum_age;
-    post.appendChild(clone);
 }
 
 export async function addLike(like_id, type) {
