@@ -78,10 +78,10 @@ async function like(like_id, type, request, addOrRemove) {
     likes.innerHTML = parseInt(likes.innerHTML) + addOrRemove;
     let fun;
     if (addOrRemove == 1) {
-        likeButton.innerHTML = "&#10084";
+        likeButton.innerHTML = "<i class='fa-solid fa-heart text-danger'></i>";
         fun = function() { removeLike(like_id, type); };
     } else {
-        likeButton.innerHTML = "&#129293";
+        likeButton.innerHTML = "<i class='fa-regular fa-heart'></i>";
         fun = function() { addLike(like_id, type); };
     }
     resetEventListener(likeButton, fun);
@@ -174,7 +174,7 @@ export async function showComments(post_id) {
         const likeButton = clone.querySelector("#comment-like-bt");
         if (comment.liked) {
             likeButton.addEventListener("click", function() { removeLike(comment.comment_id, 'comment'); });
-            likeButton.innerHTML = "&#10084";
+            likeButton.innerHTML = "<i class='fa-solid fa-heart text-danger'></i>";
         } else {
             likeButton.addEventListener("click", function() { addLike(comment.comment_id, 'comment'); });
         }

@@ -61,7 +61,7 @@ async function addNewFeedPost(template, feed, post_id, event_id, user_photo, use
     const likeButton = clone.querySelector("#likes-button");
     if (liked) {
         likeButton.addEventListener("click", function() { removeLike(post_id, 'post'); });
-        likeButton.innerHTML = "&#10084";
+        likeButton.innerHTML = "<i class='fa-solid fa-heart text-danger'></i>";
     } else {
         likeButton.addEventListener("click", function() { addLike(post_id, 'post'); });
     }

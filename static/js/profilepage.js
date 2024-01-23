@@ -123,7 +123,8 @@ async function showProfileInfos() {
     document.getElementById("followers").innerHTML = infos.followers;
     document.getElementById("followed").innerHTML = infos.followed;
     document.getElementById("profileImage").src = "/static/img/uploads/" + await loadUserImage(infos.username);
-    if(infos.banner != null) {
+    console.log(infos.background);
+    if(infos.background != null) {
         document.getElementById("bannerImage").src = "/static/img/uploads/" + infos.background;
     } else {
         document.getElementById("bannerImage").src = "/static/img/default-poster.png";
