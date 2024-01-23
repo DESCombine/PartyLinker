@@ -9,7 +9,7 @@
 - [x] Registration page
 - [x] Modify profile info
 - [x] Content upload
-- [ ] User tagging
+- [x] User tagging
 - [ ] Follow button
 - [ ] Researched profile page
 - [ ] Notifications
@@ -20,4 +20,5 @@
 - [ ] Dynamic search bar
 - [ ] Translation button
 # Media queries
-- [ ] all of them
+- [x] Homepage
+- [ ] The rest
