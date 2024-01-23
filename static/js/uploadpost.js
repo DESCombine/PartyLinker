@@ -5,8 +5,10 @@ const event_id = new URLSearchParams(window.location.search).get('event');
 if (event_id == 0) {
     document.getElementsByTagName("h1")[0].innerHTML = "Upload new event";
     document.querySelector("#event-inputs").classList.remove("invisible");
+    const logo = document.querySelector("#logo-img");
+    logo.parentNode.remove();
 } else {
-    document.getElementsByTagName("h1")[0].innerHTML = "Upload post for<br> event " + event_id;
+    document.getElementsByTagName("h1")[0].innerHTML = "Upload photo for event " + event_id;
     document.querySelector("form div").classList.add("overflow-y-hidden");
 }
 

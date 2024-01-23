@@ -6,3 +6,7 @@ h1 {
 form > div:first-child {
     height: 65vh;
 }
+
+@media (min-width: 767px) {
+    
+}
