@@ -349,6 +349,71 @@ namespace User {
             }
             return $users;
         }
+
+        public static function retrieve_email($driver, $username) {
+            $sql = "SELECT email FROM user WHERE username = ?";
+            try {
+                $result = $driver->query($sql, $username);
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                return $row["email"];
+            } else {
+                return null;
+            }
+        }
+
+        public static function insert_tfa($driver, $username, $code) {
+            $sql = "SELECT username FROM tfa_code WHERE username = ?";
+            try {
+                $result = $driver->query($sql, $username);
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+            if($result->num_rows > 0) {
+                $sql = "UPDATE tfa_code SET code = ? WHERE username = ?";
+                try {
+                    $driver->query($sql, $code, $username);
+                } catch (\Exception $e) {
+                    throw new \Exception("Error while querying the database: " . $e->getMessage());
+                }
+            } else {
+                $sql = "INSERT INTO tfa_code (username, code) VALUES (?, ?)";
+                try {
+                    $driver->query($sql, $username, $code);
+                } catch (\Exception $e) {
+                    throw new \Exception("Error while querying the database: " . $e->getMessage());
+                }
+            }
+        }
+
+        public static function retrieve_tfa($driver, $username) {
+            $sql = "SELECT code FROM tfa_code WHERE username = ?";
+            try {
+                $result = $driver->query($sql, $username);
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                return $row["code"];
+            } else {
+                return null;
+            }
+        }
+
+        public static function reset_tfa($driver, $username) {
+            $sql = "UPDATE tfa_code SET code = 0 WHERE username = ?";
+            try {
+                $driver->query($sql, $username);
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+        }
     }
     class UsernameTaken extends \Exception { }
     class EmailTaken extends \Exception { }
