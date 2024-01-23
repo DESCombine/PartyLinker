@@ -7,7 +7,7 @@
 - [x] Profile page modals
 - [x] Profile page photos
 - [x] Registration page
-- [ ] Modify profile info (upload images)
+- [x] Modify profile info
 - [x] Content upload
 - [ ] User tagging
 - [ ] Follow button
