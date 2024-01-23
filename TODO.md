@@ -9,10 +9,10 @@
 - [x] Registration page
 - [x] Modify profile info
 - [x] Content upload
-- [x] User tagging
 - [ ] Follow button
 - [ ] Researched profile page
-- [ ] Notifications
+- [x] User tagging notification
+- [x] Event notification
 # WOW effect
 - [ ] 2F Authentication
 - [ ] Remember me
