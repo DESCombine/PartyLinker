@@ -14,7 +14,7 @@
 - [x] User tagging notification
 - [x] Event notification
 # WOW effect
-- [ ] 2F Authentication
+- [x] 2F Authentication
 - [ ] Remember me
 - [x] Map page
 - [ ] Dynamic search bar
