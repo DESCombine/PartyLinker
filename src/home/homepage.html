@@ -159,13 +159,14 @@
             </div>
             <!-- Upload Modal -->
             <div class="modal fade" id="upload-modal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content h-75">
                         <div class="modal-header justify-content-center">
                             <h4 class="modal-title" id="uploadModalLabel">Upload new picture&#128248</h4>
                         </div>
                         <div class="modal-body">
                             <div class="container-fluid">
+                                <h5>Which event have you been to?</h5>
                                 <div class="row">
                                     <input type="text" id="upload-searchbar" class="border-1 rounded" placeholder="Event name...">
                                 </div>
@@ -174,7 +175,7 @@
                                         <template id="event-result-template">
                                             <li class="list-group-item"  id="ev-res-id">
                                                 <div class="row justify-content-start">
-                                                    <div class="col-2">
+                                                    <div class="col-2 col-md-1">
                                                         <img id="ev-res-image" src="/static/img/default-image.png" class="img-fluid img-thumbnail">
                                                     </div>
                                                     <div class="col">
@@ -191,7 +192,7 @@
                             </div>
                         </div>
                         <div class="modal-footer border-top border-black justify-content-center">
-                            <button id="new-event" class="btn btn-primary invisible">
+                            <button id="new-event" class="btn btn-primary btn-lg invisible">
                                 Upload a new event&#127881
                             </button>
                         </div>
@@ -200,8 +201,8 @@
             </div>
             <!-- Comments Modal -->
             <div class="modal fade" id="comments-modal" tabindex="-1" aria-labelledby="commentsModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                    <div class="modal-content">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable align-items-end align-items-md-center modal-lg">
+                    <div class="modal-content h-75">
                         <div class="modal-header justify-content-center">
                             <h4 class="modal-title" id="commentsModalLabel">&#128172Comments</h4>
                         </div>
@@ -211,7 +212,7 @@
                                     <template id="comment-template">
                                         <li class="list-group-item"  id="comment-id">
                                             <div class="row justify-content-start">
-                                                <div class="col-2">
+                                                <div class="col-2 mb-1 col-md-1">
                                                     <img id="comment-user-photo" src="/static/img/default-profile.png" alt="" class="img-fluid img-thumbnail">
                                                 </div>
                                                 <div class="col">
@@ -241,7 +242,7 @@
                                 </ol>
                             </div>
                         </div>
-                        <div class="modal-footer border-top border-black">
+                        <div class="modal-footer border-top border-black justify-content-center">
                             <form class="row">
                                 <div class="col-1">
                                     <label for="comment-input" class="col-form-label">&#128172</label>
@@ -261,18 +262,18 @@
             </div>
             <!-- Partecipants modal -->
             <div class="modal fade" id="partecipants-modal" tabindex="-1" aria-labelledby="partecipantsModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                    <div class="modal-content">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable align-items-end align-items-md-center modal-lg">
+                    <div class="modal-content h-75">
                         <div class="modal-header justify-content-center">
                             <h4 class="modal-title" id="partecipantsModalLabel">&#128111Partecipants</h4>
                         </div>
                         <div class="modal-body">
                             <div class="container-fluid">
                                 <ul class="list-group list-group-flush my-1 overflow-y-auto" id="partecipants">
-                                    <template id="partecipants-template">
+                                    <template id="partecipants-template">   
                                         <li class="list-group-item">
                                             <div class="row justify-content-start">
-                                                <div class="col-2">
+                                                <div class="col-2 col-md-1">
                                                     <img id="partecipants-photo" src="/static/img/default-profile.png" alt="" class="img-fluid img-thumbnail">
                                                 </div>
                                                 <div class="col">
