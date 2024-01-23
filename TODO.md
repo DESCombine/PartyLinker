@@ -21,4 +21,5 @@
 - [ ] Translation button
 # Media queries
 - [x] Homepage
+- [x] Upload page
 - [ ] The rest
