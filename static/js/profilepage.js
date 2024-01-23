@@ -1,5 +1,5 @@
 import { request_path } from "/static/js/config.js?v=1";
-import { loadUserImage, addlike, showComments, showPartecipations } from "/static/js/utils.js";
+import { loadUserImage, addLike, showComments, showPartecipations } from "/static/js/utils.js";
 
 const postButton = document.getElementById("buttons").getElementsByTagName("div").item(0);
 const eventButton = document.getElementById("buttons").getElementsByTagName("div").item(1);
@@ -135,7 +135,7 @@ async function showModalPost(modal, post_id, event_id, user_photo, username,
     document.getElementById("post-user-photo").src = "/static/img/uploads/" + await loadUserImage(username);
     document.getElementById("post-name").innerHTML = username;
     document.getElementById("post-photo").src = "/static/img/uploads/" + image;
-    document.getElementById("likes-button").addEventListener("click", function () { addlike(post_id, 1); });
+    document.getElementById("likes-button").addEventListener("click", function () { addLike(post_id, 1); });
     document.getElementById("comments-button").addEventListener("click", function () { showComments(post_id); })
     document.getElementById("post-likes").innerHTML = likes;
     document.getElementById("post-description").innerHTML = description;
