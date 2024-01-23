@@ -73,6 +73,11 @@ namespace User {
         {
             $this->password = password_hash($password, PASSWORD_DEFAULT);
         }
+
+        public function get_password()
+        {
+            return $this->password;
+        }
         // insert into database
         public function db_serialize(\DBDriver $driver)
         {
