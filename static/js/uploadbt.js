@@ -43,5 +43,5 @@ async function showSearchResults(event) {
 }
 
 function selectEvent(event_id) {
-    window.location.replace("../post/postpage.html?event=" + event_id);
+    window.location.replace("/post/postpage.html?event=" + event_id);
 }
