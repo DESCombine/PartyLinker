@@ -50,6 +50,7 @@
     if ($settings->getTFA()) {
         header("Location: https://partylinker.live/login/twofactorauth.html");
     } else {
+        UserUtility::update_online($driver, $username);
         header("Location: https://partylinker.live");
     }
     $driver->close_connection();

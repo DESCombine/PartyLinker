@@ -418,6 +418,15 @@ namespace User {
                 throw new \Exception("Error while querying the database: " . $e->getMessage());
             }
         }
+
+        public static function update_online($driver, $username) {
+            $sql = "UPDATE user SET online = NOT online WHERE username = ?";
+            try {
+                $driver->query($sql, $username);
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+        }
     }
     class UsernameTaken extends \Exception { }
     class EmailTaken extends \Exception { }

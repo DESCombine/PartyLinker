@@ -1,5 +1,16 @@
 import { request_path } from "/static/js/config.js?v=1";
 
+window.addEventListener('onunload', function() {
+    setOffline();
+});
+
+async function setOffline() {
+    await fetch(request_path + "/user/switch_online.php", {
+        method: "POST",
+        credentials: "include"
+    });
+}
+
 export async function loadUserImage(user_id) {
     const response = await fetch(request_path + "/user/load_user_img.php?user=" + user_id);
     const image = await response.json();

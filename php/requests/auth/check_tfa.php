@@ -16,6 +16,7 @@ $right_code = intval($right_code);
 if($inserted_code == $right_code)
 {
     UserUtility::reset_tfa($driver, $username);
+    UserUtility::update_online($driver, $username);
     header("Location: https://partylinker.live");
 }
 else
