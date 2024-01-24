@@ -46,11 +46,12 @@
     }
     $settings = UserUtility::retrieve_settings($driver, $username);
     echo json_encode(array("message" => "success"), JSON_PRETTY_PRINT);
+    global $domain;
     if ($settings->getTFA()) {
-        header("Location: http://".$_SERVER["HTTP_HOST"]."/login/twofactorauth.html");
+        header("Location: ".$domain."/login/twofactorauth.html");
     } else {
         UserUtility::update_online($driver, $username);
-        header("Location: http://".$_SERVER["HTTP_HOST"]);
+        header("Location: ".$domain);
     }
     $driver->close_connection();
 ?>

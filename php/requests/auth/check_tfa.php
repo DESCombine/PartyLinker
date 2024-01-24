@@ -12,15 +12,13 @@ $right_code = UserUtility::retrieve_tfa($driver, $username);
 // convert to int
 $inserted_code = intval($inserted_code);
 $right_code = intval($right_code);
-
-if($inserted_code == $right_code)
-{
+global $domain;
+if($inserted_code == $right_code) {
     UserUtility::reset_tfa($driver, $username);
     UserUtility::update_online($driver, $username);
-    header("Location: http://".$_SERVER["HTTP_HOST"]);
+    header("Location: ".$domain);
 }
-else
-{
-    header("Location: http://".$_SERVER["HTTP_HOST"]."/login/twofactorauth.html?error=1");
+else {
+    header("Location: ".$domain."/login/twofactorauth.html?error=1");
 }
 ?>
