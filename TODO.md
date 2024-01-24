@@ -7,17 +7,21 @@
 - [x] Profile page modals
 - [x] Profile page photos
 - [x] Registration page
-- [ ] Modify profile info (upload images)
+- [x] Modify profile info
 - [x] Content upload
-- [ ] User tagging
 - [ ] Follow button
 - [ ] Researched profile page
-- [ ] Notifications
+- [x] User tagging notification
+- [x] Event notification
+- [ ] fix token recognition
+- [ ] fix offline switch
 # WOW effect
-- [ ] 2F Authentication
+- [x] 2F Authentication
 - [ ] Remember me
-- [ ] Map page
+- [x] Map page
 - [ ] Dynamic search bar
 - [ ] Translation button
 # Media queries
-- [ ] all of them
+- [x] Homepage
+- [x] Upload page
+- [ ] The rest

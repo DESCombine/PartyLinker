@@ -1,4 +1,4 @@
-import { request_path } from "/static/js/config.js?v=1";
+import { request_path } from "/static/js/config.js?v=2";
 import { checkOrganizer } from "/static/js/utils.js";
 
 document.getElementById("upload-modal").addEventListener("shown.bs.modal", function() { renderFooter() });
@@ -43,5 +43,5 @@ async function showSearchResults(event) {
 }
 
 function selectEvent(event_id) {
-    window.location.replace("../post/postpage.html?event=" + event_id);
+    window.location.replace("/post/postpage.html?event=" + event_id);
 }

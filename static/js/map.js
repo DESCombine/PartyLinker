@@ -1,4 +1,4 @@
-import { request_path } from "/static/js/config.js?v=1";
+import { request_path } from "/static/js/config.js?v=2";
 
 
 async function loadEvents() {

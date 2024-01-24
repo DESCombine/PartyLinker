@@ -3,25 +3,28 @@
         <head>
             <title>PartyLinker - Home</title>
             <meta charset="UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link rel="icon" href="/static/img/icon.ico" type="image/x-icon"/>
             <link rel="stylesheet" type="text/css" href="/static/css/homepage.css"/>
             <!-- Font Renner import -->
             <link rel="stylesheet" href="https://indestructibletype-fonthosting.github.io/renner.css" type="text/css" charset="utf-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <!-- Icons import -->
+            <script src="https://kit.fontawesome.com/d9b18796bb.js" crossorigin="anonymous"></script>      
             <!-- Bootstrap import -->
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         </head>
         <body>
             <div class="container-fluid overflow-hidden">
-                <header class="text-center pt-2">
+                <header class="text-center mt-3">
                     <h1>PartyLinker</h1>
                 </header>
                 <main>
                     <div class="container-fluid">
-                        <h2>&#128101Online Users</h2>
+                        <h2><i class="fa-solid fa-user-group"></i>Online Users</h2>
                         <ul class="list-group list-group-flush list-group-horizontal overflow-x-auto border-top border-bottom border-dark"  id="online-users">
                             <template id="online-template">
-                                <li class="list-group-item col-3">
-                                    <img id="online-image" src="/static/img/default-profile.png" alt="" class="rounded-circle img-thumbnail">
+                                <li class="list-group-item col-3 col-md-1">
+                                    <img id="online-image" src="/static/img/default-profile.png" alt="" class="img-fluid rounded-circle img-thumbnail">
                                 </li>
                             </template>
                         </ul>
@@ -30,101 +33,143 @@
                         <ol class="list-group list-group-flush my-1" id="feed">
                             <template id="post-template">
                                 <li class="list-group-item" id="post-id">
-                                    <div class="row justify-content-start mt-3">
-                                        <div class="col-2">
+                                    <div class="row justify-content-start my-3">
+                                        <div class="col-2 col-md-1">
                                             <img id="post-user-photo" src="/static/img/default-profile.png" alt="" class="img-fluid img-thumbnail">
                                         </div>
-                                        <div class="col">
+                                        <div class="col pt-md-3">
                                             <h3 id="post-name">Username</h3>
                                         </div>
                                     </div>
-                                    <div class="text-center">
-                                        <img id="post-photo" src="/static/img/default-image.png" alt="" class="img-fluid">
-                                    </div>
-                                    <ol class="list-group list-group-flush list-group-horizontal">
-                                        <li class="list-group-item">
-                                            <button id="likes-button" class="btn">
-                                                &#129293
-                                            </button>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <button id="comments-button" class="btn"  data-bs-toggle="modal" data-bs-target="#comments-modal">
-                                                &#128172
-                                            </button>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <button id="partecipants-button" class="btn invisible"  data-bs-toggle="modal" data-bs-target="#partecipants-modal">
-                                                &#128111
-                                            </button>
-                                        </li>
-                                        <li class="list-group-item ms-5 pt-3">
-                                            <p id="post-likes">0</p>
-                                        </li>
-                                    </ol>
-                                    <p id="post-description">Post description</p>
-                                    <template id="description-template">
-                                        <div class="text-center">
-                                            <h4 id="event-name">Event Name</h4>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <img id="post-photo" src="/static/img/default-image.png" alt="" class="img-fluid">
                                         </div>
-                                        <ol class="list-group list-group-flush">
-                                            <li class="list-group-item">
-                                                <p id="event-place">Place</p>
-                                            </li>
-                                            <li class="list-group-item">
-                                                <p id="event-date">Date</p>
-                                            </li>
-                                            <li class="list-group-item">
-                                                <p id="event-vips">Vips</p>
-                                            </li>
-                                            <li class="list-group-item">
-                                                <p id="event-people">Max-People</p>
-                                            </li>
-                                            <li class="list-group-item">
-                                                <p id="event-price">Price</p>
-                                            </li>
-                                            <li class="list-group-item">
-                                                <p id="event-age">Minimum age</p>
-                                            </li>
-                                        </ol>
-                                    </template>
+                                        <div class="col-md-6">
+                                            <ol id="under-post" class="list-group list-group-flush list-group-horizontal">
+                                                <li class="list-group-item pt-3 pe-0">
+                                                    <p id="post-likes">0</p>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <button id="likes-button" class="btn">
+                                                        <i class="fa-regular fa-heart"></i>
+                                                    </button>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <button id="comments-button" class="btn"  data-bs-toggle="modal" data-bs-target="#comments-modal">
+                                                        <i class="fa-regular fa-comment"></i>
+                                                    </button>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <button id="partecipants-button" class="btn invisible"  data-bs-toggle="modal" data-bs-target="#partecipants-modal">
+                                                        <i class="fa-solid fa-users-viewfinder"></i>
+                                                    </button>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <button id="event-button" class="btn invisible">
+                                                        <i class="fa-solid fa-tent"></i>
+                                                    </button>
+                                                </li>
+                                            </ol>
+                                            <p id="post-description">Post description</p>
+                                            <div id="event-info">
+                                                <div class="text-center">
+                                                    <h4 id="event-name">Event Name</h4>
+                                                </div>
+                                                <ol class="list-group list-group-flush">
+                                                    <li class="list-group-item">
+                                                        <p id="event-place">Place</p>
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        <p id="event-date">Date</p>
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        <p id="event-vips">Vips</p>
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        <p id="event-people">Max-People</p>
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        <p id="event-price">Price</p>
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        <p id="event-age">Minimum age</p>
+                                                    </li>
+                                                </ol>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </li>
                             </template>
                         </ol>
                     </div>
                 </main>
-                <footer class="mt-5">
+                <footer class="mt-5 d-md-none">
                     <nav class="bg-light fixed-bottom border-top border-black">
                         <ol class="nav nav-fill my-2">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="/">&#127968</a>
+                                <a class="nav-link active" aria-current="page" href="/"><i class="fa-solid fa-house text-black"></i></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/search/">&#128269</a>
+                                <a class="nav-link" href="/search/"><i class="fa-solid fa-magnifying-glass text-black"></i></a>
                             </li>
                             <li class="nav-item">
-                                <button id="upload-button" class="nav-link btn border border-dark rounded"  data-bs-toggle="modal" data-bs-target="#upload-modal">
-                                    &#10133
+                                <button id="upload-button" class="btn border border-dark rounded"  data-bs-toggle="modal" data-bs-target="#upload-modal">
+                                    <i class="fa-solid fa-circle-plus text-dark"></i>
                                 </button>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/map/">&#128506</a>
+                                <a class="nav-link" href="/map/"><i class="fa-solid fa-map-location-dot text-black"></i></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/profile/">&#128100</a>
+                                <a class="nav-link" href="/profile/"><i class="fa-solid fa-user text-black"></i></a>
                             </li>
                         </ol>
                     </nav>
                 </footer>
+                <aside class="d-none d-md-flex justify-content-end fixed-top pt-3 me-5">
+                    <button class="btn btn-secondary btn-lg" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                        <div class="offcanvas-header">
+                            <h1 class="offcanvas-title" id="offcanvasNavbarLabel">Explore the site</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body">
+                            <ol class="list-group list-group-flush">
+                                <li class="list-group-item my-3">
+                                    <a class="text-center fs-2 nav-link active" aria-current="page" href="/"><i class="fa-solid fa-house"></i> Home page</i></a>
+                                </li>
+                                <li class="list-group-item my-3">
+                                    <a class="text-center fs-2 nav-link" href="/search/"><i class="fa-solid fa-magnifying-glass"></i> Search page</a>
+                                </li>
+                                <li class="list-group-item my-3 text-center">
+                                    <button id="upload-button" class="text-center fs-2 btn border border-dark rounded"  data-bs-toggle="modal" data-bs-target="#upload-modal">
+                                        <i class="fa-solid fa-circle-plus"></i> Upload new post
+                                    </button>
+                                </li>
+                                <li class="list-group-item my-3">
+                                    <a class="text-center fs-2 nav-link" href="/map/"><i class="fa-solid fa-map-location-dot"></i> Events near you</a>
+                                </li>
+                                <li class="list-group-item my-3">
+                                    <a class="text-center fs-2 nav-link" href="/profile/"><i class="fa-solid fa-user"></i> Profile page</a>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </aside>
             </div>
             <!-- Upload Modal -->
             <div class="modal fade" id="upload-modal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content h-75">
                         <div class="modal-header justify-content-center">
-                            <h4 class="modal-title" id="uploadModalLabel">Upload new picture&#128248</h4>
+                            <h4 class="modal-title" id="uploadModalLabel">Upload new picture <i class="fa-solid fa-camera-retro"></i></h4>
                         </div>
                         <div class="modal-body">
                             <div class="container-fluid">
+                                <h5>Which event have you been to?</h5>
                                 <div class="row">
                                     <input type="text" id="upload-searchbar" class="border-1 rounded" placeholder="Event name...">
                                 </div>
@@ -133,7 +178,7 @@
                                         <template id="event-result-template">
                                             <li class="list-group-item"  id="ev-res-id">
                                                 <div class="row justify-content-start">
-                                                    <div class="col-2">
+                                                    <div class="col-2 col-md-1">
                                                         <img id="ev-res-image" src="/static/img/default-image.png" class="img-fluid img-thumbnail">
                                                     </div>
                                                     <div class="col">
@@ -150,8 +195,8 @@
                             </div>
                         </div>
                         <div class="modal-footer border-top border-black justify-content-center">
-                            <button id="new-event" class="btn btn-primary invisible">
-                                Upload a new event&#127881
+                            <button id="new-event" class="btn btn-primary btn-lg invisible">
+                                Upload a new event <i class="fa-regular fa-calendar-plus"></i>
                             </button>
                         </div>
                     </div>
@@ -159,10 +204,10 @@
             </div>
             <!-- Comments Modal -->
             <div class="modal fade" id="comments-modal" tabindex="-1" aria-labelledby="commentsModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                    <div class="modal-content">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable align-items-end align-items-md-center modal-lg">
+                    <div class="modal-content h-75">
                         <div class="modal-header justify-content-center">
-                            <h4 class="modal-title" id="commentsModalLabel">&#128172Comments</h4>
+                            <h4 class="modal-title" id="commentsModalLabel"><i class="fa-solid fa-comments"></i> Comments</h4>
                         </div>
                         <div class="modal-body">
                             <div class="container-fluid">
@@ -170,7 +215,7 @@
                                     <template id="comment-template">
                                         <li class="list-group-item"  id="comment-id">
                                             <div class="row justify-content-start">
-                                                <div class="col-2">
+                                                <div class="col-2 mb-1 col-md-1">
                                                     <img id="comment-user-photo" src="/static/img/default-profile.png" alt="" class="img-fluid img-thumbnail">
                                                 </div>
                                                 <div class="col">
@@ -183,12 +228,12 @@
                                                 </div>
                                                 <div>
                                                     <button id="comment-trash" class="btn invisible">
-                                                        &#128465
+                                                        <i class="fa-solid fa-trash-can"></i>
                                                     </button>
                                                 </div>
                                                 <div>
                                                     <button id="comment-like-bt" class="btn">
-                                                        &#129293
+                                                        <i class="fa-regular fa-heart"></i>
                                                     </button>
                                                 </div>
                                                 <div class="ms-3 pt-2">
@@ -200,17 +245,17 @@
                                 </ol>
                             </div>
                         </div>
-                        <div class="modal-footer border-top border-black">
+                        <div class="modal-footer border-top border-black justify-content-center">
                             <form class="row">
                                 <div class="col-1">
-                                    <label for="comment-input" class="col-form-label">&#128172</label>
+                                    <label for="comment-input" class="col-form-label"><i class="fa-solid fa-comment"></i></label>
                                 </div>
                                 <div class="col-9">
                                     <input type="text" id="comment-input" name="comment-input" class="form-control border-dark" placeholder="Write your message...">
                                 </div>
                                 <div class="col-2">
                                     <button type="button" class="btn" id="submit-comment" name="submit-comment">
-                                        &#128284
+                                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
                                     </button>
                                 </div>
                             </form>
@@ -220,18 +265,18 @@
             </div>
             <!-- Partecipants modal -->
             <div class="modal fade" id="partecipants-modal" tabindex="-1" aria-labelledby="partecipantsModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                    <div class="modal-content">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable align-items-end align-items-md-center modal-lg">
+                    <div class="modal-content h-75">
                         <div class="modal-header justify-content-center">
-                            <h4 class="modal-title" id="partecipantsModalLabel">&#128111Partecipants</h4>
+                            <h4 class="modal-title" id="partecipantsModalLabel"><i class="fa-solid fa-users-gear"></i> Partecipants</h4>
                         </div>
                         <div class="modal-body">
                             <div class="container-fluid">
                                 <ul class="list-group list-group-flush my-1 overflow-y-auto" id="partecipants">
-                                    <template id="partecipants-template">
+                                    <template id="partecipants-template">   
                                         <li class="list-group-item">
                                             <div class="row justify-content-start">
-                                                <div class="col-2">
+                                                <div class="col-2 col-md-1">
                                                     <img id="partecipants-photo" src="/static/img/default-profile.png" alt="" class="img-fluid img-thumbnail">
                                                 </div>
                                                 <div class="col">
@@ -247,10 +292,10 @@
                             <div class="container-fluid text-center">
                                 <div class="d-inline-flex gap-2">
                                     <button id="submit-partecipation" class="btn btn-secondary me-3">
-                                        Partecipate ;)
+                                        Let's party! <i class="fa-solid fa-face-laugh-squint"></i>
                                     </button>
                                     <button id="submit-busy" class="btn btn-secondary ms-3 px-4">
-                                        I'm busy :(
+                                        I'm busy <i class="fa-solid fa-face-sad-tear"></i>
                                     </button>
                                 </div>
                             </div>
@@ -261,7 +306,7 @@
             <!-- Bootstrap import -->
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
             <!-- JS import -->
-            <script src="/static/js/homepage.js" type="module"></script>
-            <script src="/static/js/uploadbt.js" type="module"></script>
+            <script src="/static/js/homepage.js?v=1" type="module"></script>
+            <script src="/static/js/uploadbt.js?v=1" type="module"></script>
         </body>
     </html>

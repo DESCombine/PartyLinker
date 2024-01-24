@@ -1,5 +1,7 @@
-import { request_path } from "/static/js/config.js?v=1";
-import { loadUserImage, addlike, showComments, showPartecipations } from "/static/js/utils.js";
+import { request_path } from "/static/js/config.js?v=2";
+import { loadUserImage, addLike, showComments, showPartecipations } from "/static/js/utils.js";
+
+document.querySelector("#modifyIcon").href = "/modifyprofile/modifyprofile.html";
 
 const postButton = document.getElementById("buttons").getElementsByTagName("div").item(0);
 const eventButton = document.getElementById("buttons").getElementsByTagName("div").item(1);
@@ -122,8 +124,12 @@ async function showProfileInfos() {
     document.getElementById("description").innerHTML = infos.bio;
     document.getElementById("followers").innerHTML = infos.followers;
     document.getElementById("followed").innerHTML = infos.followed;
-    document.getElementById("profileImage").src = "/static/img/uploads/" + await loadUserImage(infos.username);
-    if(infos.banner != null) {
+    if(await loadUserImage(infos.username) == null) {
+        document.getElementById("profileImage").src = "/static/img/default-profile.png";
+    } else {
+        document.getElementById("profileImage").src = "/static/img/uploads/" + await loadUserImage(infos.username);
+    }
+    if(infos.background != null) {
         document.getElementById("bannerImage").src = "/static/img/uploads/" + infos.background;
     } else {
         document.getElementById("bannerImage").src = "/static/img/default-poster.png";
@@ -135,12 +141,12 @@ async function showModalPost(modal, post_id, event_id, user_photo, username,
     document.getElementById("post-user-photo").src = "/static/img/uploads/" + await loadUserImage(username);
     document.getElementById("post-name").innerHTML = username;
     document.getElementById("post-photo").src = "/static/img/uploads/" + image;
-    document.getElementById("likes-button").addEventListener("click", function () { addlike(post_id, 1); });
+    document.getElementById("likes-button").addEventListener("click", function () { addLike(post_id, 1); });
     document.getElementById("comments-button").addEventListener("click", function () { showComments(post_id); })
     document.getElementById("post-likes").innerHTML = likes;
     document.getElementById("post-description").innerHTML = description;
     if (event) {
-        document.getElementById("details-button").addEventListener("click", function () { window.location.replace("../event/eventpage.html?id=" + event_id); });
+        document.getElementById("details-button").addEventListener("click", function () { window.location.replace("/event/eventpage.html?id=" + event_id); });
         document.getElementById("details-button").classList.remove("invisible");
         document.getElementById("partecipants-button").addEventListener("click", function () { showPartecipations(event_id); })
         document.getElementById("partecipants-button").addEventListener("click", function () { showPartecipations(event_id); });

@@ -5,8 +5,7 @@ namespace User {
     use Firebase\JWT\JWT;
     use Firebase\JWT\Key;
 
-    class DBUser implements \DBTable
-    {
+    class DBUser implements \DBTable {
         private $username;
         private $email;
         private $name;
@@ -23,21 +22,8 @@ namespace User {
 
 
         // TODO: add relationship to other user
-        public function __construct(
-            $username = null,
-            $email = null,
-            $name = null,
-            $surname = null,
-            $birth_date = null,
-            $profile_photo = null,
-            $background = null,
-            $bio = null,
-            $phone = null,
-            $password = null,
-            $online = null,
-            $follows = null,
-            $followers = null
-        ) {
+        public function __construct($username = null, $email = null, $name = null, $surname = null, $birth_date = null, $profile_photo = null, $background = null, $bio = null, $phone = null, 
+                $password = null, $online = null, $follows = null, $followers = null) {
             $this->username = $username;
             $this->email = $email;
             $this->name = $name;
@@ -52,8 +38,7 @@ namespace User {
             $this->follows = $follows;
             $this->followers = $followers;
         }
-        public function jsonSerialize()
-        {
+        public function jsonSerialize() {
             return [
                 "username" => $this->username,
                 "email" => $this->email,
@@ -69,47 +54,72 @@ namespace User {
                 "followers" => $this->followers
             ];
         }
-        public function create_password(string $password)
-        {
+        public function create_password(string $password) {
             $this->password = password_hash($password, PASSWORD_DEFAULT);
         }
-        // insert into database
-        public function db_serialize(\DBDriver $driver)
-        {
+
+        public function get_password() {
+            return $this->password;
+        }
+        
+        public function db_serialize(\DBDriver $driver) {
             if ($this->password == null) {
                 throw new \Exception("Password not set");
             }
             $sql = "INSERT INTO user (username, email, name, surname, birth_date, profile_photo, background, bio, phone, password, online) 
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             try {
-                $driver->query(
-                    $sql,
-                    $this->username,
-                    $this->email,
-                    $this->name,
-                    $this->surname,
-                    date($this->birth_date),
-                    $this->profile_photo,
-                    $this->background,
-                    $this->bio,
-                    $this->phone,
-                    $this->password,
-                    $this->online
-                );
+                $driver->query($sql, $this->username, $this->email, $this->name, $this->surname, date($this->birth_date), 
+                        $this->profile_photo, $this->background, $this->bio, $this->phone, $this->password, $this->online);
             } catch (\Exception $e) {
                 throw new \Exception("Error while querying the database: " . $e->getMessage());
             }
 
         }
 
-        public function check_password(string $password)
-        {
+        public function check_password(string $password) {
             return password_verify($password, $this->password);
+        }
+
+        public function update_infos(\DBDriver $driver, string $name, string $surname, string $birth_date, string $email, string $phone, string $username, string $password, string $gender, int $organizer, 
+                string $profilePhoto, string $bannerPhoto, string $bio, string $language, int $notifications, int $TFA) {
+            $sql = "UPDATE user SET email = ?, name = ?, surname = ?, birth_date = ?, profile_photo = ?, background = ?, bio = ?, phone = ?, password = ? WHERE username = ?";
+            try {
+                $driver->query($sql, $email, $name, $surname, date($birth_date), $profilePhoto, 
+                        $bannerPhoto, $bio, $phone, $password, $username);
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+            // check if settings exists
+            $sql = "SELECT * FROM settings WHERE username = ?";
+            try {
+                $result = $driver->query($sql, $username);
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+            if ($result->num_rows == 0) {
+                $settings = new DBSettings($username, $language, $notifications, $TFA, $organizer);
+                $settings->db_serialize($driver);
+            } else {
+                $sql = "UPDATE settings SET language = ?, notifications = ?, 2fa = ?, organizer = ? WHERE username = ?";
+                try {
+                    $driver->query($sql, $language, $notifications, $TFA, $organizer, $username);
+                } catch (\Exception $e) {
+                    throw new \Exception("Error while querying the database: " . $e->getMessage());
+                }
+            }
+        }
+
+        public function getUsername() {
+            return $this->username;
+        }
+
+        public function getEmail() {
+            return $this->email;
         }
     }
 
-    class DBSettings implements \DBTable
-    {
+    class DBSettings implements \DBTable {
         private $username;
         private $language;
         private $notifications;
@@ -144,12 +154,19 @@ namespace User {
             }
 
         }
+
+        public function getNotifications() {
+            return $this->notifications;
+        }
+
+        public function getTFA() {
+            return $this->twofa;
+        }
     }
 
-    class UserUtility
-    {
-        public static function from_form(string $username, string $email, string $name, string $surname, string $birth_date, string $profile_photo, string $background, string $bio, string $phone, string $password = "")
-        {
+    class UserUtility {
+        public static function from_form(string $username, string $email, string $name, string $surname, 
+                string $birth_date, string $profile_photo, string $background, string $bio, string $phone, string $password = "") {
             $user = new DBUser($username, $email, $name, $surname, $birth_date, $profile_photo, $background, $bio, $phone);
             if ($password != "") {
                 $user->create_password($password);
@@ -157,8 +174,7 @@ namespace User {
             return $user;
         }
 
-        public static function from_db_with_username($driver, string $username)
-        {
+        public static function from_db_with_username($driver, string $username) {
             $sql = "SELECT u.*, 
             (SELECT COUNT(*) FROM relationship WHERE followed = ?) as follower,
             (SELECT COUNT(*) FROM relationship WHERE follows = ?) as follows
@@ -172,20 +188,9 @@ namespace User {
 
             if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
-                $user = new DBUser(
-                    $row["username"],
-                    $row["email"],
-                    $row["name"],
-                    $row["surname"],
-                    $row["birth_date"],
-                    $row["profile_photo"],
-                    $row["background"],
-                    $row["bio"],
-                    $row["phone"],
-                    $row["password"],
-                    $row["online"],
-                    $row["follower"],
-                    $row["follows"]
+                $user = new DBUser($row["username"], $row["email"], $row["name"], $row["surname"], $row["birth_date"], 
+                        $row["profile_photo"], $row["background"], $row["bio"], $row["phone"], $row["password"], 
+                        $row["online"], $row["follower"], $row["follows"]
                 );
             } else {
                 return null;
@@ -193,40 +198,7 @@ namespace User {
             return $user;
         }
 
-        public static function from_db_with_username_like(\DBDriver $driver, string $username): array
-        {
-            $sql = "SELECT * FROM user WHERE username LIKE ?";
-
-            try {
-                $result = $driver->query($sql, "%" . $username . "%");
-            } catch (\Exception $e) {
-                throw new \Exception("Error while querying the database: " . $e->getMessage());
-            }
-            $users = array();
-            if ($result->num_rows > 0) {
-                for ($i = 0; $i < $result->num_rows; $i++) {
-                    $row = $result->fetch_array();
-                    $user = new DBUser(
-                        $row["username"],
-                        $row["email"],
-                        $row["name"],
-                        $row["surname"],
-                        $row["birth_date"],
-                        $row["profile_photo"],
-                        $row["background"],
-                        $row["bio"],
-                        $row["phone"],
-                        $row["password"],
-                        $row["online"]
-                    );
-                    array_push($users, $user);
-                }
-            }
-            return $users;
-        }
-
-        public static function from_db_with_email(\DBDriver $driver, string $email)
-        {
+        public static function from_db_with_email(\DBDriver $driver, string $email) {
             $user = null;
             $sql = "SELECT * FROM user WHERE email = ?";
             try {
@@ -236,18 +208,8 @@ namespace User {
             }
             if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
-                $user = new DBUser(
-                    $row["username"],
-                    $row["email"],
-                    $row["name"],
-                    $row["surname"],
-                    $row["birth_date"],
-                    $row["profile_photo"],
-                    $row["background"],
-                    $row["bio"],
-                    $row["phone"],
-                    $row["password"],
-                    $row["online"]
+                $user = new DBUser($row["username"], $row["email"], $row["name"], $row["surname"], $row["birth_date"], 
+                        $row["profile_photo"], $row["background"], $row["bio"], $row["phone"], $row["password"], $row["online"]
                 );
             } else {
                 return null;
@@ -256,8 +218,7 @@ namespace User {
 
         }
 
-        public static function from_db_with_phone(\DBDriver $driver, string $phone)
-        {
+        public static function from_db_with_phone(\DBDriver $driver, string $phone) {
             $user = null;
             $sql = "SELECT * FROM user WHERE phone = ?";
             try {
@@ -267,18 +228,8 @@ namespace User {
             }
             if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
-                $user = new DBUser(
-                    $row["username"],
-                    $row["email"],
-                    $row["name"],
-                    $row["surname"],
-                    $row["birth_date"],
-                    $row["profile_photo"],
-                    $row["background"],
-                    $row["bio"],
-                    $row["phone"],
-                    $row["password"],
-                    $row["online"]
+                $user = new DBUser($row["username"], $row["email"], $row["name"], $row["surname"], $row["birth_date"], 
+                        $row["profile_photo"], $row["background"], $row["bio"], $row["phone"], $row["password"], $row["online"]
                 );
             } else {
                 return null;
@@ -287,8 +238,7 @@ namespace User {
 
         }
 
-        public static function check_if_available(\DBDriver $driver, $username = "", $email = "", $phone = ""): void
-        {
+        public static function check_if_available(\DBDriver $driver, $username = "", $email = "", $phone = ""): void {
             if (!empty($username)) {
                 $sql = "SELECT * FROM user WHERE username = ?";
                 try {
@@ -322,8 +272,7 @@ namespace User {
             }
         }
 
-        public static function retrieve_username_from_token($token): string
-        {
+        public static function retrieve_username_from_token($token): string {
             if (preg_match("/Bearer\s(\S+)/", $token, $matches) !== 1) {
                 throw new \Exception("Invalid token");
             } else {
@@ -333,8 +282,7 @@ namespace User {
             }
         }
 
-        public static function retrieve_online_followed($driver, $username)
-        {
+        public static function retrieve_online_followed($driver, $username) {
             $sql = "SELECT u.* FROM user u, relationship r 
                     WHERE u.username = r.followed AND r.follows = ? AND u.online = 1";
             try {
@@ -346,27 +294,15 @@ namespace User {
             if ($result->num_rows > 0) {
                 for ($i = 0; $i < $result->num_rows; $i++) {
                     $row = $result->fetch_array();
-                    $user = new DBUser(
-                        $row["username"],
-                        $row["email"],
-                        $row["name"],
-                        $row["surname"],
-                        $row["birth_date"],
-                        $row["profile_photo"],
-                        $row["background"],
-                        $row["bio"],
-                        $row["phone"],
-                        $row["password"],
-                        $row["online"]
-                    );
+                    $user = new DBUser($row["username"], $row["email"], $row["name"], $row["surname"], $row["birth_date"], 
+                            $row["profile_photo"], $row["background"], $row["bio"], $row["phone"], $row["password"], $row["online"]);
                     array_push($users, $user);
                 }
             }
             return $users;
         }
 
-        public static function retrieve_profile_picture($driver, $username)
-        {
+        public static function retrieve_profile_picture($driver, $username) {
             $sql = "SELECT profile_photo FROM user WHERE username = ?";
             try {
                 $result = $driver->query($sql, $username);
@@ -381,8 +317,7 @@ namespace User {
             }
         }
 
-        public static function retrieve_settings($driver, $username)
-        {
+        public static function retrieve_settings($driver, $username) {
             $sql = "SELECT * FROM settings WHERE username = ?";
             try {
                 $result = $driver->query($sql, $username);
@@ -397,17 +332,105 @@ namespace User {
             }
             return $settings;
         }
-    }
-    class UsernameTaken extends \Exception
-    {
-    }
-    class EmailTaken extends \Exception
-    {
-    }
-    class PhoneTaken extends \Exception
-    {
-    }
-}
 
+        public static function retrieve_followers($driver, $username) {
+            $sql = "SELECT u.* FROM user u, relationship r 
+                    WHERE u.username = r.follows
+                    AND r.followed = ?";
+            try {
+                $result = $driver->query($sql, $username);
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+            $users = array();
+            if ($result->num_rows > 0) {
+                for ($i = 0; $i < $result->num_rows; $i++) {
+                    $row = $result->fetch_array();
+                    $user = new DBUser($row["username"], $row["email"], $row["name"], $row["surname"], $row["birth_date"], 
+                            $row["profile_photo"], $row["background"], $row["bio"], $row["phone"], $row["password"], $row["online"]);
+                    array_push($users, $user);
+                }
+            }
+            return $users;
+        }
+
+        public static function retrieve_email($driver, $username) {
+            $sql = "SELECT email FROM user WHERE username = ?";
+            try {
+                $result = $driver->query($sql, $username);
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                return $row["email"];
+            } else {
+                return null;
+            }
+        }
+
+        public static function insert_tfa($driver, $username, $code) {
+            $sql = "SELECT username FROM tfa_code WHERE username = ?";
+            try {
+                $result = $driver->query($sql, $username);
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+            if($result->num_rows > 0) {
+                $sql = "UPDATE tfa_code SET code = ? WHERE username = ?";
+                try {
+                    $driver->query($sql, $code, $username);
+                } catch (\Exception $e) {
+                    throw new \Exception("Error while querying the database: " . $e->getMessage());
+                }
+            } else {
+                $sql = "INSERT INTO tfa_code (username, code) VALUES (?, ?)";
+                try {
+                    $driver->query($sql, $username, $code);
+                } catch (\Exception $e) {
+                    throw new \Exception("Error while querying the database: " . $e->getMessage());
+                }
+            }
+        }
+
+        public static function retrieve_tfa($driver, $username) {
+            $sql = "SELECT code FROM tfa_code WHERE username = ?";
+            try {
+                $result = $driver->query($sql, $username);
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                return $row["code"];
+            } else {
+                return null;
+            }
+        }
+
+        public static function reset_tfa($driver, $username) {
+            $sql = "UPDATE tfa_code SET code = 0 WHERE username = ?";
+            try {
+                $driver->query($sql, $username);
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+        }
+
+        public static function update_online($driver, $username) {
+            $sql = "UPDATE user SET online = NOT online WHERE username = ?";
+            try {
+                $driver->query($sql, $username);
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+        }
+    }
+    class UsernameTaken extends \Exception { }
+    class EmailTaken extends \Exception { }
+    class PhoneTaken extends \Exception { }
+}
 
 ?>

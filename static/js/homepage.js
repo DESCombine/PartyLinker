@@ -1,4 +1,4 @@
-import { request_path } from "/static/js/config.js?v=1";
+import { request_path } from "/static/js/config.js?v=2";
 import { cleanTemplateList, removeLike, addLike, addEventDescription, loadEvent, showComments, showPartecipations } from "/static/js/utils.js";
 
 async function loadOnlineUsers() {
@@ -61,7 +61,7 @@ async function addNewFeedPost(template, feed, post_id, event_id, user_photo, use
     const likeButton = clone.querySelector("#likes-button");
     if (liked) {
         likeButton.addEventListener("click", function() { removeLike(post_id, 'post'); });
-        likeButton.innerHTML = "&#10084";
+        likeButton.innerHTML = "<i class='fa-solid fa-heart text-danger'></i>";
     } else {
         likeButton.addEventListener("click", function() { addLike(post_id, 'post'); });
     }
@@ -72,6 +72,13 @@ async function addNewFeedPost(template, feed, post_id, event_id, user_photo, use
         clone.querySelector("#partecipants-button").addEventListener("click", function() { showPartecipations(event_id); });
         clone.querySelector("#partecipants-button").classList.remove("invisible");
         addEventDescription(clone, await loadEvent(event_id));
+    } else {
+        clone.querySelector("#event-info").innerHTML = "";
+        clone.querySelector("#event-button").addEventListener("click", function () { window.location.replace("/event/eventpage.html?id=" + event_id); });
+        clone.querySelector("#event-button").classList.remove("invisible");
+        const parent = clone.querySelector("#under-post");
+        parent.insertBefore(parent.lastElementChild, parent.lastElementChild.previousElementSibling);
+        
     }
     feed.appendChild(clone);
 }

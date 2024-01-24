@@ -2,11 +2,3 @@ h1, h2 {
     font-family: 'Renner*';
     color: #422F75;
 }
-
-#comments-modal > .modal-dialog, #partecipants-modal > .modal-dialog {
-    align-items: flex-end;
-}
-
-.modal-content {
-    height: 50%;
-}

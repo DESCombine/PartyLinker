@@ -10,4 +10,11 @@ try {
 } catch (Exception $e) {
     throw new Exception("Error while connecting to the database: " . $e->getMessage());
 }
+
+$domain = $_SERVER['HTTP_HOST'];
+if ($domain == "localhost")
+    $domain = "http://localhost";
+else {
+    $domain = "https://partylinker.live";
+}
 ?>

@@ -2,6 +2,8 @@
     require_once(getenv("PL_ROOTDIRECTORY")."php/bootstrap.php");
     require_once(getenv("PL_ROOTDIRECTORY")."php/requests/authenticated_request.php");
     require_once(getenv("PL_ROOTDIRECTORY")."php/img_upload_handler.php");
+    require_once(getenv("PL_ROOTDIRECTORY")."php/requests/email/tag_notify_handler.php");
+    require_once(getenv("PL_ROOTDIRECTORY")."php/requests/email/post_notify_handler.php");
     require_once(getenv("PL_ROOTDIRECTORY")."db/post.php");
     use Post\PostUtility;
     require_once(getenv("PL_ROOTDIRECTORY")."db/event.php");
@@ -14,6 +16,7 @@
     $event_id = $_POST["event-id"];
     $image = img_handler($_POST["image"]);
     $description = $_POST["description"];
+    tag_notify_handler($description);
     $event_post = 0;
     if ($event_id == 0) {
         $event_post = 1;
@@ -31,6 +34,7 @@
         if ($event_id == 0) {
             $event = EventUtility::from_form($name, $location, $starting_date, $ending_date, $vips, $max_capacity, $price, $minimum_age);
             $event_id = $event->db_serialize($driver);
+            event_notify_handler();
         }
         $post = PostUtility::from_form($event_id, $username, $image, $description, $event_post);
         $post->db_serialize($driver);

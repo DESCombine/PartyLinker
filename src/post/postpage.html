@@ -15,36 +15,33 @@
         </head>
         <body>
             <div class="container-fluid overflow-hidden">
-                <header class="text-center mt-4 mb-4">
-                    <h1>Post new Photo</h1>
+                <header class="text-center my-4">
+                    <h1>New Photo</h1>
                 </header>
                 <main class="border border-black p-3">
-                    <form action="" method="POST" enctype="multipart/form-data">
-                        <div class="overflow-x-hidden">
-                            <div>
-                                <input type="hidden" name="event-id">
-                            </div>
-                            <div class="row my-4 justify-content-center">
-                                <label for="inputImage" class="col-4 col-form-label">Picture*</label>
-                                <div class="col-8">
-                                    <input type="file" class="form-control" id="inputImage" name="image" required>
+                    <form action="" method="POST">
+                        <div class="row overflow-x-hidden">
+                            <div class="col-md-6">
+                                <div>
+                                    <input type="hidden" name="event-id">
+                                </div>
+                                <div class="row my-4 justify-content-center">
+                                    <label for="inputImage" class="col-4 col-form-label">Picture*</label>
+                                    <div class="col-8">
+                                        <input type="file" class="form-control" id="inputImage" name="image" required>
+                                    </div>
+                                </div>
+                                <div class="row my-4 justify-content-center">
+                                    <label for="inputDescription" class="col-4 col-form-label">Description*</label>
+                                    <div class="col-8">
+                                        <textarea class="form-control" id="inputDescription" name="description" required></textarea>
+                                    </div>
                                 </div>
                             </div>
-                            <!--
-                            <div class="row my-4 justify-content-center">
-                                <label for="inputTags" class="col-4 col-form-label">Tags</label>
-                                <div class="col-8">
-                                    <input type="text" class="form-control" id="inputEvent" name="event">
-                                </div>
+                            <div class="d-none d-md-flex col-md-6 align-items-center">
+                                <img id="logo-img" src="/static/img/cover.png" alt="logo" class="img-fluid">
                             </div>
-                            -->
-                            <div class="row my-4 justify-content-center">
-                                <label for="inputDescription" class="col-4 col-form-label">Description*</label>
-                                <div class="col-8">
-                                    <textarea class="form-control" id="inputDescription" name="description" required></textarea>
-                                </div>
-                            </div>
-                            <div id="event-inputs" class="invisible">
+                            <div id="event-inputs" class="invisible col-md-6">
                                 <div class="row my-4 justify-content-center">
                                     <label for="inputEvent" class="col-4 col-form-label">Event name*</label>
                                     <div class="col-8">
@@ -97,7 +94,7 @@
                             </div>
                         </div>
                         <div class="row text-center">
-                            <p>(* marked Labels are mandatory)</p>
+                            <p>(* marked labels are mandatory)</p>
                         </div>
                         <div class="d-flex gap-5 justify-content-center">
                                 <button type="reset" class="btn btn-secondary btn-lg ms-3">
@@ -110,17 +107,17 @@
                         </div>
                     </form>
                 </main>
-                <aside class="mt-5">
+                <footer class="mt-5 d-md-none">
                     <nav class="bg-light fixed-bottom border-top border-black">
                         <ol class="nav nav-fill my-2">
                             <li class="nav-item">
-                                <a class="nav-link" href="/">&#127968</a>
+                                <a class="nav-link active" aria-current="page" href="/">&#127968</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/search/">&#128269</a>
                             </li>
                             <li class="nav-item">
-                                <button aria-current="page" id="upload-button" class="nav-link active btn border border-2 border-dark rounded"  data-bs-toggle="modal" data-bs-target="#upload-modal">
+                                <button id="upload-button" class="btn border border-dark rounded"  data-bs-toggle="modal" data-bs-target="#upload-modal">
                                     &#10133
                                 </button>
                             </li>
@@ -132,17 +129,50 @@
                             </li>
                         </ol>
                     </nav>
+                </footer>
+                <aside class="d-none d-md-flex justify-content-end fixed-top pt-3 me-5">
+                    <button class="btn btn-secondary btn-lg" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                        &#127828
+                    </button>
+                    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                        <div class="offcanvas-header">
+                            <h1 class="offcanvas-title" id="offcanvasNavbarLabel">Explore the site</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body">
+                            <ol class="list-group list-group-flush">
+                                <li class="list-group-item my-3">
+                                    <a class="fs-2 nav-link active" aria-current="page" href="/">&#127968Home page</a>
+                                </li>
+                                <li class="list-group-item my-3">
+                                    <a class="fs-2 nav-link" href="/search/">&#128269Search page</a>
+                                </li>
+                                <li class="list-group-item my-3">
+                                    <button id="upload-button" class="fs-2 btn border border-dark rounded"  data-bs-toggle="modal" data-bs-target="#upload-modal">
+                                        &#10133 Post new content
+                                    </button>
+                                </li>
+                                <li class="list-group-item my-3">
+                                    <a class="fs-2 nav-link" href="/map/">&#128506Events near you</a>
+                                </li>
+                                <li class="list-group-item my-3">
+                                    <a class="fs-2 nav-link" href="/profile/">&#128100Profile page</a>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
                 </aside>
             </div>
             <!-- Upload Modal -->
             <div class="modal fade" id="upload-modal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content h-75">
                         <div class="modal-header justify-content-center">
                             <h4 class="modal-title" id="uploadModalLabel">Upload new picture&#128248</h4>
                         </div>
                         <div class="modal-body">
                             <div class="container-fluid">
+                                <h5>Which event have you been to?</h5>
                                 <div class="row">
                                     <input type="text" id="upload-searchbar" class="border-1 rounded" placeholder="Event name...">
                                 </div>
@@ -151,11 +181,14 @@
                                         <template id="event-result-template">
                                             <li class="list-group-item"  id="ev-res-id">
                                                 <div class="row justify-content-start">
-                                                    <div class="col-2">
+                                                    <div class="col-2 col-md-1">
                                                         <img id="ev-res-image" src="/static/img/default-image.png" class="img-fluid img-thumbnail">
                                                     </div>
                                                     <div class="col">
                                                         <h5 id="ev-res-name">Event name</h5>
+                                                    </div>
+                                                    <div class="col">
+                                                        <p id="ev-res-date">Date</p>
                                                     </div>
                                                 </div>
                                             </li>
@@ -165,7 +198,7 @@
                             </div>
                         </div>
                         <div class="modal-footer border-top border-black justify-content-center">
-                            <button id="new-event" class="btn btn-primary invisible">
+                            <button id="new-event" class="btn btn-primary btn-lg invisible">
                                 Upload a new event&#127881
                             </button>
                         </div>
@@ -175,7 +208,7 @@
             <!-- Bootstrap import -->
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
             <!-- JS import -->
-            <script src="/static/js/uploadbt.js" type="module"></script>
-            <script src="/static/js/uploadpost.js" type="module"></script>
+            <script src="/static/js/uploadbt.js?v=1" type="module"></script>
+            <script src="/static/js/uploadpost.js?v=1" type="module"></script>
         </body>
     </html>
