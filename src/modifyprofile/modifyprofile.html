@@ -25,43 +25,43 @@
                 <h1 class="text-center pb-3">Change your info</h1>
                 <form action="" method="POST" enctype="multipart/form-data">
                     <div class="row mb-3 justify-content-center">
-                        <label for="name" class="col-3 col-form-label">Name</label>
+                        <label for="name" class="col-3 col-form-label mx-1">Name</label>
                         <div class="col-5">
                             <input type="text" class="form-control" id="inputName" name="name">
                         </div>
                     </div>
                     <div class="row mb-3 justify-content-center">
-                        <label for="inputSurname" class="col-3 col-form-label">Surname</label>
+                        <label for="inputSurname" class="col-3 col-form-label mx-1">Surname</label>
                         <div class="col-5">
                             <input type="text" class="form-control" id="inputSurname" name="surname">
                         </div>
                     </div>
                     <div class="row mb-3 justify-content-center">
-                        <label for="inputDate" class="col-3 col-form-label">Date of Birth</label>
+                        <label for="inputDate" class="col-3 col-form-label mx-1">Date of Birth</label>
                         <div class="col-5">
                             <input type="date" class="form-control" id="inputDate" name="birthdate">
                         </div>
                     </div>
                     <div class="row mb-3 justify-content-center">
-                        <label for="inputEmail" class="col-3 col-form-label">Email</label>
+                        <label for="inputEmail" class="col-3 col-form-label mx-1">Email</label>
                         <div class="col-5">
                             <input type="text" class="form-control" id="inputEmail" name="email">
                         </div>
                     </div>
                     <div class="row mb-3 justify-content-center">
-                        <label for="inputPhone" class="col-3 col-form-label">Phone</label>
+                        <label for="inputPhone" class="col-3 col-form-label mx-1">Phone</label>
                         <div class="col-5">
                             <input type="text" class="form-control" id="inputPhone" name="phone">
                         </div>
                     </div>
                     <div class="row mb-3 justify-content-center">
-                        <label for="inputPassword" class="col-3 col-form-label">Password</label>
+                        <label for="inputPassword" class="col-3 col-form-label mx-1">Password</label>
                         <div class="col-5">
                             <input type="password" class="form-control" id="inputPassword" name="password">
                         </div>
                     </div>
                     <div class="row mb-3 justify-content-center">
-                        <label for="inputGender" class="col-3 col-form-label">Gender</label>
+                        <label for="inputGender" class="col-3 col-form-label mx-1">Gender</label>
                         <div class="col-5">
                             <select id="gender" name="gender" class="form-control">
                                 <option value="notSpecified" selected>Not specify</option>
@@ -71,30 +71,32 @@
                             </select>
                         </div>
                     </div>
-                    <div class="row mb-3 form-check form-switch">
-                        <input type="checkbox" class="form-check-input" id="inputOrganizer" name="organizer">
-                        <label for="inputOrganizer" class="col-3 col-form-label">Organizer</label>
+                    <div class="row mb-3 justify-content-center align-items-center">
+                        <label for="inputOrganizer" class="col-3 col-form-label mx-1">Organizer</label>
+                        <div class="col-5 align-items-center">
+                            <input type="checkbox" id="inputOrganizer" name="organizer" role="switch">
+                        </div>
                     </div>
                     <div class="row mb-3 justify-content-center">
-                        <label for="inputProfilePhoto" class="col-3 col-form-label">Profile Photo</label>
+                        <label for="inputProfilePhoto" class="col-3 col-form-label mx-1">Profile Photo</label>
                         <div class="col-5">
                             <input type="file" class="form-control" id="inputProfilePhoto" name="profilePhoto">
                         </div>
                     </div>
                     <div class="row mb-3 justify-content-center">
-                        <label for="inputBannerPhoto" class="col-3 col-form-label">Banner Photo</label>
+                        <label for="inputBannerPhoto" class="col-3 col-form-label mx-1">Banner Photo</label>
                         <div class="col-5">
                             <input type="file" class="form-control" id="inputBannerPhoto" name="bannerPhoto">
                         </div>
                     </div>
                     <div class="row mb-3 justify-content-center">
-                        <label for="inputBio" class="col-3 col-form-label">Description</label>
+                        <label for="inputBio" class="col-3 col-form-label mx-1">Description</label>
                         <div class="col-5">
                             <textarea class="form-control" id="inputBio" name="bio" maxlength="512"></textarea>
                         </div>
                     </div>
                     <div class="row mb-3 justify-content-center">
-                        <label for="inputLangiage" class="col-3 col-form-label">Language</label>
+                        <label for="inputLangiage" class="col-3 col-form-label mx-1">Language</label>
                         <div class="col-5">
                             <select id="language" name="language" class="form-control">
                                 <option value="italiano" selected>Italiano</option>
@@ -105,13 +107,17 @@
                             </select>
                         </div>
                     </div>
-                    <div class="row mb-3 form-check form-switch">
-                        <input type="checkbox" class="form-check-input" id="inputNotifications" name="notifications">
-                        <label for="inputNotifications" class="col-3 col-form-label">Notifications</label>
+                    <div class="row mb-3 justify-content-center align-items-center">
+                        <label for="inputNotifications" class="col-3 col-form-label mx-1">Notifications</label>
+                        <div class="col-5 align-items-center">
+                            <input type="checkbox" id="inputNotifications" name="notifications" role="switch">
+                        </div>
                     </div>
-                    <div class="row mb-3 form-check form-switch">
-                        <input type="checkbox" class="form-check-input" id="input2FA" name="2FA">
-                        <label for="input2FA" class="col-3 col-form-label">2FA</label>
+                    <div class="row mb-3 justify-content-center align-items-center">
+                        <label for="input2FA" class="col-3 col-form-label mx-1">2FA</label>
+                        <div class="col-5 align-items-center">
+                            <input type="checkbox" id="input2FA" name="2FA" role="switch">
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-4 text-center">
