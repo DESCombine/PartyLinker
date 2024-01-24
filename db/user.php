@@ -93,7 +93,7 @@ namespace User {
             // check if settings exists
             $sql = "SELECT * FROM settings WHERE username = ?";
             try {
-                $result = $driver->query($sql, $this->username);
+                $result = $driver->query($sql, $username);
             } catch (\Exception $e) {
                 throw new \Exception("Error while querying the database: " . $e->getMessage());
             }
@@ -103,7 +103,7 @@ namespace User {
             } else {
                 $sql = "UPDATE settings SET language = ?, notifications = ?, 2fa = ?, organizer = ? WHERE username = ?";
                 try {
-                    $driver->query($sql, $language, $notifications, $TFA, $organizer, $this->username);
+                    $driver->query($sql, $language, $notifications, $TFA, $organizer, $username);
                 } catch (\Exception $e) {
                     throw new \Exception("Error while querying the database: " . $e->getMessage());
                 }
