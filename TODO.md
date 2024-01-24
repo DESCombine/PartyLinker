@@ -13,6 +13,8 @@
 - [ ] Researched profile page
 - [x] User tagging notification
 - [x] Event notification
+- [ ] fix token recognition
+- [ ] fix offline switch
 # WOW effect
 - [x] 2F Authentication
 - [ ] Remember me
