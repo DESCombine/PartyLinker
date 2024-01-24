@@ -6,3 +6,25 @@ h1 {
 form > div:first-child {
     height: 65vh;
 }
+
+#locationSuggestion {
+    position: absolute;
+    font-size: 10px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    border-radius: 10px;
+    padding: 10px;
+    /* overflow-y: scroll; */
+}
+
+#locationSuggestion > div {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+}
