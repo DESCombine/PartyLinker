@@ -1,4 +1,4 @@
-import { request_path } from "/static/js/config.js?v=1";
+import { request_path } from "/static/js/config.js?v=2";
 
 const event_id = new URLSearchParams(window.location.search).get('event');
 

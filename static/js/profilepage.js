@@ -1,4 +1,4 @@
-import { request_path } from "/static/js/config.js?v=1";
+import { request_path } from "/static/js/config.js?v=2";
 import { loadUserImage, addLike, showComments, showPartecipations } from "/static/js/utils.js";
 
 document.querySelector("#modifyIcon").action = request_path + "/modifyprofile/modifyprofile.html";
