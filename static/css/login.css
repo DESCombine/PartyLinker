@@ -1,9 +1,26 @@
-header img {
-    width: 50% !important;
+@media screen and (min-width: 768px) {
+    img {
+        display: flex;
+        float: left;
+        width: 30% !important;
+        padding: 1%;
+    }
 
+    main>div {
+        display: flex;
+        float: right;
+    }
 }
 
-body > #first{
-    margin-top: 50% !important;
-    margin-bottom: 50% !important;
+@media screen and (max-width: 767px) {
+    body>#first {
+        margin-top: 50% !important;
+        margin-bottom: 50% !important;
+    }
+
+    img {
+        width: 100% !important;
+        height: 100% !important;
+        padding: 5%;
+    }
 }
