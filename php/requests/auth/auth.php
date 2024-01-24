@@ -26,7 +26,7 @@
     $jwt = JWT::encode($payload, $key, 'HS256');
     $cookie_name = "token";
     $cookie_value = "Bearer ".$jwt;
-    if($_SERVER["HTTP_HOST"] == "http://localhost") {
+    if($_SERVER["HTTP_HOST"] == "localhost") {
         setcookie($cookie_name, $cookie_value, [
             'expires' => time() + 86400 * 365,
             'path' => '/',
