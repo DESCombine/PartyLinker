@@ -5,7 +5,7 @@
     
     global $driver;
     $event = $_GET['event'];
-    $event = EventUtility::from_db_with_name($driver, $event);
+    $event = EventUtility::from_db_with_name_like($driver, $event);
     header('Content-Type: application/json');
     echo json_encode($event, JSON_PRETTY_PRINT);
 ?>

@@ -29,10 +29,9 @@ export async function checkOrganizer() {
     return settings.organizer;
 }
 
-export function cleanTemplateList(listId) {
-    const modalList = document.getElementById(listId);
-    while (modalList.getElementsByTagName('li').length > 0) {
-        modalList.removeChild(modalList.lastChild);
+export function cleanTemplateList(list) {
+    while (list.getElementsByTagName('li').length > 0) {
+        list.removeChild(list.lastChild);
     }
 }
 
@@ -112,7 +111,7 @@ async function submitComment(post_id) {
             "content": content
         })
     });
-    cleanTemplateList("comments");
+    cleanTemplateList(document.querySelector("comments"));
     showComments(post_id);
 }
 
@@ -127,7 +126,7 @@ async function removeComment(comment_id, post_id) {
             "comment_id": comment_id
         })
     });
-    cleanTemplateList("comments");
+    cleanTemplateList(document.querySelector("comments"));
     showComments(post_id);
 }
 
@@ -142,7 +141,7 @@ async function submitPartecipation(event_id) {
             "event_id": event_id
         })
     });
-    cleanTemplateList("partecipants");
+    cleanTemplateList(document.querySelector("partecipants"));
     showPartecipations(event_id);
 }
 
@@ -157,7 +156,7 @@ async function submitBusy(event_id) {
             "event_id": event_id
         })
     });
-    cleanTemplateList("partecipants");
+    cleanTemplateList(document.querySelector("partecipants"));
     showPartecipations(event_id);
 }
 

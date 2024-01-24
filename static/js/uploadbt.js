@@ -1,19 +1,21 @@
 import { request_path } from "/static/js/config.js?v=2";
-import { checkOrganizer } from "/static/js/utils.js";
+import { checkOrganizer, cleanTemplateList } from "/static/js/utils.js";
 
-document.getElementById("upload-modal").addEventListener("shown.bs.modal", function() { renderFooter() });
+const modal = document.getElementById("upload-modal");
 
-async function renderFooter() {
+modal.addEventListener("shown.bs.modal", function() { renderModalFooter() });
+
+async function renderModalFooter() {
+    const modalFooter = modal.querySelector(".modal-footer");
     if (checkOrganizer()) {
-        document.getElementById("new-event").classList.remove("invisible");
-        document.getElementById("new-event").addEventListener("click", function() { selectEvent(0); });
+        modalFooter.querySelector("button").addEventListener("click", function() { selectEvent(0); });
     } else {
-        document.getElementById("upload-modal")
-                .getElementsByClassName("modal-footer")[0].innerHTML = "<p class='text-center'>Had Fun?&#129321</p>";
+        modalFooter.innerHTML = "<p class='text-center'>Had Fun? <i class='fa-solid fa-face-grin-stars'></i></p>";
     }
 }
 
-const searchbar = document.getElementById("upload-searchbar");
+const modalBody = modal.querySelector(".modal-body");
+const searchbar = modalBody.querySelector("input");
 searchbar.addEventListener("keyup", function(event) {
     if (event.key === 'Enter') {
         showSearchResults(searchbar.value);
@@ -27,17 +29,19 @@ async function search(event) {
 }
 
 async function showSearchResults(event) {
-    const searchResults = document.getElementById("search-event-results");
+    const searchResults = modalBody.querySelector("ol");
+    cleanTemplateList(searchResults);
     const events = await search(event);
-    const template = document.getElementById("event-result-template");
+    const template = modalBody.querySelector("template");
     for (let i = 0; i < events.length; i++) {
         const event = events[i];
-        let clone = document.importNode(template.content, true);
-        clone.querySelector("#ev-res-id").setAttribute("name", "event"+event.event_id);
-        clone.querySelector("#ev-res-image").src = "/static/img/uploads/" + event.image;
-        clone.querySelector("#ev-res-name").textContent = event.name;
-        clone.querySelector("#ev-res-date").textContent = event.date;
-        clone.querySelector("#ev-res-id").addEventListener("click", function() { selectEvent(event.event_id); });
+        const clone = document.importNode(template.content, true);
+        clone.querySelector("li").setAttribute("name", "event"+event.event_id);
+        clone.querySelector("img").src = "/static/img/uploads/" + event.image;
+        const nameAndDate = clone.querySelector("div");
+        nameAndDate.getElementsByTagName("p")[0].textContent = event.name;
+        nameAndDate.getElementsByTagName("p")[1].textContent = event.date;
+        clone.querySelector("li").addEventListener("click", function() { selectEvent(event.event_id); });
         searchResults.appendChild(clone);
     }
 }

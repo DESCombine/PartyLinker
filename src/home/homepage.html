@@ -105,7 +105,7 @@
                     </div>
                 </main>
                 <footer class="mt-5 d-md-none">
-                    <nav class="bg-light fixed-bottom border-top border-black">
+                    <nav class="bg-white fixed-bottom border-top border-black">
                         <ol class="nav nav-fill my-2">
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="/"><i class="fa-solid fa-house text-black"></i></a>
@@ -114,7 +114,7 @@
                                 <a class="nav-link" href="/search/"><i class="fa-solid fa-magnifying-glass text-black"></i></a>
                             </li>
                             <li class="nav-item">
-                                <button id="upload-button" class="btn border border-dark rounded"  data-bs-toggle="modal" data-bs-target="#upload-modal">
+                                <button class="btn border border-dark rounded"  data-bs-toggle="modal" data-bs-target="#upload-modal">
                                     <i class="fa-solid fa-circle-plus text-dark"></i>
                                 </button>
                             </li>
@@ -128,7 +128,7 @@
                     </nav>
                 </footer>
                 <aside class="d-none d-md-flex justify-content-end fixed-top pt-3 me-5">
-                    <button class="btn btn-secondary btn-lg" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                    <button class="btn btn-lg border border-black" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                         <i class="fa-solid fa-bars"></i>
                     </button>
                     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
@@ -145,7 +145,7 @@
                                     <a class="text-center fs-2 nav-link" href="/search/"><i class="fa-solid fa-magnifying-glass"></i> Search page</a>
                                 </li>
                                 <li class="list-group-item my-3 text-center">
-                                    <button id="upload-button" class="text-center fs-2 btn border border-dark rounded"  data-bs-toggle="modal" data-bs-target="#upload-modal">
+                                    <button class="text-center fs-2 btn border border-dark rounded"  data-bs-toggle="modal" data-bs-target="#upload-modal">
                                         <i class="fa-solid fa-circle-plus"></i> Upload new post
                                     </button>
                                 </li>
@@ -165,37 +165,35 @@
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                     <div class="modal-content h-75">
                         <div class="modal-header justify-content-center">
-                            <h4 class="modal-title" id="uploadModalLabel">Upload new picture <i class="fa-solid fa-camera-retro"></i></h4>
+                            <h2 class="modal-title" id="uploadModalLabel">Upload new picture <i class="fa-solid fa-camera-retro"></i></h2>
                         </div>
-                        <div class="modal-body">
-                            <div class="container-fluid">
-                                <h5>Which event have you been to?</h5>
-                                <div class="row">
-                                    <input type="text" id="upload-searchbar" class="border-1 rounded" placeholder="Event name...">
-                                </div>
-                                <div class="row">
-                                    <ol class="list-group list-group-flush my-1 overflow-y-auto" id="search-event-results">
-                                        <template id="event-result-template">
-                                            <li class="list-group-item"  id="ev-res-id">
-                                                <div class="row justify-content-start">
-                                                    <div class="col-2 col-md-1">
-                                                        <img id="ev-res-image" src="/static/img/default-image.png" class="img-fluid img-thumbnail">
-                                                    </div>
-                                                    <div class="col">
-                                                        <h5 id="ev-res-name">Event name</h5>
-                                                    </div>
-                                                    <div class="col">
-                                                        <p id="ev-res-date">Date</p>
-                                                    </div>
+                        <div class="modal-body container-fluid">
+                            <h3 class="fs-5">Which event have you been to?</h3>
+                            <div class="row">
+                                <input type="text" class="border-1 rounded" placeholder="Event name...">
+                            </div>
+                            <div class="row">
+                                <ol class="list-group list-group-flush my-1 overflow-y-auto">
+                                    <template>
+                                        <li class="list-group-item">
+                                            <div class="row justify-content-start">
+                                                <div class="col-2 col-md-1">
+                                                    <img src="/static/img/default-image.png" class="img-fluid img-thumbnail">
                                                 </div>
-                                            </li>
-                                        </template>
-                                    </ol>
-                                </div>
+                                                <div class="col">
+                                                    <p>Event name</p>
+                                                </div>
+                                                <div class="col-3">
+                                                    <p>Date</p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </template>
+                                </ol>
                             </div>
                         </div>
                         <div class="modal-footer border-top border-black justify-content-center">
-                            <button id="new-event" class="btn btn-primary btn-lg invisible">
+                            <button class="btn btn-primary btn-lg">
                                 Upload a new event <i class="fa-regular fa-calendar-plus"></i>
                             </button>
                         </div>

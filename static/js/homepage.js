@@ -47,8 +47,8 @@ async function showFeed() {
         addNewFeedPost(template, feed, post.post_id, post.event_id, post.profile_photo, 
                 post.username, post.image, post.description, post.likes, post.event_post, post.liked);
     }
-    document.getElementById("comments-modal").addEventListener("hidden.bs.modal", function() { cleanTemplateList("comments"); });
-    document.getElementById("partecipants-modal").addEventListener("hidden.bs.modal", function() { cleanTemplateList("partecipants"); });
+    document.getElementById("comments-modal").addEventListener("hidden.bs.modal", function() { cleanTemplateList(document.querySelector("comments")); });
+    document.getElementById("partecipants-modal").addEventListener("hidden.bs.modal", function() { cleanTemplateList(document.querySelector("partecipants")); });
 }
 
 async function addNewFeedPost(template, feed, post_id, event_id, user_photo, username,
