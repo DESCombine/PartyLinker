@@ -2,13 +2,14 @@
     require_once(getenv("PL_ROOTDIRECTORY")."php/bootstrap.php");
     use Firebase\JWT\JWT;
     require_once(getenv("PL_ROOTDIRECTORY")."db/user.php");
+    use User\UserUtility;
     require_once(getenv("PL_ROOTDIRECTORY")."php/requests/cors.php");
     header('Content-Type: application/json');
     $key = getenv("PL_JWTKEY");
     //$request = json_decode(file_get_contents('php://input'), true);
     $username = $_POST["username"];
     $password = $_POST["password"];
-    $user = User\UserUtility::from_db_with_username($driver, $username);
+    $user = UserUtility::from_db_with_username($driver, $username);
     if( $user == null ){
         http_response_code(401);
         echo json_encode(array("error" => "Username not found"), JSON_PRETTY_PRINT);
@@ -44,9 +45,12 @@
             'samesite' => 'None',
         ]);
     }
-
-
+    $settings = UserUtility::retrieve_settings($driver, $username);
     echo json_encode(array("message" => "success"), JSON_PRETTY_PRINT);
-    header("Location: https://partylinker.live");
+    if ($settings->getTFA()) {
+        header("Location: https://partylinker.live/login/twofactorauth.html");
+    } else {
+        header("Location: https://partylinker.live");
+    }
     $driver->close_connection();
 ?>

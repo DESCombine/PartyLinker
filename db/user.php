@@ -158,6 +158,10 @@ namespace User {
         public function getNotifications() {
             return $this->notifications;
         }
+
+        public function getTFA() {
+            return $this->twofa;
+        }
     }
 
     class UserUtility {
