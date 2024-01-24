@@ -1,7 +1,7 @@
 import { request_path } from "/static/js/config.js?v=2";
 import { loadUserImage, addLike, showComments, showPartecipations } from "/static/js/utils.js";
 
-document.querySelector("#modifyIcon").action = request_path + "/modifyprofile/modifyprofile.html";
+document.querySelector("#modifyIcon").href = "/modifyprofile/modifyprofile.html";
 
 const postButton = document.getElementById("buttons").getElementsByTagName("div").item(0);
 const eventButton = document.getElementById("buttons").getElementsByTagName("div").item(1);
@@ -124,8 +124,11 @@ async function showProfileInfos() {
     document.getElementById("description").innerHTML = infos.bio;
     document.getElementById("followers").innerHTML = infos.followers;
     document.getElementById("followed").innerHTML = infos.followed;
-    document.getElementById("profileImage").src = "/static/img/uploads/" + await loadUserImage(infos.username);
-    console.log(infos.background);
+    if(await loadUserImage(infos.username) == null) {
+        document.getElementById("profileImage").src = "/static/img/default-profile.png";
+    } else {
+        document.getElementById("profileImage").src = "/static/img/uploads/" + await loadUserImage(infos.username);
+    }
     if(infos.background != null) {
         document.getElementById("bannerImage").src = "/static/img/uploads/" + infos.background;
     } else {
