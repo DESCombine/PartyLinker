@@ -1,6 +1,8 @@
 import { request_path } from "/static/js/config.js?v=1";
 import { loadUserImage, addLike, showComments, showPartecipations } from "/static/js/utils.js";
 
+document.querySelector("#modifyIcon").action = request_path + "/modifyprofile/modifyprofile.html";
+
 const postButton = document.getElementById("buttons").getElementsByTagName("div").item(0);
 const eventButton = document.getElementById("buttons").getElementsByTagName("div").item(1);
 const templatePost = document.importNode(document.getElementById("template-photos"), true);

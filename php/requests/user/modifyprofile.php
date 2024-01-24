@@ -45,6 +45,6 @@ $password = $user->get_password();
 $user->update_infos($driver, $name, $surname, $birth_date, $email, $phone, $username, $password, $gender, $organizer, $profilePhoto, $bannerPhoto, $bio, $language, $notifications, $TFA);
 
 echo json_encode(array("message" => "success"), JSON_PRETTY_PRINT);
-header("Location: https://partylinker.live/profile");
+header("Location: http://".$_SERVER["HTTP_HOST"]."/profile");
 $driver->close_connection();
 ?>

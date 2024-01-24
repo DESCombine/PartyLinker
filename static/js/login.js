@@ -1,5 +1,7 @@
 import { request_path } from "/static/js/config.js?v=1";
 
+document.getElementsByTagName("form")[0].action = request_path + "/auth/auth.php";
+
 async function tryLogin() {
     username = document.getElementById("username").value
     password = document.getElementById("password").value

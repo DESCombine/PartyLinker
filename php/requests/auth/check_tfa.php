@@ -17,10 +17,10 @@ if($inserted_code == $right_code)
 {
     UserUtility::reset_tfa($driver, $username);
     UserUtility::update_online($driver, $username);
-    header("Location: https://partylinker.live");
+    header("Location: http://".$_SERVER["HTTP_HOST"]);
 }
 else
 {
-    header("Location: https://partylinker.live/login/twofactorauth.html?error=1");
+    header("Location: http://".$_SERVER["HTTP_HOST"]."/login/twofactorauth.html?error=1");
 }
 ?>

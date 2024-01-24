@@ -26,8 +26,7 @@
     $jwt = JWT::encode($payload, $key, 'HS256');
     $cookie_name = "token";
     $cookie_value = "Bearer ".$jwt;
-    echo $_SERVER["HTTP_ORIGIN"];
-    if($_SERVER["HTTP_ORIGIN"] == "http://localhost") {
+    if($_SERVER["HTTP_HOST"] == "http://localhost") {
         setcookie($cookie_name, $cookie_value, [
             'expires' => time() + 86400 * 365,
             'path' => '/',
@@ -48,10 +47,10 @@
     $settings = UserUtility::retrieve_settings($driver, $username);
     echo json_encode(array("message" => "success"), JSON_PRETTY_PRINT);
     if ($settings->getTFA()) {
-        header("Location: https://partylinker.live/login/twofactorauth.html");
+        header("Location: http://".$_SERVER["HTTP_HOST"]."/login/twofactorauth.html");
     } else {
         UserUtility::update_online($driver, $username);
-        header("Location: https://partylinker.live");
+        header("Location: http://".$_SERVER["HTTP_HOST"]);
     }
     $driver->close_connection();
 ?>
