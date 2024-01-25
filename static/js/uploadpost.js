@@ -1,15 +1,20 @@
 import { request_path } from "/static/js/config.js?v=2";
+import { loadEvent } from "/static/js/utils.js?";
 
 const event_id = new URLSearchParams(window.location.search).get('event');
+const event = await loadEvent(event_id);
 
 if (event_id == 0) {
     document.getElementsByTagName("h1")[0].innerHTML = "Upload new event";
     document.querySelector("#event-inputs").classList.remove("invisible");
-    const logo = document.querySelector("#logo-img");
+    const logo = document.querySelector("form img");
     logo.parentNode.remove();
 } else {
-    document.getElementsByTagName("h1")[0].innerHTML = "Upload photo for event " + event_id;
+    document.getElementsByTagName("h1")[0].innerHTML = "Upload photo for " + event.name;
     document.querySelector("form div").classList.add("overflow-y-hidden");
+    document.querySelectorAll("#event-inputs input").forEach(input => {
+        input.removeAttribute("required");
+    });
 }
 
 document.getElementsByName("event-id")[0].value = event_id;
