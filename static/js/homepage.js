@@ -1,8 +1,7 @@
 import { request_path } from "/static/js/config.js?v=2";
-import { cleanTemplateList, removeLike, addLike, addEventDescription, loadEvent, showComments, showPartecipations } from "/static/js/utils.js";
+import { checkError, cleanTemplateList, removeLike, addLike, addEventDescription, loadEvent, showComments, showPartecipations } from "/static/js/utils.js";
 
 async function loadOnlineUsers() {
-    console.log("Loading online users...");
     const response = await fetch(request_path + "/user/load_online_users.php", {
         method: "GET",
         headers: {
@@ -11,9 +10,7 @@ async function loadOnlineUsers() {
         credentials: "include"
     });
     const users = await response.json();    
-    if(users.error === "No token provided") {
-        window.location.replace("/login/login.html");
-    }
+    checkError(users);
     return users;
 }
 
@@ -39,6 +36,7 @@ async function loadFeed() {
         credentials: "include"
     });
     const posts = await response.json();
+    checkError(posts);
     return posts;
 }
 
