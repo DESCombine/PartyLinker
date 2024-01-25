@@ -1,3 +1,7 @@
+import { request_path } from "/static/js/config.js?v=2";
+
+document.getElementsByTagName("form")[0].action = request_path + "/auth/auth.php";
+
 // when screen is resized
 window.addEventListener("resize", function(){
     if(window.matchMedia("(min-width: 767px)").matches){

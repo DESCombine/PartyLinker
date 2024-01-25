@@ -9,7 +9,6 @@ if (error) {
     document.getElementById("error").classList.remove("invisible");
 }
 
-
 async function sendCode() {
     await fetch(request_path + "/email/tfa_handler.php", {
         method: "GET",
