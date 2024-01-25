@@ -38,10 +38,9 @@ async function showSearchResults(event) {
         const clone = document.importNode(template.content, true);
         clone.querySelector("li").setAttribute("name", "event"+event.event_id);
         clone.querySelector("img").src = "/static/img/uploads/" + event.image;
-        const nameAndDate = clone.querySelector("div");
-        nameAndDate.getElementsByTagName("p")[0].textContent = event.name;
-        nameAndDate.getElementsByTagName("p")[1].textContent = event.date;
-        clone.querySelector("li").addEventListener("click", function() { selectEvent(event.event_id); });
+        clone.querySelector("a").textContent = event.name;
+        clone.querySelector("a").href = "/post/postpage.html?event=" + event.event_id;
+        clone.querySelector("p").textContent = event.date;
         searchResults.appendChild(clone);
     }
 }

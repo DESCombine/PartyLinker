@@ -7,6 +7,10 @@ form > div:first-child {
     height: 65vh;
 }
 
+#upload-modal template li {
+    cursor: pointer;
+}
+
 #locationSuggestion {
     position: absolute;
     font-size: 10px;
