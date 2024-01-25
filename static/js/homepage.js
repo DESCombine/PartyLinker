@@ -1,5 +1,5 @@
 import { request_path } from "/static/js/config.js?v=2";
-import { cleanTemplateList, removeLike, addLike, addEventDescription, loadEvent, showComments, showPartecipations } from "/static/js/utils.js";
+import { checkError, cleanTemplateList, removeLike, addLike, addEventDescription, loadEvent, showComments, showPartecipations } from "/static/js/utils.js";
 
 async function loadOnlineUsers() {
     const response = await fetch(request_path + "/user/load_online_users.php", {
@@ -9,7 +9,8 @@ async function loadOnlineUsers() {
         },
         credentials: "include"
     });
-    const users = await response.json();
+    const users = await response.json();    
+    checkError(users);
     return users;
 }
 
@@ -35,6 +36,7 @@ async function loadFeed() {
         credentials: "include"
     });
     const posts = await response.json();
+    checkError(posts);
     return posts;
 }
 
