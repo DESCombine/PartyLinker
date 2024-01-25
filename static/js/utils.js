@@ -38,14 +38,17 @@ function resetEventListener(oldButton, fun) {
     return newButton;
 }
 
-export function addEventDescription(clone, event) {
-    clone.querySelector("#event-name").innerHTML = event.name;
-    clone.querySelector("#event-place").innerHTML = "Place: " + event.location;
-    clone.querySelector("#event-date").innerHTML = "Starting Date: " + event.starting_date + "<br>Ending Date: " + event.ending_date;
-    clone.querySelector("#event-vips").innerHTML = "Vips: " + event.vips;
-    clone.querySelector("#event-people").innerHTML = "Available places: " + event.max_capacity;
-    clone.querySelector("#event-price").innerHTML = "Price: " + event.price;
-    clone.querySelector("#event-age").innerHTML = "Required age: " + event.minimum_age;
+export function addEventDescription(parent, event) {
+    parent.querySelector("h4").innerHTML = event.name;
+    const infos = parent.querySelector("ol");
+    infos.innerHTML = `
+            <li class="list-group-item"><p>Place ${event.location}</p></li>
+            <li class="list-group-item"><p>Starting Date: ${event.starting_date}</p></li>
+            <li class="list-group-item"><p>Ending Date: ${event.ending_date}</p></li>
+            <li class="list-group-item"><p>Vips: ${event.vips}</p></li>
+            <li class="list-group-item"><p>Max-People: ${event.max_capacity}</p></li>
+            <li class="list-group-item"><p>Price: ${event.price}</p></li>
+            <li class="list-group-item"><p>Minimum age: ${event.minimum_age}</p></li>`;
 }
 
 export async function addLike(like_id, type) {

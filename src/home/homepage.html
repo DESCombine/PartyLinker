@@ -21,80 +21,63 @@
                 <main>
                     <div class="container-fluid">
                         <h2><i class="fa-solid fa-user-group"></i>Online Users</h2>
-                        <ul class="list-group list-group-flush list-group-horizontal overflow-x-auto border-top border-bottom border-dark"  id="online-users">
-                            <template id="online-template">
+                        <ul id="online-users" class="list-group list-group-flush list-group-horizontal overflow-x-auto border-top border-bottom border-dark">
+                            <template>
                                 <li class="list-group-item col-3 col-md-1">
-                                    <img id="online-image" src="/static/img/default-profile.png" alt="" class="img-fluid rounded-circle img-thumbnail">
+                                    <img src="/static/img/default-profile.png" alt="" class="img-fluid rounded-circle img-thumbnail">
                                 </li>
                             </template>
                         </ul>
                     </div>
                     <div class="container-fluid">
-                        <ol class="list-group list-group-flush my-1" id="feed">
-                            <template id="post-template">
-                                <li class="list-group-item" id="post-id">
-                                    <div class="row justify-content-start my-3">
+                        <ol id="feed" class="list-group list-group-flush my-1">
+                            <template>
+                                <li class="list-group-item">
+                                    <div class="post-user row justify-content-start my-3">
                                         <div class="col-2 col-md-1">
-                                            <img id="post-user-photo" src="/static/img/default-profile.png" alt="" class="img-fluid img-thumbnail">
+                                            <img src="/static/img/default-profile.png" alt="" class="img-fluid img-thumbnail">
                                         </div>
                                         <div class="col pt-md-3">
-                                            <h3 id="post-name">Username</h3>
+                                            <h3>Username</h3>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="post-content row">
                                         <div class="col-md-6">
-                                            <img id="post-photo" src="/static/img/default-image.png" alt="" class="img-fluid">
+                                            <img src="/static/img/default-image.png" alt="" class="img-fluid">
                                         </div>
                                         <div class="col-md-6">
-                                            <ol id="under-post" class="list-group list-group-flush list-group-horizontal">
+                                            <ol class="list-group list-group-flush list-group-horizontal">
                                                 <li class="list-group-item pt-3 pe-0">
-                                                    <p id="post-likes">0</p>
+                                                    <p>0</p>
                                                 </li>
                                                 <li class="list-group-item">
-                                                    <button id="likes-button" class="btn">
+                                                    <button class="like-button btn">
                                                         <i class="fa-regular fa-heart"></i>
                                                     </button>
                                                 </li>
                                                 <li class="list-group-item">
-                                                    <button id="comments-button" class="btn"  data-bs-toggle="modal" data-bs-target="#comments-modal">
+                                                    <button class="comment-button btn"  data-bs-toggle="modal" data-bs-target="#comments-modal">
                                                         <i class="fa-regular fa-comment"></i>
                                                     </button>
                                                 </li>
                                                 <li class="list-group-item">
-                                                    <button id="partecipants-button" class="btn invisible"  data-bs-toggle="modal" data-bs-target="#partecipants-modal">
+                                                    <button class="partecipate-button btn invisible"  data-bs-toggle="modal" data-bs-target="#partecipants-modal">
                                                         <i class="fa-solid fa-users-viewfinder"></i>
                                                     </button>
                                                 </li>
                                                 <li class="list-group-item">
-                                                    <button id="event-button" class="btn invisible">
+                                                    <button class="event-info-button btn invisible">
                                                         <i class="fa-solid fa-tent"></i>
                                                     </button>
                                                 </li>
                                             </ol>
-                                            <p id="post-description">Post description</p>
-                                            <div id="event-info">
+                                            <p class="post-description">Post description</p>
+                                            <div class="event-info">
                                                 <div class="text-center">
-                                                    <h4 id="event-name">Event Name</h4>
+                                                    <h4>Event Name</h4>
                                                 </div>
                                                 <ol class="list-group list-group-flush">
-                                                    <li class="list-group-item">
-                                                        <p id="event-place">Place</p>
-                                                    </li>
-                                                    <li class="list-group-item">
-                                                        <p id="event-date">Date</p>
-                                                    </li>
-                                                    <li class="list-group-item">
-                                                        <p id="event-vips">Vips</p>
-                                                    </li>
-                                                    <li class="list-group-item">
-                                                        <p id="event-people">Max-People</p>
-                                                    </li>
-                                                    <li class="list-group-item">
-                                                        <p id="event-price">Price</p>
-                                                    </li>
-                                                    <li class="list-group-item">
-                                                        <p id="event-age">Minimum age</p>
-                                                    </li>
+                                                    <!-- generated with js -->
                                                 </ol>
                                             </div>
                                         </div>

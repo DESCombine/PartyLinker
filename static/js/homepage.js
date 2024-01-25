@@ -15,14 +15,14 @@ async function loadOnlineUsers() {
 }
 
 async function showOnlineUsers() {
-    const online_users = document.getElementById("online-users");
+    const online_users = document.querySelector("#online-users");
     const users = await loadOnlineUsers();
-    let template = document.querySelector("#online-template");
+    const template = online_users.querySelector("template");
     for (let i = 0; i < users.length; i++) {
         let user = users[i];
-        let clone = document.importNode(template.content, true);
-        clone.querySelector("#online-image").src = "/static/img/uploads/" + user.profile_photo;
-        clone.querySelector("#online-image").alt = user.username;
+        let clone = template.content.cloneNode(true);
+        clone.querySelector("img").src = "/static/img/uploads/" + user.profile_photo;
+        clone.querySelector("img").alt = user.username;
         online_users.appendChild(clone);
     }
 }
@@ -41,46 +41,55 @@ async function loadFeed() {
 }
 
 async function showFeed() {
-    const feed = document.getElementById("feed");
+    const feed = document.querySelector("#feed");
     const posts = await loadFeed();
-    let template = document.getElementById("post-template");
+    const template = feed.querySelector("template");
     for (let i = 0; i < posts.length; i++) {
         let post = posts[i];
-        addNewFeedPost(template, feed, post.post_id, post.event_id, post.profile_photo, 
+        let clone = template.content.cloneNode(true);
+        addNewFeedPost(clone, feed, post.post_id, post.event_id, post.profile_photo, 
                 post.username, post.image, post.description, post.likes, post.event_post, post.liked);
     }
     document.getElementById("comments-modal").addEventListener("hidden.bs.modal", function() { cleanTemplateList(document.querySelector("comments")); });
     document.getElementById("partecipants-modal").addEventListener("hidden.bs.modal", function() { cleanTemplateList(document.querySelector("partecipants")); });
+    if (posts.length == 0) {
+        feed.parentNode.innerHTML = "<p class='fs-4 text-center'>No posts to show.<br>\
+                Start following new users with the search page <i class='fa-solid fa-magnifying-glass'></i></p>";
+    }
 }
 
-async function addNewFeedPost(template, feed, post_id, event_id, user_photo, username,
-    image, description, likes, event, liked) {
-    let clone = document.importNode(template.content, true);
-    clone.querySelector("#post-id").setAttribute("name", "post" + post_id);
-    clone.querySelector("#post-user-photo").src = "/static/img/uploads/" + user_photo;
-    clone.querySelector("#post-name").innerHTML = username;
-    clone.querySelector("#post-photo").src = "/static/img/uploads/" + image;
-    const likeButton = clone.querySelector("#likes-button");
+async function addNewFeedPost(clone, feed, post_id, event_id, user_photo, username,
+        image, description, likes, event, liked) {
+    const postUser = clone.querySelector(".post-user");
+    const postContent = clone.querySelector(".post-content");
+    const postActions = postContent.querySelector("ol");
+
+    clone.querySelector("li").setAttribute("name", "post" + post_id);
+    postUser.querySelector("img").src = "/static/img/uploads/" + user_photo;
+    postUser.querySelector("h3").innerHTML = username;
+    postContent.querySelector("img").src = "/static/img/uploads/" + image;
+    postActions.querySelector("p").innerHTML = likes;
+
+    const likeButton = postActions.querySelector(".like-button");
     if (liked) {
         likeButton.addEventListener("click", function() { removeLike(post_id, 'post'); });
         likeButton.innerHTML = "<i class='fa-solid fa-heart text-danger'></i>";
     } else {
         likeButton.addEventListener("click", function() { addLike(post_id, 'post'); });
     }
-    clone.querySelector("#comments-button").addEventListener("click", function() { showComments(post_id); });
-    clone.querySelector("#post-likes").innerHTML = likes;
-    clone.querySelector("#post-description").innerHTML = description;
+    postActions.querySelector(".comment-button").addEventListener("click", function() { showComments(post_id); });
+    postContent.querySelector(".post-description").innerHTML = description;
+    
+    const eventInfo = postContent.querySelector(".event-info");
     if (event) {
-        clone.querySelector("#partecipants-button").addEventListener("click", function() { showPartecipations(event_id); });
-        clone.querySelector("#partecipants-button").classList.remove("invisible");
-        addEventDescription(clone, await loadEvent(event_id));
+        postActions.querySelector(".partecipate-button").addEventListener("click", function() { showPartecipations(event_id); });
+        postActions.querySelector(".partecipate-button").classList.remove("invisible");
+        addEventDescription(eventInfo, await loadEvent(event_id));
     } else {
-        clone.querySelector("#event-info").innerHTML = "";
-        clone.querySelector("#event-button").addEventListener("click", function () { window.location.replace("/event/eventpage.html?id=" + event_id); });
-        clone.querySelector("#event-button").classList.remove("invisible");
-        const parent = clone.querySelector("#under-post");
-        parent.insertBefore(parent.lastElementChild, parent.lastElementChild.previousElementSibling);
-        
+        eventInfo.innerHTML = "";
+        postActions.querySelector(".event-info-button").addEventListener("click", function () { window.location.replace("/event/eventpage.html?id=" + event_id); });
+        postActions.querySelector(".event-info-button").classList.remove("invisible");
+        postActions.insertBefore(postActions.lastElementChild, postActions.lastElementChild.previousElementSibling);
     }
     feed.appendChild(clone);
 }
