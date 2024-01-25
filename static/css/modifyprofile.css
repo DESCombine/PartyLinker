@@ -1,4 +1,6 @@
-header img {
-    width: 50% !important;
-
+img {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+    padding: 5%;
 }
