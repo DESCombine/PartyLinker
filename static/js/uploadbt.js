@@ -7,7 +7,8 @@ modal.addEventListener("shown.bs.modal", function() { renderModalFooter() });
 
 async function renderModalFooter() {
     const modalFooter = modal.querySelector(".modal-footer");
-    if (checkOrganizer()) {
+    if (checkOrganizer() == 1) {
+        modalFooter.querySelector("button").classList.remove("invisible");
         modalFooter.querySelector("button").addEventListener("click", function() { selectEvent(0); });
     } else {
         modalFooter.innerHTML = "<p class='text-center'>Had Fun? <i class='fa-solid fa-face-grin-stars'></i></p>";
@@ -38,10 +39,9 @@ async function showSearchResults(event) {
         const clone = document.importNode(template.content, true);
         clone.querySelector("li").setAttribute("name", "event"+event.event_id);
         clone.querySelector("img").src = "/static/img/uploads/" + event.image;
-        const nameAndDate = clone.querySelector("div");
-        nameAndDate.getElementsByTagName("p")[0].textContent = event.name;
-        nameAndDate.getElementsByTagName("p")[1].textContent = event.date;
-        clone.querySelector("li").addEventListener("click", function() { selectEvent(event.event_id); });
+        clone.querySelector("a").textContent = event.name;
+        clone.querySelector("a").href = "/post/postpage.html?event=" + event.event_id;
+        clone.querySelector("p").textContent = event.date;
         searchResults.appendChild(clone);
     }
 }

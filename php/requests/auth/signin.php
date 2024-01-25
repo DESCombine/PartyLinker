@@ -25,6 +25,8 @@ if ($user != null) {
     $user->__construct($username, $email, $name, $surname, $birth_date, null, null, null, null, $password, 0, null, null);
     $user->create_password($password);
     $user->db_serialize($driver);
+    $settings = new User\DBSettings($username);
+    $settings->db_serialize($driver);
 }
 
 
