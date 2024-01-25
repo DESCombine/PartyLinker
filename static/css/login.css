@@ -1,14 +1,18 @@
 @media screen and (min-width: 768px) {
     img {
-        display: flex;
-        float: left;
         width: 30% !important;
         padding: 1%;
+        object-fit: cover;
+        height: 50%;
     }
 
     main>div {
         display: flex;
         float: right;
+    }
+
+    main>div>div {
+        width: 50px;
     }
 }
 
@@ -19,6 +23,7 @@
     }
 
     img {
+        display: block;
         width: 100% !important;
         height: 100% !important;
         padding: 5%;
