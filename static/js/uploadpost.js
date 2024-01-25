@@ -20,8 +20,10 @@ if (event_id == 0) {
 document.getElementsByName("event-id")[0].value = event_id;
 document.getElementsByTagName("form")[0].action = request_path + "/user/upload_post.php";
 
-document.querySelector("#inputLocation").onkeyup = function () {
-    if(this.value.length > 4) {
+document.querySelector("#inputLocation").onkeyup = function (e) {
+    var code = (e.keyCode || e.which)
+    console.log(code)
+    if(this.value.length > 4 && (code != 37 || code != 38 || code != 39 || code != 40)) {
         //document.querySelector(".location-suggestions").classList.remove("invisible");
         get_location_suggestions(this.value);
     }
@@ -42,10 +44,11 @@ async function get_location_suggestions(location) {
     const uuid_pattern = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi;
     if(uuid_pattern.test(session_id)) {
         
-        const request_url = `https://api.mapbox.com/search/searchbox/v1/suggest?q=${location.replaceAll(" ", "%20")}&access_token=${mapboxgl.accessToken}&session_token=${session_id}`;
+        const request_url = `https://api.mapbox.com/search/searchbox/v1/suggest?q=${location.replaceAll(" ", "%20")}&types=address,poi,street,city&access_token=${mapboxgl.accessToken}&session_token=${session_id}`;
         const data = await (await fetch(request_url)).json();
         let suggestions = []
         data.suggestions.forEach(suggestion => {
+            console.log(suggestion)
             suggestions.push({
                 "name": suggestion.name,
                 "address": suggestion.full_address,
@@ -55,13 +58,13 @@ async function get_location_suggestions(location) {
         
         let suggestions_html = "";
         suggestions.forEach(suggestion => {
-            suggestions_html += `<div class="location-suggestion" onclick="suggestion_selected('${suggestion.mapbox_id}')">
+            suggestions_html += `<div class="suggestion" onclick="suggestion_selected('${suggestion.mapbox_id}')">
                                     <h3 class="location-name">${suggestion.name}</h3>
-                                    <p class="location-address">${suggestion.address}</p>
+                                    ${suggestion.address!=undefined?'<p class="location-address">' + suggestion.address + '</p>':''}
                                 </div>`;
         });
         document.querySelector("#locationSuggestions").innerHTML = suggestions_html;
-        document.querySelector("#locationSuggestions").classList.remove("invisible");
+        document.querySelector("#locationSuggestions").classList.remove("d-none");
     }
 }
 
@@ -71,7 +74,7 @@ window.suggestion_selected = async function (mapbox_id) {
     const data = await (await fetch(request_url)).json();
     console.log(data)
     document.querySelector("#inputLocation").value = data.features[0].properties.full_address;
-    document.querySelector("#locationSuggestions").classList.add("invisible");
+    document.querySelector("#locationSuggestions").classList.add("d-none");
     //Remove session_id from url
     const url = new URL(window.location.href);
     url.searchParams.delete('session_id');
