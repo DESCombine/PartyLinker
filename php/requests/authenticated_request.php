@@ -8,8 +8,8 @@
         } else {
             $domain = "https://partylinker.live";
         }
-        header("Location: ".$domain."/login/login.html");
         echo json_encode(array("error" => "No token provided"));
+        exit();
     }
     $username = UserUtility::retrieve_username_from_token($_COOKIE["token"]);
 ?>

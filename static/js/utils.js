@@ -1,15 +1,10 @@
 import { request_path } from "/static/js/config.js?v=2";
 
-window.addEventListener('onunload', function() {
-    setOffline();
-});
-
-async function setOffline() {
-    await fetch(request_path + "/user/switch_online.php", {
-        method: "POST",
-        credentials: "include"
-    });
-}
+export function checkError(response) {
+    if (response.error === "No token provided") {
+        window.location.replace("/login/login.html");
+    }
+} 
 
 export async function loadUserImage(user_id) {
     const response = await fetch(request_path + "/user/load_user_img.php?user=" + user_id);
@@ -26,6 +21,7 @@ export async function loadEvent(event_id) {
 export async function checkOrganizer() {
     const response = await fetch(request_path + "/user/load_settings.php");
     const settings = await response.json();
+    checkError(settings);
     return settings.organizer;
 }
 
@@ -61,7 +57,7 @@ export async function removeLike(like_id, type) {
 }
 
 async function like(like_id, type, request, addOrRemove) {
-    await fetch(request_path + request, {
+    const response = await fetch(request_path + request, {
         method: "POST",
         credentials: "include",
         header: {
@@ -72,6 +68,7 @@ async function like(like_id, type, request, addOrRemove) {
             "type": type
         })
     });
+    checkError(await response.json());
     let likes;
     let likeButton;
     const element = document.getElementsByName(type+like_id)[0];
@@ -100,7 +97,7 @@ async function like(like_id, type, request, addOrRemove) {
 async function submitComment(post_id) {
     const content = document.querySelector("#comment-input").value;
     document.querySelector("#comment-input").value = "";
-    await fetch(request_path + "/user/upload_comment.php", {
+    const response = await fetch(request_path + "/user/upload_comment.php", {
         method: "POST",
         credentials: "include",
         header: {
@@ -111,6 +108,7 @@ async function submitComment(post_id) {
             "content": content
         })
     });
+    checkError(await response.json());
     cleanTemplateList(document.querySelector("comments"));
     showComments(post_id);
 }
@@ -131,7 +129,7 @@ async function removeComment(comment_id, post_id) {
 }
 
 async function submitPartecipation(event_id) {
-    await fetch(request_path + "/user/upload_partecipation.php", {
+    const response = await fetch(request_path + "/user/upload_partecipation.php", {
         method: "POST",
         credentials: "include",
         header: {
@@ -141,12 +139,13 @@ async function submitPartecipation(event_id) {
             "event_id": event_id
         })
     });
+    checkError(await response.json());
     cleanTemplateList(document.querySelector("partecipants"));
     showPartecipations(event_id);
 }
 
 async function submitBusy(event_id) {
-    await fetch(request_path + "/user/remove_partecipation.php", {
+    const response = await fetch(request_path + "/user/remove_partecipation.php", {
         method: "POST",
         credentials: "include",
         header: {
@@ -156,6 +155,7 @@ async function submitBusy(event_id) {
             "event_id": event_id
         })
     });
+    checkError(await response.json());
     cleanTemplateList(document.querySelector("partecipants"));
     showPartecipations(event_id);
 }
