@@ -198,6 +198,26 @@ namespace User {
             return $user;
         }
 
+        public static function from_db_with_username_like( \DBDriver $driver, string $username ): array{
+            $sql = "SELECT * FROM user WHERE username LIKE ?";
+
+            try {
+                $result = $driver->query($sql, "%".$username."%");
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+            $users = array();
+            if ($result->num_rows > 0) {
+                for($i = 0; $i < $result->num_rows; $i++){
+                    $row = $result->fetch_array();
+                    $user = new DBUser($row["username"], $row["email"], $row["name"], $row["surname"], $row["birth_date"], 
+                            $row["profile_photo"], $row["background"], $row["bio"], $row["phone"], $row["password"], $row["online"]);
+                    array_push($users, $user);
+                }
+            }
+            return $users;
+        }
+
         public static function from_db_with_email(\DBDriver $driver, string $email) {
             $user = null;
             $sql = "SELECT * FROM user WHERE email = ?";
