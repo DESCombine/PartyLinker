@@ -131,38 +131,6 @@ async function removeComment(comment_id, post_id) {
     showComments(post_id);
 }
 
-async function submitPartecipation(event_id) {
-    const response = await fetch(request_path + "/user/upload_partecipation.php", {
-        method: "POST",
-        credentials: "include",
-        header: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            "event_id": event_id
-        })
-    });
-    checkError(await response.json());
-    cleanTemplateList(document.querySelector("partecipants"));
-    showPartecipations(event_id);
-}
-
-async function submitBusy(event_id) {
-    const response = await fetch(request_path + "/user/remove_partecipation.php", {
-        method: "POST",
-        credentials: "include",
-        header: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            "event_id": event_id
-        })
-    });
-    checkError(await response.json());
-    cleanTemplateList(document.querySelector("partecipants"));
-    showPartecipations(event_id);
-}
-
 async function loadComments(post_id) {
     const response = await fetch(request_path + "/user/load_comments.php?post=" + post_id);
     const comments = await response.json();
@@ -204,23 +172,42 @@ export async function loadPartecipations(event_id) {
     return partecipations;
 }
 
+async function partecipationClick(event_id, request) {
+    await fetch(request_path + request, {
+        method: "POST",
+        credentials: "include",
+        header: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            "event_id": event_id
+        })
+    });
+    const partList = document.querySelector("#partecipants-modal ul");
+    cleanTemplateList(partList);
+    showPartecipations(event_id);
+}
+
 export async function showPartecipations(event_id) {
-    const partecipations = document.getElementById("partecipants");
+    const partModal = document.querySelector("#partecipants-modal")
+    const partecipations = partModal.querySelector("ul");
     const partecipations_list = await loadPartecipations(event_id);
-    let template = document.getElementById("partecipants-template");
+    let template = partecipations.querySelector("template");
     let isUserPartecipating = false;
     for (let i = 0; i < partecipations_list.length; i++) {
         let partecipation = partecipations_list[i];
         if (partecipation.partecipating) {
             isUserPartecipating = true;
         }
-        let clone = document.importNode(template.content, true);
-        clone.querySelector("#partecipants-photo").src = "/static/img/uploads/" + partecipation.profile_photo;
-        clone.querySelector("#partecipants-name").textContent = partecipation.username;
+        let clone = template.content.cloneNode(true);
+        clone.querySelector("img").src = "/static/img/uploads/" + partecipation.profile_photo;
+        clone.querySelector("h5").textContent = partecipation.username;
         partecipations.appendChild(clone);
     }
-    const partecipants_button = document.querySelector("#submit-partecipation");
-    const busy_button = document.querySelector("#submit-busy");
-    resetEventListener(partecipants_button, function() { submitPartecipation(event_id); }).disabled = isUserPartecipating;
-    resetEventListener(busy_button, function() { submitBusy(event_id); }). disabled = !isUserPartecipating;
+    const partecipants_button = partModal.getElementsByTagName("button")[0];
+    const busy_button = partModal.getElementsByTagName("button")[1];
+    resetEventListener(partecipants_button, function() { 
+            partecipationClick(event_id, "/user/upload_partecipation.php"); }).disabled = isUserPartecipating;
+    resetEventListener(busy_button, function() { 
+            partecipationClick(event_id, "/user/remove_partecipation.php"); }).disabled = !isUserPartecipating;
 }
