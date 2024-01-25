@@ -7,7 +7,8 @@ modal.addEventListener("shown.bs.modal", function() { renderModalFooter() });
 
 async function renderModalFooter() {
     const modalFooter = modal.querySelector(".modal-footer");
-    if (checkOrganizer()) {
+    if (checkOrganizer() == 1) {
+        modalFooter.querySelector("button").classList.remove("invisible");
         modalFooter.querySelector("button").addEventListener("click", function() { selectEvent(0); });
     } else {
         modalFooter.innerHTML = "<p class='text-center'>Had Fun? <i class='fa-solid fa-face-grin-stars'></i></p>";
