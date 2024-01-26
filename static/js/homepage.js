@@ -50,8 +50,10 @@ async function showFeed() {
         addNewFeedPost(clone, feed, post.post_id, post.event_id, post.profile_photo, 
                 post.username, post.image, post.description, post.likes, post.event_post, post.liked);
     }
-    document.getElementById("comments-modal").addEventListener("hidden.bs.modal", function() { cleanTemplateList(document.querySelector("comments")); });
-    document.getElementById("partecipants-modal").addEventListener("hidden.bs.modal", function() { cleanTemplateList(document.querySelector("partecipants")); });
+    document.getElementById("comments-modal").addEventListener("hidden.bs.modal", 
+            function() { cleanTemplateList(document.querySelector("#comments-modal ol")); });
+    document.getElementById("partecipants-modal").addEventListener("hidden.bs.modal", 
+            function() { cleanTemplateList(document.querySelector("#partecipants-modal ul")); });
     if (posts.length == 0) {
         feed.parentNode.innerHTML = "<p class='fs-4 text-center'>No posts to show.<br>\
                 Start following new users with the search page <i class='fa-solid fa-magnifying-glass'></i></p>";
@@ -68,7 +70,7 @@ async function addNewFeedPost(clone, feed, post_id, event_id, user_photo, userna
     postUser.querySelector("img").src = "/static/img/uploads/" + user_photo;
     postUser.querySelector("h3").innerHTML = username;
     postContent.querySelector("img").src = "/static/img/uploads/" + image;
-    postActions.querySelector("p").innerHTML = likes;
+    postActions.querySelector(".likes").innerHTML = likes;
 
     const likeButton = postActions.querySelector(".like-button");
     if (liked) {
