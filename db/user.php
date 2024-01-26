@@ -456,7 +456,11 @@ namespace User {
             } catch (\Exception $e) {
                 throw new \Exception("Error while querying the database: " . $e->getMessage());
             }
-            $sql = "SELECT username, last_seen FROM user WHERE online = 1";
+            $sql = "SELECT u.username, u.last_seen 
+                    FROM user u, relationship r 
+                    WHERE u.username = r.followed 
+                    AND r.follows = ? 
+                    AND u.online = 1";
             try {
                 $result = $driver->query($sql);
             } catch (\Exception $e) {
