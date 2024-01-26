@@ -1,7 +1,11 @@
 <?php
     require_once(getenv("PL_ROOTDIRECTORY")."php/bootstrap.php");
     use Post\PostUtility;
-    require_once(getenv("PL_ROOTDIRECTORY")."php/requests/authenticated_request.php");
+    if(!isset($_GET["user"])) {
+        require_once(getenv("PL_ROOTDIRECTORY")."php/requests/authenticated_request.php");
+    } else {
+        $username = $_GET["user"];
+    }
     require_once(getenv("PL_ROOTDIRECTORY")."db/post.php");
     
     global $driver;

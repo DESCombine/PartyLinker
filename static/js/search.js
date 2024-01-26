@@ -20,7 +20,7 @@ function showSearchResults(users) {
         console.log(user)
         const user_div = document.createElement("div");
         user_div.innerHTML = `
-        <div class="result row">
+        <div class="result row" onclick="redirect('${user.username}')">
             <div class="col-2">
                 <img src="/static/img/uploads/${user.profile_photo}" alt="placeholder" class="result-profile-img"> 
             </div> 
@@ -32,3 +32,7 @@ function showSearchResults(users) {
     });
 }
 
+
+window.redirect = (user_id) => {
+    window.location.href = "/profile?user=" + user_id;
+}

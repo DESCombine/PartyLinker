@@ -10,8 +10,9 @@ postButton.addEventListener("click", function () { changeView("post"); });
 eventButton.addEventListener("click", function () { changeView("event"); });
 postButton.style.pointerEvents = "none";
 
-async function loadPosts() {
-    const response = await fetch(request_path + "/user/load_posted.php", {
+async function loadPosts(user) {
+    const request_url = user == null ? request_path + "/user/load_posted.php" : request_path + "/user/load_posted.php?user=" + user;
+    const response = await fetch(request_url, {
         method: "GET",
         headers: {
             "Content-Type": "application/json"
@@ -22,8 +23,9 @@ async function loadPosts() {
     return posts;
 }
 
-async function loadProfileInfos() {
-    const response = await fetch(request_path + "/user/load_profile_infos.php", {
+async function loadProfileInfos(user) {
+    const request_url = user == null ? request_path + "/user/load_profile_infos.php" : request_path + "/user/load_profile_infos.php?user=" + user;
+    const response = await fetch(request_url, {
         method: "GET",
         headers: {
             "Content-Type": "application/json"
@@ -59,8 +61,8 @@ function changeView(button) {
     showPhotos(type);
 }
 
-async function getType(type) {
-    const photos = await loadPosts();
+async function getType(type, user) {
+    const photos = await loadPosts(user);
     const returnarray = [];
     photos.forEach(element => {
         if (element.event_post == type) {
@@ -84,9 +86,9 @@ function openModal(post) {
     showModalPost(modal, post.id, post.event_id, post.user_photo, post.username, post.image, post.description, post.likes, post.event_post);
 }
 
-async function showPhotos(type) {
+async function showPhotos(type, user) {
     const posts = document.getElementById("posts");
-    let photos = (await getType(type));
+    let photos = (await getType(type, user));
     let photo = photos[0];
     let photosDiv = document.getElementById("photos");
     let template = document.getElementById("template-photos");
@@ -118,8 +120,8 @@ async function showPhotos(type) {
     }
 }
 
-async function showProfileInfos() {
-    const infos = await loadProfileInfos();
+async function showProfileInfos(user) {
+    const infos = await loadProfileInfos(user);
     document.getElementById("username").innerHTML = infos.username;
     document.getElementById("description").innerHTML = infos.bio;
     document.getElementById("followers").innerHTML = infos.followers;
@@ -155,5 +157,10 @@ async function showModalPost(modal, post_id, event_id, user_photo, username,
 
 }
 
-showProfileInfos();
-showPhotos(0);
+const user = new URLSearchParams(window.location.search).get("user");
+console.log(user);
+showProfileInfos(user);
+showPhotos(0, user);
+if (user != null) {
+    document.getElementById("modifyIcon").classList.add("d-none");
+}
