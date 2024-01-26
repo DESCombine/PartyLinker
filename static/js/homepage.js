@@ -25,6 +25,9 @@ async function showOnlineUsers() {
         clone.querySelector("img").alt = user.username;
         online_users.appendChild(clone);
     }
+    if (users.length == 0) {
+        online_users.innerHTML = "<p class='fs-5 mt-2'>No users online.</p>";
+    }
 }
 
 async function loadFeed() {
