@@ -63,7 +63,7 @@ async function like(like_id, type, request, addOrRemove) {
     await fetch(request_path + request, {
         method: "POST",
         credentials: "include",
-        header: {
+        headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
@@ -99,7 +99,7 @@ async function submitComment(post_id) {
     await fetch(request_path + "/user/upload_comment.php", {
         method: "POST",
         credentials: "include",
-        header: {
+        headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
@@ -115,7 +115,7 @@ async function removeComment(comment_id, post_id) {
     await fetch(request_path + "/user/remove_comment.php", {
         method: "POST",
         credentials: "include",
-        header: {
+        headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
@@ -167,7 +167,7 @@ async function partecipationClick(event_id, request) {
     await fetch(request_path + request, {
         method: "POST",
         credentials: "include",
-        header: {
+        headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
@@ -202,3 +202,15 @@ export async function showPartecipations(event_id) {
     resetEventListener(busy_button, function() { 
             partecipationClick(event_id, "/user/remove_partecipation.php"); }).disabled = !isUserPartecipating;
 }
+
+async function confirmOnline() {
+    const res = await fetch(request_path + "/user/update_online.php", {
+        method: "POST",
+        credentials: "include"
+    });
+    const response = await res.json();
+    checkError(response);
+}
+
+confirmOnline();
+setInterval(confirmOnline, 5 * 60 * 1000);

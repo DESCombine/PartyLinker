@@ -14,7 +14,7 @@
 - [x] User tagging notification
 - [x] Event notification
 - [x] fix token recognition
-- [ ] fix offline switch
+- [x] fix offline switch
 # WOW effect
 - [x] 2F Authentication
 - [ ] Remember me
