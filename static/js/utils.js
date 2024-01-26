@@ -22,7 +22,7 @@ export async function checkOrganizer() {
     const response = await fetch(request_path + "/user/load_settings.php");
     const settings = await response.json();
     checkError(settings);
-    return settings.organizer;
+    return settings.organizer === 1;
 }
 
 export function cleanTemplateList(list) {
