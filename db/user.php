@@ -462,7 +462,7 @@ namespace User {
                     AND r.follows = ? 
                     AND u.online = 1";
             try {
-                $result = $driver->query($sql);
+                $result = $driver->query($sql, $username);
             } catch (\Exception $e) {
                 throw new \Exception("Error while querying the database: " . $e->getMessage());
             }
