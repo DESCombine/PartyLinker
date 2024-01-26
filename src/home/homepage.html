@@ -47,7 +47,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <ol class="list-group list-group-flush list-group-horizontal">
-                                                <li class="list-group-item pt-3 pe-0">
+                                                <li class="likes list-group-item pt-3 pe-0">
                                                     <p>0</p>
                                                 </li>
                                                 <li class="list-group-item">
@@ -188,37 +188,37 @@
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable align-items-end align-items-md-center modal-lg">
                     <div class="modal-content h-75">
                         <div class="modal-header justify-content-center">
-                            <h4 class="modal-title" id="commentsModalLabel"><i class="fa-solid fa-comments"></i> Comments</h4>
+                            <h2 class="modal-title" id="commentsModalLabel"><i class="fa-solid fa-comments"></i> Comments</h2>
                         </div>
                         <div class="modal-body">
                             <div class="container-fluid">
-                                <ol class="list-group list-group-flush my-1 overflow-y-auto" id="comments">
-                                    <template id="comment-template">
-                                        <li class="list-group-item"  id="comment-id">
+                                <ol class="list-group list-group-flush my-1 overflow-y-auto">
+                                    <template>
+                                        <li class="list-group-item">
                                             <div class="row justify-content-start">
                                                 <div class="col-2 mb-1 col-md-1">
-                                                    <img id="comment-user-photo" src="/static/img/default-profile.png" alt="" class="img-fluid img-thumbnail">
+                                                    <img src="/static/img/default-profile.png" alt="" class="img-fluid img-thumbnail">
                                                 </div>
                                                 <div class="col">
-                                                    <h5 id="comment-name">Username</h5>
+                                                    <h3 class="fs-5">Username</h3>
                                                 </div>
                                             </div>
                                             <div class="d-flex">
                                                 <div class="flex-grow-1">
-                                                    <p id="comment-content">Comment</p>
+                                                    <p class="content">Comment</p>
                                                 </div>
                                                 <div>
-                                                    <button id="comment-trash" class="btn invisible">
+                                                    <button class="trash-button btn invisible">
                                                         <i class="fa-solid fa-trash-can"></i>
                                                     </button>
                                                 </div>
                                                 <div>
-                                                    <button id="comment-like-bt" class="btn">
+                                                    <button class="like-button btn">
                                                         <i class="fa-regular fa-heart"></i>
                                                     </button>
                                                 </div>
                                                 <div class="ms-3 pt-2">
-                                                    <p id="comment-likes">0</p>
+                                                    <p class="likes">0</p>
                                                 </div>
                                             </div>
                                         </li>
@@ -232,10 +232,10 @@
                                     <label for="comment-input" class="col-form-label"><i class="fa-solid fa-comment"></i></label>
                                 </div>
                                 <div class="col-9">
-                                    <input type="text" id="comment-input" name="comment-input" class="form-control border-dark" placeholder="Write your message...">
+                                    <input type="text" name="comment-input" class="form-control border-dark" placeholder="Write your message...">
                                 </div>
                                 <div class="col-2">
-                                    <button type="button" class="btn" id="submit-comment" name="submit-comment">
+                                    <button type="button" class="btn" name="submit-comment">
                                         <i class="fa-solid fa-arrow-right-from-bracket"></i>
                                     </button>
                                 </div>
@@ -253,15 +253,15 @@
                         </div>
                         <div class="modal-body">
                             <div class="container-fluid">
-                                <ul class="list-group list-group-flush my-1 overflow-y-auto" id="partecipants">
-                                    <template id="partecipants-template">   
+                                <ul class="list-group list-group-flush my-1 overflow-y-auto">
+                                    <template>   
                                         <li class="list-group-item">
                                             <div class="row justify-content-start">
                                                 <div class="col-2 col-md-1">
-                                                    <img id="partecipants-photo" src="/static/img/default-profile.png" alt="" class="img-fluid img-thumbnail">
+                                                    <img src="/static/img/default-profile.png" alt="" class="img-fluid img-thumbnail">
                                                 </div>
                                                 <div class="col">
-                                                    <h5 id="partecipants-name">Username</h5>
+                                                    <h3 class="fs-5">Username</h5>
                                                 </div>
                                             </div>
                                         </li>
@@ -272,10 +272,10 @@
                         <div class="modal-footer border-top border-black">
                             <div class="container-fluid text-center">
                                 <div class="d-inline-flex gap-2">
-                                    <button id="submit-partecipation" class="btn btn-secondary me-3">
+                                    <button class="btn btn-secondary me-3">
                                         Let's party! <i class="fa-solid fa-face-laugh-squint"></i>
                                     </button>
-                                    <button id="submit-busy" class="btn btn-secondary ms-3 px-4">
+                                    <button class="btn btn-secondary ms-3 px-4">
                                         I'm busy <i class="fa-solid fa-face-sad-tear"></i>
                                     </button>
                                 </div>

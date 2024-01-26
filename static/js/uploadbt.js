@@ -35,8 +35,8 @@ async function showSearchResults(event) {
     const events = await search(event);
     const template = modalBody.querySelector("template");
     for (let i = 0; i < events.length; i++) {
-        const event = events[i];
-        const clone = template.content.cloneNode(true);
+        let event = events[i];
+        let clone = template.content.cloneNode(true);
         clone.querySelector("li").setAttribute("name", "event"+event.event_id);
         clone.querySelector("img").src = "/static/img/uploads/" + event.image;
         clone.querySelector("a").textContent = event.name;

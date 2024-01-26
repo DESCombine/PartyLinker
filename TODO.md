@@ -13,13 +13,13 @@
 - [ ] Researched profile page
 - [x] User tagging notification
 - [x] Event notification
-- [ ] fix token recognition
-- [ ] fix offline switch
+- [x] fix token recognition
+- [x] fix offline switch
 # WOW effect
 - [x] 2F Authentication
 - [ ] Remember me
 - [x] Map page
-- [ ] Dynamic search bar
+- [x] Dynamic search bar
 - [ ] Translation button
 # Media queries
 - [x] Homepage

@@ -439,13 +439,46 @@ namespace User {
             }
         }
 
-        public static function update_online($driver, $username) {
-            $sql = "UPDATE user SET online = NOT online WHERE username = ?";
+        public static function update_online($driver, $username, $online) {
+            $sql = "UPDATE user SET online = ? WHERE username = ?";
             try {
-                $driver->query($sql, $username);
+                $driver->query($sql, $online, $username);
             } catch (\Exception $e) {
                 throw new \Exception("Error while querying the database: " . $e->getMessage());
             }
+        }
+
+        public static function update_timestamps($driver, $username) {
+            date_default_timezone_set('Europe/Rome');
+            $sql = "UPDATE user SET last_seen = ? WHERE username = ?";
+            try {
+                $driver->query($sql, date("Y-m-d H:i:s", time()), $username);
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+            $sql = "SELECT u.username, u.last_seen 
+                    FROM user u, relationship r 
+                    WHERE u.username = r.followed 
+                    AND r.follows = ? 
+                    AND u.online = 1";
+            try {
+                $result = $driver->query($sql, $username);
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+            // returns all the users that have last_seen older than five minutes
+            $users = array();
+            if ($result->num_rows > 0) {
+                for ($i = 0; $i < $result->num_rows; $i++) {
+                    $row = $result->fetch_array();
+                    $last_seen = strtotime($row["last_seen"]);
+                    $now = strtotime(date("Y-m-d H:i:s"));
+                    if ($now - $last_seen > 300) {
+                        array_push($users, $row["username"]);
+                    }
+                }
+            }
+            return $users;
         }
     }
     class UsernameTaken extends \Exception { }

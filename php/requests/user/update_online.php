@@ -6,6 +6,11 @@
 
     global $driver;
     global $username;
-    UserUtility::update_online($driver, $username);
+    UserUtility::update_online($driver, $username, 1);
+    $onlineUsers = UserUtility::update_timestamps($driver, $username);
+    foreach ($onlineUsers as $onlineUser) {
+        UserUtility::update_online($driver, $onlineUser, 0);
+    }
+    header('Content-Type: application/json');
     echo json_encode(array("message" => "success"), JSON_PRETTY_PRINT);
 ?>

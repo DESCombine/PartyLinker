@@ -15,7 +15,6 @@ $right_code = intval($right_code);
 global $domain;
 if($inserted_code == $right_code) {
     UserUtility::reset_tfa($driver, $username);
-    UserUtility::update_online($driver, $username);
     header("Location: ".$domain);
 }
 else {

@@ -60,10 +60,10 @@ export async function removeLike(like_id, type) {
 }
 
 async function like(like_id, type, request, addOrRemove) {
-    const response = await fetch(request_path + request, {
+    await fetch(request_path + request, {
         method: "POST",
         credentials: "include",
-        header: {
+        headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
@@ -71,20 +71,9 @@ async function like(like_id, type, request, addOrRemove) {
             "type": type
         })
     });
-    checkError(await response.json());
-    let likes;
-    let likeButton;
     const element = document.getElementsByName(type+like_id)[0];
-    switch (type) {
-        case 'post':
-            likes = element.querySelector("#post-likes");
-            likeButton = element.querySelector("#likes-button");
-            break;
-        case 'comment':
-            likes = element.querySelector("#comment-likes");
-            likeButton = element.querySelector("#comment-like-bt");
-            break;
-    }
+    const likes = element.querySelector(".likes");
+    const likeButton = element.querySelector(".like-button");
     likes.innerHTML = parseInt(likes.innerHTML) + addOrRemove;
     let fun;
     if (addOrRemove == 1) {
@@ -97,13 +86,20 @@ async function like(like_id, type, request, addOrRemove) {
     resetEventListener(likeButton, fun);
 }
 
+async function loadComments(post_id) {
+    const response = await fetch(request_path + "/user/load_comments.php?post=" + post_id);
+    const comments = await response.json();
+    return comments;
+}
+
 async function submitComment(post_id) {
-    const content = document.querySelector("#comment-input").value;
-    document.querySelector("#comment-input").value = "";
-    const response = await fetch(request_path + "/user/upload_comment.php", {
+    const modalFooter = document.querySelector("#comments-modal .modal-footer");
+    const content = modalFooter.querySelector("input").value;
+    modalFooter.querySelector("input").value = "";
+    await fetch(request_path + "/user/upload_comment.php", {
         method: "POST",
         credentials: "include",
-        header: {
+        headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
@@ -111,8 +107,7 @@ async function submitComment(post_id) {
             "content": content
         })
     });
-    checkError(await response.json());
-    cleanTemplateList(document.querySelector("comments"));
+    cleanTemplateList(document.querySelector("#comments-modal ol"));
     showComments(post_id);
 }
 
@@ -120,81 +115,45 @@ async function removeComment(comment_id, post_id) {
     await fetch(request_path + "/user/remove_comment.php", {
         method: "POST",
         credentials: "include",
-        header: {
+        headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
             "comment_id": comment_id
         })
     });
-    cleanTemplateList(document.querySelector("comments"));
+    cleanTemplateList(document.querySelector("#comments-modal ol"));
     showComments(post_id);
 }
 
-async function submitPartecipation(event_id) {
-    const response = await fetch(request_path + "/user/upload_partecipation.php", {
-        method: "POST",
-        credentials: "include",
-        header: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            "event_id": event_id
-        })
-    });
-    checkError(await response.json());
-    cleanTemplateList(document.querySelector("partecipants"));
-    showPartecipations(event_id);
-}
-
-async function submitBusy(event_id) {
-    const response = await fetch(request_path + "/user/remove_partecipation.php", {
-        method: "POST",
-        credentials: "include",
-        header: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            "event_id": event_id
-        })
-    });
-    checkError(await response.json());
-    cleanTemplateList(document.querySelector("partecipants"));
-    showPartecipations(event_id);
-}
-
-async function loadComments(post_id) {
-    const response = await fetch(request_path + "/user/load_comments.php?post=" + post_id);
-    const comments = await response.json();
-    return comments;
-}
-
 export async function showComments(post_id) {
-    const comments = document.getElementById("comments");
+    const comModal = document.querySelector("#comments-modal");
+    const comments = comModal.querySelector("ol");
     const comments_to_show = await loadComments(post_id);
-    let template = document.getElementById("comment-template");
+    const template = comModal.querySelector("template");
     for (let i = 0; i < comments_to_show.length; i++) {
         let comment = comments_to_show[i];
-        let clone = document.importNode(template.content, true);
-        clone.querySelector("#comment-id").setAttribute("name", "comment"+comment.comment_id);
-        clone.querySelector("#comment-user-photo").src = "/static/img/uploads/" + comment.profile_photo;
-        clone.querySelector("#comment-name").textContent = comment.username;
-        clone.querySelector("#comment-content").textContent = comment.content;
+        let clone = template.content.cloneNode(true);
+        clone.querySelector("li").setAttribute("name", "comment" + comment.comment_id);
+        clone.querySelector("img").src = "/static/img/uploads/" + comment.profile_photo;
+        clone.querySelector("h3").textContent = comment.username;
+        clone.querySelector(".content").textContent = comment.content;
         if (comment.owner) {
-            clone.querySelector("#comment-trash").classList.remove("invisible");
-            clone.querySelector("#comment-trash").addEventListener("click", function() { removeComment(comment.comment_id, post_id); })
+            clone.querySelector(".trash-button").classList.remove("invisible");
+            clone.querySelector(".trash-button").addEventListener("click", function() { removeComment(comment.comment_id, post_id); })
         }
-        const likeButton = clone.querySelector("#comment-like-bt");
+        const likeButton = clone.querySelector(".like-button");
         if (comment.liked) {
             likeButton.addEventListener("click", function() { removeLike(comment.comment_id, 'comment'); });
             likeButton.innerHTML = "<i class='fa-solid fa-heart text-danger'></i>";
         } else {
             likeButton.addEventListener("click", function() { addLike(comment.comment_id, 'comment'); });
         }
-        clone.querySelector("#comment-likes").innerHTML = comment.likes;
+        clone.querySelector(".likes").innerHTML = comment.likes;
         comments.appendChild(clone);
     }
-    const comment_button = document.querySelector("#submit-comment");
+    const modalFooter = comModal.querySelector(".modal-footer");
+    const comment_button = modalFooter.querySelector("button");
     resetEventListener(comment_button, function() { submitComment(post_id); });
 }
 
@@ -204,23 +163,54 @@ export async function loadPartecipations(event_id) {
     return partecipations;
 }
 
+async function partecipationClick(event_id, request) {
+    await fetch(request_path + request, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            "event_id": event_id
+        })
+    });
+    const partList = document.querySelector("#partecipants-modal ul");
+    cleanTemplateList(partList);
+    showPartecipations(event_id);
+}
+
 export async function showPartecipations(event_id) {
-    const partecipations = document.getElementById("partecipants");
+    const partModal = document.querySelector("#partecipants-modal")
+    const partecipations = partModal.querySelector("ul");
     const partecipations_list = await loadPartecipations(event_id);
-    let template = document.getElementById("partecipants-template");
+    let template = partecipations.querySelector("template");
     let isUserPartecipating = false;
     for (let i = 0; i < partecipations_list.length; i++) {
         let partecipation = partecipations_list[i];
         if (partecipation.partecipating) {
             isUserPartecipating = true;
         }
-        let clone = document.importNode(template.content, true);
-        clone.querySelector("#partecipants-photo").src = "/static/img/uploads/" + partecipation.profile_photo;
-        clone.querySelector("#partecipants-name").textContent = partecipation.username;
+        let clone = template.content.cloneNode(true);
+        clone.querySelector("img").src = "/static/img/uploads/" + partecipation.profile_photo;
+        clone.querySelector("h3").textContent = partecipation.username;
         partecipations.appendChild(clone);
     }
-    const partecipants_button = document.querySelector("#submit-partecipation");
-    const busy_button = document.querySelector("#submit-busy");
-    resetEventListener(partecipants_button, function() { submitPartecipation(event_id); }).disabled = isUserPartecipating;
-    resetEventListener(busy_button, function() { submitBusy(event_id); }). disabled = !isUserPartecipating;
+    const partecipants_button = partModal.getElementsByTagName("button")[0];
+    const busy_button = partModal.getElementsByTagName("button")[1];
+    resetEventListener(partecipants_button, function() { 
+            partecipationClick(event_id, "/user/upload_partecipation.php"); }).disabled = isUserPartecipating;
+    resetEventListener(busy_button, function() { 
+            partecipationClick(event_id, "/user/remove_partecipation.php"); }).disabled = !isUserPartecipating;
 }
+
+async function confirmOnline() {
+    const res = await fetch(request_path + "/user/update_online.php", {
+        method: "POST",
+        credentials: "include"
+    });
+    const response = await res.json();
+    checkError(response);
+}
+
+confirmOnline();
+setInterval(confirmOnline, 5 * 60 * 1000);

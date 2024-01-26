@@ -8,6 +8,7 @@
         } else {
             $domain = "https://partylinker.live";
         }
+        header('Content-Type: application/json');
         echo json_encode(array("error" => "No token provided"));
         exit();
     }
