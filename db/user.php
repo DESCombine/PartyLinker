@@ -190,7 +190,7 @@ namespace User {
                 $row = $result->fetch_assoc();
                 $user = new DBUser($row["username"], $row["email"], $row["name"], $row["surname"], $row["birth_date"], 
                         $row["profile_photo"], $row["background"], $row["bio"], $row["phone"], $row["password"], 
-                        $row["online"], $row["follower"], $row["follows"]
+                        $row["online"], $row["follows"], $row["follower"]
                 );
             } else {
                 return null;
@@ -320,6 +320,46 @@ namespace User {
                 }
             }
             return $users;
+        }
+
+        public static function toggle_follow($driver, $username, $toFollow) {
+            $sql = "SELECT * FROM relationship WHERE follows = ? AND followed = ?";
+            try {
+                $result = $driver->query($sql, $username, $toFollow);
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+
+            if ($result->num_rows > 0) {
+                $sql = "DELETE FROM relationship WHERE follows = ? AND followed = ?";
+                try {
+                    $driver->query($sql, $username, $toFollow);
+                } catch (\Exception $e) {
+                    throw new \Exception("Error while querying the database: " . $e->getMessage());
+                }
+            } else {
+                $sql = "INSERT INTO relationship (follows, followed) VALUES (?, ?)";
+                try {
+                    $driver->query($sql, $username, $toFollow);
+                } catch (\Exception $e) {
+                    throw new \Exception("Error while querying the database: " . $e->getMessage());
+                }
+            }
+        }
+
+        public static function check_if_follows($driver, $username, $toCheck) {
+            $sql = "SELECT * FROM relationship WHERE follows = ? AND followed = ?";
+            try {
+                $result = $driver->query($sql, $username, $toCheck);
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+
+            if ($result->num_rows > 0) {
+                return true;
+            } else {
+                return false;
+            }
         }
 
         public static function retrieve_profile_picture($driver, $username) {

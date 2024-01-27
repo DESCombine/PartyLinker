@@ -163,4 +163,39 @@ showProfileInfos(user);
 showPhotos(0, user);
 if (user != null) {
     document.getElementById("modifyIcon").classList.add("d-none");
+    const followButton = document.getElementById("followButton");
+    followButton.classList.remove("d-none");
+    checkFollow();
+
+}
+
+async function checkFollow() {
+    const response = await fetch(request_path + "/user/check_if_follows.php?user=" + user, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        credentials: "include"
+    });
+    const result = await response.json();
+    if (result.follows) {
+        document.getElementById("followButton").innerHTML = "Unfollow";
+    } else {
+        document.getElementById("followButton").innerHTML = "Follow";
+    }
+}
+
+window.toggleFollow = async () => {
+    const response = await fetch(request_path + "/user/toggle_follow.php?user=" + user, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        credentials: "include"
+    });
+    const result = await response.json();
+    if (result.message == "success") {
+        checkFollow();
+        showProfileInfos(user);
+    } 
 }
