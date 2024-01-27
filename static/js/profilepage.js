@@ -126,12 +126,12 @@ async function showProfileInfos(user) {
     document.getElementById("description").innerHTML = infos.bio;
     document.getElementById("followers").innerHTML = infos.followers;
     document.getElementById("followed").innerHTML = infos.followed;
-    if(await loadUserImage(infos.username) == null) {
+    if (await loadUserImage(infos.username) == null) {
         document.getElementById("profileImage").src = "/static/img/default-profile.png";
     } else {
         document.getElementById("profileImage").src = "/static/img/uploads/" + await loadUserImage(infos.username);
     }
-    if(infos.background != null) {
+    if (infos.background != null) {
         document.getElementById("bannerImage").src = "/static/img/uploads/" + infos.background;
     } else {
         document.getElementById("bannerImage").src = "/static/img/default-poster.png";
@@ -154,7 +154,49 @@ async function showModalPost(modal, post_id, event_id, user_photo, username,
         document.getElementById("partecipants-button").addEventListener("click", function () { showPartecipations(event_id); });
         document.getElementById("partecipants-button").classList.remove("invisible");
     }
+    document.getElementById("translate").addEventListener("click", function () { translatePost(post_id); });
+}
 
+async function translatePost(post_id) {
+    const response = await fetch(request_path + "/user/retrieve_translate_datas.php", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            "post_id": post_id
+        })
+    });
+    const description = await response.json();
+    console.log(description);
+    document.getElementById("post-description").innerHTML = translated;
+    const axios = require('axios');
+
+    const options = {
+        method: 'POST',
+        url: 'https://microsoft-translator-text.p.rapidapi.com/BreakSentence',
+        params: {
+            'api-version': '3.0'
+        },
+        headers: {
+            'content-type': 'application/json',
+            'X-RapidAPI-Key': '723f176375mshdd99d11a5d9657cp1701adjsnbc2737f56f7c',
+            'X-RapidAPI-Host': 'microsoft-translator-text.p.rapidapi.com'
+        },
+        data: [
+            {
+                Text: description
+            }
+        ]
+    };
+
+    try {
+        const response = await axios.request(options);
+        console.log(response.data);
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 const user = new URLSearchParams(window.location.search).get("user");

@@ -162,6 +162,10 @@ namespace User {
         public function getTFA() {
             return $this->twofa;
         }
+
+        public function getLanguage() {
+            return $this->language;
+        }
     }
 
     class UserUtility {

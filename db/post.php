@@ -200,6 +200,20 @@
                         $row["description"], $row["posted"], $row["likes"], $row["event_post"]);
             }
 
+            public static function get_description_with_post_id(\DBDriver $driver, $post_id) {
+                $sql = "SELECT description FROM post WHERE post_id = ?";
+                try {
+                    $result = $driver->query($sql, $post_id);
+                } catch (\Exception $e) {
+                    throw new \Exception("Error while querying the database: " . $e->getMessage());
+                }
+                if ($result->num_rows == 0) {
+                    return null;
+                }
+                $row = $result->fetch_assoc();
+                return $row["description"];
+            }
+
             public static function from_db_all_posts_with_event_id(\DBDriver $driver, $event_id) {
                 $sql = "SELECT * FROM post WHERE event_id = ?";
                 try {
