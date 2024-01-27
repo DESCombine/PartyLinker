@@ -18,6 +18,7 @@
     if( !$user->check_password($password) ){
         http_response_code(401);
         echo json_encode(array("error" => "Wrong password"), JSON_PRETTY_PRINT);
+        header("Location: ".$domain."/login/login.html?wrongpassword=true");
         exit();
     }
     $payload = array(
