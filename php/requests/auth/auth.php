@@ -43,7 +43,7 @@
     $settings = UserUtility::retrieve_settings($driver, $username);
     echo json_encode(array("message" => "success"), JSON_PRETTY_PRINT);
     global $domain;
-    if ($settings->getTFA()) {
+    if ($settings->getTFA() && $settings->getTFA() != null) {
         header("Location: ".$domain."/login/twofactorauth.html");
     } else {
         header("Location: ".$domain);
