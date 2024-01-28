@@ -1,5 +1,5 @@
 import { request_path } from "/static/js/config.js?v=2";
-import { loadEvent, showComments, loadPartecipations, showPartecipations, addlike, removelike, loadUserImage } from "/static/js/utils.js";
+import { loadEvent, showComments, loadPartecipations, showPartecipations, addlike, removelike, loadUserImage } from "/static/js/utils.js?v=1";
 const event_id = new URLSearchParams(window.location.search).get('id');
 console.log(event_id);
 async function loadPoster() {
