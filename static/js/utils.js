@@ -195,8 +195,8 @@ export async function showPartecipations(event_id) {
         clone.querySelector("h3").textContent = partecipation.username;
         partecipations.appendChild(clone);
     }
-    const partecipants_button = partModal.getElementsByTagName("button")[0];
-    const busy_button = partModal.getElementsByTagName("button")[1];
+    const partecipants_button = partModal.getElementsByTagName("button")[1];
+    const busy_button = partModal.getElementsByTagName("button")[2];
     resetEventListener(partecipants_button, function() { 
             partecipationClick(event_id, "/user/upload_partecipation.php"); }).disabled = isUserPartecipating;
     resetEventListener(busy_button, function() { 
