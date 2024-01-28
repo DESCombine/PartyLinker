@@ -19,7 +19,13 @@ export async function loadEvent(event_id) {
 }
 
 export async function checkOrganizer() {
-    const response = await fetch(request_path + "/user/load_settings.php");
+    const response = await fetch(request_path + "/user/load_settings.php", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        credentials: "include"
+    });
     const settings = await response.json();
     checkError(settings);
     return settings.organizer === 1;
