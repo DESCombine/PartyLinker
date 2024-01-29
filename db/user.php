@@ -83,6 +83,14 @@ namespace User {
 
         public function update_infos(\DBDriver $driver, string $name, string $surname, string $birth_date, string $email, string $phone, string $username, string $password, string $gender, int $organizer, 
                 string $profilePhoto, string $bannerPhoto, string $bio, string $language, int $notifications, int $TFA) {
+            // if profilephoto or bannerphoto are null, set them to the current ones
+            $user = UserUtility::from_db_with_username($driver, $username);
+            if ($profilePhoto == "") {
+                $profilePhoto = $user->profile_photo;
+            }
+            if ($bannerPhoto == "") {
+                $bannerPhoto = $user->background;
+            }       
             $sql = "UPDATE user SET email = ?, name = ?, surname = ?, birth_date = ?, profile_photo = ?, background = ?, bio = ?, phone = ?, password = ? WHERE username = ?";
             try {
                 $driver->query($sql, $email, $name, $surname, date($birth_date), $profilePhoto, 
