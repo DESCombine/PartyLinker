@@ -141,7 +141,8 @@ export async function showComments(post_id) {
         let comment = comments_to_show[i];
         let clone = template.content.cloneNode(true);
         clone.querySelector("li").setAttribute("name", "comment" + comment.comment_id);
-        clone.querySelector("img").src = "/static/img/uploads/" + comment.profile_photo;
+        let profile_photo = clone.querySelector("img") == null ? "/static/img/default_profile.png" : "/static/img/uploads/" + comment.profile_photo;
+        clone.querySelector("img").src = profile_photo;
         clone.querySelector("h3").textContent = comment.username;
         clone.querySelector(".content").textContent = comment.content;
         if (comment.owner) {
@@ -197,7 +198,8 @@ export async function showPartecipations(event_id) {
             isUserPartecipating = true;
         }
         let clone = template.content.cloneNode(true);
-        clone.querySelector("img").src = "/static/img/uploads/" + partecipation.profile_photo;
+        let profile_photo = clone.querySelector("img") == null ? "/static/img/default_profile.png" : "/static/img/uploads/" + partecipation.profile_photo;
+        clone.querySelector("img").src = profile_photo;
         clone.querySelector("h3").textContent = partecipation.username;
         partecipations.appendChild(clone);
     }

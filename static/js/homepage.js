@@ -21,7 +21,8 @@ async function showOnlineUsers() {
     for (let i = 0; i < users.length; i++) {
         let user = users[i];
         let clone = template.content.cloneNode(true);
-        clone.querySelector("img").src = "/static/img/uploads/" + user.profile_photo;
+        let profile_photo = user.profile_photo == null ? "/static/img/default_profile.png" : "/static/img/uploads/" + user.profile_photo;
+        clone.querySelector("img").src = profile_photo;
         clone.querySelector("img").alt = user.username;
         online_users.appendChild(clone);
     }
@@ -72,7 +73,8 @@ async function addNewFeedPost(clone, feed, post_id, event_id, user_photo, userna
     clone.querySelector("li").setAttribute("name", "post" + post_id);
     postUser.querySelector("img").src = "/static/img/uploads/" + user_photo;
     postUser.querySelector("h3").innerHTML = username;
-    postContent.querySelector("img").src = "/static/img/uploads/" + image;
+    let profile_photo = postUser.querySelector("img") == null ? "/static/img/default_profile.png" : "/static/img/uploads/" + user_photo;
+    postContent.querySelector("img").src = profile_photo;
     postActions.querySelector(".likes").innerHTML = likes;
 
     const likeButton = postActions.querySelector(".like-button");
