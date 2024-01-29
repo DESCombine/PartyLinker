@@ -1,5 +1,5 @@
 import { request_path } from "/static/js/config.js?v=2";
-import { loadEvent, showComments, loadPartecipations, showPartecipations, addlike, removelike, loadUserImage } from "/static/js/utils.js?v=1";
+import { loadEvent, showComments, loadPartecipations, showPartecipations, addLike, removeLike, loadUserImage } from "/static/js/utils.js?v=1";
 const event_id = new URLSearchParams(window.location.search).get('id');
 console.log(event_id);
 async function loadPoster() {
@@ -43,13 +43,13 @@ async function showContent() {
     document.getElementById("poster-id").src = "/static/img/uploads/" + post.image;
     const likeButton = document.getElementById("likes-button");
     if (post.liked) {
-        likeButton.addEventListener("click", function () { removelike(post_id, 'post'); });
+        likeButton.addEventListener("click", function () { removeLike(post_id, 'post'); });
         likeButton.innerHTML = "&#10084";
     } else {
-        likeButton.addEventListener("click", function () { addlike(post_id, 'post'); });
+        likeButton.addEventListener("click", function () { addLike(post_id, 'post'); });
     }
     document.getElementById("comments-button").addEventListener("click", function () { showComments(post_id); })
-    let event = await loadEvent(12345);
+    let event = await loadEvent(event_id);
     document.getElementById("event-name").innerHTML = "Title: " + event.name;
     document.getElementById("event-day").innerHTML = "Date: " + event.starting_date.split(" ")[0];
     document.getElementById("event-time").innerHTML = "Time: " + event.starting_date.split(" ")[1];

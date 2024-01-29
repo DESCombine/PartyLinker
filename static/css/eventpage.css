@@ -11,3 +11,7 @@ footer {
     border-radius: 50% !important;
     width: 50% !important;
 }
+
+#photo-id:hover {
+    cursor: pointer;
+}
