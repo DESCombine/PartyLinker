@@ -30,7 +30,7 @@ function tfa_send()
     $to = $email;
     $subject = "2FA Code";
     $headers = "From: PartyLinker <noreply@partylinker.com>";
-    //mail($to, $subject, $notif_text, $headers);
+    mail($to, $subject, $notif_text, $headers);
 }
 
 tfa_send();
