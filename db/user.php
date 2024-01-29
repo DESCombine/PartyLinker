@@ -292,6 +292,25 @@ namespace User {
             }
         }
 
+        public static function all_infos_with_username($driver, $username) {
+            $sql = "SELECT u.*, s.language, s.notifications, s.2fa, s.organizer FROM user u, settings s WHERE u.username = s.username AND u.username = ?";
+            try {
+                $result = $driver->query($sql, $username);
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+            if($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $user = new DBUser($row["username"], $row["email"], $row["name"], $row["surname"], $row["birth_date"], 
+                        $row["profile_photo"], $row["background"], $row["bio"], $row["phone"], $row["password"], $row["online"]
+                );
+                $settings = new DBSettings($row["username"], $row["language"], $row["notifications"], $row["2fa"], $row["organizer"]);
+                return array($user, $settings);
+            } else {
+                return null;
+            }
+        }
+
         public static function retrieve_username_from_token($token): string {
             if (preg_match("/Bearer\s(\S+)/", $token, $matches) !== 1) {
                 throw new \Exception("Invalid token");
