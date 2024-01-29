@@ -51,8 +51,4 @@ main #modifyIcon {
     #photo-id:hover {
         cursor: pointer;
     }
-
-    #post-photo:hover {
-        cursor: pointer;
-    }
 }
