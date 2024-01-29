@@ -15,3 +15,7 @@ footer {
 #photo-id:hover {
     cursor: pointer;
 }
+
+.upload-modal a {
+    text-decoration: none !important;
+}

@@ -4,6 +4,10 @@
     margin: 0px;
 }
 
+.upload-modal a {
+    text-decoration: none !important;
+}
+
 #searchbar {
     width: 100%;
     height: 3.2rem;
