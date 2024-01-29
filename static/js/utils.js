@@ -143,7 +143,8 @@ export async function showComments(post_id) {
         clone.querySelector("li").setAttribute("name", "comment" + comment.comment_id);
         let profile_photo = clone.querySelector("img") == null ? "/static/img/default_profile.png" : "/static/img/uploads/" + comment.profile_photo;
         clone.querySelector("img").src = profile_photo;
-        clone.querySelector("h3").textContent = comment.username;
+        clone.querySelector("a").textContent = comment.username;
+        clone.querySelector("a").href = "/profile?user=" + comment.username;
         clone.querySelector(".content").textContent = comment.content;
         if (comment.owner) {
             clone.querySelector(".trash-button").classList.remove("invisible");
@@ -200,7 +201,8 @@ export async function showPartecipations(event_id) {
         let clone = template.content.cloneNode(true);
         let profile_photo = clone.querySelector("img") == null ? "/static/img/default_profile.png" : "/static/img/uploads/" + partecipation.profile_photo;
         clone.querySelector("img").src = profile_photo;
-        clone.querySelector("h3").textContent = partecipation.username;
+        clone.querySelector("a").textContent = partecipation.username;
+        clone.querySelector("a").href = "/profile?user=" + partecipation.username;
         partecipations.appendChild(clone);
     }
     const partecipants_button = partModal.getElementsByTagName("button")[1];

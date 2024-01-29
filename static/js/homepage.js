@@ -71,10 +71,11 @@ async function addNewFeedPost(clone, feed, post_id, event_id, user_photo, userna
     const postActions = postContent.querySelector("ol");
 
     clone.querySelector("li").setAttribute("name", "post" + post_id);
-    postUser.querySelector("img").src = "/static/img/uploads/" + user_photo;
-    postUser.querySelector("h3").innerHTML = username;
     let profile_photo = postUser.querySelector("img") == null ? "/static/img/default_profile.png" : "/static/img/uploads/" + user_photo;
-    postContent.querySelector("img").src = profile_photo;
+    postUser.querySelector("img").src = profile_photo;
+    postUser.querySelector("a").innerHTML = username;
+    postUser.querySelector("a").href = "/profile?user=" + username;
+    postContent.querySelector("img").src = "/static/img/uploads/" + image;
     postActions.querySelector(".likes").innerHTML = likes;
 
     const likeButton = postActions.querySelector(".like-button");
