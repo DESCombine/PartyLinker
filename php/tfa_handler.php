@@ -16,8 +16,8 @@ function tfa_send($username)
     <head>
         <style>
             body {
-                background-color: #000;
-                color: #fff;
+                background-color: #fff;
+                color: #000;
                 font-family: Arial, Helvetica, sans-serif;
                 font-size: 1.5rem;
                 text-align: center;
@@ -36,16 +36,21 @@ function tfa_send($username)
             }
     
             a {
-                color: #fff;
+                color: #000;
                 text-decoration: none;
             }
     
             div {
-                background-color: #fff;
+                background-color: #000;
                 color: #000;
                 padding: 2rem;
                 border-radius: 1rem;
                 display: inline-block;
+            }
+
+            p {
+                color: #fff;
+                font-size: 2rem;
             }
         </style>
     </head>
