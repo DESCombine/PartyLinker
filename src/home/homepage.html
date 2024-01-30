@@ -4,11 +4,11 @@
             <title>PartyLinker - Home</title>
             <meta charset="UTF-8"/>
             <meta name="viewport" content="width=device-width, initial-scale=1">
-            <link rel="icon" href="/static/img/icon.ico" type="image/x-icon"/>
             <link rel="stylesheet" type="text/css" href="/static/css/homepage.css"/>
             <!-- Font Renner import -->
             <link rel="stylesheet" href="https://indestructibletype-fonthosting.github.io/renner.css" type="text/css" charset="utf-8" />
             <!-- Icons import -->
+            <link rel="icon" href="/static/img/icon.ico" type="image/x-icon"/>
             <script src="https://kit.fontawesome.com/d9b18796bb.js" crossorigin="anonymous"></script>      
             <!-- Bootstrap import -->
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -38,7 +38,7 @@
                                             <img src="/static/img/default-profile.png" alt="" class="img-fluid img-thumbnail">
                                         </div>
                                         <div class="col pt-md-3">
-                                            <h3>Username</h3>
+                                            <a href="#" class="fs-3 text-black">Username</a>
                                         </div>
                                     </div>
                                     <div class="post-content row">
@@ -65,10 +65,10 @@
                                                         <i class="fa-solid fa-users-viewfinder"></i>
                                                     </button>
                                                 </li>
-                                                <li class="list-group-item">
-                                                    <button class="event-info-button btn invisible">
+                                                <li class="list-group-item pt-3 ps-4">
+                                                    <a href="#" class="text-black invisible">
                                                         <i class="fa-solid fa-tent"></i>
-                                                    </button>
+                                                    </a>
                                                 </li>
                                             </ol>
                                             <p class="post-description">Post description</p>
@@ -87,11 +87,12 @@
                         </ol>
                     </div>
                 </main>
+                <!-- Navbar for mobile -->
                 <footer class="mt-5 d-md-none">
                     <nav class="bg-white fixed-bottom border-top border-black">
                         <ol class="nav nav-fill my-2">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="/"><i class="fa-solid fa-house text-black"></i></a>
+                                <a class="nav-link" href="/"><i class="fa-solid fa-house text-black"></i></a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/search/"><i class="fa-solid fa-magnifying-glass text-black"></i></a>
@@ -110,19 +111,20 @@
                         </ol>
                     </nav>
                 </footer>
-                <aside class="d-none d-md-flex justify-content-end fixed-top pt-3 me-5">
-                    <button class="btn btn-lg border border-black" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <!-- Navbar for desktop -->
+                <div class="d-none d-md-flex justify-content-end fixed-top pt-3 me-5">
+                    <button class="btn btn-lg border border-black bg-light" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                         <i class="fa-solid fa-bars"></i>
                     </button>
                     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                         <div class="offcanvas-header">
-                            <h1 class="offcanvas-title" id="offcanvasNavbarLabel">Explore the site</h1>
+                            <h2 class="offcanvas-title" id="offcanvasNavbarLabel">Explore the site</h2>
                             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                         </div>
                         <div class="offcanvas-body">
                             <ol class="list-group list-group-flush">
                                 <li class="list-group-item my-3">
-                                    <a class="text-center fs-2 nav-link active" aria-current="page" href="/"><i class="fa-solid fa-house"></i> Home page</i></a>
+                                    <a class="text-center fs-2 nav-link active" aria-current="page" href="/"><i class="fa-solid fa-house"></i> Home page</a>
                                 </li>
                                 <li class="list-group-item my-3">
                                     <a class="text-center fs-2 nav-link" href="/search/"><i class="fa-solid fa-magnifying-glass"></i> Search page</a>
@@ -141,14 +143,21 @@
                             </ol>
                         </div>
                     </div>
-                </aside>
+                </div>
             </div>
             <!-- Upload Modal -->
             <div class="modal fade" id="upload-modal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                     <div class="modal-content h-75">
                         <div class="modal-header justify-content-center">
-                            <h2 class="modal-title" id="uploadModalLabel">Upload new picture <i class="fa-solid fa-camera-retro"></i></h2>
+                            <div class="row justify-content-end">
+                                <div class="col">
+                                    <h2 class="modal-title" id="uploadModalLabel">Upload new picture <i class="fa-solid fa-camera-retro"></i></h2>
+                                </div>
+                                <div class="col-1">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>  
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-body container-fluid">
                             <h3 class="fs-5">Which event have you been to?</h3>
@@ -160,11 +169,11 @@
                                     <template>
                                         <li class="list-group-item">
                                             <div class="row justify-content-start">
-                                                <div class="col-2 col-md-1">
+                                                <div class="col-2 col-lg-1">
                                                     <img src="/static/img/default-image.png" class="img-fluid img-thumbnail">
                                                 </div>
                                                 <div class="col">
-                                                    <p>Event name</p>
+                                                    <a class="text-dark">Event name</a>
                                                 </div>
                                                 <div class="col-3">
                                                     <p>Date</p>
@@ -188,7 +197,14 @@
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable align-items-end align-items-md-center modal-lg">
                     <div class="modal-content h-75">
                         <div class="modal-header justify-content-center">
-                            <h2 class="modal-title" id="commentsModalLabel"><i class="fa-solid fa-comments"></i> Comments</h2>
+                            <div class="row justify-content-end">
+                                <div class="col">
+                                    <h2 class="modal-title" id="commentsModalLabel"><i class="fa-solid fa-comments"></i> Comments</h2>
+                                </div>
+                                <div class="col-1">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>  
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-body">
                             <div class="container-fluid">
@@ -196,11 +212,11 @@
                                     <template>
                                         <li class="list-group-item">
                                             <div class="row justify-content-start">
-                                                <div class="col-2 mb-1 col-md-1">
+                                                <div class="col-2 mb-1 col-lg-1">
                                                     <img src="/static/img/default-profile.png" alt="" class="img-fluid img-thumbnail">
                                                 </div>
                                                 <div class="col">
-                                                    <h3 class="fs-5">Username</h3>
+                                                    <a href="#" class="fs-5 text-black">Username</a>
                                                 </div>
                                             </div>
                                             <div class="d-flex">
@@ -249,7 +265,14 @@
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable align-items-end align-items-md-center modal-lg">
                     <div class="modal-content h-75">
                         <div class="modal-header justify-content-center">
-                            <h4 class="modal-title" id="partecipantsModalLabel"><i class="fa-solid fa-users-gear"></i> Partecipants</h4>
+                            <div class="row justify-content-end">
+                                <div class="col">
+                                    <h2 class="modal-title" id="partecipantsModalLabel"><i class="fa-solid fa-users-gear"></i> Partecipants</h2>
+                                </div>
+                                <div class="col-1">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>  
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-body">
                             <div class="container-fluid">
@@ -257,11 +280,11 @@
                                     <template>   
                                         <li class="list-group-item">
                                             <div class="row justify-content-start">
-                                                <div class="col-2 col-md-1">
+                                                <div class="col-2 col-lg-1">
                                                     <img src="/static/img/default-profile.png" alt="" class="img-fluid img-thumbnail">
                                                 </div>
                                                 <div class="col">
-                                                    <h3 class="fs-5">Username</h5>
+                                                    <a href="#" class="fs-5 text-dark">Username</a>
                                                 </div>
                                             </div>
                                         </li>
@@ -287,7 +310,7 @@
             <!-- Bootstrap import -->
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
             <!-- JS import -->
-            <script src="/static/js/homepage.js?v=1" type="module"></script>
-            <script src="/static/js/uploadbt.js?v=1" type="module"></script>
+            <script src="/static/js/homepage.js?v=2" type="module"></script>
+            <script src="/static/js/uploadbt.js?v=2" type="module"></script>
         </body>
     </html>

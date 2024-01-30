@@ -83,6 +83,14 @@ namespace User {
 
         public function update_infos(\DBDriver $driver, string $name, string $surname, string $birth_date, string $email, string $phone, string $username, string $password, string $gender, int $organizer, 
                 string $profilePhoto, string $bannerPhoto, string $bio, string $language, int $notifications, int $TFA) {
+            // if profilephoto or bannerphoto are null, set them to the current ones
+            $user = UserUtility::from_db_with_username($driver, $username);
+            if ($profilePhoto == "") {
+                $profilePhoto = $user->profile_photo;
+            }
+            if ($bannerPhoto == "") {
+                $bannerPhoto = $user->background;
+            }       
             $sql = "UPDATE user SET email = ?, name = ?, surname = ?, birth_date = ?, profile_photo = ?, background = ?, bio = ?, phone = ?, password = ? WHERE username = ?";
             try {
                 $driver->query($sql, $email, $name, $surname, date($birth_date), $profilePhoto, 
@@ -194,7 +202,7 @@ namespace User {
                 $row = $result->fetch_assoc();
                 $user = new DBUser($row["username"], $row["email"], $row["name"], $row["surname"], $row["birth_date"], 
                         $row["profile_photo"], $row["background"], $row["bio"], $row["phone"], $row["password"], 
-                        $row["online"], $row["follower"], $row["follows"]
+                        $row["online"], $row["follows"], $row["follower"]
                 );
             } else {
                 return null;
@@ -296,6 +304,34 @@ namespace User {
             }
         }
 
+        public static function insertFeedback($driver, $feedback) {
+            $sql = "INSERT INTO feedback (feedback, date_time) VALUES (?, ?)";
+            try {
+                $driver->query($sql, $feedback, date("Y-m-d H:i:s", time()));
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+        }
+
+        public static function all_infos_with_username($driver, $username) {
+            $sql = "SELECT u.*, s.language, s.notifications, s.2fa, s.organizer FROM user u, settings s WHERE u.username = s.username AND u.username = ?";
+            try {
+                $result = $driver->query($sql, $username);
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+            if($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $user = new DBUser($row["username"], $row["email"], $row["name"], $row["surname"], $row["birth_date"], 
+                        $row["profile_photo"], $row["background"], $row["bio"], $row["phone"], $row["password"], $row["online"]
+                );
+                $settings = new DBSettings($row["username"], $row["language"], $row["notifications"], $row["2fa"], $row["organizer"]);
+                return array($user, $settings);
+            } else {
+                return null;
+            }
+        }
+
         public static function retrieve_username_from_token($token): string {
             if (preg_match("/Bearer\s(\S+)/", $token, $matches) !== 1) {
                 throw new \Exception("Invalid token");
@@ -324,6 +360,46 @@ namespace User {
                 }
             }
             return $users;
+        }
+
+        public static function toggle_follow($driver, $username, $toFollow) {
+            $sql = "SELECT * FROM relationship WHERE follows = ? AND followed = ?";
+            try {
+                $result = $driver->query($sql, $username, $toFollow);
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+
+            if ($result->num_rows > 0) {
+                $sql = "DELETE FROM relationship WHERE follows = ? AND followed = ?";
+                try {
+                    $driver->query($sql, $username, $toFollow);
+                } catch (\Exception $e) {
+                    throw new \Exception("Error while querying the database: " . $e->getMessage());
+                }
+            } else {
+                $sql = "INSERT INTO relationship (follows, followed) VALUES (?, ?)";
+                try {
+                    $driver->query($sql, $username, $toFollow);
+                } catch (\Exception $e) {
+                    throw new \Exception("Error while querying the database: " . $e->getMessage());
+                }
+            }
+        }
+
+        public static function check_if_follows($driver, $username, $toCheck) {
+            $sql = "SELECT * FROM relationship WHERE follows = ? AND followed = ?";
+            try {
+                $result = $driver->query($sql, $username, $toCheck);
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+
+            if ($result->num_rows > 0) {
+                return true;
+            } else {
+                return false;
+            }
         }
 
         public static function retrieve_profile_picture($driver, $username) {

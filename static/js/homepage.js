@@ -1,5 +1,5 @@
 import { request_path } from "/static/js/config.js?v=2";
-import { checkError, cleanTemplateList, removeLike, addLike, addEventDescription, loadEvent, showComments, showPartecipations } from "/static/js/utils.js";
+import { checkError, cleanTemplateList, removeLike, addLike, addEventDescription, loadEvent, showComments, showPartecipations } from "/static/js/utils.js?v=1";
 
 async function loadOnlineUsers() {
     const response = await fetch(request_path + "/user/load_online_users.php", {
@@ -21,12 +21,13 @@ async function showOnlineUsers() {
     for (let i = 0; i < users.length; i++) {
         let user = users[i];
         let clone = template.content.cloneNode(true);
-        clone.querySelector("img").src = "/static/img/uploads/" + user.profile_photo;
+        let profile_photo = user.profile_photo == null ? "/static/img/default_profile.png" : "/static/img/uploads/" + user.profile_photo;
+        clone.querySelector("img").src = profile_photo;
         clone.querySelector("img").alt = user.username;
         online_users.appendChild(clone);
     }
     if (users.length == 0) {
-        online_users.innerHTML = "<p class='fs-5 mt-2'>No users online.</p>";
+        online_users.innerHTML = "<p class='fs-5 mt-3'>No users online.</p>";
     }
 }
 
@@ -70,8 +71,10 @@ async function addNewFeedPost(clone, feed, post_id, event_id, user_photo, userna
     const postActions = postContent.querySelector("ol");
 
     clone.querySelector("li").setAttribute("name", "post" + post_id);
-    postUser.querySelector("img").src = "/static/img/uploads/" + user_photo;
-    postUser.querySelector("h3").innerHTML = username;
+    let profile_photo = postUser.querySelector("img") == null ? "/static/img/default_profile.png" : "/static/img/uploads/" + user_photo;
+    postUser.querySelector("img").src = profile_photo;
+    postUser.querySelector("a").innerHTML = username;
+    postUser.querySelector("a").href = "/profile?user=" + username;
     postContent.querySelector("img").src = "/static/img/uploads/" + image;
     postActions.querySelector(".likes").innerHTML = likes;
 
@@ -92,8 +95,8 @@ async function addNewFeedPost(clone, feed, post_id, event_id, user_photo, userna
         addEventDescription(eventInfo, await loadEvent(event_id));
     } else {
         eventInfo.innerHTML = "";
-        postActions.querySelector(".event-info-button").addEventListener("click", function () { window.location.replace("/event/eventpage.html?id=" + event_id); });
-        postActions.querySelector(".event-info-button").classList.remove("invisible");
+        postActions.querySelector("a").href = "/event/eventpage.html?id=" + event_id;
+        postActions.querySelector("a").classList.remove("invisible");
         postActions.insertBefore(postActions.lastElementChild, postActions.lastElementChild.previousElementSibling);
     }
     feed.appendChild(clone);

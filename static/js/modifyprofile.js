@@ -15,3 +15,35 @@ window.addEventListener("resize", function(){
         this.document.getElementById('extern-container').classList.remove('d-flex')
     }
 });
+
+async function showSavedInformations() {
+    // Get informations from server
+    const response = await fetch(request_path + "/user/get_saved_infos.php");
+    const data = await response.json();
+
+    console.log(data);
+
+    // for each empty element in data, set it to ""
+    for (let i = 0; i < data.length; i++) {
+        for (const [key, value] of Object.entries(data[i])) {
+            if (value == null) {
+                data[i][key] = "";
+            }
+        }
+    }
+
+    // Show informations in form
+    document.getElementById("inputName").value = data[0].name;
+    document.getElementById("inputSurname").value = data[0].surname;
+    document.getElementById("inputDate").value = data[0].birth_date;
+    document.getElementById("inputEmail").value = data[0].email;
+    document.getElementById("inputPhone").value = data[0].phone;
+    // document.getElementById("inputGender").value = data[0].gender;
+    document.getElementById("inputOrganizer").checked = data[1].organizer == 1 ? true : false;
+    document.getElementById("inputBio").value = data[0].bio;
+    document.getElementById("inputLanguage").value = data[1].language;
+    document.getElementById("inputNotifications").checked = data[1].notifications == 1 ? true : false;
+    document.getElementById("input2FA").checked = data[1].twofa == 1 ? true : false;
+}
+
+showSavedInformations();

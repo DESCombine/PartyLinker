@@ -1,5 +1,5 @@
 import { request_path } from "/static/js/config.js?v=2";
-import { checkOrganizer, cleanTemplateList } from "/static/js/utils.js";
+import { checkOrganizer, cleanTemplateList } from "/static/js/utils.js?v=1";
 
 const modal = document.getElementById("upload-modal");
 
@@ -7,7 +7,7 @@ modal.addEventListener("shown.bs.modal", function() { renderModalFooter() });
 
 async function renderModalFooter() {
     const modalFooter = modal.querySelector(".modal-footer");
-    if (checkOrganizer() == 1) {
+    if (checkOrganizer()) {
         modalFooter.querySelector("button").classList.remove("invisible");
         modalFooter.querySelector("button").addEventListener("click", function() { selectEvent(0); });
     } else {

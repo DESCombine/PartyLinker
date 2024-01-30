@@ -59,7 +59,7 @@ async function get_location_suggestions(location) {
         let suggestions_html = "";
         suggestions.forEach(suggestion => {
             suggestions_html += `<div class="suggestion" onclick="suggestion_selected('${suggestion.mapbox_id}')">
-                                    <h3 class="location-name">${suggestion.name}</h3>
+                                    <p class="location-name fs-5 fw-bold">${suggestion.name}</p>
                                     ${suggestion.address!=undefined?'<p class="location-address">' + suggestion.address + '</p>':''}
                                 </div>`;
         });

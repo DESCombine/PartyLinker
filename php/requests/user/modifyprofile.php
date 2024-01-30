@@ -21,9 +21,19 @@ if (isset($_POST["organizer"])) {
 } else {
     $organizer = 0;
 }
+$profilePhoto = null;
+$bannerPhoto = null;
 
-$profilePhoto = img_handler($_FILES["profilePhoto"]);
-$bannerPhoto = img_handler($_FILES["bannerPhoto"]);
+if ($_FILES["profilePhoto"]["name"] != null) {
+    $profilePhoto = img_handler($_FILES["profilePhoto"]);
+} else {
+    $profilePhoto = "";
+}
+if ($_FILES["bannerPhoto"]["name"] != null) {
+    $bannerPhoto = img_handler($_FILES["bannerPhoto"]);
+} else {
+    $bannerPhoto = "";
+}
 $bio = $_POST["bio"];
 $language = $_POST["language"];
 if (isset($_POST["notifications"])) {

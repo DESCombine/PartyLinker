@@ -19,10 +19,16 @@ export async function loadEvent(event_id) {
 }
 
 export async function checkOrganizer() {
-    const response = await fetch(request_path + "/user/load_settings.php");
+    const response = await fetch(request_path + "/user/load_settings.php", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        credentials: "include"
+    });
     const settings = await response.json();
     checkError(settings);
-    return settings.organizer;
+    return settings.organizer === 1;
 }
 
 export function cleanTemplateList(list) {
@@ -135,8 +141,10 @@ export async function showComments(post_id) {
         let comment = comments_to_show[i];
         let clone = template.content.cloneNode(true);
         clone.querySelector("li").setAttribute("name", "comment" + comment.comment_id);
-        clone.querySelector("img").src = "/static/img/uploads/" + comment.profile_photo;
-        clone.querySelector("h3").textContent = comment.username;
+        let profile_photo = clone.querySelector("img") == null ? "/static/img/default_profile.png" : "/static/img/uploads/" + comment.profile_photo;
+        clone.querySelector("img").src = profile_photo;
+        clone.querySelector("a").textContent = comment.username;
+        clone.querySelector("a").href = "/profile?user=" + comment.username;
         clone.querySelector(".content").textContent = comment.content;
         if (comment.owner) {
             clone.querySelector(".trash-button").classList.remove("invisible");
@@ -191,12 +199,14 @@ export async function showPartecipations(event_id) {
             isUserPartecipating = true;
         }
         let clone = template.content.cloneNode(true);
-        clone.querySelector("img").src = "/static/img/uploads/" + partecipation.profile_photo;
-        clone.querySelector("h3").textContent = partecipation.username;
+        let profile_photo = clone.querySelector("img") == null ? "/static/img/default_profile.png" : "/static/img/uploads/" + partecipation.profile_photo;
+        clone.querySelector("img").src = profile_photo;
+        clone.querySelector("a").textContent = partecipation.username;
+        clone.querySelector("a").href = "/profile?user=" + partecipation.username;
         partecipations.appendChild(clone);
     }
-    const partecipants_button = partModal.getElementsByTagName("button")[0];
-    const busy_button = partModal.getElementsByTagName("button")[1];
+    const partecipants_button = partModal.getElementsByTagName("button")[1];
+    const busy_button = partModal.getElementsByTagName("button")[2];
     resetEventListener(partecipants_button, function() { 
             partecipationClick(event_id, "/user/upload_partecipation.php"); }).disabled = isUserPartecipating;
     resetEventListener(busy_button, function() { 

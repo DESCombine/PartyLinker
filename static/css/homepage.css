@@ -2,3 +2,7 @@ h1, h2 {
     font-family: 'Renner*';
     color: #422F75;
 }
+
+a {
+    text-decoration: none !important;
+}

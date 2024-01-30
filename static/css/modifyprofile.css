@@ -5,6 +5,10 @@ img {
     padding: 5%;
 }
 
+.upload-modal a {
+    text-decoration: none !important;
+}
+
 @media screen and (min-width: 768px) {
     html {
         height: 100%;

@@ -11,3 +11,11 @@ footer {
     border-radius: 50% !important;
     width: 50% !important;
 }
+
+#photo-id:hover {
+    cursor: pointer;
+}
+
+.upload-modal a {
+    text-decoration: none !important;
+}
