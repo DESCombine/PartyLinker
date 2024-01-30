@@ -47,6 +47,11 @@ function tfa_send($username)
                 border-radius: 1rem;
                 display: inline-block;
             }
+
+            p {
+                color: #fff;
+                font-size: 2rem;
+            }
         </style>
     </head>
     
