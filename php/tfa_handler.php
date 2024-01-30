@@ -1,13 +1,12 @@
 <?php
 require_once(getenv("PL_ROOTDIRECTORY") . "php/bootstrap.php");
-require_once(getenv("PL_ROOTDIRECTORY") . "php/requests/authenticated_request.php");
 require_once(getenv("PL_ROOTDIRECTORY") . "db/user.php");
-use User\UserUtility;
 
-function tfa_send()
+use User\UserUtility;
+function tfa_send($username)
 {
+
     global $driver;
-    global $username;
     $email = UserUtility::retrieve_email($driver, $username);
     $code = random_int(1111, 9999);
     UserUtility::insert_tfa($driver, $username, $code);
@@ -29,9 +28,18 @@ function tfa_send()
     $notif_text = str_replace('@code', $code, $notif_text);
     $to = $email;
     $subject = "2FA Code";
-    $headers = "From: PartyLinker <noreply@partylinker.com>";
-    mail($to, $subject, $notif_text, $headers);
+    $sender = new \SendGrid\Mail\Mail(); 
+    $sender->setFrom("noreply@partylinker.live", "noreply");
+    $sender->setSubject($subject);
+    $sender->addTo($to);
+    $sender->addContent(
+        "text/html", $notif_text
+    );
+    $sendgrid = new \SendGrid(getenv('PL_MAILKEY'));
+    try {
+        $sendgrid->send($sender);
+    } catch (Exception $e) {
+        echo 'Caught exception: '. $e->getMessage() ."\n";
+    }
 }
-
-tfa_send();
 ?>

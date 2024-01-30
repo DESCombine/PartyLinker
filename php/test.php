@@ -1,5 +1,5 @@
 <?php 
     require_once(getenv("PL_ROOTDIRECTORY"). "php/bootstrap.php");
-
-    echo var_dump($_SERVER);
+    require_once(getenv("PL_ROOTDIRECTORY"). "php/tfa_handler.php");
+    tfa_send("danilo.maglia");
 ?>
