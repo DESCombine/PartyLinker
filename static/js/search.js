@@ -29,7 +29,6 @@ function showSearchResults(users) {
     const search_results = document.getElementById("searchresults");
     search_results.innerHTML = "";
     users.forEach(user => {
-        console.log(user)
         const user_div = document.createElement("div");
         user_div.innerHTML = `
         <div class="result row" onclick="redirect('${user.username}')">
