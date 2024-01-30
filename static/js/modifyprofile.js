@@ -6,8 +6,8 @@ if (window.matchMedia("(min-width: 767px)").matches) {
     document.getElementsByTagName('img')[0].classList.add('d-none')
 }
 
-window.addEventListener("resize", function(){
-    if(window.matchMedia("(min-width: 767px)").matches){
+window.addEventListener("resize", function () {
+    if (window.matchMedia("(min-width: 767px)").matches) {
         document.getElementsByTagName('img')[0].classList.add('d-none')
         this.document.getElementById('extern-container').classList.add('d-flex')
     } else {
@@ -16,20 +16,7 @@ window.addEventListener("resize", function(){
     }
 });
 
-async function loadPosts(user) {
-    const request_url = user == null ? request_path + "/user/load_posted.php" : request_path + "/user/load_posted.php?user=" + user;
-    const response = await fetch(request_url, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        credentials: "include"
-    });
-    const posts = await response.json();
-    return posts;
-}
-
-async function showSavedInformations() {
+async function loadSavesInfos(user) {
     // Get informations from server
     const request_url = request_path + "/user/get_saved_infos.php";
     const response = await fetch(request_url, {
@@ -40,7 +27,11 @@ async function showSavedInformations() {
         credentials: "include"
     });
     const data = await response.json();
-    console.log(data);
+    return data;
+}
+
+async function showSavedInformations() {
+    data = await loadSavesInfos();
 
     // for each empty element in data, set it to ""
     for (let i = 0; i < data.length; i++) {
