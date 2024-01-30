@@ -210,7 +210,7 @@ namespace User {
             $sql = "SELECT * FROM user WHERE username LIKE ?";
 
             try {
-                $result = $driver->query($sql, "%".$username."%");
+                $result = $driver->query($sql, $username."%");
             } catch (\Exception $e) {
                 throw new \Exception("Error while querying the database: " . $e->getMessage());
             }

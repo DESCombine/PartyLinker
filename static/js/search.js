@@ -2,15 +2,27 @@ import { request_path } from "/static/js/config.js?v=2";
 
 const searchbar = document.getElementById("searchbar");
 searchbar.addEventListener("keyup", function(event) {
-    if (event.key === 'Enter') {
+    if(searchbar.value.length > 0) {
         search(searchbar.value);
+    } else {
+        clearResults();
     }
+    
 });
 
 async function search(query) {
     const response = await fetch(request_path + "/user/search_user.php?query=" + query);
     const users = await response.json();
     showSearchResults(users);
+    //if the value changed while searching, check if it's empty
+    if(searchbar.value.length == 0) {
+        clearResults();
+    }
+}
+
+function clearResults() {
+    const search_results = document.getElementById("searchresults");
+    search_results.innerHTML = "";
 }
 
 function showSearchResults(users) {
