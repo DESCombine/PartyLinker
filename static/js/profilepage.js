@@ -81,9 +81,8 @@ function removeAll() {
 }
 
 function openModal(post) {
-    //console.log(post);
     const modal = document.getElementById("post-modal");
-    showModalPost(modal, post.id, post.event_id, post.user_photo, post.username, post.image, post.description, post.likes, post.event_post);
+    showModalPost(modal, post.post_id, post.event_id, post.user_photo, post.username, post.image, post.description, post.likes, post.event_post);
 }
 
 async function showPhotos(type, user) {
@@ -147,6 +146,7 @@ async function showModalPost(modal, post_id, event_id, user_photo, username,
     document.getElementById("comments-button").addEventListener("click", function () { showComments(post_id); })
     document.getElementById("post-likes").innerHTML = likes;
     document.getElementById("post-description").innerHTML = description;
+    document.getElementById("translate").addEventListener("click", function () { translatePost(post_id); });
     if (event) {
         document.getElementById("details-button").addEventListener("click", function () { window.location.replace("/event/eventpage.html?id=" + event_id); });
         document.getElementById("details-button").classList.remove("invisible");
