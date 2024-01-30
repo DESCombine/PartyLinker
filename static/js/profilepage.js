@@ -158,34 +158,43 @@ async function showModalPost(modal, post_id, event_id, user_photo, username,
     document.getElementById("translate").addEventListener("click", function () { translatePost(post_id); });
 }
 
+function createCookie(name, value, days) {
+    let expires;
+
+    if (days) {
+        let date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toGMTString();
+    }
+    else {
+        expires = "";
+    }
+
+    document.cookie = escape(name) + "=" +
+        escape(value) + expires + "; path=/";
+}
+
 async function translatePost(post_id) {
+    createCookie("post_id", post_id, 1);
     const response = await fetch(request_path + "/user/retrieve_translate_datas.php", {
         method: "POST",
         credentials: "include",
         headers: {
             "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            "post_id": post_id
-        })
+        }
     });
     const description = await response.json();
     console.log(description);
-    document.getElementById("post-description").innerHTML = translated;
-    const axios = require('axios');
 
+    const url = 'https://microsoft-translator-text.p.rapidapi.com/BreakSentence?api-version=3.0&Language=' + description.language;
     const options = {
         method: 'POST',
-        url: 'https://microsoft-translator-text.p.rapidapi.com/BreakSentence',
-        params: {
-            'api-version': '3.0'
-        },
         headers: {
             'content-type': 'application/json',
             'X-RapidAPI-Key': '723f176375mshdd99d11a5d9657cp1701adjsnbc2737f56f7c',
             'X-RapidAPI-Host': 'microsoft-translator-text.p.rapidapi.com'
         },
-        data: [
+        body: [
             {
                 Text: description
             }
@@ -193,8 +202,9 @@ async function translatePost(post_id) {
     };
 
     try {
-        const response = await axios.request(options);
-        console.log(response.data);
+        const response = await fetch(url, options);
+        const result = await response.text();
+        console.log(result);
     } catch (error) {
         console.error(error);
     }
@@ -240,5 +250,5 @@ window.toggleFollow = async () => {
     if (result.message == "success") {
         checkFollow();
         showProfileInfos(user);
-    } 
+    }
 }
