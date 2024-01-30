@@ -300,6 +300,15 @@ namespace User {
             }
         }
 
+        public static function insertFeedback($driver, $feedback) {
+            $sql = "INSERT INTO feedback (feedback, date_time) VALUES (?, ?)";
+            try {
+                $driver->query($sql, $feedback, date("Y-m-d H:i:s", time()));
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+        }
+
         public static function all_infos_with_username($driver, $username) {
             $sql = "SELECT u.*, s.language, s.notifications, s.2fa, s.organizer FROM user u, settings s WHERE u.username = s.username AND u.username = ?";
             try {
