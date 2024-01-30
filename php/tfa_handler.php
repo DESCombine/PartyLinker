@@ -12,17 +12,58 @@ function tfa_send($username)
     UserUtility::insert_tfa($driver, $username, $code);
     $notif_text = 
     "<html>
-        <body>
-            <header>
-                <h1>Insert this code inside the webpage to login</h1>
-            </header>
-            <main>
+
+    <head>
+        <style>
+            body {
+                background-color: #000;
+                color: #fff;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 1.5rem;
+                text-align: center;
+            }
+    
+            header {
+                padding: 2rem;
+            }
+    
+            main {
+                padding: 2rem;
+            }
+    
+            footer {
+                padding: 2rem;
+            }
+    
+            a {
+                color: #fff;
+                text-decoration: none;
+            }
+    
+            div {
+                background-color: #fff;
+                color: #000;
+                padding: 2rem;
+                border-radius: 1rem;
+                display: inline-block;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <header>
+            <h1>Insert this code inside the webpage to login</h1>
+        </header>
+        <main>
+            <div>
                 <p>@code</p>
-            </main>
-            <footer>
-                <a href='https://partylinker.live'>PartyLinker</a>
-            </footer>
-        </body>
+            </div>
+        </main>
+        <footer>
+            <a href='https://partylinker.live'>PartyLinker</a>
+        </footer>
+    </body>
+    
     </html>";
     
     $notif_text = str_replace('@code', $code, $notif_text);
