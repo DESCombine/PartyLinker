@@ -16,11 +16,30 @@ window.addEventListener("resize", function(){
     }
 });
 
+async function loadPosts(user) {
+    const request_url = user == null ? request_path + "/user/load_posted.php" : request_path + "/user/load_posted.php?user=" + user;
+    const response = await fetch(request_url, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        credentials: "include"
+    });
+    const posts = await response.json();
+    return posts;
+}
+
 async function showSavedInformations() {
     // Get informations from server
-    const response = await fetch(request_path + "/user/get_saved_infos.php");
+    const request_url = request_path + "/user/get_saved_infos.php";
+    const response = await fetch(request_url, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        credentials: "include"
+    });
     const data = await response.json();
-
     console.log(data);
 
     // for each empty element in data, set it to ""
