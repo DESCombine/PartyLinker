@@ -157,18 +157,6 @@ async function showModalPost(modal, post_id, event_id, user_photo, username,
 
 }
 
-const user = new URLSearchParams(window.location.search).get("user");
-console.log(user);
-showProfileInfos(user);
-showPhotos(0, user);
-if (user != null) {
-    document.getElementById("modifyIcon").classList.add("d-none");
-    const followButton = document.getElementById("followButton");
-    followButton.classList.remove("d-none");
-    checkFollow();
-
-}
-
 async function checkFollow() {
     const response = await fetch(request_path + "/user/check_if_follows.php?user=" + user, {
         method: "GET",
@@ -185,17 +173,38 @@ async function checkFollow() {
     }
 }
 
-window.toggleFollow = async () => {
-    const response = await fetch(request_path + "/user/toggle_follow.php?user=" + user, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        credentials: "include"
+
+
+const user = new URLSearchParams(window.location.search).get("user");
+if (user != null) {
+    // In case the user is visiting his own profile, redirect to /profile
+    loadProfileInfos(null).then((infos) => {
+        if (infos.username == user) {
+            window.location.replace("/profile/");
+        }
     });
-    const result = await response.json();
-    if (result.message == "success") {
-        checkFollow();
-        showProfileInfos(user);
-    } 
+    document.getElementById("modifyIcon").classList.add("d-none");
+    const followButton = document.getElementById("followButton");
+    followButton.classList.remove("d-none");
+    window.toggleFollow = async () => {
+        const response = await fetch(request_path + "/user/toggle_follow.php?user=" + user, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: "include"
+        });
+        const result = await response.json();
+        if (result.message == "success") {
+            checkFollow();
+            showProfileInfos(user);
+        } 
+    }
+    checkFollow();
+    
+
 }
+showProfileInfos(user);
+showPhotos(0, user);
+
+
