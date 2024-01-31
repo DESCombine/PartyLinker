@@ -260,10 +260,17 @@
                 if ($result->num_rows > 0) {
                     for($i = 0; $i < $result->num_rows; $i++){
                         $row = $result->fetch_array();
+                        $sql = "SELECT * FROM post_like WHERE post_id = ? AND username = ?";
+                        try {
+                            $liked = $driver->query($sql, $row["post_id"], $username)->num_rows > 0;
+                        } catch (\Exception $e) {
+                            throw new \Exception("Error while querying the database: " . $e->getMessage());
+                        }
                         $post = new DBPost($row["post_id"], $row["event_id"], $row["username"], $row["image"], 
-                                $row["description"], $row["posted"], $row["likes"], $row["event_post"]);
+                                $row["description"], $row["posted"], $row["likes"], $row["event_post"], null, $liked);
                         array_push($posts, $post);
                     }
+
                 }
                 return $posts;
             }
