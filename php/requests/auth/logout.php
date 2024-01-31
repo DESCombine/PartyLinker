@@ -21,5 +21,5 @@
         $cookie_options['domain'] = '.partylinker.live';
     } 
     setcookie($cookie_name, '', $cookie_options);
-    header("Location: /");
+    header("Location: www.partylinker.live");
 ?>
