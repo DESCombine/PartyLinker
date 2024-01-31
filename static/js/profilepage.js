@@ -126,12 +126,12 @@ async function showProfileInfos(user) {
     document.getElementById("description").innerHTML = infos.bio;
     document.getElementById("followers").innerHTML = infos.followers;
     document.getElementById("followed").innerHTML = infos.followed;
-    if(await loadUserImage(infos.username) == null) {
+    if (await loadUserImage(infos.username) == null) {
         document.getElementById("profileImage").src = "/static/img/default-profile.png";
     } else {
         document.getElementById("profileImage").src = "/static/img/uploads/" + await loadUserImage(infos.username);
     }
-    if(infos.background != null) {
+    if (infos.background != null) {
         document.getElementById("bannerImage").src = "/static/img/uploads/" + infos.background;
     } else {
         document.getElementById("bannerImage").src = "/static/img/default-poster.png";
@@ -140,6 +140,13 @@ async function showProfileInfos(user) {
 
 async function showModalPost(modal, post_id, event_id, user_photo, username,
     image, description, likes, event) {
+    // clean buttons event listeners
+    document.getElementById("likes-button").replaceWith(document.getElementById("likes-button").cloneNode(true));
+    document.getElementById("comments-button").replaceWith(document.getElementById("comments-button").cloneNode(true));
+    document.getElementById("details-button").replaceWith(document.getElementById("details-button").cloneNode(true));
+    document.getElementById("partecipants-button").replaceWith(document.getElementById("partecipants-button").cloneNode(true));
+    document.getElementById("translate").replaceWith(document.getElementById("translate").cloneNode(true));
+    // show modal
     document.getElementById("post-user-photo").src = "/static/img/uploads/" + await loadUserImage(username);
     document.getElementById("post-name").innerHTML = username;
     document.getElementById("post-photo").src = "/static/img/uploads/" + image;
@@ -147,6 +154,7 @@ async function showModalPost(modal, post_id, event_id, user_photo, username,
     document.getElementById("comments-button").addEventListener("click", function () { showComments(post_id); })
     document.getElementById("post-likes").innerHTML = likes;
     document.getElementById("post-description").innerHTML = description;
+    document.getElementById("translate").addEventListener("click", function () { translatePost(post_id); });
     if (event) {
         document.getElementById("details-button").addEventListener("click", function () { window.location.replace("/event/eventpage.html?id=" + event_id); });
         document.getElementById("details-button").classList.remove("invisible");
@@ -198,10 +206,10 @@ if (user != null) {
         if (result.message == "success") {
             checkFollow();
             showProfileInfos(user);
-        } 
+        }
     }
     checkFollow();
-    
+
 
 }
 
@@ -230,28 +238,29 @@ async function translatePost(post_id) {
             "Content-Type": "application/json"
         }
     });
-    const description = await response.json();
-    console.log(description);
+    const data = await response.json();
+    console.log(data);
 
-    const url = 'https://microsoft-translator-text.p.rapidapi.com/BreakSentence?api-version=3.0&Language=' + description.language;
+    const url = 'https://google-translate113.p.rapidapi.com/api/v1/translator/text';
     const options = {
         method: 'POST',
         headers: {
-            'content-type': 'application/json',
+            'content-type': 'application/x-www-form-urlencoded',
             'X-RapidAPI-Key': '723f176375mshdd99d11a5d9657cp1701adjsnbc2737f56f7c',
-            'X-RapidAPI-Host': 'microsoft-translator-text.p.rapidapi.com'
+            'X-RapidAPI-Host': 'google-translate113.p.rapidapi.com'
         },
-        body: [
-            {
-                Text: description
-            }
-        ]
+        body: new URLSearchParams({
+            from: 'auto',
+            to: data.language,
+            text: data.description
+        })
     };
 
     try {
         const response = await fetch(url, options);
-        const result = await response.text();
+        const result = await response.json();
         console.log(result);
+        document.getElementById("post-description").innerHTML = result.trans;
     } catch (error) {
         console.error(error);
     }
