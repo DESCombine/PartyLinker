@@ -126,12 +126,12 @@ async function showProfileInfos(user) {
     document.getElementById("description").innerHTML = infos.bio;
     document.getElementById("followers").innerHTML = infos.followers;
     document.getElementById("followed").innerHTML = infos.followed;
-    if (await loadUserImage(infos.username) == null) {
+    if(await loadUserImage(infos.username) == null) {
         document.getElementById("profileImage").src = "/static/img/default-profile.png";
     } else {
         document.getElementById("profileImage").src = "/static/img/uploads/" + await loadUserImage(infos.username);
     }
-    if (infos.background != null) {
+    if(infos.background != null) {
         document.getElementById("bannerImage").src = "/static/img/uploads/" + infos.background;
     } else {
         document.getElementById("bannerImage").src = "/static/img/default-poster.png";
@@ -147,7 +147,6 @@ async function showModalPost(modal, post_id, event_id, user_photo, username,
     document.getElementById("comments-button").addEventListener("click", function () { showComments(post_id); })
     document.getElementById("post-likes").innerHTML = likes;
     document.getElementById("post-description").innerHTML = description;
-    document.getElementById("translate").addEventListener("click", function () { translatePost(post_id); });
     if (event) {
         document.getElementById("details-button").addEventListener("click", function () { window.location.replace("/event/eventpage.html?id=" + event_id); });
         document.getElementById("details-button").classList.remove("invisible");
@@ -155,7 +154,55 @@ async function showModalPost(modal, post_id, event_id, user_photo, username,
         document.getElementById("partecipants-button").addEventListener("click", function () { showPartecipations(event_id); });
         document.getElementById("partecipants-button").classList.remove("invisible");
     }
-    document.getElementById("translate").addEventListener("click", function () { translatePost(post_id); });
+
+}
+
+async function checkFollow() {
+    const response = await fetch(request_path + "/user/check_if_follows.php?user=" + user, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        credentials: "include"
+    });
+    const result = await response.json();
+    if (result.follows) {
+        document.getElementById("followButton").innerHTML = "Unfollow";
+    } else {
+        document.getElementById("followButton").innerHTML = "Follow";
+    }
+}
+
+
+
+const user = new URLSearchParams(window.location.search).get("user");
+if (user != null) {
+    // In case the user is visiting his own profile, redirect to /profile
+    loadProfileInfos(null).then((infos) => {
+        if (infos.username == user) {
+            window.location.replace("/profile/");
+        }
+    });
+    document.getElementById("modifyIcon").classList.add("d-none");
+    const followButton = document.getElementById("followButton");
+    followButton.classList.remove("d-none");
+    window.toggleFollow = async () => {
+        const response = await fetch(request_path + "/user/toggle_follow.php?user=" + user, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: "include"
+        });
+        const result = await response.json();
+        if (result.message == "success") {
+            checkFollow();
+            showProfileInfos(user);
+        } 
+    }
+    checkFollow();
+    
+
 }
 
 function createCookie(name, value, days) {
@@ -210,33 +257,7 @@ async function translatePost(post_id) {
     }
 }
 
-async function checkFollow() {
-    const response = await fetch(request_path + "/user/check_if_follows.php?user=" + user, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        credentials: "include"
-    });
-    const result = await response.json();
-    if (result.follows) {
-        document.getElementById("followButton").innerHTML = "Unfollow";
-    } else {
-        document.getElementById("followButton").innerHTML = "Follow";
-    }
-}
+showProfileInfos(user);
+showPhotos(0, user);
 
-window.toggleFollow = async () => {
-    const response = await fetch(request_path + "/user/toggle_follow.php?user=" + user, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        credentials: "include"
-    });
-    const result = await response.json();
-    if (result.message == "success") {
-        checkFollow();
-        showProfileInfos(user);
-    } 
-}
+
