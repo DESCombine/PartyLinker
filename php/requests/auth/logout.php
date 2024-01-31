@@ -9,6 +9,17 @@
         User\UserUtility::insertFeedback($driver, $_POST["feedback"]);
     }
     unset($_COOKIE['token']);
-    setcookie('token', '', -1, '/'); 
+    $cookie_name = "token";
+    $cookie_value = "Bearer ".$jwt;
+    $cookie_options = array(
+        'path' => '/',
+        'secure' => true,
+        'httponly' => true,
+        'samesite' => 'None',
+    );
+    if($_SERVER["HTTP_HOST"] != "localhost") {
+        $cookie_options['domain'] = '.partylinker.live';
+    } 
+    setcookie($cookie_name, '', $cookie_options);
     header("Location: /");
 ?>
