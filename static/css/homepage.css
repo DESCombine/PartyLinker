@@ -1,6 +1,18 @@
-h1, h2 {
+h1, h2, h3, h4 {
     font-family: 'Renner*';
     color: #422F75;
+}
+
+body, main, nav, div, ol, ul, li {
+    background-color: #ECE9F4 !important;
+}
+
+i {
+    color: #422F75;
+}
+
+p, .translate-button {
+    color: black;
 }
 
 a {
