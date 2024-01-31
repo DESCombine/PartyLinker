@@ -3,8 +3,12 @@ h1, h2, h3, h4 {
     color: #422F75;
 }
 
-body, main, nav, div, ol, ul, li {
+body, main div, ol, ul, li {
     background-color: #ECE9F4 !important;
+}
+
+nav, nav ol li, .offcanvas div, .offcanvas ol, .offcanvas li, #desk-nav-bt {
+    background-color: #ded8f4 !important;
 }
 
 i {
