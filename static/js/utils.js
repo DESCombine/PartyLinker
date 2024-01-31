@@ -37,7 +37,7 @@ export function cleanTemplateList(list) {
     }
 }
 
-function resetEventListener(oldButton, fun) {
+export function resetEventListener(oldButton, fun) {
     const newButton = oldButton.cloneNode(true);
     oldButton.parentNode.replaceChild(newButton, oldButton);
     newButton.addEventListener("click", fun);

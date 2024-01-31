@@ -23,7 +23,7 @@
                     <h1>New Post</h1>
                 </header>
                 <main class="border border-black p-3">
-                    <form action="" method="POST">
+                    <form action="#" method="POST">
                         <div class="row overflow-x-hidden">
                             <div class="col-md-6">
                                 <div>
@@ -45,7 +45,7 @@
                             <div class="d-none d-md-flex col-md-6 align-items-center">
                                 <img id="logo-img" src="/static/img/cover.png" alt="logo" class="img-fluid">
                             </div>
-                            <div id="event-inputs" class="invisible col-md-6">
+                            <fieldset id="event-inputs" class="invisible col-md-6">
                                 <div class="row my-4 justify-content-center">
                                     <label for="inputEvent" class="col-4 col-form-label">Event name*</label>
                                     <div class="col-8">
@@ -95,7 +95,6 @@
                                         <input type="number" class="form-control" id="inputMinAge" name="min-age">
                                     </div>
                                 </div>
-                            </div>
                         </div>
                         <div class="row text-center">
                             <p>(* marked labels are mandatory)</p>
@@ -104,7 +103,7 @@
                             <button type="reset" class="btn btn-secondary btn-lg ms-3">
                                 Cancel
                             </button>
-                            <button type="submit" class="btn btn-secondary btn-lg me-3 px-4">
+                            <button type="submit" class="btn btn-primary btn-lg me-3 px-4">
                                 Post
                             </button>
                         </div>

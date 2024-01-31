@@ -59,7 +59,7 @@ async function showFeed() {
     document.getElementById("partecipants-modal").addEventListener("hidden.bs.modal", 
             function() { cleanTemplateList(document.querySelector("#partecipants-modal ul")); });
     if (posts.length == 0) {
-        feed.parentNode.innerHTML = "<p class='fs-4 text-center'>No posts to show.<br>\
+        feed.parentNode.innerHTML = "<p class='fs-4 text-center'>No posts to show.\
                 Start following new users with the search page <i class='fa-solid fa-magnifying-glass'></i></p>";
     }
 }

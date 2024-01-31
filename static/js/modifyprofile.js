@@ -16,7 +16,7 @@ window.addEventListener("resize", function () {
     }
 });
 
-async function loadSavesInfos(user) {
+async function loadSavesInfos() {
     // Get informations from server
     const request_url = request_path + "/user/get_saved_infos.php";
     const response = await fetch(request_url, {
@@ -31,7 +31,8 @@ async function loadSavesInfos(user) {
 }
 
 async function showSavedInformations() {
-    data = await loadSavesInfos();
+
+    let data = await loadSavesInfos();
 
     // for each empty element in data, set it to ""
     for (let i = 0; i < data.length; i++) {
