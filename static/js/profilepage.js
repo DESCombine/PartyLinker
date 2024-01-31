@@ -126,12 +126,12 @@ async function showProfileInfos(user) {
     document.getElementById("description").innerHTML = infos.bio;
     document.getElementById("followers").innerHTML = infos.followers;
     document.getElementById("followed").innerHTML = infos.followed;
-    if (await loadUserImage(infos.username) == null) {
+    if(await loadUserImage(infos.username) == null) {
         document.getElementById("profileImage").src = "/static/img/default-profile.png";
     } else {
         document.getElementById("profileImage").src = "/static/img/uploads/" + await loadUserImage(infos.username);
     }
-    if (infos.background != null) {
+    if(infos.background != null) {
         document.getElementById("bannerImage").src = "/static/img/uploads/" + infos.background;
     } else {
         document.getElementById("bannerImage").src = "/static/img/default-poster.png";
@@ -147,7 +147,6 @@ async function showModalPost(modal, post_id, event_id, user_photo, username,
     document.getElementById("comments-button").addEventListener("click", function () { showComments(post_id); })
     document.getElementById("post-likes").innerHTML = likes;
     document.getElementById("post-description").innerHTML = description;
-    document.getElementById("translate").addEventListener("click", function () { translatePost(post_id); });
     if (event) {
         document.getElementById("details-button").addEventListener("click", function () { window.location.replace("/event/eventpage.html?id=" + event_id); });
         document.getElementById("details-button").classList.remove("invisible");
@@ -155,59 +154,7 @@ async function showModalPost(modal, post_id, event_id, user_photo, username,
         document.getElementById("partecipants-button").addEventListener("click", function () { showPartecipations(event_id); });
         document.getElementById("partecipants-button").classList.remove("invisible");
     }
-    document.getElementById("translate").addEventListener("click", function () { translatePost(post_id); });
-}
 
-function createCookie(name, value, days) {
-    let expires;
-
-    if (days) {
-        let date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        expires = "; expires=" + date.toGMTString();
-    }
-    else {
-        expires = "";
-    }
-
-    document.cookie = escape(name) + "=" +
-        escape(value) + expires + "; path=/";
-}
-
-async function translatePost(post_id) {
-    createCookie("post_id", post_id, 1);
-    const response = await fetch(request_path + "/user/retrieve_translate_datas.php", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-            "Content-Type": "application/json"
-        }
-    });
-    const description = await response.json();
-    console.log(description);
-
-    const url = 'https://microsoft-translator-text.p.rapidapi.com/BreakSentence?api-version=3.0&Language=' + description.language;
-    const options = {
-        method: 'POST',
-        headers: {
-            'content-type': 'application/json',
-            'X-RapidAPI-Key': '723f176375mshdd99d11a5d9657cp1701adjsnbc2737f56f7c',
-            'X-RapidAPI-Host': 'microsoft-translator-text.p.rapidapi.com'
-        },
-        body: [
-            {
-                Text: description
-            }
-        ]
-    };
-
-    try {
-        const response = await fetch(url, options);
-        const result = await response.text();
-        console.log(result);
-    } catch (error) {
-        console.error(error);
-    }
 }
 
 async function checkFollow() {
@@ -226,17 +173,38 @@ async function checkFollow() {
     }
 }
 
-window.toggleFollow = async () => {
-    const response = await fetch(request_path + "/user/toggle_follow.php?user=" + user, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        credentials: "include"
+
+
+const user = new URLSearchParams(window.location.search).get("user");
+if (user != null) {
+    // In case the user is visiting his own profile, redirect to /profile
+    loadProfileInfos(null).then((infos) => {
+        if (infos.username == user) {
+            window.location.replace("/profile/");
+        }
     });
-    const result = await response.json();
-    if (result.message == "success") {
-        checkFollow();
-        showProfileInfos(user);
-    } 
+    document.getElementById("modifyIcon").classList.add("d-none");
+    const followButton = document.getElementById("followButton");
+    followButton.classList.remove("d-none");
+    window.toggleFollow = async () => {
+        const response = await fetch(request_path + "/user/toggle_follow.php?user=" + user, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: "include"
+        });
+        const result = await response.json();
+        if (result.message == "success") {
+            checkFollow();
+            showProfileInfos(user);
+        } 
+    }
+    checkFollow();
+    
+
 }
+showProfileInfos(user);
+showPhotos(0, user);
+
+
