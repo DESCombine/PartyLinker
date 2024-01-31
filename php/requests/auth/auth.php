@@ -1,13 +1,13 @@
 <?php
     require_once(getenv("PL_ROOTDIRECTORY")."php/bootstrap.php");
-    use Firebase\JWT\JWT;
     require_once(getenv("PL_ROOTDIRECTORY")."db/user.php");
-    use User\UserUtility;
     require_once(getenv("PL_ROOTDIRECTORY")."php/requests/cors.php");
     require_once(getenv("PL_ROOTDIRECTORY")."php/tfa_handler.php");
     require_once(getenv("PL_ROOTDIRECTORY")."php/auth_utility.php");
-    header('Content-Type: application/json');
 
+    use User\UserUtility;
+
+    header('Content-Type: application/json');
 
     global $driver;
     $username = $_POST["username"];
@@ -33,7 +33,7 @@
         header("Location: ".$domain."/login/twofactorauth.html?token=".$token);
     } else {
         set_token_cookie($username, $_POST["remember"]);
-        // header("Location: ".$domain);
+        header("Location: ".$domain);
     }
     $driver->close_connection();
 
