@@ -213,6 +213,59 @@ export async function showPartecipations(event_id) {
             partecipationClick(event_id, "/user/remove_partecipation.php"); }).disabled = !isUserPartecipating;
 }
 
+function createCookie(name, value, days) {
+    let expires;
+
+    if (days) {
+        let date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toGMTString();
+    }
+    else {
+        expires = "";
+    }
+
+    document.cookie = escape(name) + "=" +
+        escape(value) + expires + "; path=/";
+}
+
+export async function translatePost(post_id, textElement) {
+    createCookie("post_id", post_id, 1);
+    const response = await fetch(request_path + "/user/retrieve_translate_datas.php", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    });
+    const data = await response.json();
+    console.log(data);
+
+    const url = 'https://google-translate113.p.rapidapi.com/api/v1/translator/text';
+    const options = {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/x-www-form-urlencoded',
+            'X-RapidAPI-Key': '723f176375mshdd99d11a5d9657cp1701adjsnbc2737f56f7c',
+            'X-RapidAPI-Host': 'google-translate113.p.rapidapi.com'
+        },
+        body: new URLSearchParams({
+            from: 'auto',
+            to: data.language,
+            text: data.description
+        })
+    };
+
+    try {
+        const response = await fetch(url, options);
+        const result = await response.json();
+        console.log(result);
+        textElement.innerHTML = result.trans;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 async function confirmOnline() {
     const res = await fetch(request_path + "/user/update_online.php", {
         method: "POST",

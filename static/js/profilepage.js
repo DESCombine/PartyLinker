@@ -1,5 +1,5 @@
 import { request_path } from "/static/js/config.js?v=2";
-import { loadUserImage, showComments, resetEventListener, cleanTemplateList} from "/static/js/utils.js?v=1";
+import { loadUserImage, showComments, resetEventListener, cleanTemplateList, translatePost } from "/static/js/utils.js?v=1";
 
 document.querySelector("#modifyIcon").href = "/modifyprofile/modifyprofile.html";
 
@@ -154,7 +154,7 @@ async function showModalPost(modal, post_id, event_id, user_photo, username,
     document.getElementById("post-photo").src = "/static/img/uploads/" + image;
     document.getElementById("post-likes").innerHTML = likes;
     document.getElementById("post-description").innerHTML = description;
-    document.getElementById("translate").addEventListener("click", function () { translatePost(post_id); });
+    document.getElementById("translate").addEventListener("click", function () { translatePost(post_id, document.getElementById("post-description")); });
     const likeButton = postActions.querySelector("#likes-button");
     if (liked) {
         likeButton.addEventListener("click", function() { removeLike(post_id, 'post'); });
@@ -217,59 +217,6 @@ if (user != null) {
     checkFollow();
 
 
-}
-
-function createCookie(name, value, days) {
-    let expires;
-
-    if (days) {
-        let date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        expires = "; expires=" + date.toGMTString();
-    }
-    else {
-        expires = "";
-    }
-
-    document.cookie = escape(name) + "=" +
-        escape(value) + expires + "; path=/";
-}
-
-async function translatePost(post_id) {
-    createCookie("post_id", post_id, 1);
-    const response = await fetch(request_path + "/user/retrieve_translate_datas.php", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-            "Content-Type": "application/json"
-        }
-    });
-    const data = await response.json();
-    console.log(data);
-
-    const url = 'https://google-translate113.p.rapidapi.com/api/v1/translator/text';
-    const options = {
-        method: 'POST',
-        headers: {
-            'content-type': 'application/x-www-form-urlencoded',
-            'X-RapidAPI-Key': '723f176375mshdd99d11a5d9657cp1701adjsnbc2737f56f7c',
-            'X-RapidAPI-Host': 'google-translate113.p.rapidapi.com'
-        },
-        body: new URLSearchParams({
-            from: 'auto',
-            to: data.language,
-            text: data.description
-        })
-    };
-
-    try {
-        const response = await fetch(url, options);
-        const result = await response.json();
-        console.log(result);
-        document.getElementById("post-description").innerHTML = result.trans;
-    } catch (error) {
-        console.error(error);
-    }
 }
 
 export async function addLike(like_id, type) {

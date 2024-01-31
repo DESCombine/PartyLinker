@@ -1,5 +1,6 @@
 import { request_path } from "/static/js/config.js?v=2";
-import { checkError, cleanTemplateList, removeLike, addLike, addEventDescription, loadEvent, showComments, showPartecipations } from "/static/js/utils.js?v=1";
+import { checkError, cleanTemplateList, removeLike, addLike, 
+        addEventDescription, loadEvent, showComments, showPartecipations, translatePost } from "/static/js/utils.js?v=1";
 
 async function loadOnlineUsers() {
     const response = await fetch(request_path + "/user/load_online_users.php", {
@@ -86,7 +87,9 @@ async function addNewFeedPost(clone, feed, post_id, event_id, user_photo, userna
         likeButton.addEventListener("click", function() { addLike(post_id, 'post'); });
     }
     postActions.querySelector(".comment-button").addEventListener("click", function() { showComments(post_id); });
-    postContent.querySelector(".post-description").innerHTML = description;
+    let desc = postContent.querySelector(".post-description");
+    desc.innerHTML = description;
+    postContent.querySelector(".translate-button").addEventListener("click", function () { translatePost(post_id, desc); });
     
     const eventInfo = postContent.querySelector(".event-info");
     if (event) {
