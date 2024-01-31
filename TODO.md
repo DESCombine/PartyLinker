@@ -21,7 +21,7 @@
 - [x] fix token recognition
 - [x] fix offline switch
 # WOW effect
-- [ ] Translation button
+- [x] Translation button
 - [x] 2F Authentication
 - [x] Remember me
 - [x] Map page
