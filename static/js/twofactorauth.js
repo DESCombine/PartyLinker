@@ -9,15 +9,6 @@ if (error) {
     document.getElementById("error").classList.remove("invisible");
 }
 
-async function sendCode() {
-    await fetch(request_path + "/email/tfa_handler.php", {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        credentials: "include"
-    });
-}
 
 // when screen is resized
 window.addEventListener("resize", function(){
@@ -31,5 +22,3 @@ window.addEventListener("resize", function(){
         this.document.getElementById("first").classList.remove("align-items-center");
     }
 });
-
-sendCode();

@@ -210,18 +210,6 @@ async function translatePost(post_id) {
     }
 }
 
-const user = new URLSearchParams(window.location.search).get("user");
-console.log(user);
-showProfileInfos(user);
-showPhotos(0, user);
-if (user != null) {
-    document.getElementById("modifyIcon").classList.add("d-none");
-    const followButton = document.getElementById("followButton");
-    followButton.classList.remove("d-none");
-    checkFollow();
-
-}
-
 async function checkFollow() {
     const response = await fetch(request_path + "/user/check_if_follows.php?user=" + user, {
         method: "GET",
@@ -250,5 +238,5 @@ window.toggleFollow = async () => {
     if (result.message == "success") {
         checkFollow();
         showProfileInfos(user);
-    }
+    } 
 }

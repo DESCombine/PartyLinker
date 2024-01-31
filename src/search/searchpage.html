@@ -15,20 +15,56 @@
     <body>
         <div class="container-fluid" id="page">
             <div class="row">
-                <div class="col-md-11 col-12 container">
+                <div class="col-md-10 ms-md-4 col-12 container">
                     <div class="row-2">
-                        <div class="col p-0">
-                            <input type="text" id="searchbar" class="border-1 col-10" placeholder="Search...">
+                        <div class="d-flex p-0">
+                            <input type="text" id="searchbar" class="h3 fw-normal border border-black col-10 mt-5 p-2 w-100 rounded-pill bg-light" placeholder="Search...">
+                            <div class="d-none d-md-block col mt-5 ms-4">
+                                <button class="btn btn-lg border border-black bg-light" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                                    <i class="fa-solid fa-bars"></i>
+                                </button>
+                                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                                    <div class="offcanvas-header">
+                                        <h2 class="offcanvas-title" id="offcanvasNavbarLabel">Explore the site</h2>
+                                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                    </div>
+                                    <div class="offcanvas-body">
+                                        <ol class="list-group list-group-flush">
+                                            <li class="list-group-item my-3">
+                                                <a class="text-center fs-2 nav-link active" aria-current="page" href="/"><i class="fa-solid fa-house"></i> Home page</a>
+                                            </li>
+                                            <li class="list-group-item my-3">
+                                                <a class="text-center fs-2 nav-link" href="/search/"><i class="fa-solid fa-magnifying-glass"></i> Search page</a>
+                                            </li>
+                                            <li class="list-group-item my-3 text-center">
+                                                <button class="text-center fs-2 btn border border-dark rounded"  data-bs-toggle="modal" data-bs-target="#upload-modal">
+                                                    <i class="fa-solid fa-circle-plus"></i> Upload new post
+                                                </button>
+                                            </li>
+                                            <li class="list-group-item my-3">
+                                                <a class="text-center fs-2 nav-link" href="/map/"><i class="fa-solid fa-map-location-dot"></i> Events near you</a>
+                                            </li>
+                                            <li class="list-group-item my-3">
+                                                <a class="text-center fs-2 nav-link" href="/profile/"><i class="fa-solid fa-user"></i> Profile page</a>
+                                            </li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
                     <div class="row-2"></div>
-                    <div id="searchresults" class="row-7 container-fluid"></div>
-                </div>
-                
-                <div class="col">
-                    <div class="d-none d-md-block position-absolute mt-5">
-                        <button class="text-center border-0 bg-light fs-2" id="navbar-toggler"><i class="fa-solid fa-bars"></i></button>
-                    </div>
+                    <ol id="searchresults" class="row-7 container-fluid">
+                        <template id="result-template">
+                            <div class="col-2">
+                                <img src="/static/img/uploads/default-profile.png" alt="placeholder" class="result-profile-img"> 
+                            </div> 
+                            <div class="col-9"> 
+                                <span>username</span>  
+                            </div> 
+                        </template>
+                    </ol>
                 </div>
             </div>
            
@@ -59,38 +95,7 @@
             </nav>
         </footer>
         <!-- Navbar for desktop -->
-        <div class="d-none d-md-flex justify-content-end fixed-top pt-3 me-5">
-            <button class="btn btn-lg border border-black bg-light" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-                <i class="fa-solid fa-bars"></i>
-            </button>
-            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-                <div class="offcanvas-header">
-                    <h2 class="offcanvas-title" id="offcanvasNavbarLabel">Explore the site</h2>
-                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body">
-                    <ol class="list-group list-group-flush">
-                        <li class="list-group-item my-3">
-                            <a class="text-center fs-2 nav-link active" aria-current="page" href="/"><i class="fa-solid fa-house"></i> Home page</a>
-                        </li>
-                        <li class="list-group-item my-3">
-                            <a class="text-center fs-2 nav-link" href="/search/"><i class="fa-solid fa-magnifying-glass"></i> Search page</a>
-                        </li>
-                        <li class="list-group-item my-3 text-center">
-                            <button class="text-center fs-2 btn border border-dark rounded"  data-bs-toggle="modal" data-bs-target="#upload-modal">
-                                <i class="fa-solid fa-circle-plus"></i> Upload new post
-                            </button>
-                        </li>
-                        <li class="list-group-item my-3">
-                            <a class="text-center fs-2 nav-link" href="/map/"><i class="fa-solid fa-map-location-dot"></i> Events near you</a>
-                        </li>
-                        <li class="list-group-item my-3">
-                            <a class="text-center fs-2 nav-link" href="/profile/"><i class="fa-solid fa-user"></i> Profile page</a>
-                        </li>
-                    </ol>
-                </div>
-            </div>
-        </div>
+        
         <!-- Upload Modal -->
         <div class="modal fade" id="upload-modal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -139,7 +144,7 @@
             </div>
 
         <script src="/static/js/search.js?v=2" type="module"></script>
-        <script src="/static/js/uploadbt.js?v=2" type="module"></script>
+        <script src="/static/js/uploadbt.js?v=3" type="module"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     </body>
 </html>

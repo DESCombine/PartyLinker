@@ -1,10 +1,11 @@
 # List for what It's still missing to complete the project
 - [ ] Make sure that everything is working on partylinker.live
-- [ ] Set up the mail server
+- [x] Set up the mail server
 - [ ] Decide the look of the site
+- [ ] Validate code
 
 # List of things to do
-- [ ] media queries
+- [x] media queries
 - [x] Cooments forms
 - [x] Like button
 - [x] Partecipation button

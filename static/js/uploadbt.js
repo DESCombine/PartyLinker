@@ -18,10 +18,18 @@ async function renderModalFooter() {
 const modalBody = modal.querySelector(".modal-body");
 const searchbar = modalBody.querySelector("input");
 searchbar.addEventListener("keyup", function(event) {
-    if (event.key === 'Enter') {
+    if (searchbar.value.length > 0) {
         showSearchResults(searchbar.value);
+
+    } else {
+        clearResults();
     }
 });
+
+function clearResults() {
+    const searchResults = modalBody.querySelector("ol");
+    cleanTemplateList(searchResults);
+}
 
 async function search(event) {
     const response = await fetch(request_path + "/user/search_event.php?event=" + event);
@@ -31,9 +39,10 @@ async function search(event) {
 
 async function showSearchResults(event) {
     const searchResults = modalBody.querySelector("ol");
-    cleanTemplateList(searchResults);
+    
     const events = await search(event);
     const template = modalBody.querySelector("template");
+    clearResults();
     for (let i = 0; i < events.length; i++) {
         let event = events[i];
         let clone = template.content.cloneNode(true);
@@ -43,6 +52,11 @@ async function showSearchResults(event) {
         clone.querySelector("a").href = "/post/postpage.html?event=" + event.event_id;
         clone.querySelector("p").textContent = event.date;
         searchResults.appendChild(clone);
+    }
+    //get the searchbar value
+    const searchbar = modalBody.querySelector("input");
+    if(searchbar.value.length == 0) {
+        clearResults();
     }
 }
 

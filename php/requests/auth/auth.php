@@ -4,6 +4,7 @@
     require_once(getenv("PL_ROOTDIRECTORY")."db/user.php");
     use User\UserUtility;
     require_once(getenv("PL_ROOTDIRECTORY")."php/requests/cors.php");
+    require_once(getenv("PL_ROOTDIRECTORY")."php/tfa_handler.php");
     header('Content-Type: application/json');
     $key = getenv("PL_JWTKEY");
     //$request = json_decode(file_get_contents('php://input'), true);
@@ -45,7 +46,9 @@
     echo json_encode(array("message" => "success"), JSON_PRETTY_PRINT);
     global $domain;
     if ($settings->getTFA() && $settings->getTFA() != null) {
+        tfa_send($username);
         header("Location: ".$domain."/login/twofactorauth.html");
+        
     } else {
         header("Location: ".$domain);
     }
