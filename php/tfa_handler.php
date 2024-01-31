@@ -9,7 +9,14 @@ function tfa_send($username)
     global $driver;
     $email = UserUtility::retrieve_email($driver, $username);
     $code = random_int(1111, 9999);
-    UserUtility::insert_tfa($driver, $username, $code);
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $token = '';
+    $tokenLength = 128;
+    for ($i = 0; $i < $tokenLength; $i++) {
+        $token .= $characters[random_int(0, $charactersLength - 1)];
+    }
+    UserUtility::insert_tfa($driver, $token, $username, $code);
     $notif_text = 
     "<html>
 
@@ -87,5 +94,6 @@ function tfa_send($username)
     } catch (Exception $e) {
         echo 'Caught exception: '. $e->getMessage() ."\n";
     }
+    return $token;
 }
 ?>

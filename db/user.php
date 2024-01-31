@@ -466,34 +466,19 @@ namespace User {
             }
         }
 
-        public static function insert_tfa($driver, $username, $code) {
-            $sql = "SELECT username FROM tfa_code WHERE username = ?";
+        public static function insert_tfa($driver, $token,  $username, $code) {
+            $sql = "INSERT INTO tfa_code (token, username, code) VALUES (?, ?, ?)";
             try {
-                $result = $driver->query($sql, $username);
+                $driver->query($sql, $token, $username, $code);
             } catch (\Exception $e) {
                 throw new \Exception("Error while querying the database: " . $e->getMessage());
             }
-            if($result->num_rows > 0) {
-                $sql = "UPDATE tfa_code SET code = ? WHERE username = ?";
-                try {
-                    $driver->query($sql, $code, $username);
-                } catch (\Exception $e) {
-                    throw new \Exception("Error while querying the database: " . $e->getMessage());
-                }
-            } else {
-                $sql = "INSERT INTO tfa_code (username, code) VALUES (?, ?)";
-                try {
-                    $driver->query($sql, $username, $code);
-                } catch (\Exception $e) {
-                    throw new \Exception("Error while querying the database: " . $e->getMessage());
-                }
-            }
         }
 
-        public static function retrieve_tfa($driver, $username) {
-            $sql = "SELECT code FROM tfa_code WHERE username = ?";
+        public static function retrieve_tfa($driver, $token) {
+            $sql = "SELECT code FROM tfa_code WHERE token = ?";
             try {
-                $result = $driver->query($sql, $username);
+                $result = $driver->query($sql, $token);
             } catch (\Exception $e) {
                 throw new \Exception("Error while querying the database: " . $e->getMessage());
             }
@@ -506,10 +491,39 @@ namespace User {
             }
         }
 
-        public static function reset_tfa($driver, $username) {
-            $sql = "UPDATE tfa_code SET code = 0 WHERE username = ?";
+        public static function check_tfa_success($driver, $token) {
+            $sql = "SELECT code, username FROM tfa_code WHERE token = ?";
             try {
-                $driver->query($sql, $username);
+                $result = $driver->query($sql, $token);
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                if ($row["code"] == 0) {
+                    return $row["username"];
+                } else {
+                    return null;
+                }
+            } else {
+                return null;
+            }
+        }
+
+        public static function delete_tfa($driver, $token) {
+            $sql = "DELETE FROM tfa_code WHERE token = ?";
+            try {
+                $driver->query($sql, $token);
+            } catch (\Exception $e) {
+                throw new \Exception("Error while querying the database: " . $e->getMessage());
+            }
+        }
+
+        public static function reset_tfa($driver, $token) {
+            $sql = "UPDATE tfa_code SET code = 0 WHERE token = ?";
+            try {
+                $driver->query($sql, $token);
             } catch (\Exception $e) {
                 throw new \Exception("Error while querying the database: " . $e->getMessage());
             }

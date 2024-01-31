@@ -4,6 +4,9 @@ document.getElementsByTagName("form")[0].action = request_path + "/auth/check_tf
 
 const urlParams = new URLSearchParams(window.location.search);
 const error = urlParams.get('error');
+const token = urlParams.get('token');
+document.getElementById("tokenInput").setAttribute("value", token);
+document.getElementById("rememberInput").setAttribute("value", urlParams.get('remember'));
 
 if (error) {
     document.getElementById("error").classList.remove("invisible");
