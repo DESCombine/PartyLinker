@@ -1,5 +1,5 @@
 import { request_path } from "/static/js/config.js?v=2";
-import { loadUserImage, addLike, showComments, showPartecipations } from "/static/js/utils.js?v=1";
+import { loadUserImage, showComments, resetEventListener, cleanTemplateList} from "/static/js/utils.js?v=1";
 
 document.querySelector("#modifyIcon").href = "/modifyprofile/modifyprofile.html";
 
@@ -8,6 +8,8 @@ const eventButton = document.getElementById("buttons").getElementsByTagName("div
 const templatePost = document.importNode(document.getElementById("template-photos"), true);
 postButton.addEventListener("click", function () { changeView("post"); });
 eventButton.addEventListener("click", function () { changeView("event"); });
+document.getElementById("comments-modal").addEventListener("hidden.bs.modal", 
+function() { cleanTemplateList(document.querySelector("#comments-modal ol")); });
 postButton.style.pointerEvents = "none";
 
 async function loadPosts(user) {
@@ -83,7 +85,7 @@ function removeAll() {
 function openModal(post) {
     console.log(post.post_id);
     const modal = document.getElementById("post-modal");
-    showModalPost(modal, post.post_id, post.event_id, post.user_photo, post.username, post.image, post.description, post.likes, post.event_post);
+    showModalPost(modal, post.post_id, post.event_id, post.user_photo, post.username, post.image, post.description, post.likes, post.event_post, post.liked);
 }
 
 async function showPhotos(type, user) {
@@ -139,30 +141,33 @@ async function showProfileInfos(user) {
 }
 
 async function showModalPost(modal, post_id, event_id, user_photo, username,
-    image, description, likes, event) {
+    image, description, likes, event, liked) {
+    const postContent = modal.querySelector(".modal-content");
+    const postActions = postContent.querySelector("ol");
+    postActions.querySelector("a").classList.add("invisible");
     // clean buttons event listeners
-    document.getElementById("likes-button").replaceWith(document.getElementById("likes-button").cloneNode(true));
-    document.getElementById("comments-button").replaceWith(document.getElementById("comments-button").cloneNode(true));
-    document.getElementById("details-button").replaceWith(document.getElementById("details-button").cloneNode(true));
-    document.getElementById("partecipants-button").replaceWith(document.getElementById("partecipants-button").cloneNode(true));
     document.getElementById("translate").replaceWith(document.getElementById("translate").cloneNode(true));
+    document.getElementById("comments-button").replaceWith(document.getElementById("comments-button").cloneNode(true));
     // show modal
     document.getElementById("post-user-photo").src = "/static/img/uploads/" + await loadUserImage(username);
     document.getElementById("post-name").innerHTML = username;
     document.getElementById("post-photo").src = "/static/img/uploads/" + image;
-    document.getElementById("likes-button").addEventListener("click", function () { addLike(post_id, 1); });
-    document.getElementById("comments-button").addEventListener("click", function () { showComments(post_id); })
     document.getElementById("post-likes").innerHTML = likes;
     document.getElementById("post-description").innerHTML = description;
     document.getElementById("translate").addEventListener("click", function () { translatePost(post_id); });
-    document.getElementById("details-button").classList.add("invisible");
-    if (event) {
-        document.getElementById("details-button").addEventListener("click", function () { window.location.replace("/event/eventpage.html?id=" + event_id); });
-        document.getElementById("details-button").classList.remove("invisible");
-        document.getElementById("partecipants-button").addEventListener("click", function () { showPartecipations(event_id); })
-        document.getElementById("partecipants-button").addEventListener("click", function () { showPartecipations(event_id); });
-        document.getElementById("partecipants-button").classList.remove("invisible");
+    const likeButton = postActions.querySelector("#likes-button");
+    if (liked) {
+        likeButton.addEventListener("click", function() { removeLike(post_id, 'post'); });
+        likeButton.innerHTML = "<i class='fa-solid fa-heart text-danger'></i>";
+    } else {
+        likeButton.addEventListener("click", function() { addLike(post_id, 'post'); });
     }
+    postActions.querySelector("#comments-button").addEventListener("click", function() { showComments(post_id); });
+    
+    if (event) {
+        postActions.querySelector("a").href = "/event/eventpage.html?id=" + event_id;
+        postActions.querySelector("a").classList.remove("invisible");
+    } 
 
 }
 
@@ -266,6 +271,41 @@ async function translatePost(post_id) {
         console.error(error);
     }
 }
+
+export async function addLike(like_id, type) {
+    like(like_id, type, "/user/upload_like.php", 1);
+}
+
+export async function removeLike(like_id, type) {
+    like(like_id, type, "/user/remove_like.php", -1);
+}
+
+async function like(like_id, type, request, addOrRemove) {
+    await fetch(request_path + request, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            "like_id": like_id,
+            "type": type
+        })
+    });
+    const likes = document.querySelector("#post-likes");
+    const likeButton = document.querySelector("#likes-button");
+    likes.innerHTML = parseInt(likes.innerHTML) + addOrRemove;
+    let fun;
+    if (addOrRemove == 1) {
+        likeButton.innerHTML = "<i class='fa-solid fa-heart text-danger'></i>";
+        fun = function() { removeLike(like_id, type); };
+    } else {
+        likeButton.innerHTML = "<i class='fa-regular fa-heart'></i>";
+        fun = function() { addLike(like_id, type); };
+    }
+    resetEventListener(likeButton, fun);
+}
+
 
 showProfileInfos(user);
 showPhotos(0, user);
