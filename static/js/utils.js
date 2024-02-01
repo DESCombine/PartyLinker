@@ -57,41 +57,6 @@ export function addEventDescription(parent, event) {
             <li class="list-group-item"><p>Minimum age: ${event.minimum_age}</p></li>`;
 }
 
-export async function addLike(like_id, type) {
-    like(like_id, type, "/user/upload_like.php", 1);
-}
-
-export async function removeLike(like_id, type) {
-    like(like_id, type, "/user/remove_like.php", -1);
-}
-
-async function like(like_id, type, request, addOrRemove) {
-    await fetch(request_path + request, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            "like_id": like_id,
-            "type": type
-        })
-    });
-    const element = document.getElementsByName(type+like_id)[0];
-    const likes = element.querySelector(".likes");
-    const likeButton = element.querySelector(".like-button");
-    likes.innerHTML = parseInt(likes.innerHTML) + addOrRemove;
-    let fun;
-    if (addOrRemove == 1) {
-        likeButton.innerHTML = "<i class='fa-solid fa-heart text-danger'></i>";
-        fun = function() { removeLike(like_id, type); };
-    } else {
-        likeButton.innerHTML = "<i class='fa-regular fa-heart'></i>";
-        fun = function() { addLike(like_id, type); };
-    }
-    resetEventListener(likeButton, fun);
-}
-
 async function loadComments(post_id) {
     const response = await fetch(request_path + "/user/load_comments.php?post=" + post_id);
     const comments = await response.json();
@@ -150,14 +115,14 @@ export async function showComments(post_id) {
             clone.querySelector(".trash-button").classList.remove("invisible");
             clone.querySelector(".trash-button").addEventListener("click", function() { removeComment(comment.comment_id, post_id); })
         }
+        clone.querySelector(".likes").innerHTML = comment.likes;
         const likeButton = clone.querySelector(".like-button");
         if (comment.liked) {
-            likeButton.addEventListener("click", function() { removeLike(comment.comment_id, 'comment'); });
+            likeButton.addEventListener("click", function () { removeLike(comment.comment_id, "comment") });
             likeButton.innerHTML = "<i class='fa-solid fa-heart text-danger'></i>";
         } else {
-            likeButton.addEventListener("click", function() { addLike(comment.comment_id, 'comment'); });
+            likeButton.addEventListener("click", function () { addLike(comment.comment_id, "comment") });
         }
-        clone.querySelector(".likes").innerHTML = comment.likes;
         comments.appendChild(clone);
     }
     const modalFooter = comModal.querySelector(".modal-footer");
@@ -211,6 +176,57 @@ export async function showPartecipations(event_id) {
             partecipationClick(event_id, "/user/upload_partecipation.php"); }).disabled = isUserPartecipating;
     resetEventListener(busy_button, function() { 
             partecipationClick(event_id, "/user/remove_partecipation.php"); }).disabled = !isUserPartecipating;
+}
+
+export async function addLike(like_id, type) {
+    like(like_id, type, "/user/upload_like.php", 1);
+}
+
+export async function removeLike(like_id, type) {
+    like(like_id, type, "/user/remove_like.php", -1);
+}
+
+async function like(like_id, type, request, addOrRemove) {
+    await fetch(request_path + request, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            "like_id": like_id,
+            "type": type
+        })
+    });
+    const element = document.getElementsByName(type + like_id)[0];
+    const likes = element.querySelector(".likes");
+    const likeButton = element.querySelector(".like-button");
+    likes.innerHTML = parseInt(likes.innerHTML) + addOrRemove;
+    let fun;
+    if (addOrRemove == 1) {
+        likeButton.innerHTML = "<i class='fa-solid fa-heart text-danger'></i>";
+        fun = function() { removeLike(like_id, type, likeButton, likes); };
+    } else {
+        likeButton.innerHTML = "<i class='fa-regular fa-heart'></i>";
+        fun = function() { addLike(like_id, type, likeButton, likes); };
+    }
+    resetEventListener(likeButton, fun);
+}
+
+function createCookie(name, value, days) {
+    let expires;
+
+    if (days) {
+        let date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toGMTString();
+    }
+    else {
+        expires = "";
+    }
+
+    document.cookie = escape(name) + "=" +
+        escape(value) + expires + "; path=/";
 }
 
 export async function translatePost(post_id, textElement) {
