@@ -3,6 +3,7 @@
 - [x] Set up the mail server
 - [ ] Decide the look of the site
 - [ ] Validate code
+- [ ] fix comments in eventpage
 
 # List of things to do
 - [x] media queries
