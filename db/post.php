@@ -214,8 +214,8 @@
                 return $row["description"];
             }
 
-            public static function from_db_all_posts_with_event_id(\DBDriver $driver, $event_id) {
-                $sql = "SELECT * FROM post WHERE event_id = ?";
+            public static function from_db_all_posts_with_event_id(\DBDriver $driver, $event_id, $username) {
+                $sql = "SELECT * FROM post WHERE event_id = ? AND event_post = 0";
                 try {
                     $result = $driver->query($sql, $event_id);
                 } catch (\Exception $e) {
@@ -227,26 +227,17 @@
                 $posts = array();
                 for($i = 0; $i < $result->num_rows; $i++){
                     $row = $result->fetch_array();
+                    $sql = "SELECT * FROM post_like WHERE post_id = ? AND username = ?";
+                    try {
+                        $liked = $driver->query($sql, $row["post_id"], $username)->num_rows > 0;
+                    } catch (\Exception $e) {
+                        throw new \Exception("Error while querying the database: " . $e->getMessage());
+                    }
                     $post = new DBPost($row["post_id"], $row["event_id"], $row["username"], $row["image"], 
-                            $row["description"], $row["posted"], $row["likes"], $row["event_post"]);
+                            $row["description"], $row["posted"], $row["likes"], $row["event_post"], null, $liked);
                     array_push($posts, $post);
                 }
                 return $posts;
-            }
- 
-            public static function poster_from_db_with_event_id(\DBDriver $driver, $event_id) {
-                $sql = "SELECT * FROM post WHERE event_id = ? AND event_post = 1";
-                try {
-                    $result = $driver->query($sql, $event_id);
-                } catch (\Exception $e) {
-                    throw new \Exception("Error while querying the database: " . $e->getMessage());
-                }
-                if ($result->num_rows == 0) {
-                    return null;
-                }
-                $row = $result->fetch_assoc();
-                return new DBPost($row["post_id"], $row["event_id"], $row["username"], $row["image"], 
-                        $row["description"], $row["posted"], $row["likes"], $row["event_post"]);
             }
 
             public static function from_db_with_username(\DBDriver $driver, $username) {
@@ -402,14 +393,22 @@
                 }
             }
 
-            public static function load_post_id($driver, $event_id) {
-                $sql = "SELECT post_id FROM post WHERE event_id = ? AND event_post = 1";
+            public static function load_post_event($driver, $event_id, $username) {
+                $sql = "SELECT * FROM post WHERE event_id = ? AND event_post = 1";
                 try {
                     $result = $driver->query($sql, $event_id);
                 } catch (\Exception $e) {
                     throw new \Exception("Error while querying the database: " . $e->getMessage());
                 }
-                return $result->fetch_assoc()["post_id"];
+                $row = $result->fetch_assoc();
+                $sql = "SELECT * FROM post_like WHERE post_id = ? AND username = ?";
+                try {
+                    $liked = $driver->query($sql, $row["post_id"], $username)->num_rows > 0;
+                } catch (\Exception $e) {
+                    throw new \Exception("Error while querying the database: " . $e->getMessage());
+                }
+                return new DBPost($row["post_id"], $row["event_id"], $row["username"], $row["image"], 
+                    $row["description"], $row["posted"], $row["likes"], $row["event_post"], null, $liked);
             }
         }
     }

@@ -1,5 +1,5 @@
 import { request_path } from "/static/js/config.js?v=2";
-import { checkError, cleanTemplateList, removeLike, addLike, 
+import { checkError, cleanTemplateList, addLike, removeLike, 
         addEventDescription, loadEvent, showComments, showPartecipations, translatePost } from "/static/js/utils.js?v=1";
 
 async function loadOnlineUsers() {
@@ -78,14 +78,14 @@ async function addNewFeedPost(clone, feed, post_id, event_id, user_photo, userna
     postUser.querySelector("a").href = "/profile?user=" + username;
     postContent.querySelector("img").src = "/static/img/uploads/" + image;
     postActions.querySelector(".likes").innerHTML = likes;
-
     const likeButton = postActions.querySelector(".like-button");
     if (liked) {
-        likeButton.addEventListener("click", function() { removeLike(post_id, 'post'); });
+        likeButton.addEventListener("click", function () { removeLike(post_id, "post") });
         likeButton.innerHTML = "<i class='fa-solid fa-heart text-danger'></i>";
     } else {
-        likeButton.addEventListener("click", function() { addLike(post_id, 'post'); });
+        likeButton.addEventListener("click", function () { addLike(post_id, "post") });
     }
+
     postActions.querySelector(".comment-button").addEventListener("click", function() { showComments(post_id); });
     let desc = postContent.querySelector(".post-description");
     desc.innerHTML = description;

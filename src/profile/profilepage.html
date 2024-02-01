@@ -63,9 +63,9 @@
                         <p class="text-center p-2 mb-2">Events Organized</p>
                     </div>
                 </div>
-                <div class="row justify-content-center" id="photos" data-bs-toggle="modal" data-bs-target="#post-modal">
+                <div class="row justify-content-center" id="photos">
                     <template id="template-photos">
-                        <div class="col-4">
+                        <div class="col-4" data-bs-toggle="modal" data-bs-target="#post-modal">
                             <img src="/static/img/default-image.png" alt="" class="img-fluid mx-auto d-block m-2"
                                 id="photo-id">
                         </div>
@@ -146,25 +146,25 @@
             <div class="modal-content">
                 <div class="modal-header justify-content-center">
                     <div class="row justify-content-start mt-3">
-                        <div class="col">
+                        <div class="col-2">
                             <img id="post-user-photo" src="/static/img/default-profile.png" alt=""
                                 class="img-fluid img-thumbnail">
                         </div>
                         <div class="col">
                             <h3 id="post-name">Username</h3>
                         </div>
-                        <div class="col">
+                        <div class="col-2">
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                     </div>
                 </div>
                 <div class="modal-body">
-                    <div>
+                    <div class="container-fluid">
                         <li class="list-group-item" id="post-id">
                             <div class="text-center">
                                 <img id="post-photo" src="/static/img/default-image.png" alt="" class="img-fluid">
                             </div>
-                            <ol class="list-group list-group-flush list-group-horizontal">
+                            <ol id="post-actions" class="list-group list-group-flush list-group-horizontal">
                                 <li class="list-group-item pt-3 pe-0" id="post-likes">
                                     <p>0</p>
                                 </li>

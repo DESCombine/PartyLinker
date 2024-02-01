@@ -24,46 +24,44 @@
         <div class="container-fluid pt-0 overflow-hidden">
             <div id="extern" class="row">
                 <div class="col-12 col-md-4">
-                    <h1>Poster</h1>
-                    <div class="container-fluid pt-0 overflow-hidden" id="poster">
-                        <div class="row justify-content-center" id="poster-photo">
-                            <img src="/static/img/default-image.png" alt="" class="img-fluid mx-auto d-block m-2"
-                                id="poster-id">
+                    <h2>Event</h2>
+                    <div class="container-fluid pt-0 overflow-hidden" id="event-poster">
+                        <div class="row justify-content-center">
+                            <img src="/static/img/default-image.png" alt="" class="img-fluid mx-auto d-block m-2">
                         </div>
-                        <div class="row justify-content-center" id="photo-buttons">
-                            <div class="d-flex mb-3">
-                                <div class="p-2" class="align-items-center">
-                                    <p id="event-likes" class="texst-center">0</p>
-                                </div>
-                                <div class="p-2">
-                                    <button id="likes-button" class="btn">
-                                        &#129293
+                        <div class="row">
+                            <ol class="list-group list-group-flush list-group-horizontal">
+                                <li id="poster-likes" class="list-group-item pt-3 pe-0">
+                                    <p>0</p>
+                                </li>
+                                <li class="list-group-item">
+                                    <button id="poster-like-bt" class="btn">
+                                        <i class="fa-regular fa-heart"></i>
                                     </button>
-                                </div>
-                                <div class="p-2">
-                                    <button id="comments-button" class="btn" data-bs-toggle="modal"
-                                        data-bs-target="#comments-modal">
-                                        &#128172
+                                </li>
+                                <li class="list-group-item">
+                                    <button id="poster-comment-bt" class="btn"  data-bs-toggle="modal" data-bs-target="#comments-modal">
+                                        <i class="fa-regular fa-comment"></i>
                                     </button>
-                                </div>
+                                </li>
+                            </ol>
+                            <p id="poster-description">Post description</p>
+                            <div class="text-end">
+                                <button id="poster-translate-bt" class="btn btn-sm border border-black">Translate</button>
                             </div>
-                        </div>
-                        <div class="row justify-content-center" id="photo-description">
-                            <div class="col-10">
-                                <p id="event-name">Default</p>
-                                <p id="event-day">Default</p>
-                                <p id="event-time">Default</p>
-                                <p id="event-vip">Default</p>
-                                <p id="event-maxpeople">Default</p>
-                                <p id="event-price">Default</p>
-                                <p id="event-min-age">Default</p>
-                                <p id="event-description">Default</p>
+                            <div id="poster-info">
+                                <div class="text-center">
+                                    <h4>Event Name</h4>
+                                </div>
+                                <ol class="list-group list-group-flush">
+                                    <!-- generated with js -->
+                                </ol>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
-                    <h1>Photos</h1>
+                    <h2>Photos</h2>
                     <div class="row justify-content-center" id="photos" data-bs-toggle="modal"
                         data-bs-target="#post-modal">
                         <template id="template-photos">
@@ -75,16 +73,16 @@
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
-                    <h1>Partecipants</h1>
+                    <h2>Partecipants</h2>
                     <div class="container-fluid pt-0 overflow-hidden" id="people">
                         <template id="template-partecipants">
-                            <div class="row" id="partecipant-photo" class="align-items-center">
-                                <div class="col-1 text-center">
+                            <div class="row" class="align-items-center">
+                                <div class="col-2 text-center">
                                     <img src="/static/img/default-profile.png" alt=""
-                                        class="img-fluid mx-auto d-block m-2" id="photo-id">
+                                        class="img-fluid rounded-circle mx-auto d-block m-2" id="partecipant-photo">
                                 </div>
-                                <div class="col-9 justify-content-center">
-                                    <p id="partecipant-name">Default</p>
+                                <div class="col justify-content-center pt-3">
+                                    <a id="partecipant-name" href="" class="text-black">Default</a>
                                 </div>
                             </div>
                         </template>
@@ -163,38 +161,43 @@
             <div class="modal-content">
                 <div class="modal-header justify-content-center">
                     <div class="row justify-content-start mt-3">
-                        <div class="col">
+                        <div class="col-2">
                             <img id="post-user-photo" src="/static/img/default-profile.png" alt=""
-                                class="img-fluid img-thumbnail">
+                                class="rounded-circle img-fluid img-thumbnail">
                         </div>
                         <div class="col">
                             <h3 id="post-name">Username</h3>
                         </div>
-                        <div class="col">
+                        <div class="col-2">
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                     </div>
                 </div>
                 <div class="modal-body">
-                    <div>
+                    <div class="container-fluid">
                         <li class="list-group-item" id="post-id">
                             <div class="text-center">
                                 <img id="post-photo" src="/static/img/default-image.png" alt="" class="img-fluid">
                             </div>
-                            <ol class="list-group list-group-flush list-group-horizontal">
-                                <li class="list-group-item pt-3 pe-0" id="post-likes-modal">
+                            <ol id="post-actions" class="list-group list-group-flush list-group-horizontal">
+                                <li class="list-group-item pt-3 pe-0" id="post-likes">
                                     <p>0</p>
                                 </li>
                                 <li class="list-group-item">
-                                    <button class="btn" id="likes-button-modal">
+                                    <button class="btn" id="likes-button">
                                         <i class="fa-regular fa-heart"></i>
                                     </button>
                                 </li>
                                 <li class="list-group-item">
-                                    <button class="btn" id="comments-button-modal" data-bs-toggle="modal"
+                                    <button class="btn" id="comments-button" data-bs-toggle="modal"
                                         data-bs-target="#comments-modal">
                                         <i class="fa-regular fa-comment"></i>
                                     </button>
+                                </li>
+                                <li class="list-group-item pt-3 ps-4" id="info-button">
+                                    <a href="#" class="text-black invisible">
+                                        <i class="fa-solid fa-circle-info"></i>
+                                    </a>
                                 </li>
                             </ol>
                         </li>
