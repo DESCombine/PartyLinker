@@ -1,6 +1,6 @@
 import { request_path } from "/static/js/config.js?v=2";
 import { checkError, cleanTemplateList, removeLike, addLike, 
-        addEventDescription, loadEvent, showComments, showPartecipations, translatePost } from "/static/js/utils.js?v=1";
+        addEventDescription, loadEvent, showComments, showPartecipations, translatePost } from "/static/js/utils.js?v=2";
 
 async function loadOnlineUsers() {
     const response = await fetch(request_path + "/user/load_online_users.php", {

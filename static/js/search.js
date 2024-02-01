@@ -1,5 +1,5 @@
 import { request_path } from "/static/js/config.js?v=2";
-import { cleanTemplateList } from "/static/js/utils.js?v=1";
+import { cleanTemplateList } from "/static/js/utils.js?v=2";
 
 const searchbar = document.getElementById("searchbar");
 searchbar.addEventListener("keyup", function(event) {

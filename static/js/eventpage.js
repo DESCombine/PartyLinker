@@ -1,5 +1,5 @@
 import { request_path } from "/static/js/config.js?v=2";
-import { loadEvent, showComments, resetEventListener, cleanTemplateList, translatePost, loadPartecipations, loadUserImage } from "/static/js/utils.js?v=1";
+import { loadEvent, showComments, resetEventListener, cleanTemplateList, translatePost, loadPartecipations, loadUserImage } from "/static/js/utils.js?v=2";
 const event_id = new URLSearchParams(window.location.search).get('id');
 console.log(event_id);
 const post_id = await loadPostId(event_id);
