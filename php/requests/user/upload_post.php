@@ -12,9 +12,8 @@
 
     global $driver;
     global $username;
-
     $event_id = $_POST["event-id"];
-    $image = img_handler($_POST["image"]);
+    $image = img_handler($_FILES["image"]);
     $description = $_POST["description"];
     tag_notify_handler($description);
     $event_post = 0;

@@ -182,7 +182,7 @@
 
         class PostUtility {
             public static function from_form($event_id, $username, $image, $description, $event_post) {
-                return new DBPost($event_id, $username, $image, $description, null, null, $event_post);
+                return new DBPost(null, $event_id, $username, $image, $description, null, null, $event_post);
             }
 
             public static function from_db_with_event_id(\DBDriver $driver, $event_id) {

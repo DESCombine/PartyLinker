@@ -231,6 +231,7 @@ function createCookie(name, value, days) {
 
 export async function translatePost(post_id, textElement) {
     createCookie("post_id", post_id, 1);
+    console.log
     const response = await fetch(request_path + "/user/retrieve_translate_datas.php", {
         method: "POST",
         credentials: "include",
