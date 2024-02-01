@@ -6,7 +6,8 @@
 
     global $username;
     global $driver;
-    $post_id = $_COOKIE["post_id"];
+    $request = json_decode(file_get_contents('php://input'), true);
+    $post_id = $request["post_id"];
 
     use Post\PostUtility;
     $description = PostUtility::get_description_with_post_id($driver, $post_id);
