@@ -17,7 +17,7 @@ function img_handler($file) {
     }
     // move the image to the folder /static/img/uploads with a unique name
     $new_file_name = uniqid() . '.' . $file_extension;
-    $new_file_path = getenv("PL_ROOTDIRECTORY").'/static/img/uploads/' . $new_file_name;
+    $new_file_path = getenv("PL_ROOTDIRECTORY").'static/img/uploads/' . $new_file_name;
     if(!move_uploaded_file($file['tmp_name'], $new_file_path)) {
         throw new Exception('Failed to move uploaded file.');
     }
