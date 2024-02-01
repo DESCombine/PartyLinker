@@ -3,7 +3,8 @@
 
 <head>
     <title>PartyLinker - Event</title>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="/static/css/eventpage.css" />
     <!-- Font Renner import -->
     <link rel="stylesheet" href="https://indestructibletype-fonthosting.github.io/renner.css" type="text/css"
@@ -21,65 +22,72 @@
     </header>
     <main>
         <div class="container-fluid pt-0 overflow-hidden">
-            <h1>Poster</h1>
-            <div class="container-fluid pt-0 overflow-hidden" id="poster">
-                <div class="row justify-content-center" id="poster-photo">
-                    <img src="/static/img/default-image.png" alt="" class="img-fluid mx-auto d-block m-2"
-                        id="poster-id">
-                </div>
-                <div class="row justify-content-center" id="photo-buttons">
-                    <div class="d-flex mb-3">
-                        <div class="p-2">
-                            <button id="likes-button" class="btn">
-                                &#129293
-                            </button>
+            <div id="extern" class="row">
+                <div class="col-12 col-md-4">
+                    <h1>Poster</h1>
+                    <div class="container-fluid pt-0 overflow-hidden" id="poster">
+                        <div class="row justify-content-center" id="poster-photo">
+                            <img src="/static/img/default-image.png" alt="" class="img-fluid mx-auto d-block m-2"
+                                id="poster-id">
                         </div>
-                        <div class="p-2">
-                            <button id="comments-button" class="btn" data-bs-toggle="modal"
-                                data-bs-target="#comments-modal">
-                                &#128172
-                            </button>
+                        <div class="row justify-content-center" id="photo-buttons">
+                            <div class="d-flex mb-3">
+                                <div class="p-2">
+                                    <button id="likes-button" class="btn">
+                                        &#129293
+                                    </button>
+                                </div>
+                                <div class="p-2">
+                                    <button id="comments-button" class="btn" data-bs-toggle="modal"
+                                        data-bs-target="#comments-modal">
+                                        &#128172
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center" id="photo-description">
+                            <div class="col-10">
+                                <p id="event-name">Default</p>
+                                <p id="event-day">Default</p>
+                                <p id="event-time">Default</p>
+                                <p id="event-vip">Default</p>
+                                <p id="event-maxpeople">Default</p>
+                                <p id="event-price">Default</p>
+                                <p id="event-min-age">Default</p>
+                                <p id="event-description">Default</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-center" id="photo-description">
-                    <div class="col-10">
-                        <p id="event-name">Default</p>
-                        <p id="event-day">Default</p>
-                        <p id="event-time">Default</p>
-                        <p id="event-vip">Default</p>
-                        <p id="event-maxpeople">Default</p>
-                        <p id="event-price">Default</p>
-                        <p id="event-min-age">Default</p>
-                        <p id="event-description">Default</p>
+                <div class="col-12 col-md-4">
+                    <h1>Photos</h1>
+                    <div class="row justify-content-center" id="photos" data-bs-toggle="modal"
+                        data-bs-target="#post-modal">
+                        <template id="template-photos">
+                            <div class="col-4">
+                                <img src="/static/img/default-image.png" alt="" class="img-fluid mx-auto d-block m-2"
+                                    id="photo-id">
+                            </div>
+                        </template>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <h1>Partecipants</h1>
+                    <div class="container-fluid pt-0 overflow-hidden" id="people">
+                        <template id="template-partecipants">
+                            <div class="row" id="partecipant-photo" class="align-items-center">
+                                <div class="col-1 text-center">
+                                    <img src="/static/img/default-profile.png" alt=""
+                                        class="img-fluid mx-auto d-block m-2" id="photo-id">
+                                </div>
+                                <div class="col-9 justify-content-center">
+                                    <p id="partecipant-name">Default</p>
+                                </div>
+                            </div>
+                        </template>
                     </div>
                 </div>
             </div>
-            <h1>Photos</h1>
-            <div class="row justify-content-center" id="photos" data-bs-toggle="modal" data-bs-target="#post-modal">
-                <template id="template-photos">
-                    <div class="col-4">
-                        <img src="/static/img/default-image.png" alt="" class="img-fluid mx-auto d-block m-2"
-                            id="photo-id">
-                    </div>
-                </template>
-            </div>
-            <h1>Partecipants</h1>
-            <div class="container-fluid pt-0 overflow-hidden" id="people">
-
-                <template id="template-partecipants">
-                    <div class="row" id="partecipant-photo" class="align-items-center">
-                        <div class="col-1 text-center">
-                            <img src="/static/img/default-profile.png" alt="" class="img-fluid mx-auto d-block m-2"
-                                id="photo-id">
-                        </div>
-                        <div class="col-9 justify-content-center">
-                            <p id="partecipant-name">Default</p>
-                        </div>
-                    </div>
-                </template>
-            </div>
-        </div>
         </div>
     </main>
     <!-- Navbar for mobile -->
