@@ -213,30 +213,16 @@ export async function showPartecipations(event_id) {
             partecipationClick(event_id, "/user/remove_partecipation.php"); }).disabled = !isUserPartecipating;
 }
 
-function createCookie(name, value, days) {
-    let expires;
-
-    if (days) {
-        let date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        expires = "; expires=" + date.toGMTString();
-    }
-    else {
-        expires = "";
-    }
-
-    document.cookie = escape(name) + "=" +
-        escape(value) + expires + "; path=www.partylinker.live";
-}
-
 export async function translatePost(post_id, textElement) {
-    createCookie("post_id", post_id, 1);
     const response = await fetch(request_path + "/user/retrieve_translate_datas.php", {
         method: "POST",
         credentials: "include",
         headers: {
             "Content-Type": "application/json"
-        }
+        },
+        body: JSON.stringify({
+            "post_id": post_id,
+        })
     });
     const data = await response.json();
     console.log(data);
