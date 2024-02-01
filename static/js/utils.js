@@ -226,7 +226,7 @@ function createCookie(name, value, days) {
     }
 
     document.cookie = escape(name) + "=" +
-        escape(value) + expires + "; path=/";
+        escape(value) + expires + "; path=www.partylinker.live";
 }
 
 export async function translatePost(post_id, textElement) {
