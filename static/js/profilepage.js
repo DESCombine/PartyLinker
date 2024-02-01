@@ -148,6 +148,7 @@ async function showModalPost(modal, post_id, event_id, user_photo, username,
     // clean buttons event listeners
     document.getElementById("translate").replaceWith(document.getElementById("translate").cloneNode(true));
     document.getElementById("comments-button").replaceWith(document.getElementById("comments-button").cloneNode(true));
+    document.getElementById("likes-button").replaceWith(document.getElementById("likes-button").cloneNode(true));
     // show modal
     document.getElementById("post-user-photo").src = "/static/img/uploads/" + await loadUserImage(username);
     document.getElementById("post-name").innerHTML = username;

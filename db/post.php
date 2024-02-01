@@ -401,6 +401,16 @@
                     throw new \Exception("Error while querying the database: " . $e->getMessage());
                 }
             }
+
+            public static function load_post_id($driver, $event_id) {
+                $sql = "SELECT post_id FROM post WHERE event_id = ? AND event_post = 1";
+                try {
+                    $result = $driver->query($sql, $event_id);
+                } catch (\Exception $e) {
+                    throw new \Exception("Error while querying the database: " . $e->getMessage());
+                }
+                return $result->fetch_assoc()["post_id"];
+            }
         }
     }
 ?>

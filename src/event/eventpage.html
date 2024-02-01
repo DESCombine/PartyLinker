@@ -3,7 +3,8 @@
 
 <head>
     <title>PartyLinker - Event</title>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="/static/css/eventpage.css" />
     <!-- Font Renner import -->
     <link rel="stylesheet" href="https://indestructibletype-fonthosting.github.io/renner.css" type="text/css"
@@ -21,65 +22,75 @@
     </header>
     <main>
         <div class="container-fluid pt-0 overflow-hidden">
-            <h1>Poster</h1>
-            <div class="container-fluid pt-0 overflow-hidden" id="poster">
-                <div class="row justify-content-center" id="poster-photo">
-                    <img src="/static/img/default-image.png" alt="" class="img-fluid mx-auto d-block m-2"
-                        id="poster-id">
-                </div>
-                <div class="row justify-content-center" id="photo-buttons">
-                    <div class="d-flex mb-3">
-                        <div class="p-2">
-                            <button id="likes-button" class="btn">
-                                &#129293
-                            </button>
+            <div id="extern" class="row">
+                <div class="col-12 col-md-4">
+                    <h1>Poster</h1>
+                    <div class="container-fluid pt-0 overflow-hidden" id="poster">
+                        <div class="row justify-content-center" id="poster-photo">
+                            <img src="/static/img/default-image.png" alt="" class="img-fluid mx-auto d-block m-2"
+                                id="poster-id">
                         </div>
-                        <div class="p-2">
-                            <button id="comments-button" class="btn" data-bs-toggle="modal"
-                                data-bs-target="#comments-modal">
-                                &#128172
-                            </button>
+                        <div class="row justify-content-center" id="photo-buttons">
+                            <div class="d-flex mb-3">
+                                <div class="p-2" class="align-items-center">
+                                    <p id="event-likes" class="texst-center">0</p>
+                                </div>
+                                <div class="p-2">
+                                    <button id="likes-button" class="btn">
+                                        &#129293
+                                    </button>
+                                </div>
+                                <div class="p-2">
+                                    <button id="comments-button" class="btn" data-bs-toggle="modal"
+                                        data-bs-target="#comments-modal">
+                                        &#128172
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center" id="photo-description">
+                            <div class="col-10">
+                                <p id="event-name">Default</p>
+                                <p id="event-day">Default</p>
+                                <p id="event-time">Default</p>
+                                <p id="event-vip">Default</p>
+                                <p id="event-maxpeople">Default</p>
+                                <p id="event-price">Default</p>
+                                <p id="event-min-age">Default</p>
+                                <p id="event-description">Default</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-center" id="photo-description">
-                    <div class="col-10">
-                        <p id="event-name">Default</p>
-                        <p id="event-day">Default</p>
-                        <p id="event-time">Default</p>
-                        <p id="event-vip">Default</p>
-                        <p id="event-maxpeople">Default</p>
-                        <p id="event-price">Default</p>
-                        <p id="event-min-age">Default</p>
-                        <p id="event-description">Default</p>
+                <div class="col-12 col-md-4">
+                    <h1>Photos</h1>
+                    <div class="row justify-content-center" id="photos" data-bs-toggle="modal"
+                        data-bs-target="#post-modal">
+                        <template id="template-photos">
+                            <div class="col-4">
+                                <img src="/static/img/default-image.png" alt="" class="img-fluid mx-auto d-block m-2"
+                                    id="photo-id">
+                            </div>
+                        </template>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <h1>Partecipants</h1>
+                    <div class="container-fluid pt-0 overflow-hidden" id="people">
+                        <template id="template-partecipants">
+                            <div class="row" id="partecipant-photo" class="align-items-center">
+                                <div class="col-1 text-center">
+                                    <img src="/static/img/default-profile.png" alt=""
+                                        class="img-fluid mx-auto d-block m-2" id="photo-id">
+                                </div>
+                                <div class="col-9 justify-content-center">
+                                    <p id="partecipant-name">Default</p>
+                                </div>
+                            </div>
+                        </template>
                     </div>
                 </div>
             </div>
-            <h1>Photos</h1>
-            <div class="row justify-content-center" id="photos" data-bs-toggle="modal" data-bs-target="#post-modal">
-                <template id="template-photos">
-                    <div class="col-4">
-                        <img src="/static/img/default-image.png" alt="" class="img-fluid mx-auto d-block m-2"
-                            id="photo-id">
-                    </div>
-                </template>
-            </div>
-            <h1>Partecipants</h1>
-            <div class="container-fluid pt-0 overflow-hidden" id="people">
-
-                <template id="template-partecipants">
-                    <div class="row" id="partecipant-photo" class="align-items-center">
-                        <div class="col-1 text-center">
-                            <img src="/static/img/default-profile.png" alt="" class="img-fluid mx-auto d-block m-2"
-                                id="photo-id">
-                        </div>
-                        <div class="col-9 justify-content-center">
-                            <p id="partecipant-name">Default</p>
-                        </div>
-                    </div>
-                </template>
-            </div>
-        </div>
         </div>
     </main>
     <!-- Navbar for mobile -->
@@ -171,121 +182,35 @@
                                 <img id="post-photo" src="/static/img/default-image.png" alt="" class="img-fluid">
                             </div>
                             <ol class="list-group list-group-flush list-group-horizontal">
+                                <li class="list-group-item pt-3 pe-0" id="post-likes-modal">
+                                    <p>0</p>
+                                </li>
                                 <li class="list-group-item">
-                                    <button id="likes-button-modal" class="btn" onclick="">
-                                        &#129293
+                                    <button class="btn" id="likes-button-modal">
+                                        <i class="fa-regular fa-heart"></i>
                                     </button>
                                 </li>
                                 <li class="list-group-item">
-                                    <button id="comments-button" class="btn" onclick="" data-bs-toggle="modal"
+                                    <button class="btn" id="comments-button-modal" data-bs-toggle="modal"
                                         data-bs-target="#comments-modal">
-                                        &#128172
+                                        <i class="fa-regular fa-comment"></i>
                                     </button>
-                                </li>
-                                <li class="list-group-item">
-                                    <button id="partecipants-button" class="btn invisible" onclick=""
-                                        data-bs-toggle="modal" data-bs-target="#partecipants-modal">
-                                        &#128111
-                                    </button>
-                                </li>
-                                <li class="list-group-item ms-5 pt-3">
-                                    <p id="post-likes">0</p>
                                 </li>
                             </ol>
                         </li>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <p id="post-description">Post description</p>
-                    <template id="description-template">
-                        <div class="text-center">
-                            <h4 id="event-name">Event Name</h4>
-                        </div>
-                        <ol class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                <p id="event-place">Place</p>
-                            </li>
-                            <li class="list-group-item">
-                                <p id="event-date">Date</p>
-                            </li>
-                            <li class="list-group-item">
-                                <p id="event-vips">Vips</p>
-                            </li>
-                            <li class="list-group-item">
-                                <p id="event-people">Max-People</p>
-                            </li>
-                            <li class="list-group-item">
-                                <p id="event-price">Price</p>
-                            </li>
-                            <li class="list-group-item">
-                                <p id="event-age">Minimum age</p>
-                            </li>
-                        </ol>
-                    </template>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Comments Modal -->
-    <div class="modal fade" id="comments-modal" tabindex="-1" aria-labelledby="commentsModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header justify-content-center">
-                    <h4 class="modal-title" id="commentsModalLabel">&#128172Comments</h4>
-                </div>
-                <div class="modal-body">
                     <div class="container-fluid">
-                        <ol class="list-group list-group-flush my-1 overflow-y-auto" id="comments">
-                            <template id="comment-template">
-                                <li class="list-group-item">
-                                    <div class="row justify-content-start">
-                                        <div class="col-2">
-                                            <img id="comment-user-photo" src="/static/img/default-profile.png" alt=""
-                                                class="img-fluid img-thumbnail">
-                                        </div>
-                                        <div class="col">
-                                            <h5 id="comment-name">Username</h5>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="flex-grow-1">
-                                            <p id="comment-content">Comment</p>
-                                        </div>
-                                        <div>
-                                            <button id="comment-trash" class="btn">
-                                                &#128465
-                                            </button>
-                                        </div>
-                                        <div>
-                                            <button id="comment-like" class="btn">
-                                                &#128077
-                                            </button>
-                                        </div>
-                                        <div class="ms-3 pt-2">
-                                            <p id="comment-likes">0</p>
-                                        </div>
-                                    </div>
-                                </li>
-                            </template>
-                        </ol>
+                        <div class="row m-1">
+                            <div class="col">
+                                <p id="post-description">Post description</p>
+                            </div>
+                            <div class="col-3">
+                                <button id="translate" class="btn btn-secondary" action="">Translate</button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer border-top border-black">
-                    <form class="row">
-                        <div class="col-1">
-                            <label for="write-comment" class="col-form-label">&#128172</label>
-                        </div>
-                        <div class="col-9">
-                            <input type="text" name="write-comment" class="form-control border-dark"
-                                placeholder="Write your message...">
-                        </div>
-                        <div class="col-2">
-                            <button type="submit" class="btn" name="submit-comment">
-                                &#128284
-                            </button>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
@@ -334,6 +259,79 @@
                     <button class="btn btn-primary btn-lg invisible">
                         Upload a new event <i class="fa-regular fa-calendar-plus"></i>
                     </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Comments Modal -->
+    <div class="modal fade" id="comments-modal" tabindex="-1" aria-labelledby="commentsModalLabel" aria-hidden="true">
+        <div
+            class="modal-dialog modal-dialog-centered modal-dialog-scrollable align-items-end align-items-md-center modal-lg">
+            <div class="modal-content h-75">
+                <div class="modal-header justify-content-center">
+                    <div class="row justify-content-end">
+                        <div class="col">
+                            <h2 class="modal-title" id="commentsModalLabel"><i class="fa-solid fa-comments"></i>
+                                Comments</h2>
+                        </div>
+                        <div class="col-1">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <ol class="list-group list-group-flush my-1 overflow-y-auto">
+                            <template>
+                                <li class="list-group-item">
+                                    <div class="row justify-content-start">
+                                        <div class="col-2 mb-1 col-lg-1">
+                                            <img src="/static/img/default-profile.png" alt=""
+                                                class="img-fluid img-thumbnail">
+                                        </div>
+                                        <div class="col">
+                                            <a href="#" class="fs-5 text-black">Username</a>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <div class="flex-grow-1">
+                                            <p class="content">Comment</p>
+                                        </div>
+                                        <div>
+                                            <button class="trash-button btn invisible">
+                                                <i class="fa-solid fa-trash-can"></i>
+                                            </button>
+                                        </div>
+                                        <div>
+                                            <button class="like-button btn">
+                                                <i class="fa-regular fa-heart"></i>
+                                            </button>
+                                        </div>
+                                        <div class="ms-3 pt-2">
+                                            <p class="likes">0</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </template>
+                        </ol>
+                    </div>
+                </div>
+                <div class="modal-footer border-top border-black justify-content-center">
+                    <form class="row">
+                        <div class="col-1">
+                            <label for="comment-input" class="col-form-label"><i
+                                    class="fa-solid fa-comment"></i></label>
+                        </div>
+                        <div class="col-9">
+                            <input type="text" id="comment-input" name="comment" class="form-control border-dark"
+                                placeholder="Write your message...">
+                        </div>
+                        <div class="col-2">
+                            <button type="button" class="btn" name="submit-comment">
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
