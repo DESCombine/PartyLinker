@@ -58,7 +58,14 @@ export function addEventDescription(parent, event) {
 }
 
 async function loadComments(post_id) {
-    const response = await fetch(request_path + "/user/load_comments.php?post=" + post_id);
+    const response = await fetch(request_path + "/user/load_comments.php?post=" + post_id, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        credentials: "include"
+    
+    });
     const comments = await response.json();
     return comments;
 }
