@@ -1,6 +1,6 @@
 import { request_path } from "/static/js/config.js?v=2";
 import { loadUserImage, loadEvent, showComments, resetEventListener, 
-        translatePost, loadPartecipations, addEventDescription } from "/static/js/utils.js?v=1";
+        translatePost, loadPartecipations, addEventDescription, cleanTemplateList } from "/static/js/utils.js?v=1";
 
 const event_id = new URLSearchParams(window.location.search).get('id');
 const post = await loadPostEvent(event_id);
@@ -35,7 +35,8 @@ async function showContent() {
     desc.innerHTML = post.description;
     poster.querySelector("#poster-translate-bt").addEventListener("click", function () { translatePost(post.post_id, desc); });
     addEventDescription(poster.querySelector("#poster-info"), event);
-
+    document.getElementById("comments-modal").addEventListener("hidden.bs.modal", 
+            function() { cleanTemplateList(document.querySelector("#comments-modal ol")); });
     // photos
     showPhotos(await loadPhotos());
 
