@@ -27,22 +27,21 @@
             <!--Profile infos header-->
             <div class="row justify-content-center" id="profileInfo">
                 <div class="row justify-content-center">
-                    <div class="col">
+                    <div class="col-4">
                         <p id="username">Username</p>
                         
                     </div>
-                    <div class="col">
+                    <div class="col-2 align-items-center">
                         <a href="" class="text-dark" id="modifyIcon">
                             <i class="fa-solid fa-gear"></i>
                         </a>
-                        <button class="d-none btn btn-sm border border-black" onclick="toggleFollow()" id="followButton">Follow</button>
-                        
+                        <button class="d-none btn btn-sm border border-black" onclick="toggleFollow()" id="followButton"><i class="fa-solid fa-user-plus"></i></button>
                     </div>
-                    <div class="col">
+                    <div class="col-3">
                         <p class="text-center">Followed</p>
                         <p class="text-center" id="followed">0</p>
                     </div>
-                    <div class="col">
+                    <div class="col-3">
                         <p class="text-center">Followers</p>
                         <p class="text-center" id="followers">0</p>
                     </div>
@@ -331,8 +330,8 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
     <!-- JS import-->
-    <script src="/static/js/profilepage.js?v=10" type="module"></script>
-    <script src="/static/js/uploadbt.js?v=10" type="module"></script>
+    <script src="/static/js/profilepage.js?v=15" type="module"></script>
+    <script src="/static/js/uploadbt.js?v=12" type="module"></script>
 </body>
 
 </html>

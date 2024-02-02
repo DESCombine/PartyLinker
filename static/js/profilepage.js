@@ -1,5 +1,5 @@
 import { request_path } from "/static/js/config.js?v=10";
-import { loadUserImage, cleanTemplateList, resetEventListener, translatePost, showComments } from "/static/js/utils.js?v=10";
+import { loadUserImage, cleanTemplateList, resetEventListener, translatePost, showComments } from "/static/js/utils.js?v=12";
 
 document.querySelector("#modifyIcon").href = "/modifyprofile/modifyprofile.html";
 
@@ -110,9 +110,9 @@ async function checkFollow() {
     });
     const result = await response.json();
     if (result.follows) {
-        document.getElementById("followButton").innerHTML = "Unfollow";
+        document.getElementById("followButton").innerHTML = '<i class="fa-solid fa-user-check"></i>';
     } else {
-        document.getElementById("followButton").innerHTML = "Follow";
+        document.getElementById("followButton").innerHTML = '<i class="fa-solid fa-user-plus"></i>';
     }
 }
 
