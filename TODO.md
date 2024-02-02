@@ -21,11 +21,11 @@
 - [x] Event notification
 - [x] fix token recognition
 - [x] fix offline switch
-- [] fix password modify
-- [] scritta rossa su registrazione se utente già usato
-- [] scritta rossa su login
-- [] togliere gender da modifyprofile
-- [] linguaggio di default
+- [x] fix password modify
+- [x] scritta rossa su registrazione se utente già usato
+- [x] scritta rossa su login
+- [x] togliere gender da modifyprofile
+- [x] linguaggio di default
 - [x] mettere le col nel profile
 # WOW effect
 - [x] Translation button

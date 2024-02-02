@@ -14,3 +14,8 @@ window.addEventListener("resize", function () {
         this.document.getElementById("first").classList.remove("align-items-center");
     }
 });
+
+// check url for error
+if(window.location.href.indexOf("?wrongusername") > -1){
+    document.getElementById("error").classList.remove("invisible");
+}
