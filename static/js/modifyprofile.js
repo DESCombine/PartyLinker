@@ -49,21 +49,11 @@ async function showSavedInformations() {
     document.getElementById("inputDate").value = data[0].birth_date;
     document.getElementById("inputEmail").value = data[0].email;
     document.getElementById("inputPhone").value = data[0].phone;
-    // document.getElementById("inputGender").value = data[0].gender;
     document.getElementById("inputOrganizer").checked = data[1].organizer == 1 ? true : false;
     document.getElementById("inputBio").value = data[0].bio;
     let lang = data[1].language;
-    if(lang == "it") {
-        document.getElementById("inputLanguage").value = "Italiano";
-    } else if(lang == "en") {
-        document.getElementById("inputLanguage").value = "English";
-    } else if(lang == "fr") {
-        document.getElementById("inputLanguage").value = "Français";
-    } else if(lang == "de") {
-        document.getElementById("inputLanguage").value = "Deutsch";
-    } else if(lang == "es") {
-        document.getElementById("inputLanguage").value = "Español";
-    }
+    console.log(lang);
+    document.getElementById("inputLanguage").value = lang;
     document.getElementById("inputNotifications").checked = data[1].notifications == 1 ? true : false;
     document.getElementById("input2FA").checked = data[1].twofa == 1 ? true : false;
 }
