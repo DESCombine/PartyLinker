@@ -11,6 +11,7 @@
     header('Content-Type: application/json');
 
     global $driver;
+    global $domain;
     global $username;
     $event_id = $_POST["event-id"];
     $image = img_handler($_FILES["image"]);
@@ -42,5 +43,6 @@
         exit();
     }
     echo json_encode(array("message" => "Post created successfully"));
+    header("Location: " . $domain);
     $driver->close_connection();
 ?>
