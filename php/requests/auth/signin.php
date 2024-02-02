@@ -28,9 +28,9 @@ if ($user != null) {
     $settings = new User\DBSettings($username);
     $settings->db_serialize($driver);
 }
-
+global $domain;
 
 echo json_encode(array("message" => "success"), JSON_PRETTY_PRINT);
-header("Location: http://".$_SERVER["HTTP_HOST"]."/login/login.html");
+header("Location: " . $domain);
 $driver->close_connection();
 ?>
