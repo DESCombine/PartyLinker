@@ -48,6 +48,7 @@ async function showSearchResults(event) {
         let clone = template.content.cloneNode(true);
         clone.querySelector("li").setAttribute("name", "event"+event.event_id);
         clone.querySelector("img").src = "/static/img/uploads/" + event.image;
+        clone.querySelector("img").alt = event.name;
         clone.querySelector("a").textContent = event.name;
         clone.querySelector("a").href = "/post/postpage.html?event=" + event.event_id;
         clone.querySelector("p").textContent = event.date;
