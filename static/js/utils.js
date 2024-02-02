@@ -64,7 +64,6 @@ async function loadComments(post_id) {
             "Content-Type": "application/json"
         },
         credentials: "include"
-    
     });
     const comments = await response.json();
     return comments;
@@ -133,12 +132,21 @@ export async function showComments(post_id) {
         comments.appendChild(clone);
     }
     const modalFooter = comModal.querySelector(".modal-footer");
+    modalFooter.querySelector("form").onkeydown = function(event) {
+        return event.key != 'Enter';
+    }
     const comment_button = modalFooter.querySelector("button");
     resetEventListener(comment_button, function() { submitComment(post_id); });
 }
 
 export async function loadPartecipations(event_id) {
-    const response = await fetch(request_path + "/user/load_partecipations.php?event=" + event_id);
+    const response = await fetch(request_path + "/user/load_partecipations.php?event=" + event_id, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        credentials: "include"
+    });
     const partecipations = await response.json();
     return partecipations;
 }

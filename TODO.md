@@ -3,7 +3,6 @@
 - [x] Set up the mail server
 - [ ] Decide the look of the site
 - [ ] Validate code
-- [ ] fix comments in eventpage
 
 # List of things to do
 - [x] media queries
@@ -27,9 +26,11 @@
 - [x] togliere gender da modifyprofile
 - [x] linguaggio di default
 - [x] mettere le col nel profile
-- [ ] center post image home
-- [ ] fix comment form
-- [ ] fix credentials
+- [x] center post image home
+- [x] fix comment form
+- [x] fix comment form
+- [x] fix credentials
+- [x] fix comments in eventpage
 # WOW effect
 - [x] Translation button
 - [x] 2F Authentication
