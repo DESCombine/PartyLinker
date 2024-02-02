@@ -45,7 +45,7 @@ export function resetEventListener(oldButton, fun) {
 }
 
 export function addEventDescription(parent, event) {
-    parent.querySelector("h4").innerHTML = event.name;
+    parent.querySelector("p").innerHTML = event.name;
     const infos = parent.querySelector("ol");
     infos.innerHTML = `
             <li class="list-group-item"><p>Place ${event.location}</p></li>
