@@ -1,4 +1,4 @@
-import { request_path } from "/static/js/config.js?v=2";
+import { request_path } from "/static/js/config.js?v=10";
 
 export function checkError(response) {
     if (response.error === "No token provided") {

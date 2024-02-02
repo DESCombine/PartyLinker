@@ -1,5 +1,5 @@
-import { request_path } from "/static/js/config.js?v=2";
-import { loadUserImage, cleanTemplateList, resetEventListener, translatePost, showComments } from "/static/js/utils.js?v=1";
+import { request_path } from "/static/js/config.js?v=10";
+import { loadUserImage, cleanTemplateList, resetEventListener, translatePost, showComments } from "/static/js/utils.js?v=10";
 
 document.querySelector("#modifyIcon").href = "/modifyprofile/modifyprofile.html";
 
@@ -183,10 +183,10 @@ function showPhotos(photos) {
     } else {
         let dim = 0;
         for (let photo_index = 0; photo_index < photos.length; photo_index++) {
+            photo = photos[photo_index];
             let clone = document.importNode(template.content, true);
             clone.querySelector("#photo-id").src = "/static/img/uploads/" + photo.image;
             clone.querySelector("#photo-id").addEventListener("click", function () { openModal(photos[photo_index]); });
-            photo = photos[photo_index];
             photosDiv.appendChild(clone);
             dim++;
         }

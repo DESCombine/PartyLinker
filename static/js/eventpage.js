@@ -1,6 +1,6 @@
-import { request_path } from "/static/js/config.js?v=2";
+import { request_path } from "/static/js/config.js?v=10";
 import { loadUserImage, loadEvent, showComments, resetEventListener, 
-        translatePost, loadPartecipations, addEventDescription, cleanTemplateList } from "/static/js/utils.js?v=1";
+        translatePost, loadPartecipations, addEventDescription, cleanTemplateList } from "/static/js/utils.js?v=10";
 
 const event_id = new URLSearchParams(window.location.search).get('id');
 const post = await loadPostEvent(event_id);
@@ -96,10 +96,11 @@ function showPhotos(photos) {
     } else {
         let dim = 0;
         for (let photo_index = 0; photo_index < photos.length; photo_index++) {
+            photo = photos[photo_index];
             let clone = document.importNode(template.content, true);
             clone.querySelector("#photo-id").src = "/static/img/uploads/" + photo.image;
             clone.querySelector("#photo-id").addEventListener("click", function () { openModal(photos[photo_index]); });
-            photo = photos[photo_index];
+            
             photosDiv.appendChild(clone);
             dim++;
         }

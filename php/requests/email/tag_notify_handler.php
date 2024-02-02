@@ -2,6 +2,7 @@
     require_once(getenv("PL_ROOTDIRECTORY")."php/bootstrap.php");
     require_once(getenv("PL_ROOTDIRECTORY")."php/requests/authenticated_request.php");
     require_once(getenv("PL_ROOTDIRECTORY")."db/user.php");
+    require_once(getenv("PL_ROOTDIRECTORY")."php/email_utils.php");
     use User\UserUtility;
 
     function tag_notify_handler($text) {
@@ -38,13 +39,13 @@
                                         }
                                 
                                         a {
-                                            color: #000;
+                                            color: #fff;
                                             text-decoration: none;
                                         }
                                 
                                         div {
                                             background-color: #000;
-                                            color: #000;
+                                            color: #fff;
                                             padding: 2rem;
                                             border-radius: 1rem;
                                             display: inline-block;
@@ -53,6 +54,10 @@
                                         h2, a {
                                             color: #fff;
                                             font-size: 2rem;
+                                        }
+                                        h1 {
+                                            color: #fff;
+                                            font-size: 2.5rem;
                                         }
                                     </style>
                                 </head>
@@ -63,7 +68,7 @@
                                     <main>
                                         <div>
                                             <h2>Check it out at:</h2>
-                                            <a href='https://partylinker.live!'>PartyLinker</a>
+                                            <a href='https://partylinker.live'>PartyLinker</a>
                                         </div>
                                     </main>
                                 </body>
@@ -72,8 +77,7 @@
                     $notif_text = str_replace('@sender', $username, $notif_text);
                     $to = $tagged_user->getEmail();
                     $subject = "You have been tagged in a post!";
-                    $headers = "From: PartyLinker <noreply@partylinker.com>";
-                    mail($to, $subject, $notif_text, $headers);
+                    sendEmail($to, $subject, $notif_text, "PartyLinker", "Hey ".$tagged_user->getUsername().", you have been tagged in a post by ".$username."! Check it out at https://partylinker.live");
                 }
             }
         }

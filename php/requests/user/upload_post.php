@@ -28,7 +28,6 @@
         $price = $_POST["price"];
         $minimum_age = $_POST["min-age"];
     }
-
     try {
         if ($event_id == 0) {
             $event = EventUtility::from_form($name, $location, $starting_date, $ending_date, $vips, $max_capacity, $price, $minimum_age);
