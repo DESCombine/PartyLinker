@@ -15,6 +15,7 @@ async function loadEvents() {
         const response = await fetch("https://api.mapbox.com/geocoding/v5/mapbox.places/" + event.location + ".json?access_token=pk.eyJ1IjoiZGFuaWxvbWFnbGlhIiwiYSI6ImNscmdtYzVqYTAyejIya21rZnJrOWtsazIifQ.4iM5ZZ26Y945WvEawTztOQ")
         const data = await response.json();
         return {
+            "id": event.event_id,
             "lng": data.features[0].center[0],
             "lat": data.features[0].center[1],
             "title": event.name,
@@ -40,7 +41,7 @@ async function loadMap() {
     });
     events.forEach(event => {
         const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
-            '<h3>' + event.title + '</h3>' +
+            '<h3>' + event.title + '</h3>' + '<a class="text-black" href="/event/eventpage.html?id=' + event.id + '"><i class="fa-solid fa-circle-info"></i></a>' +
             '<p> Starting: ' + event.start + '<br/>Ending: ' + event.end + '</p>'
         );
         new mapboxgl.Marker({

@@ -7,13 +7,27 @@ const post = await loadPostEvent(event_id);
 const event = await loadEvent(event_id);
 
 async function loadPostEvent(event_id) {
-    const response = await fetch(request_path + "/user/load_post_event.php?event=" + event_id);
+    const response = await fetch(request_path + "/user/load_post_event.php?event=" + event_id, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        credentials: "include"
+    
+    });
     const post_id = await response.json();
     return post_id;
 }
 
 async function loadPhotos() {
-    const response = await fetch(request_path + "/user/load_event_posts.php?event=" + event_id);
+    const response = await fetch(request_path + "/user/load_event_posts.php?event=" + event_id, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        credentials: "include"
+    
+    });
     const photos = await response.json();
     return photos;
 }
