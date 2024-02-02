@@ -27,6 +27,9 @@
 - [x] togliere gender da modifyprofile
 - [x] linguaggio di default
 - [x] mettere le col nel profile
+- [ ] center post image home
+- [ ] fix comment form
+- [ ] fix credentials
 # WOW effect
 - [x] Translation button
 - [x] 2F Authentication
