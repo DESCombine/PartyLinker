@@ -110,9 +110,9 @@ async function checkFollow() {
     });
     const result = await response.json();
     if (result.follows) {
-        document.getElementById("followButton").innerHTML = "Unfollow";
+        document.getElementById("followButton").innerHTML = '<i class="fa-solid fa-user-check"></i>';
     } else {
-        document.getElementById("followButton").innerHTML = "Follow";
+        document.getElementById("followButton").innerHTML = '<i class="fa-solid fa-user-plus"></i>';
     }
 }
 
