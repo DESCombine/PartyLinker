@@ -29,6 +29,7 @@
 - [] mettere le col nel profile
 - [ ] center post image home
 - [ ] fix comment form
+- [ ] fix credentials
 # WOW effect
 - [x] Translation button
 - [x] 2F Authentication
