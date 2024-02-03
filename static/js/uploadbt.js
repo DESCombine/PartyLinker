@@ -11,7 +11,7 @@ async function renderModalFooter() {
         modalFooter.querySelector("button").classList.remove("invisible");
         modalFooter.querySelector("button").addEventListener("click", function() { selectEvent(0); });
     } else {
-        modalFooter.innerHTML = "<p class='text-center'>Had Fun? <i class='fa-solid fa-face-grin-stars'></i></p>";
+        modalFooter.innerHTML = "<p class='text-center'>Had Fun? <em class='fa-solid fa-face-grin-stars'></em></p>";
     }
 }
 

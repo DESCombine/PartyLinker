@@ -60,8 +60,8 @@ async function showFeed() {
     document.getElementById("partecipants-modal").addEventListener("hidden.bs.modal", 
             function() { cleanTemplateList(document.querySelector("#partecipants-modal ul")); });
     if (posts.length == 0) {
-        feed.parentNode.innerHTML = "<p class='fs-4 text-center'>No posts to show.\
-                Start following new users with the search page <i class='fa-solid fa-magnifying-glass'></i></p>";
+        feed.parentNode.innerHTML = "<p class='fs-4 text-center mt-5'>No posts to show.\
+                Start following new users with the search page <em class='fa-solid fa-magnifying-glass'></em></p>";
     }
 }
 
@@ -81,7 +81,7 @@ async function addNewFeedPost(clone, feed, post_id, event_id, user_photo, userna
     const likeButton = postActions.querySelector(".like-button");
     if (liked) {
         likeButton.addEventListener("click", function () { removeLike(post_id, "post") });
-        likeButton.innerHTML = "<i class='fa-solid fa-heart'></i>";
+        likeButton.innerHTML = "<em class='fa-solid fa-heart'></em>";
     } else {
         likeButton.addEventListener("click", function () { addLike(post_id, "post") });
     }

@@ -41,7 +41,7 @@ async function loadMap() {
     });
     events.forEach(event => {
         const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
-            '<h3>' + event.title + '</h3>' + '<a class="text-black" href="/event/eventpage.html?id=' + event.id + '"><i class="fa-solid fa-circle-info"></i></a>' +
+            '<h3>' + event.title + '</h3>' + '<a class="text-black" href="/event/eventpage.html?id=' + event.id + '"><em class="fa-solid fa-circle-info"></em></a>' +
             '<p> Starting: ' + event.start + '<br/>Ending: ' + event.end + '</p>'
         );
         new mapboxgl.Marker({
