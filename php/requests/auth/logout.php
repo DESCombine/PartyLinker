@@ -6,7 +6,7 @@
     require_once(getenv("PL_ROOTDIRECTORY")."php/requests/cors.php");
     global $driver;
     global $domain;
-    if(isset($_POST['feedback'])) {
+    if($_POST['feedback'] != "") {
         User\UserUtility::insertFeedback($driver, $_POST["feedback"]);
     }
     unset($_COOKIE['token']);
