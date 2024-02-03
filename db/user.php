@@ -81,7 +81,7 @@ namespace User {
             return password_verify($password, $this->password);
         }
 
-        public function update_infos(\DBDriver $driver, string $name, string $surname, string $birth_date, string $email, string $phone, string $username, string $password, string $gender, int $organizer, 
+        public function update_infos(\DBDriver $driver, string $name, string $surname, string $birth_date, string $email, string $phone, string $username, string $password, int $organizer, 
                 string $profilePhoto, string $bannerPhoto, string $bio, string $language, int $notifications, int $TFA) {
             // if profilephoto or bannerphoto are null, set them to the current ones
             $user = UserUtility::from_db_with_username($driver, $username);
@@ -90,6 +90,9 @@ namespace User {
             }
             if ($bannerPhoto == "") {
                 $bannerPhoto = $user->background;
+            }
+            if ($password == null) {
+                $password = $user->password;
             }       
             $sql = "UPDATE user SET email = ?, name = ?, surname = ?, birth_date = ?, profile_photo = ?, background = ?, bio = ?, phone = ?, password = ? WHERE username = ?";
             try {
@@ -134,7 +137,7 @@ namespace User {
         private $twofa;
         private $organizer;
 
-        public function __construct($username = null, $language = null, $notifications = null, $twofa = null, $organizer = null) {
+        public function __construct($username = null, $language = "en", $notifications = null, $twofa = null, $organizer = null) {
             $this->username = $username;
             $this->language = $language;
             $this->notifications = $notifications;

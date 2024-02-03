@@ -1,5 +1,5 @@
-import { request_path } from "/static/js/config.js?v=2";
-import { loadUserImage, showComments, resetEventListener, cleanTemplateList, translatePost } from "/static/js/utils.js?v=1";
+import { request_path } from "/static/js/config.js?v=210";
+import { loadUserImage, cleanTemplateList, resetEventListener, translatePost, showComments } from "/static/js/utils.js?v=212";
 
 document.querySelector("#modifyIcon").href = "/modifyprofile/modifyprofile.html";
 
@@ -38,7 +38,7 @@ async function loadProfileInfos(user) {
     return infos;
 }
 
-function changeView(button) {
+async function changeView(button) {
     let type = 0;
     removeAll();
     const postP = postButton.getElementsByTagName("p").item(0);
@@ -60,10 +60,10 @@ function changeView(button) {
         postP.classList.remove("border-black");
         type = 1;
     }
-    showPhotos(type);
+    showPhotos(await getPostType(type, user));
 }
 
-async function getType(type, user) {
+async function getPostType(type, user) {
     const photos = await loadPosts(user);
     const returnarray = [];
     photos.forEach(element => {
@@ -80,46 +80,6 @@ function removeAll() {
         photosDiv.removeChild(photosDiv.firstChild);
     }
     photosDiv.appendChild(templatePost);
-}
-
-function openModal(post) {
-    console.log(post.post_id);
-    const modal = document.getElementById("post-modal");
-    showModalPost(modal, post.post_id, post.event_id, post.user_photo, post.username, post.image, post.description, post.likes, post.event_post, post.liked);
-}
-
-async function showPhotos(type, user) {
-    const posts = document.getElementById("posts");
-    let photos = (await getType(type, user));
-    let photo = photos[0];
-    let photosDiv = document.getElementById("photos");
-    let template = document.getElementById("template-photos");
-    if (photos.length == 0) {
-        posts.innerHTML = "No posts to show";
-        console.log("No posts to show");
-    } else {
-        let dim = 0;
-        for (let photo_index = 0; photo_index < photos.length; photo_index++) {
-            let clone = document.importNode(template.content, true);
-            clone.querySelector("#photo-id").src = "/static/img/uploads/" + photo.image;
-            clone.querySelector("#photo-id").addEventListener("click", function () { openModal(photos[photo_index]); });
-            photo = photos[photo_index];
-            photosDiv.appendChild(clone);
-            dim++;
-        }
-        let i = 0;
-        if (dim % 3 == 1) {
-            i = 2;
-        } else if (dim % 3 == 2) {
-            i = 1;
-        }
-        for (let j = 0; j < i; j++) {
-            let clone = document.importNode(template.content, true);
-            clone.querySelector("#photo-id").src = "/static/img/default-image.png";
-            clone.querySelector("#photo-id").style.visibility = "hidden";
-            photosDiv.appendChild(clone);
-        }
-    }
 }
 
 async function showProfileInfos(user) {
@@ -140,37 +100,6 @@ async function showProfileInfos(user) {
     }
 }
 
-async function showModalPost(modal, post_id, event_id, user_photo, username,
-    image, description, likes, event, liked) {
-    const postContent = modal.querySelector(".modal-content");
-    const postActions = postContent.querySelector("ol");
-    postActions.querySelector("a").classList.add("invisible");
-    // clean buttons event listeners
-    document.getElementById("translate").replaceWith(document.getElementById("translate").cloneNode(true));
-    document.getElementById("comments-button").replaceWith(document.getElementById("comments-button").cloneNode(true));
-    // show modal
-    document.getElementById("post-user-photo").src = "/static/img/uploads/" + await loadUserImage(username);
-    document.getElementById("post-name").innerHTML = username;
-    document.getElementById("post-photo").src = "/static/img/uploads/" + image;
-    document.getElementById("post-likes").innerHTML = likes;
-    document.getElementById("post-description").innerHTML = description;
-    document.getElementById("translate").addEventListener("click", function () { translatePost(post_id, document.getElementById("post-description")); });
-    const likeButton = postActions.querySelector("#likes-button");
-    if (liked) {
-        likeButton.addEventListener("click", function() { removeLike(post_id, 'post'); });
-        likeButton.innerHTML = "<i class='fa-solid fa-heart text-danger'></i>";
-    } else {
-        likeButton.addEventListener("click", function() { addLike(post_id, 'post'); });
-    }
-    postActions.querySelector("#comments-button").addEventListener("click", function() { showComments(post_id); });
-    
-    if (event) {
-        postActions.querySelector("a").href = "/event/eventpage.html?id=" + event_id;
-        postActions.querySelector("a").classList.remove("invisible");
-    } 
-
-}
-
 async function checkFollow() {
     const response = await fetch(request_path + "/user/check_if_follows.php?user=" + user, {
         method: "GET",
@@ -181,13 +110,11 @@ async function checkFollow() {
     });
     const result = await response.json();
     if (result.follows) {
-        document.getElementById("followButton").innerHTML = "Unfollow";
+        document.getElementById("followButton").innerHTML = '<i class="fa-solid fa-user-check"></i>';
     } else {
-        document.getElementById("followButton").innerHTML = "Follow";
+        document.getElementById("followButton").innerHTML = '<i class="fa-solid fa-user-plus"></i>';
     }
 }
-
-
 
 const user = new URLSearchParams(window.location.search).get("user");
 if (user != null) {
@@ -215,15 +142,74 @@ if (user != null) {
         }
     }
     checkFollow();
-
-
 }
 
-export async function addLike(like_id, type) {
+function openModal(post) {
+    showModalPost(post.post_id, post.event_id, post.username, post.image,
+            post.description, post.likes, post.liked);
+}
+
+async function showModalPost(post_id, event_id, username,
+        image, description, likes, liked) {
+    const postActions = document.getElementById("post-actions");
+    // clean buttons event listeners
+    document.getElementById("translate").replaceWith(document.getElementById("translate").cloneNode(true));
+    document.getElementById("comments-button").replaceWith(document.getElementById("comments-button").cloneNode(true));
+    document.getElementById("likes-button").replaceWith(document.getElementById("likes-button").cloneNode(true));
+    // show modal
+    document.getElementById("post-user-photo").src = "/static/img/uploads/" + await loadUserImage(username);
+    document.getElementById("post-name").innerHTML = username;
+    document.getElementById("post-photo").src = "/static/img/uploads/" + image;
+    document.getElementById("post-likes").innerHTML = likes;
+    document.getElementById("post-description").innerHTML = description;
+    document.getElementById("translate").addEventListener("click", function () { translatePost(post_id, document.getElementById("post-description")); });
+    const likeButton = postActions.querySelector("#likes-button");
+    if (liked) {
+        likeButton.addEventListener("click", function () { removeLike(post_id, "post") });
+        likeButton.innerHTML = "<i class='fa-solid fa-heart text-danger'></i>";
+    } else {
+        likeButton.addEventListener("click", function () { addLike(post_id, "post") });
+    }
+    postActions.querySelector("#comments-button").addEventListener("click", function() { showComments(post_id); });
+    postActions.querySelector("a").href = "/event/eventpage.html?id=" + event_id;
+}
+
+function showPhotos(photos) {
+    let photo = photos[0];
+    let photosDiv = document.getElementById("photos");
+    let template = document.getElementById("template-photos");
+    if (photos.length == 0) {
+        photosDiv.innerHTML = "No posts to show";
+    } else {
+        let dim = 0;
+        for (let photo_index = 0; photo_index < photos.length; photo_index++) {
+            photo = photos[photo_index];
+            let clone = document.importNode(template.content, true);
+            clone.querySelector("#photo-id").src = "/static/img/uploads/" + photo.image;
+            clone.querySelector("#photo-id").addEventListener("click", function () { openModal(photos[photo_index]); });
+            photosDiv.appendChild(clone);
+            dim++;
+        }
+        let i = 0;
+        if (dim % 3 == 1) {
+            i = 2;
+        } else if (dim % 3 == 2) {
+            i = 1;
+        }
+        for (let j = 0; j < i; j++) {
+            let clone = document.importNode(template.content, true);
+            clone.querySelector("div").style.visibility = "hidden";
+            clone.querySelector("div").classList.add("invisible");
+            photosDiv.appendChild(clone);
+        }
+    }
+}
+
+async function addLike(like_id, type) {
     like(like_id, type, "/user/upload_like.php", 1);
 }
 
-export async function removeLike(like_id, type) {
+async function removeLike(like_id, type) {
     like(like_id, type, "/user/remove_like.php", -1);
 }
 
@@ -239,22 +225,21 @@ async function like(like_id, type, request, addOrRemove) {
             "type": type
         })
     });
-    const likes = document.querySelector("#post-likes");
-    const likeButton = document.querySelector("#likes-button");
+    const likes = document.getElementById("post-likes");
+    const likeButton = document.getElementById("likes-button");
     likes.innerHTML = parseInt(likes.innerHTML) + addOrRemove;
     let fun;
     if (addOrRemove == 1) {
         likeButton.innerHTML = "<i class='fa-solid fa-heart text-danger'></i>";
-        fun = function() { removeLike(like_id, type); };
+        fun = function() { removeLike(like_id, type, likeButton, likes); };
     } else {
         likeButton.innerHTML = "<i class='fa-regular fa-heart'></i>";
-        fun = function() { addLike(like_id, type); };
+        fun = function() { addLike(like_id, type, likeButton, likes); };
     }
     resetEventListener(likeButton, fun);
 }
 
-
 showProfileInfos(user);
-showPhotos(0, user);
+showPhotos(await getPostType(0, user));
 
 

@@ -27,20 +27,21 @@
             <!--Profile infos header-->
             <div class="row justify-content-center" id="profileInfo">
                 <div class="row justify-content-center">
-                    <div class="col">
+                    <div class="col-4">
                         <p id="username">Username</p>
+                        
                     </div>
-                    <div class="col">
+                    <div class="col-2 align-items-center">
                         <a href="" class="text-dark" id="modifyIcon">
                             <i class="fa-solid fa-gear"></i>
                         </a>
-                        <button class="d-none" onclick="toggleFollow()" id="followButton">Follow</button>
+                        <button class="d-none btn btn-sm border border-black" onclick="toggleFollow()" id="followButton"><i class="fa-solid fa-user-plus"></i></button>
                     </div>
-                    <div class="col">
+                    <div class="col-3">
                         <p class="text-center">Followed</p>
                         <p class="text-center" id="followed">0</p>
                     </div>
-                    <div class="col">
+                    <div class="col-3">
                         <p class="text-center">Followers</p>
                         <p class="text-center" id="followers">0</p>
                     </div>
@@ -63,9 +64,9 @@
                         <p class="text-center p-2 mb-2">Events Organized</p>
                     </div>
                 </div>
-                <div class="row justify-content-center" id="photos" data-bs-toggle="modal" data-bs-target="#post-modal">
+                <div class="row justify-content-center" id="photos">
                     <template id="template-photos">
-                        <div class="col-4">
+                        <div class="col-4" data-bs-toggle="modal" data-bs-target="#post-modal">
                             <img src="/static/img/default-image.png" alt="" class="img-fluid mx-auto d-block m-2"
                                 id="photo-id">
                         </div>
@@ -93,7 +94,7 @@
                         <a class="nav-link" href="/map/"><i class="fa-solid fa-map-location-dot text-black"></i></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/logout/logout.php"><i
+                        <a class="nav-link" href="/logout/logout.html"><i
                                 class="fa-solid fa-right-from-bracket text-black"></i></i></a>
                     </li>
                 </ol>
@@ -146,25 +147,25 @@
             <div class="modal-content">
                 <div class="modal-header justify-content-center">
                     <div class="row justify-content-start mt-3">
-                        <div class="col">
+                        <div class="col-2">
                             <img id="post-user-photo" src="/static/img/default-profile.png" alt=""
-                                class="img-fluid img-thumbnail">
+                                class="object-fit-cover rounded-circle">
                         </div>
                         <div class="col">
                             <h3 id="post-name">Username</h3>
                         </div>
-                        <div class="col">
+                        <div class="col-2">
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                     </div>
                 </div>
                 <div class="modal-body">
-                    <div>
+                    <div class="container-fluid">
                         <li class="list-group-item" id="post-id">
                             <div class="text-center">
                                 <img id="post-photo" src="/static/img/default-image.png" alt="" class="img-fluid">
                             </div>
-                            <ol class="list-group list-group-flush list-group-horizontal">
+                            <ol id="post-actions" class="list-group list-group-flush list-group-horizontal">
                                 <li class="list-group-item pt-3 pe-0" id="post-likes">
                                     <p>0</p>
                                 </li>
@@ -329,8 +330,8 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
     <!-- JS import-->
-    <script src="/static/js/profilepage.js?v=2" type="module"></script>
-    <script src="/static/js/uploadbt.js?v=3" type="module"></script>
+    <script src="/static/js/profilepage.js?v=215" type="module"></script>
+    <script src="/static/js/uploadbt.js?v=212" type="module"></script>
 </body>
 
 </html>

@@ -15,7 +15,11 @@ $birth_date = $_POST["birthdate"];
 $email = $_POST["email"];
 $phone = $_POST["phone"];
 $password = $_POST["password"];
-$gender = $_POST["gender"];
+if (isset($_POST["password"])) {
+    $password = $_POST["password"];
+} else {
+    $password = null;
+}
 if (isset($_POST["organizer"])) {
     $organizer = 1;
 } else {
@@ -52,9 +56,11 @@ $username = UserUtility::retrieve_username_from_token($_COOKIE["token"]);
 
 // create user
 $user = new User\DBUser();
-$user->create_password($password);
-$password = $user->get_password();
-$user->update_infos($driver, $name, $surname, $birth_date, $email, $phone, $username, $password, $gender, $organizer, $profilePhoto, $bannerPhoto, $bio, $language, $notifications, $TFA);
+if($password != null){
+    $user->create_password($password);
+    $password = $user->get_password();
+}
+$user->update_infos($driver, $name, $surname, $birth_date, $email, $phone, $username, $password, $organizer, $profilePhoto, $bannerPhoto, $bio, $language, $notifications, $TFA);
 global $domain;
 echo json_encode(array("message" => "success"), JSON_PRETTY_PRINT);
 header("Location: http://partylinker.live/profile");

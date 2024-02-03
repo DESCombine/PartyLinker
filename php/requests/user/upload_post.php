@@ -11,10 +11,10 @@
     header('Content-Type: application/json');
 
     global $driver;
+    global $domain;
     global $username;
-
     $event_id = $_POST["event-id"];
-    $image = img_handler($_POST["image"]);
+    $image = img_handler($_FILES["image"]);
     $description = $_POST["description"];
     tag_notify_handler($description);
     $event_post = 0;
@@ -29,7 +29,6 @@
         $price = $_POST["price"];
         $minimum_age = $_POST["min-age"];
     }
-
     try {
         if ($event_id == 0) {
             $event = EventUtility::from_form($name, $location, $starting_date, $ending_date, $vips, $max_capacity, $price, $minimum_age);
@@ -44,5 +43,6 @@
         exit();
     }
     echo json_encode(array("message" => "Post created successfully"));
+    header("Location: " . $domain);
     $driver->close_connection();
 ?>

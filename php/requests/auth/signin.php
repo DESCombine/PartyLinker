@@ -18,6 +18,7 @@ $user = User\UserUtility::from_db_with_username($driver, $username);
 if ($user != null) {
     http_response_code(401);
     echo json_encode(array("error" => "Username already used"), JSON_PRETTY_PRINT);
+    header("Location: " . $domain . "/registration/registration.html?wrongusername=true");
     exit();
 } else {
     // create user
@@ -28,9 +29,9 @@ if ($user != null) {
     $settings = new User\DBSettings($username);
     $settings->db_serialize($driver);
 }
-
+global $domain;
 
 echo json_encode(array("message" => "success"), JSON_PRETTY_PRINT);
-header("Location: http://".$_SERVER["HTTP_HOST"]."/login/login.html");
+header("Location: " . $domain);
 $driver->close_connection();
 ?>

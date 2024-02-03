@@ -5,6 +5,7 @@
     use User\UserUtility;
     require_once(getenv("PL_ROOTDIRECTORY")."php/requests/cors.php");
     global $driver;
+    global $domain;
     if(isset($_POST['feedback'])) {
         User\UserUtility::insertFeedback($driver, $_POST["feedback"]);
     }
@@ -21,5 +22,5 @@
         $cookie_options['domain'] = '.partylinker.live';
     } 
     setcookie($cookie_name, '', $cookie_options);
-    header("Location: www.partylinker.live");
+    header("Location: " . $domain);
 ?>

@@ -1,4 +1,4 @@
-import { request_path } from "/static/js/config.js?v=2";
+import { request_path } from "/static/js/config.js?v=210";
 
 document.getElementsByTagName("form")[0].action = request_path + "/user/modifyprofile.php";
 
@@ -49,10 +49,11 @@ async function showSavedInformations() {
     document.getElementById("inputDate").value = data[0].birth_date;
     document.getElementById("inputEmail").value = data[0].email;
     document.getElementById("inputPhone").value = data[0].phone;
-    // document.getElementById("inputGender").value = data[0].gender;
     document.getElementById("inputOrganizer").checked = data[1].organizer == 1 ? true : false;
     document.getElementById("inputBio").value = data[0].bio;
-    document.getElementById("inputLanguage").value = data[1].language;
+    let lang = data[1].language;
+    console.log(lang);
+    document.getElementById("inputLanguage").value = lang;
     document.getElementById("inputNotifications").checked = data[1].notifications == 1 ? true : false;
     document.getElementById("input2FA").checked = data[1].twofa == 1 ? true : false;
 }

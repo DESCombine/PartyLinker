@@ -1,6 +1,7 @@
 <?php
 require_once(getenv("PL_ROOTDIRECTORY") . "php/bootstrap.php");
 require_once(getenv("PL_ROOTDIRECTORY") . "db/user.php");
+require_once(getenv("PL_ROOTDIRECTORY") . "php/email_utils.php");
 
 use User\UserUtility;
 function tfa_send($username)
@@ -59,6 +60,10 @@ function tfa_send($username)
                 color: #fff;
                 font-size: 2rem;
             }
+            h1 {
+                color: #fff;
+                font-size: 2.5rem;
+            }
         </style>
     </head>
     
@@ -81,19 +86,7 @@ function tfa_send($username)
     $notif_text = str_replace('@code', $code, $notif_text);
     $to = $email;
     $subject = "2FA Code";
-    $sender = new \SendGrid\Mail\Mail(); 
-    $sender->setFrom("noreply@partylinker.live", "noreply");
-    $sender->setSubject($subject);
-    $sender->addTo($to);
-    $sender->addContent(
-        "text/html", $notif_text
-    );
-    $sendgrid = new \SendGrid(getenv('PL_MAILKEY'));
-    try {
-        $sendgrid->send($sender);
-    } catch (Exception $e) {
-        echo 'Caught exception: '. $e->getMessage() ."\n";
-    }
+    sendEmail($to, $subject, $notif_text, "PartyLinker", "Insert this code inside the webpage to login: ".$code);
     return $token;
 }
 ?>

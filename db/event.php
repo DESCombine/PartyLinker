@@ -98,7 +98,7 @@
 
         class EventUtility {
             public static function from_form($name, $location, $starting_date, $ending_date, $vips, $max_capacity, $price, $minimum_age) {
-                return new DBEvent($name, $location, $starting_date, $ending_date, $vips, $max_capacity, $price, $minimum_age);
+                return new DBEvent(null, $name, $location, $starting_date, $ending_date, $vips, $max_capacity, $price, $minimum_age);
             }
 
             public static function from_db_with_event_id(\DBDriver $driver, $event_id) {

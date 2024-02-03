@@ -20,6 +20,17 @@
 - [x] Event notification
 - [x] fix token recognition
 - [x] fix offline switch
+- [x] fix password modify
+- [x] scritta rossa su registrazione se utente già usato
+- [x] scritta rossa su login
+- [x] togliere gender da modifyprofile
+- [x] linguaggio di default
+- [x] mettere le col nel profile
+- [x] center post image home
+- [x] fix comment form
+- [x] fix comment form
+- [x] fix credentials
+- [x] fix comments in eventpage
 # WOW effect
 - [x] Translation button
 - [x] 2F Authentication

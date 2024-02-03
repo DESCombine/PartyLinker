@@ -1,21 +1,7 @@
-footer {
-    padding-top: 20% !important;
-    ;
-}
-
-.nav {
-    background-color: white !important;
-}
-
-#partecipant-photo #photo-id {
-    border-radius: 50% !important;
-    width: 50% !important;
-}
-
 #photo-id:hover {
     cursor: pointer;
 }
 
-.upload-modal a {
+a {
     text-decoration: none !important;
 }

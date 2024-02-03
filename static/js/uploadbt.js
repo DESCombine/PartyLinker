@@ -1,5 +1,5 @@
-import { request_path } from "/static/js/config.js?v=2";
-import { checkOrganizer, cleanTemplateList } from "/static/js/utils.js?v=1";
+import { request_path } from "/static/js/config.js?v=210";
+import { checkOrganizer, cleanTemplateList } from "/static/js/utils.js?v=210";
 
 const modal = document.getElementById("upload-modal");
 
@@ -48,6 +48,7 @@ async function showSearchResults(event) {
         let clone = template.content.cloneNode(true);
         clone.querySelector("li").setAttribute("name", "event"+event.event_id);
         clone.querySelector("img").src = "/static/img/uploads/" + event.image;
+        clone.querySelector("img").alt = event.name;
         clone.querySelector("a").textContent = event.name;
         clone.querySelector("a").href = "/post/postpage.html?event=" + event.event_id;
         clone.querySelector("p").textContent = event.date;

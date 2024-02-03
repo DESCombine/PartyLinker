@@ -2,6 +2,7 @@
     require_once(getenv("PL_ROOTDIRECTORY")."php/bootstrap.php");
     require_once(getenv("PL_ROOTDIRECTORY")."php/requests/authenticated_request.php");
     require_once(getenv("PL_ROOTDIRECTORY")."db/user.php");
+    require_once(getenv("PL_ROOTDIRECTORY")."php/email_utils.php");
     use User\UserUtility;
  
     function event_notify_handler() {
@@ -42,7 +43,7 @@
                                 
                                         div {
                                             background-color: #000;
-                                            color: #000;
+                                            color: #fff;
                                             padding: 2rem;
                                             border-radius: 1rem;
                                             display: inline-block;
@@ -52,11 +53,16 @@
                                             color: #fff;
                                             font-size: 2rem;
                                         }
+
+                                        h1 {
+                                            color: #fff;
+                                            font-size: 2.5rem;
+                                        }
                                     </style>
                                 </head>
                                 <body>
                                     <header>
-                                        <h1>Hey @reciever, @poster hs published a new event!</h1>
+                                        <h1>Hey @reciever, @poster has published a new event!</h1>
                                     </header>
                                     <main>
                                         <div>
@@ -71,7 +77,7 @@
                 $to = $follower->getEmail();
                 $subject = "A new event is up!";
                 $headers = "From: PartyLinker <noreply@partylinker.com>";
-                mail($to, $subject, $notif_text, $headers);
+                sendEmail($to, $subject, $notif_text, "PartyLinker", "Hey ".$follower->getUsername().", ".$username." has published a new event! Check it out at https://partylinker.live");
             }
         }
     }

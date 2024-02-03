@@ -6,7 +6,7 @@
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <link rel="stylesheet" type="text/css" href="/static/css/homepage.css"/>
             <!-- Font Renner import -->
-            <link rel="stylesheet" href="https://indestructibletype-fonthosting.github.io/renner.css" type="text/css" charset="utf-8" />
+            <link rel="stylesheet" href="https://indestructibletype-fonthosting.github.io/renner.css" type="text/css" />
             <!-- Icons import -->
             <link rel="icon" href="/static/img/icon.ico" type="image/x-icon"/>
             <script src="https://kit.fontawesome.com/d9b18796bb.js" crossorigin="anonymous"></script>      
@@ -16,16 +16,16 @@
         <body>
             <div class="container-fluid overflow-hidden">
                 <header class="text-center mt-3">
-                    <h1>PartyLinker</h1>
+                    <h1>PartyLinker <em class="fa-solid fa-champagne-glasses"></em></h1>
                 </header>
                 <main>
                     <div class="container-fluid">
-                        <h2><i class="fa-solid fa-user-group"></i>Online Users</h2>
+                        <h2><em class="fa-solid fa-user-group"></em>Online Users</h2>
                         <ul id="online-users" class="list-group list-group-flush list-group-horizontal overflow-x-auto border-top border-bottom border-dark">
                             <template>
                                 <li class="list-group-item col-3 col-md-1">
                                     <img src="/static/img/default-profile.png" alt="" class="img-fluid rounded-circle img-thumbnail">
-                                </li>
+                                </lem>
                             </template>
                         </ul>
                     </div>
@@ -35,41 +35,41 @@
                                 <li class="list-group-item">
                                     <div class="post-user row justify-content-start my-3">
                                         <div class="col-2 col-md-1">
-                                            <img src="/static/img/default-profile.png" alt="" class="img-fluid img-thumbnail">
+                                            <img src="/static/img/default-profile.png" alt="" class="img-fluid rounded-circle img-thumbnail">
                                         </div>
                                         <div class="col pt-md-3">
                                             <a href="#" class="fs-3 text-black">Username</a>
                                         </div>
                                     </div>
                                     <div class="post-content row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-6 justify-content-center">
                                             <img src="/static/img/default-image.png" alt="" class="img-fluid">
                                         </div>
                                         <div class="col-md-6">
                                             <ol class="list-group list-group-flush list-group-horizontal">
                                                 <li class="likes list-group-item pt-3 pe-0">
                                                     <p>0</p>
-                                                </li>
+                                                </lem>
                                                 <li class="list-group-item">
                                                     <button class="like-button btn">
-                                                        <i class="fa-regular fa-heart"></i>
+                                                        <em class="fa-regular fa-heart"></em>
                                                     </button>
-                                                </li>
+                                                </lem>
                                                 <li class="list-group-item">
                                                     <button class="comment-button btn"  data-bs-toggle="modal" data-bs-target="#comments-modal">
-                                                        <i class="fa-regular fa-comment"></i>
+                                                        <em class="fa-regular fa-comment"></em>
                                                     </button>
-                                                </li>
+                                                </lem>
                                                 <li class="list-group-item">
                                                     <button class="partecipate-button btn invisible"  data-bs-toggle="modal" data-bs-target="#partecipants-modal">
-                                                        <i class="fa-solid fa-users-viewfinder"></i>
+                                                        <em class="fa-solid fa-users-viewfinder"></em>
                                                     </button>
-                                                </li>
+                                                </lem>
                                                 <li class="list-group-item pt-3 ps-4">
-                                                    <a href="#" class="text-black invisible">
-                                                        <i class="fa-solid fa-circle-info"></i>
+                                                    <a href="#" class="text-black invisible" title="info">
+                                                        <em class="fa-solid fa-circle-info"></em>
                                                     </a>
-                                                </li>
+                                                </lem>
                                             </ol>
                                             <p class="post-description">Post description</p>
                                             <div class="text-end">
@@ -77,7 +77,7 @@
                                             </div>
                                             <div class="event-info">
                                                 <div class="text-center">
-                                                    <h4>Event Name</h4>
+                                                    <p class="fs-4">Event Name</p>
                                                 </div>
                                                 <ol class="list-group list-group-flush">
                                                     <!-- generated with js -->
@@ -85,7 +85,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </li>
+                                </lem>
                             </template>
                         </ol>
                     </div>
@@ -95,29 +95,29 @@
                     <nav class="fixed-bottom border-top border-black">
                         <ol class="nav nav-fill my-2">
                             <li class="nav-item">
-                                <a class="nav-link" href="/"><i class="fa-solid fa-house"></i></a>
-                            </li>
+                                <a class="nav-link" href="/" title="home"><em class="fa-solid fa-house text-black"></em></a>
+                            </lem>
                             <li class="nav-item">
-                                <a class="nav-link" href="/search/"><i class="fa-solid fa-magnifying-glass"></i></a>
-                            </li>
+                                <a class="nav-link" href="/search/" title="search"><em class="fa-solid fa-magnifying-glass text-black"></em></a>
+                            </lem>
                             <li class="nav-item">
                                 <button class="btn border border-dark rounded"  data-bs-toggle="modal" data-bs-target="#upload-modal">
-                                    <i class="fa-solid fa-circle-plus"></i>
+                                    <em class="fa-solid fa-circle-plus text-dark"></em>
                                 </button>
-                            </li>
+                            </lem>
                             <li class="nav-item">
-                                <a class="nav-link" href="/map/"><i class="fa-solid fa-map-location-dot"></i></a>
-                            </li>
+                                <a class="nav-link" href="/map/" title="map"><em class="fa-solid fa-map-location-dot text-black"></em></a>
+                            </lem>
                             <li class="nav-item">
-                                <a class="nav-link" href="/profile/"><i class="fa-solid fa-user"></i></a>
-                            </li>
+                                <a class="nav-link" href="/profile/" title="profile"><em class="fa-solid fa-user text-black"></em></a>
+                            </lem>
                         </ol>
                     </nav>
                 </footer>
                 <!-- Navbar for desktop -->
                 <div class="d-none d-md-flex justify-content-end fixed-top pt-3 me-5">
-                    <button id="desk-nav-bt" class="btn btn-lg border border-black" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-                        <i class="fa-solid fa-bars"></i>
+                    <button class="btn btn-lg border border-black bg-light" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                        <em class="fa-solid fa-bars"></em>
                     </button>
                     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                         <div class="offcanvas-header">
@@ -127,22 +127,22 @@
                         <div class="offcanvas-body">
                             <ol class="list-group list-group-flush">
                                 <li class="list-group-item my-3">
-                                    <a class="text-center fs-2 nav-link active" aria-current="page" href="/"><i class="fa-solid fa-house"></i> Home page</a>
-                                </li>
+                                    <a class="text-center fs-2 nav-link active" aria-current="page" href="/"><em class="fa-solid fa-house"></em> Home page</a>
+                                </lem>
                                 <li class="list-group-item my-3">
-                                    <a class="text-center fs-2 nav-link" href="/search/"><i class="fa-solid fa-magnifying-glass"></i> Search page</a>
-                                </li>
+                                    <a class="text-center fs-2 nav-link" href="/search/"><em class="fa-solid fa-magnifying-glass"></em> Search page</a>
+                                </lem>
                                 <li class="list-group-item my-3 text-center">
                                     <button class="text-center fs-2 btn border border-dark rounded"  data-bs-toggle="modal" data-bs-target="#upload-modal">
-                                        <i class="fa-solid fa-circle-plus"></i> Upload new post
+                                        <em class="fa-solid fa-circle-plus"></em> Upload new post
                                     </button>
-                                </li>
+                                </lem>
                                 <li class="list-group-item my-3">
-                                    <a class="text-center fs-2 nav-link" href="/map/"><i class="fa-solid fa-map-location-dot"></i> Events near you</a>
-                                </li>
+                                    <a class="text-center fs-2 nav-link" href="/map/"><em class="fa-solid fa-map-location-dot"></em> Events near you</a>
+                                </lem>
                                 <li class="list-group-item my-3">
-                                    <a class="text-center fs-2 nav-link" href="/profile/"><i class="fa-solid fa-user"></i> Profile page</a>
-                                </li>
+                                    <a class="text-center fs-2 nav-link" href="/profile/"><em class="fa-solid fa-user"></em> Profile page</a>
+                                </lem>
                             </ol>
                         </div>
                     </div>
@@ -155,7 +155,7 @@
                         <div class="modal-header justify-content-center">
                             <div class="row justify-content-end">
                                 <div class="col">
-                                    <h2 class="modal-title" id="uploadModalLabel">Upload new picture <i class="fa-solid fa-camera-retro"></i></h2>
+                                    <h2 class="modal-title" id="uploadModalLabel">Upload new picture <em class="fa-solid fa-camera-retro"></em></h2>
                                 </div>
                                 <div class="col-1">
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>  
@@ -163,9 +163,9 @@
                             </div>
                         </div>
                         <div class="modal-body container-fluid">
-                            <h3 class="fs-5">Which event have you been to?</h3>
+                            <label for="eventNameUpload" class="fs-3">Which event have you been to?</label>
                             <div class="row">
-                                <input type="text" class="border-1 rounded" placeholder="Event name...">
+                                <input type="text" class="border-1 rounded" id ="eventNameUpload" placeholder="Event name...">
                             </div>
                             <div class="row">
                                 <ol class="list-group list-group-flush my-1 overflow-y-auto">
@@ -173,7 +173,7 @@
                                         <li class="list-group-item">
                                             <div class="row justify-content-start">
                                                 <div class="col-2 col-lg-1">
-                                                    <img src="/static/img/default-image.png" class="img-fluid img-thumbnail">
+                                                    <img src="/static/img/default-image.png" alt="" class="img-fluid img-thumbnail">
                                                 </div>
                                                 <div class="col">
                                                     <a class="text-dark">Event name</a>
@@ -182,14 +182,14 @@
                                                     <p>Date</p>
                                                 </div>
                                             </div>
-                                        </li>
+                                        </lem>
                                     </template>
                                 </ol>
                             </div>
                         </div>
                         <div class="modal-footer border-top border-black justify-content-center">
                             <button class="btn btn-primary btn-lg invisible">
-                                Upload a new event <i class="fa-regular fa-calendar-plus"></i>
+                                Upload a new event <em class="fa-regular fa-calendar-plus"></em>
                             </button>
                         </div>
                     </div>
@@ -202,7 +202,7 @@
                         <div class="modal-header justify-content-center">
                             <div class="row justify-content-end">
                                 <div class="col">
-                                    <h2 class="modal-title" id="commentsModalLabel"><i class="fa-solid fa-comments"></i> Comments</h2>
+                                    <h2 class="modal-title" id="commentsModalLabel"><em class="fa-solid fa-comments"></em> Comments</h2>
                                 </div>
                                 <div class="col-1">
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>  
@@ -216,7 +216,7 @@
                                         <li class="list-group-item">
                                             <div class="row justify-content-start">
                                                 <div class="col-2 mb-1 col-lg-1">
-                                                    <img src="/static/img/default-profile.png" alt="" class="img-fluid img-thumbnail">
+                                                    <img src="/static/img/default-profile.png" alt="" class="img-fluid rounded-circle img-thumbnail">
                                                 </div>
                                                 <div class="col">
                                                     <a href="#" class="fs-5 text-black">Username</a>
@@ -228,34 +228,35 @@
                                                 </div>
                                                 <div>
                                                     <button class="trash-button btn invisible">
-                                                        <i class="fa-solid fa-trash-can"></i>
+                                                        <em class="fa-solid fa-trash-can"></em>
                                                     </button>
                                                 </div>
                                                 <div>
                                                     <button class="like-button btn">
-                                                        <i class="fa-regular fa-heart"></i>
+                                                        <em class="fa-regular fa-heart"></em>
                                                     </button>
                                                 </div>
                                                 <div class="ms-3 pt-2">
                                                     <p class="likes">0</p>
                                                 </div>
                                             </div>
-                                        </li>
+                                        </lem>
                                     </template>
                                 </ol>
                             </div>
                         </div>
                         <div class="modal-footer border-top border-black justify-content-center">
                             <form class="row">
+                                <label for="comment-input" class="col-form-label" hidden>Comment:</label>
                                 <div class="col-1">
-                                    <label for="comment-input" class="col-form-label"><i class="fa-solid fa-comment"></i></label>
+                                    <em class="fa-solid fa-comment"></em>
                                 </div>
                                 <div class="col-9">
                                     <input type="text" id="comment-input" name="comment" class="form-control border-dark" placeholder="Write your message...">
                                 </div>
                                 <div class="col-2">
                                     <button type="button" class="btn" name="submit-comment">
-                                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                        <em class="fa-solid fa-arrow-right-from-bracket"></em>
                                     </button>
                                 </div>
                             </form>
@@ -270,7 +271,7 @@
                         <div class="modal-header justify-content-center">
                             <div class="row justify-content-end">
                                 <div class="col">
-                                    <h2 class="modal-title" id="partecipantsModalLabel"><i class="fa-solid fa-users-gear"></i> Partecipants</h2>
+                                    <h2 class="modal-title" id="partecipantsModalLabel"><em class="fa-solid fa-users-gear"></em> Partecipants</h2>
                                 </div>
                                 <div class="col-1">
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>  
@@ -284,13 +285,13 @@
                                         <li class="list-group-item">
                                             <div class="row justify-content-start">
                                                 <div class="col-2 col-lg-1">
-                                                    <img src="/static/img/default-profile.png" alt="" class="img-fluid img-thumbnail">
+                                                    <img src="/static/img/default-profile.png" alt="" class="img-fluid rounded-circle img-thumbnail">
                                                 </div>
                                                 <div class="col">
                                                     <a href="#" class="fs-5 text-dark">Username</a>
                                                 </div>
                                             </div>
-                                        </li>
+                                        </lem>
                                     </template>
                                 </ul>
                             </div>
@@ -299,10 +300,10 @@
                             <div class="container-fluid text-center">
                                 <div class="d-inline-flex gap-2">
                                     <button class="btn btn-secondary me-3">
-                                        Let's party! <i class="fa-solid fa-face-laugh-squint"></i>
+                                        Let's party! <em class="fa-solid fa-face-laugh-squint"></em>
                                     </button>
                                     <button class="btn btn-secondary ms-3 px-4">
-                                        I'm busy <i class="fa-solid fa-face-sad-tear"></i>
+                                        I'm busy <em class="fa-solid fa-face-sad-tear"></em>
                                     </button>
                                 </div>
                             </div>
@@ -313,7 +314,7 @@
             <!-- Bootstrap import -->
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
             <!-- JS import -->
-            <script src="/static/js/homepage.js?v=2" type="module"></script>
-            <script src="/static/js/uploadbt.js?v=3" type="module"></script>
+            <script src="/static/js/homepage.js?v=210" type="module"></script>
+            <script src="/static/js/uploadbt.js?v=210" type="module"></script>
         </body>
     </html>
