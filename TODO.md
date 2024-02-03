@@ -1,10 +1,13 @@
 # List for what It's still missing to complete the project
-- [ ] Make sure that everything is working on partylinker.live
+- [x] Make sure that everything is working on partylinker.live
 - [x] Set up the mail server
-- [ ] Decide the look of the site
-- [ ] Validate code
+- [x] Decide the look of the site
+- [x] Validate code
 
 # List of things to do
+- [ ] Fix images that aren't png
+- [ ] fix images height
+- [ ] populate db
 - [x] media queries
 - [x] Cooments forms
 - [x] Like button
