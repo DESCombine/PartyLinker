@@ -137,7 +137,7 @@ namespace User {
         private $twofa;
         private $organizer;
 
-        public function __construct($username = null, $language = "en", $notifications = null, $twofa = null, $organizer = null) {
+        public function __construct($username = null, $language = "en", $notifications = "0", $twofa = "0", $organizer = "0") {
             $this->username = $username;
             $this->language = $language;
             $this->notifications = $notifications;
