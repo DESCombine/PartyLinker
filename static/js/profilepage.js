@@ -1,5 +1,5 @@
-import { request_path } from "/static/js/config.js?v=210";
-import { loadUserImage, cleanTemplateList, resetEventListener, translatePost, showComments } from "/static/js/utils.js?v=212";
+import { request_path } from "/static/js/config.js?v=5";
+import { loadUserImage, cleanTemplateList, resetEventListener, translatePost, showComments } from "/static/js/utils.js?v=5";
 
 document.querySelector("#modifyIcon").href = "/modifyprofile/modifyprofile.html";
 

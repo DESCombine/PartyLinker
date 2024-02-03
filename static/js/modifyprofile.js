@@ -1,4 +1,4 @@
-import { request_path } from "/static/js/config.js?v=210";
+import { request_path } from "/static/js/config.js?v=5";
 
 document.getElementsByTagName("form")[0].action = request_path + "/user/modifyprofile.php";
 

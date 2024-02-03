@@ -1,5 +1,5 @@
-import { request_path } from "/static/js/config.js?v=210";
-import { checkOrganizer, cleanTemplateList } from "/static/js/utils.js?v=210";
+import { request_path } from "/static/js/config.js?v=5";
+import { checkOrganizer, cleanTemplateList } from "/static/js/utils.js?v=5";
 
 const modal = document.getElementById("upload-modal");
 
