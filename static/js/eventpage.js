@@ -40,7 +40,7 @@ async function showContent() {
     const likeButton = document.getElementById("poster-like-bt");
     if (post.liked) {
         likeButton.addEventListener("click", function () { removePosterLike(post.post_id, "post") });
-        likeButton.innerHTML = "<i class='fa-solid fa-heart text-danger'></i>";
+        likeButton.innerHTML = "<i class='fa-solid fa-heart'></i>";
     } else {
         likeButton.addEventListener("click", function () { addPosterLike(post.post_id, "post") });
     }
@@ -93,7 +93,7 @@ async function showModalPost(post_id, event_id, username,
     const likeButton = postActions.querySelector("#likes-button");
     if (liked) {
         likeButton.addEventListener("click", function () { removeModalLike(post_id, "post") });
-        likeButton.innerHTML = "<i class='fa-solid fa-heart text-danger'></i>";
+        likeButton.innerHTML = "<i class='fa-solid fa-heart'></i>";
     } else {
         likeButton.addEventListener("click", function () { addModalLike(post_id, "post") });
     }
@@ -158,7 +158,7 @@ async function likePoster(like_id, type, request, addOrRemove) {
     likes.innerHTML = parseInt(likes.innerHTML) + addOrRemove;
     let fun;
     if (addOrRemove == 1) {
-        likeButton.innerHTML = "<i class='fa-solid fa-heart text-danger'></i>";
+        likeButton.innerHTML = "<i class='fa-solid fa-heart'></i>";
         fun = function() { removePosterLike(like_id, type, likeButton, likes); };
     } else {
         likeButton.innerHTML = "<i class='fa-regular fa-heart'></i>";
@@ -192,7 +192,7 @@ async function likeModal(like_id, type, request, addOrRemove) {
     likes.innerHTML = parseInt(likes.innerHTML) + addOrRemove;
     let fun;
     if (addOrRemove == 1) {
-        likeButton.innerHTML = "<i class='fa-solid fa-heart text-danger'></i>";
+        likeButton.innerHTML = "<i class='fa-solid fa-heart'></i>";
         fun = function() { removeModalLike(like_id, type, likeButton, likes); };
     } else {
         likeButton.innerHTML = "<i class='fa-regular fa-heart'></i>";

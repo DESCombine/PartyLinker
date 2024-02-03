@@ -166,7 +166,7 @@ async function showModalPost(post_id, event_id, username,
     const likeButton = postActions.querySelector("#likes-button");
     if (liked) {
         likeButton.addEventListener("click", function () { removeLike(post_id, "post") });
-        likeButton.innerHTML = "<i class='fa-solid fa-heart text-danger'></i>";
+        likeButton.innerHTML = "<i class='fa-solid fa-heart'></i>";
     } else {
         likeButton.addEventListener("click", function () { addLike(post_id, "post") });
     }
@@ -230,7 +230,7 @@ async function like(like_id, type, request, addOrRemove) {
     likes.innerHTML = parseInt(likes.innerHTML) + addOrRemove;
     let fun;
     if (addOrRemove == 1) {
-        likeButton.innerHTML = "<i class='fa-solid fa-heart text-danger'></i>";
+        likeButton.innerHTML = "<i class='fa-solid fa-heart'></i>";
         fun = function() { removeLike(like_id, type, likeButton, likes); };
     } else {
         likeButton.innerHTML = "<i class='fa-regular fa-heart'></i>";

@@ -1,0 +1,21 @@
+h1, h2, h3, h4 {
+    font-family: 'Renner*';
+    color: #422F75 !important;
+}
+
+p, a {
+    font-family: 'Renner*';
+    color: black;
+}
+
+em {
+    color: #422F75;
+}
+
+body, main div, ol, ul, li, .modal-content {
+    background-color: #ECE9F4 !important;
+}
+
+nav, nav ol li, .offcanvas div, .offcanvas ol, .offcanvas li, #desk-nav-bt {
+    background-color: #DBD7EA !important;
+}

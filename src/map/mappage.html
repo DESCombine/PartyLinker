@@ -5,6 +5,7 @@
             <meta charset="UTF-8">
             <title>PartyLinker: Map</title>
             <link href="/static/css/mappage.css?v=210" rel="stylesheet">
+            <link rel="stylesheet" type="text/css" href="/static/css/style.css"/>
             <!-- Font Renner import -->
             <link rel="stylesheet" href="https://indestructibletype-fonthosting.github.io/renner.css" type="text/css" charset="utf-8" />
             <!-- Icons import -->
@@ -22,32 +23,32 @@
                 </div>
                 <!-- Navbar for mobile -->
                 <footer class="mt-5 d-md-none">
-                    <nav class="bg-white fixed-bottom border-top border-black">
+                    <nav class="fixed-bottom border-top border-black">
                         <ol class="nav nav-fill my-2">
                             <li class="nav-item">
-                                <a class="nav-link" href="/"><i class="fa-solid fa-house text-black"></i></a>
-                            </li>
+                                <a class="nav-link" href="/" title="home"><em class="fa-solid fa-house"></em></a>
+                            </lem>
                             <li class="nav-item">
-                                <a class="nav-link" href="/search/"><i class="fa-solid fa-magnifying-glass text-black"></i></a>
-                            </li>
+                                <a class="nav-link" href="/search/" title="search"><em class="fa-solid fa-magnifying-glass"></em></a>
+                            </lem>
                             <li class="nav-item">
                                 <button class="btn border border-dark rounded"  data-bs-toggle="modal" data-bs-target="#upload-modal">
-                                    <i class="fa-solid fa-circle-plus text-dark"></i>
+                                    <em class="fa-solid fa-circle-plus"></em>
                                 </button>
-                            </li>
+                            </lem>
                             <li class="nav-item">
-                                <a class="nav-link" href="/map/"><i class="fa-solid fa-map-location-dot text-black"></i></a>
-                            </li>
+                                <a class="nav-link" href="/map/" title="map"><em class="fa-solid fa-map-location-dot"></em></a>
+                            </lem>
                             <li class="nav-item">
-                                <a class="nav-link" href="/profile/"><i class="fa-solid fa-user text-black"></i></a>
-                            </li>
+                                <a class="nav-link" href="/profile/" title="profile"><em class="fa-solid fa-user"></em></a>
+                            </lem>
                         </ol>
                     </nav>
                 </footer>
                 <!-- Navbar for desktop -->
                 <div class="d-none d-md-flex justify-content-end fixed-top pt-3 me-5">
-                    <button class="btn btn-lg border border-black bg-light" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-                        <i class="fa-solid fa-bars"></i>
+                    <button id="desk-nav-bt" class="btn btn-lg border border-black bg-light" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                        <em class="fa-solid fa-bars"></em>
                     </button>
                     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                         <div class="offcanvas-header">
@@ -57,70 +58,70 @@
                         <div class="offcanvas-body">
                             <ol class="list-group list-group-flush">
                                 <li class="list-group-item my-3">
-                                    <a class="text-center fs-2 nav-link active" aria-current="page" href="/"><i class="fa-solid fa-house"></i> Home page</a>
-                                </li>
+                                    <a class="text-center fs-2 nav-link active" aria-current="page" href="/"><em class="fa-solid fa-house"></em> Home page</a>
+                                </lem>
                                 <li class="list-group-item my-3">
-                                    <a class="text-center fs-2 nav-link" href="/search/"><i class="fa-solid fa-magnifying-glass"></i> Search page</a>
-                                </li>
+                                    <a class="text-center fs-2 nav-link" href="/search/"><em class="fa-solid fa-magnifying-glass"></em> Search page</a>
+                                </lem>
                                 <li class="list-group-item my-3 text-center">
                                     <button class="text-center fs-2 btn border border-dark rounded"  data-bs-toggle="modal" data-bs-target="#upload-modal">
-                                        <i class="fa-solid fa-circle-plus"></i> Upload new post
+                                        <em class="fa-solid fa-circle-plus"></em> Upload new post
                                     </button>
-                                </li>
+                                </lem>
                                 <li class="list-group-item my-3">
-                                    <a class="text-center fs-2 nav-link" href="/map/"><i class="fa-solid fa-map-location-dot"></i> Events near you</a>
-                                </li>
+                                    <a class="text-center fs-2 nav-link" href="/map/"><em class="fa-solid fa-map-location-dot"></em> Events near you</a>
+                                </lem>
                                 <li class="list-group-item my-3">
-                                    <a class="text-center fs-2 nav-link" href="/profile/"><i class="fa-solid fa-user"></i> Profile page</a>
-                                </li>
+                                    <a class="text-center fs-2 nav-link" href="/profile/"><em class="fa-solid fa-user"></em> Profile page</a>
+                                </lem>
                             </ol>
                         </div>
                     </div>
                 </div>
-                <!-- Upload Modal -->
-                <div class="modal fade" id="upload-modal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                        <div class="modal-content h-75">
-                            <div class="modal-header justify-content-center">
-                                <div class="row justify-content-end">
-                                    <div class="col">
-                                        <h2 class="modal-title" id="uploadModalLabel">Upload new picture <i class="fa-solid fa-camera-retro"></i></h2>
-                                    </div>
-                                    <div class="col-1">
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>  
-                                    </div>
+            </div>
+            <!-- Upload Modal -->
+            <div class="modal fade" id="upload-modal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content h-75">
+                        <div class="modal-header justify-content-center">
+                            <div class="row justify-content-end">
+                                <div class="col">
+                                    <h2 class="modal-title" id="uploadModalLabel">Upload new picture <em class="fa-solid fa-camera-retro"></em></h2>
+                                </div>
+                                <div class="col-1">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>  
                                 </div>
                             </div>
-                            <div class="modal-body container-fluid">
-                                <h3 class="fs-5">Which event have you been to?</h3>
-                                <div class="row">
-                                    <input type="text" class="border-1 rounded" placeholder="Event name...">
-                                </div>
-                                <div class="row">
-                                    <ol class="list-group list-group-flush my-1 overflow-y-auto">
-                                        <template>
-                                            <li class="list-group-item">
-                                                <div class="row justify-content-start">
-                                                    <div class="col-2 col-lg-1">
-                                                        <img src="/static/img/default-image.png" class="img-fluid img-thumbnail">
-                                                    </div>
-                                                    <div class="col">
-                                                        <a class="text-dark">Event name</a>
-                                                    </div>
-                                                    <div class="col-3">
-                                                        <p>Date</p>
-                                                    </div>
+                        </div>
+                        <div class="modal-body container-fluid">
+                            <label for="eventNameUpload" class="fs-3">Which event have you been to?</label>
+                            <div class="row">
+                                <input type="text" class="border-1 border-black rounded-pill" id ="eventNameUpload" placeholder="Event name...">
+                            </div>
+                            <div class="row">
+                                <ol class="list-group list-group-flush my-1 overflow-y-auto">
+                                    <template>
+                                        <li class="list-group-item">
+                                            <div class="row justify-content-start">
+                                                <div class="col-2 col-lg-1">
+                                                    <img src="/static/img/default-image.png" alt="" class="img-fluid img-thumbnail">
                                                 </div>
-                                            </li>
-                                        </template>
-                                    </ol>
-                                </div>
+                                                <div class="col">
+                                                    <a class="text-dark">Event name</a>
+                                                </div>
+                                                <div class="col-3">
+                                                    <p>Date</p>
+                                                </div>
+                                            </div>
+                                        </lem>
+                                    </template>
+                                </ol>
                             </div>
-                            <div class="modal-footer border-top border-black justify-content-center">
-                                <button class="btn btn-primary btn-lg invisible">
-                                    Upload a new event <i class="fa-regular fa-calendar-plus"></i>
-                                </button>
-                            </div>
+                        </div>
+                        <div class="modal-footer border-top border-black justify-content-center">
+                            <button class="btn border border-black btn-lg invisible">
+                                Upload a new event <em class="fa-regular fa-calendar-plus"></em>
+                            </button>
                         </div>
                     </div>
                 </div>

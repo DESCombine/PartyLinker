@@ -1,24 +1,3 @@
-h1, h2, h3, h4 {
-    font-family: 'Renner*';
-    color: #422F75;
-}
-
-body, main div, ol, ul, li {
-    background-color: #ECE9F4 !important;
-}
-
-nav, nav ol li, .offcanvas div, .offcanvas ol, .offcanvas li, #desk-nav-bt {
-    background-color: #ded8f4 !important;
-}
-
-i {
-    color: #422F75;
-}
-
-p, .translate-button {
-    color: black;
-}
-
 a {
     text-decoration: none !important;
 }
