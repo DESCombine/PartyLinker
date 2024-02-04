@@ -7,7 +7,7 @@ modal.addEventListener("shown.bs.modal", function() { renderModalFooter() });
 
 async function renderModalFooter() {
     const modalFooter = modal.querySelector(".modal-footer");
-    if (checkOrganizer()) {
+    if (checkOrganizer() === true) {
         modalFooter.querySelector("button").classList.remove("invisible");
         modalFooter.querySelector("button").addEventListener("click", function() { selectEvent(0); });
     } else {
