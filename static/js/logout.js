@@ -1,4 +1,4 @@
-import { request_path } from "/static/js/config.js?v=5";
+import { request_path } from "/static/js/config.js?v=6";
 
 document.getElementsByTagName("form")[0].action = request_path + "/auth/logout.php";
 
