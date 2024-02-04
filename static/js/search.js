@@ -32,7 +32,7 @@ function showSearchResults(users) {
     users.forEach(user => {
         const clone = search_results.querySelector("template").cloneNode(true);
         if(user.profile_photo == null) {
-            user.profile_photo = "/static/default-profile.png";
+            user.profile_photo = "/static/img/default-profile.png";
         }
         clone.content.querySelector("img").src = "/static/img/uploads/" + user.profile_photo;
         clone.content.querySelector("span").textContent = user.username;
