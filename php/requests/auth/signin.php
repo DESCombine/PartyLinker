@@ -11,7 +11,7 @@ $name = $_POST["name"];
 $surname = $_POST["surname"];
 $birth_date = $_POST["birthdate"];
 $email = $_POST["email"];
-$username = $_POST["username"];
+$username = strtolower($_POST["username"]);
 $password = $_POST["password"];
 // check if user exists
 $user = User\UserUtility::from_db_with_username($driver, $username);
