@@ -6,7 +6,7 @@
 
 # List of things to do
 - [ ] Fix images that aren't png
-- [ ] fix images height
+- [x] fix images height
 - [ ] populate db
 - [ ] username not found error in login page
 - [x] media queries

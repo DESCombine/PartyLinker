@@ -9,6 +9,18 @@
     }
 }
 
+#bannerImage {
+    width: 100%;
+    aspect-ratio: 2 / 1;
+    object-fit: cover;
+}
+
+#photo-id {
+    width: 100% !important;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+}
+
 main #description {
     font-size: 10px !important;
 }
