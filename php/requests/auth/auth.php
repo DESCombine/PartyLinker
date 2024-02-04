@@ -16,6 +16,7 @@
     if( $user == null ){
         http_response_code(401);
         echo json_encode(array("error" => "Username not found"), JSON_PRETTY_PRINT);
+        header("Location: ".$domain."/login/login.html?usernotfound=true");
         exit();
     }
     if( !$user->check_password($password) ){
@@ -36,15 +37,4 @@
         header("Location: ".$domain);
     }
     $driver->close_connection();
-
-
-
-
-
-
-    
-    //$request = json_decode(file_get_contents('php://input'), true);
-
-
-
 ?>

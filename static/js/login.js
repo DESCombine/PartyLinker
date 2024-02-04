@@ -18,4 +18,9 @@ window.addEventListener("resize", function(){
 // check url for error
 if(window.location.href.indexOf("?wrongpassword") > -1){
     document.getElementById("error").classList.remove("invisible");
+    document.getElementById("error").innerHTML = "Error! Invalid password";
+}
+if (window.location.href.indexOf("?usernotfound") > -1){
+    document.getElementById("error").classList.remove("invisible");
+    document.getElementById("error").innerHTML = "Error! Invalid username";
 }

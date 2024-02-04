@@ -8,7 +8,7 @@
 - [ ] Fix images that aren't png
 - [x] fix images height
 - [ ] populate db
-- [ ] username not found error in login page
+- [x] username not found error in login page
 - [x] media queries
 - [x] Cooments forms
 - [x] Like button
