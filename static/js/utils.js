@@ -28,7 +28,7 @@ export async function checkOrganizer() {
     });
     const settings = await response.json();
     checkError(settings);
-    return settings.organizer === 1;
+    return settings.organizer;
 }
 
 export function cleanTemplateList(list) {
