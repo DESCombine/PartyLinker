@@ -54,6 +54,10 @@
                     throw new \Exception("Error while querying the database: " . $e->getMessage());
                 }
             }
+
+            public function getUser() {
+                return $this->username;
+            }
         }
 
         class DBComment implements \DBTable {
@@ -107,6 +111,10 @@
                 } catch (\Exception $e) {
                     throw new \Exception("Error while querying the database: " . $e->getMessage());
                 }
+            }
+
+            public function getPost() {
+                return $this->post_id;
             }
         }
 
@@ -181,6 +189,21 @@
         }
 
         class PostUtility {
+            public static function from_db_with_post_id(\DBDriver $driver, $post_id) {
+                $sql = "SELECT * FROM post WHERE post_id = ?";
+                try {
+                    $result = $driver->query($sql, $post_id);
+                } catch (\Exception $e) {
+                    throw new \Exception("Error while querying the database: " . $e->getMessage());
+                }
+                if ($result->num_rows == 0) {
+                    return null;
+                }
+                $row = $result->fetch_assoc();
+                return new DBPost($row["post_id"], $row["event_id"], $row["username"], $row["image"], 
+                        $row["description"], $row["posted"], $row["likes"], $row["event_post"]);
+            } 
+
             public static function from_form($event_id, $username, $image, $description, $event_post) {
                 return new DBPost(null, $event_id, $username, $image, $description, null, null, $event_post);
             }
@@ -297,6 +320,21 @@
                     }
                 }
                 return $posts;
+            }
+
+            public static function comment_with_id(\DBDriver $driver, $comment_id) {
+                $sql = "SELECT * FROM comment WHERE comment_id = ?";
+                try {
+                    $result = $driver->query($sql, $comment_id);
+                } catch (\Exception $e) {
+                    throw new \Exception("Error while querying the database: " . $e->getMessage());
+                }
+                if ($result->num_rows == 0) {
+                    return null;
+                }
+                $row = $result->fetch_assoc();
+                return new DBComment($row["comment_id"], $row["post_id"], $row["username"], 
+                        null, $row["content"], $row["likes"]);
             }
 
             public static function comments_with_post(\DBDriver $driver, $post_id, $username) {

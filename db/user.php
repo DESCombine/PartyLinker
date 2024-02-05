@@ -377,6 +377,7 @@ namespace User {
                 $sql = "DELETE FROM relationship WHERE follows = ? AND followed = ?";
                 try {
                     $driver->query($sql, $username, $toFollow);
+                    return false;
                 } catch (\Exception $e) {
                     throw new \Exception("Error while querying the database: " . $e->getMessage());
                 }
@@ -384,6 +385,7 @@ namespace User {
                 $sql = "INSERT INTO relationship (follows, followed) VALUES (?, ?)";
                 try {
                     $driver->query($sql, $username, $toFollow);
+                    return true;
                 } catch (\Exception $e) {
                     throw new \Exception("Error while querying the database: " . $e->getMessage());
                 }
