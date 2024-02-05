@@ -25,6 +25,8 @@ async function showOnlineUsers() {
         let profile_photo = user.profile_photo == null ? "/static/img/default_profile.png" : "/static/img/uploads/" + user.profile_photo;
         clone.querySelector("img").src = profile_photo;
         clone.querySelector("img").alt = user.username;
+        clone.querySelector("a").href = "/profile?user=" + user.username;
+        clone.querySelector("a").innerHTML = user.username;
         online_users.appendChild(clone);
     }
     if (users.length == 0) {
