@@ -1,12 +1,11 @@
 <?php
 require_once(getenv("PL_ROOTDIRECTORY") . "php/bootstrap.php");
-use Firebase\JWT\JWT;
 
 require_once(getenv("PL_ROOTDIRECTORY") . "php/img_upload_handler.php");
 require_once(getenv("PL_ROOTDIRECTORY") . "db/user.php");
 require_once(getenv("PL_ROOTDIRECTORY") . "php/requests/cors.php");
+require_once(getenv("PL_ROOTDIRECTORY")."php/requests/authenticated_request.php");
 header('Content-Type: application/json');
-$key = getenv("PL_JWTKEY");
 //$request = json_decode(file_get_contents('php://input'), true);
 global $username;
 $name = $_POST["name"];
@@ -50,10 +49,6 @@ if (isset($_POST["2FA"])) {
 } else {
     $TFA = 0;
 }
-use User\UserUtility;
-
-$username = UserUtility::retrieve_username_from_token($_COOKIE["token"]);
-
 // create user
 $user = new User\DBUser();
 if($password != null){
@@ -63,6 +58,6 @@ if($password != null){
 $user->update_infos($driver, $name, $surname, $birth_date, $email, $phone, $username, $password, $organizer, $profilePhoto, $bannerPhoto, $bio, $language, $notifications, $TFA);
 global $domain;
 echo json_encode(array("message" => "success"), JSON_PRETTY_PRINT);
-header("Location: http://partylinker.live/profile");
+header("Location: " . $domain . "/profile?user=" . $username);
 $driver->close_connection();
 ?>
