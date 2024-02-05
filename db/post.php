@@ -113,8 +113,8 @@
                 }
             }
 
-            public function getPost() {
-                return $this->post_id;
+            public function getUser() {
+                return $this->username;
             }
         }
 

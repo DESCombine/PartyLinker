@@ -10,10 +10,11 @@
     function like_notify_handler($liked, $type) {
         global $driver;
         global $username;
-        if ($type === "comment") {
-            $liked = PostUtility::comment_with_id($driver, $liked)->getPost();
+        if ($type == "comment") {
+            $user = PostUtility::comment_with_id($driver, $liked)->getuser();
+        } else {
+            $user = PostUtility::from_db_with_post_id($driver, $liked)->getUser();
         }
-        $user = PostUtility::from_db_with_post_id($driver, $liked)->getUser();
         $liked_user = UserUtility::from_db_with_username($driver, $user);
         $settings = UserUtility::retrieve_settings($driver, $liked_user->getUsername());
         if ($settings->getNotifications()) {
