@@ -13,7 +13,7 @@
         $profile_user = $username;
     }
     
-    $posts = PostUtility::from_db_with_username($profile_user, $driver, $username);
+    $posts = PostUtility::from_db_with_username($driver, $profile_user, $username);
     header('Content-Type: application/json');
     echo json_encode($posts, JSON_PRETTY_PRINT);
 ?>
