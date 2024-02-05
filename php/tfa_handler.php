@@ -61,7 +61,7 @@ function tfa_send($username)
                 font-size: 2rem;
             }
             h1 {
-                color: #fff;
+                color: #000;
                 font-size: 2.5rem;
             }
         </style>
