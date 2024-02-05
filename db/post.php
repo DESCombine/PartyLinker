@@ -263,7 +263,7 @@
                 return $posts;
             }
 
-            public static function from_db_with_username(\DBDriver $driver, $username) {
+            public static function from_db_with_username(\DBDriver $driver, $username, $watcher) {
                 $sql = "SELECT * FROM post WHERE username = ?";
                 try {
                     $result = $driver->query($sql, $username);
@@ -276,7 +276,7 @@
                         $row = $result->fetch_array();
                         $sql = "SELECT * FROM post_like WHERE post_id = ? AND username = ?";
                         try {
-                            $liked = $driver->query($sql, $row["post_id"], $username)->num_rows > 0;
+                            $liked = $driver->query($sql, $row["post_id"], $watcher)->num_rows > 0;
                         } catch (\Exception $e) {
                             throw new \Exception("Error while querying the database: " . $e->getMessage());
                         }
