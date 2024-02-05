@@ -10,7 +10,7 @@
     function like_notify_handler($liked, $type) {
         global $driver;
         global $username;
-        if ($type == 'comment') {
+        if ($type === "comment") {
             $liked = PostUtility::comment_with_id($driver, $liked)->getPost();
         }
         $user = PostUtility::from_db_with_post_id($driver, $liked)->getUser();
