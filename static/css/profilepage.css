@@ -39,7 +39,7 @@ main #modifyIcon {
     width: 50% !important;
 }
 
-.upload-modal a {
+#upload-modal a, #comments-modal a {
     text-decoration: none !important;
 }
 
