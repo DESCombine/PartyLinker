@@ -1,4 +1,4 @@
-import { request_path } from "/static/js/config.js?v=6";
+import { request_path } from "/static/js/config.js?v=9";
 
 export function checkError(response) {
     if (response.error === "No token provided") {
@@ -112,7 +112,7 @@ export async function showComments(post_id) {
         let comment = comments_to_show[i];
         let clone = template.content.cloneNode(true);
         clone.querySelector("li").setAttribute("name", "comment" + comment.comment_id);
-        let profile_photo = clone.querySelector("img") == null ? "/static/img/default_profile.png" : "/static/img/uploads/" + comment.profile_photo;
+        let profile_photo = comment.profile_photo == null ? "/static/img/default-profile.png" : "/static/img/uploads/" + comment.profile_photo;
         clone.querySelector("img").src = profile_photo;
         clone.querySelector("a").textContent = comment.username;
         clone.querySelector("a").href = "/profile?user=" + comment.username;
@@ -179,7 +179,7 @@ export async function showPartecipations(event_id) {
             isUserPartecipating = true;
         }
         let clone = template.content.cloneNode(true);
-        let profile_photo = clone.querySelector("img") == null ? "/static/img/default_profile.png" : "/static/img/uploads/" + partecipation.profile_photo;
+        let profile_photo = partecipation.profile_photo == null ? "/static/img/default-profile.png" : "/static/img/uploads/" + partecipation.profile_photo;
         clone.querySelector("img").src = profile_photo;
         clone.querySelector("a").textContent = partecipation.username;
         clone.querySelector("a").href = "/profile?user=" + partecipation.username;

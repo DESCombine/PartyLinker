@@ -1,4 +1,4 @@
-import { request_path } from "/static/js/config.js?v=6";
+import { request_path } from "/static/js/config.js?v=9";
 
 document.getElementsByTagName("form")[0].action = request_path + "/auth/check_tfa.php";
 

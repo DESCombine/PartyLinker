@@ -1,6 +1,6 @@
-import { request_path } from "/static/js/config.js?v=6";
+import { request_path } from "/static/js/config.js?v=9";
 import { checkError, cleanTemplateList, addLike, removeLike, 
-        addEventDescription, loadEvent, showComments, showPartecipations, translatePost } from "/static/js/utils.js?v=6";
+        addEventDescription, loadEvent, showComments, showPartecipations, translatePost } from "/static/js/utils.js?v=9";
 
 async function loadOnlineUsers() {
     const response = await fetch(request_path + "/user/load_online_users.php", {
@@ -72,7 +72,7 @@ async function addNewFeedPost(clone, feed, post_id, event_id, user_photo, userna
     const postActions = postContent.querySelector("ol");
 
     clone.querySelector("li").setAttribute("name", "post" + post_id);
-    let profile_photo = postUser.querySelector("img") == null ? "/static/img/default_profile.png" : "/static/img/uploads/" + user_photo;
+    let profile_photo = user_photo == null ? "/static/img/default-profile.png" : "/static/img/uploads/" + user_photo;
     postUser.querySelector("img").src = profile_photo;
     postUser.querySelector("a").innerHTML = username;
     postUser.querySelector("a").href = "/profile?user=" + username;
