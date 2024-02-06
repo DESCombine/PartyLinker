@@ -1,5 +1,5 @@
-import { request_path } from "/static/js/config.js?v=10";
-import { checkOrganizer, cleanTemplateList } from "/static/js/utils.js?v=10";
+import { request_path } from "/static/js/config.js?v=11";
+import { checkOrganizer, cleanTemplateList } from "/static/js/utils.js?v=11";
 
 const modal = document.getElementById("upload-modal");
 modal.addEventListener("shown.bs.modal", function() { renderModalFooter() });
