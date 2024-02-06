@@ -1,7 +1,11 @@
 import { request_path } from "/static/js/config.js?v=9";
-import { checkError, cleanTemplateList, addLike, removeLike, 
+import { checkError, cleanTemplateList, templateLike, 
         addEventDescription, loadEvent, showComments, showPartecipations, translatePost } from "/static/js/utils.js?v=9";
 
+/**
+ * Loads the followed users currently online
+ * @returns the online users
+*/
 async function loadOnlineUsers() {
     const response = await fetch(request_path + "/user/load_online_users.php", {
         method: "GET",
@@ -15,6 +19,9 @@ async function loadOnlineUsers() {
     return users;
 }
 
+/**
+ * Shows the online users in the homepage
+ */
 async function showOnlineUsers() {
     const online_users = document.querySelector("#online-users");
     const users = await loadOnlineUsers();
@@ -34,6 +41,10 @@ async function showOnlineUsers() {
     }
 }
 
+/**
+ * Loads the most recent posts in the followed feed
+ * @returns the posts in the feed
+ */
 async function loadFeed() {
     const response = await fetch(request_path + "/user/load_feed.php", {
         method: "GET",
@@ -47,6 +58,9 @@ async function loadFeed() {
     return posts;
 }
 
+/**
+ * Shows the feed in the homepage
+ */
 async function showFeed() {
     const feed = document.querySelector("#feed");
     const posts = await loadFeed();
@@ -54,8 +68,7 @@ async function showFeed() {
     for (let i = 0; i < posts.length; i++) {
         let post = posts[i];
         let clone = template.content.cloneNode(true);
-        addNewFeedPost(clone, feed, post.post_id, post.event_id, post.profile_photo, 
-                post.username, post.image, post.description, post.likes, post.event_post, post.liked);
+        addNewFeedPost(clone, feed, post);
     }
     document.getElementById("comments-modal").addEventListener("hidden.bs.modal", 
             function() { cleanTemplateList(document.querySelector("#comments-modal ol")); });
@@ -67,40 +80,43 @@ async function showFeed() {
     }
 }
 
-async function addNewFeedPost(clone, feed, post_id, event_id, user_photo, username,
-        image, description, likes, event, liked) {
+/**
+ * Adds a new post to the feed
+ * @param {Node} clone the parent node of the post template 
+ * @param {Element} feed the element that contains the posts
+ * @param {JSON} post the post to add
+ */
+async function addNewFeedPost(clone, feed, post) {
     const postUser = clone.querySelector(".post-user");
     const postContent = clone.querySelector(".post-content");
     const postActions = postContent.querySelector("ol");
 
-    clone.querySelector("li").setAttribute("name", "post" + post_id);
-    let profile_photo = user_photo == null ? "/static/img/default-profile.png" : "/static/img/uploads/" + user_photo;
+    clone.querySelector("li").setAttribute("name", "post" + post.post_id);
+    let profile_photo = post.profile_photo == null ? "/static/img/default-profile.png" : "/static/img/uploads/" + post.profile_photo;
     postUser.querySelector("img").src = profile_photo;
-    postUser.querySelector("a").innerHTML = username;
-    postUser.querySelector("a").href = "/profile?user=" + username;
-    postContent.querySelector("img").src = "/static/img/uploads/" + image;
-    postActions.querySelector(".likes").innerHTML = likes;
+    postUser.querySelector("a").innerHTML = post.username;
+    postUser.querySelector("a").href = "/profile?user=" + post.username;
+    postContent.querySelector("img").src = "/static/img/uploads/" + post.image;
+    postActions.querySelector(".likes").innerHTML = post.likes;
     const likeButton = postActions.querySelector(".like-button");
-    if (liked) {
-        likeButton.addEventListener("click", function () { removeLike(post_id, "post") });
+    likeButton.addEventListener("click", function () { templateLike(post.post_id, "post", !post.liked) });
+    if (post.liked) {
         likeButton.innerHTML = "<em class='fa-solid fa-heart'></em>";
-    } else {
-        likeButton.addEventListener("click", function () { addLike(post_id, "post") });
     }
 
-    postActions.querySelector(".comment-button").addEventListener("click", function() { showComments(post_id); });
+    postActions.querySelector(".comment-button").addEventListener("click", function() { showComments(post.post_id); });
     let desc = postContent.querySelector(".post-description");
-    desc.innerHTML = description;
-    postContent.querySelector(".translate-button").addEventListener("click", function () { translatePost(post_id, desc); });
+    desc.innerHTML = post.description;
+    postContent.querySelector(".translate-button").addEventListener("click", function () { translatePost(post.post_id, desc); });
     
     const eventInfo = postContent.querySelector(".event-info");
-    if (event) {
-        postActions.querySelector(".partecipate-button").addEventListener("click", function() { showPartecipations(event_id); });
+    if (post.event_post) {
+        postActions.querySelector(".partecipate-button").addEventListener("click", function() { showPartecipations(post.event_id); });
         postActions.querySelector(".partecipate-button").classList.remove("invisible");
-        addEventDescription(eventInfo, await loadEvent(event_id));
+        addEventDescription(eventInfo, await loadEvent(post.event_id));
     } else {
         eventInfo.innerHTML = "";
-        postActions.querySelector("a").href = "/event/eventpage.html?id=" + event_id;
+        postActions.querySelector("a").href = "/event/eventpage.html?id=" + post.event_id;
         postActions.querySelector("a").classList.remove("invisible");
         postActions.insertBefore(postActions.lastElementChild, postActions.lastElementChild.previousElementSibling);
     }

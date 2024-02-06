@@ -1,6 +1,7 @@
 import { request_path } from "/static/js/config.js?v=9";
 import { cleanTemplateList } from "/static/js/utils.js?v=9";
 
+// Listens for the searchbar to change and calls the search function
 const searchbar = document.getElementById("searchbar");
 searchbar.addEventListener("keyup", function(event) {
     if(searchbar.value.length > 0) {
@@ -11,6 +12,10 @@ searchbar.addEventListener("keyup", function(event) {
     
 });
 
+/**
+ * Searches for users with the given query
+ * @param {String} query the partial username to search for 
+ */
 async function search(query) {
     const response = await fetch(request_path + "/user/search_user.php?query=" + query);
     const users = await response.json();
@@ -21,11 +26,18 @@ async function search(query) {
     }
 }
 
+/**
+ * Clears the search results
+ */
 function clearResults() {
     const search_results = document.getElementById("searchresults");
     cleanTemplateList(search_results);
 }
 
+/**
+ * Shows the search results on the page
+ * @param {JSON} users the users to show
+ */
 function showSearchResults(users) {
     const search_results = document.getElementById("searchresults");
     clearResults();
@@ -47,7 +59,7 @@ function showSearchResults(users) {
     });
 }
 
-
+// Redirects to the user's profile
 window.redirect = (user_id) => {
     console.log("redirecting to " + user_id)
     window.location.href = "/profile?user=" + user_id;
