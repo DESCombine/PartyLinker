@@ -5,6 +5,10 @@
     require_once(getenv("PL_ROOTDIRECTORY")."php/email_utils.php");
     use User\UserUtility;
 
+    /**
+     * This file is used to send an email to the user when someone tags them in a comment
+     * $text -> the text of the comment
+     */
     function tag_notify_handler($text) {
         global $driver;
         global $username;
@@ -83,6 +87,10 @@
         }
     }
 
+    /**
+     * This function is used to get the tags from a text
+     * $text -> the text to get the tags from
+     */
     function getTags($text) {
         $words = explode(" ", $text);
         $tags = array();

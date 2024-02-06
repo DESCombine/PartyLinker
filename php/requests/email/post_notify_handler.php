@@ -4,7 +4,10 @@
     require_once(getenv("PL_ROOTDIRECTORY")."db/user.php");
     require_once(getenv("PL_ROOTDIRECTORY")."php/email_utils.php");
     use User\UserUtility;
- 
+    
+    /**
+     * This file is used to send an email to the user when someone you follow posts a new event
+     */
     function event_notify_handler() {
         global $driver;
         global $username;

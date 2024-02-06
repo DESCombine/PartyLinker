@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * This function is used to handle the image upload
+ * It checks if the image is valid and then moves it to the /static/img/uploads folder
+ * $file -> the file that needs to be uploaded
+ */
 function img_handler($file) {
     $max_image_size = 31457280;
     $allowed_image_types = array('image/png', 'image/jpeg', 'image/gif');
