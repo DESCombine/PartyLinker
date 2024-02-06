@@ -7,6 +7,10 @@
     use User\UserUtility;
     use Post\PostUtility;
 
+    /**  
+     * This file is used to send an email to the user when someone comments on their post
+     * $commented -> the id of the post that was commented on
+     */
     function comment_notify_handler($commented) {
         global $driver;
         global $username;

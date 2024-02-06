@@ -5,6 +5,10 @@
     require_once(getenv("PL_ROOTDIRECTORY")."php/email_utils.php");
     use User\UserUtility;
 
+    /**
+     * This file is used to send an email to the user when someone follows them
+     * $followed -> the username of the user that was followed
+     */
     function follow_notify_handler($followed) {
         global $driver;
         global $username;
