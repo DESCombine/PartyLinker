@@ -15,7 +15,7 @@
     object-fit: cover;
 }
 
-#photo-id {
+#photos img {
     width: 100% !important;
     aspect-ratio: 1 / 1;
     object-fit: cover;
@@ -68,7 +68,7 @@ main #modifyIcon {
         cursor: pointer;
     }
 
-    #photo-id:hover {
+    #photos img:hover {
         cursor: pointer;
     }
 }
