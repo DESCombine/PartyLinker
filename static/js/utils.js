@@ -384,10 +384,7 @@ export function showPhotos(photos) {
     let photo = photos[0];
     let photosDiv = document.getElementById("photos");
     let template = document.getElementById("template-photos");
-    if (photos.length == 0) {
-        photosDiv.innerHTML = "No posts to show";
-    } else {
-        photosDiv.innerHTML = "";
+    if (photos.length != 0) {
         let dim = 0;
         for (let photo_index = 0; photo_index < photos.length; photo_index++) {
             photo = photos[photo_index];

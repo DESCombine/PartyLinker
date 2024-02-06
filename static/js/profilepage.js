@@ -1,5 +1,5 @@
 import { request_path } from "/static/js/config.js?v=11";
-import { loadUserImage, cleanTemplateList, showPhotos } from "/static/js/utils.js?v=11";
+import { loadUserImage, cleanTemplateList, showPhotos } from "/static/js/utils.js?v=12";
 
 document.querySelector("#modifyIcon").href = "/modifyprofile/modifyprofile.html";
 const postButton = document.getElementById("buttons").getElementsByTagName("div").item(0);
@@ -175,7 +175,7 @@ if (user != null) {
     document.getElementById("mobileProfileNav").href = "/profile/";
     document.getElementById("mobileProfileNav").innerHTML = '<em class="fa-solid fa-user"></em>';
     document.getElementById("desktopProfileNav").href = "/profile/";
-    document.getElementById("desktopProfileNav").innerHTML = '<em class="fa-solid fa-user"></em>';
+    document.getElementById("desktopProfileNav").innerHTML = '<em class="fa-solid fa-user"></em> Profile page';
 }
 
 showProfileInfos(user);
