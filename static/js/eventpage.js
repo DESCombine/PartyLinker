@@ -1,6 +1,6 @@
-import { request_path } from "/static/js/config.js?v=13";
+import { request_path } from "/static/js/config.js?v=14";
 import { showPhotos, loadEvent, showComments, like,
-        translatePost, loadPartecipations, addEventDescription, cleanTemplateList } from "/static/js/utils.js?v=13";
+        translatePost, loadPartecipations, addEventDescription, cleanTemplateList, showPartecipations } from "/static/js/utils.js?v=14";
 
 // First the id is taken from the url, then the post and the event informations are loaded
 const event_id = new URLSearchParams(window.location.search).get('id');
@@ -67,6 +67,10 @@ async function showContent() {
     showPhotos(await loadPhotos());
 
     // partecipants
+    
+    document.getElementById("partecipants-modal").addEventListener("hidden.bs.modal", 
+            function() { cleanTemplateList(document.querySelector("#partecipants-modal ul")); });
+    document.querySelector("#partecipate-button").addEventListener("click", function() { showPartecipations(event_id); });
     let partecipants = await loadPartecipations(event_id);
     let partecipantsDiv = document.getElementById("people");
     let template = document.getElementById("template-partecipants");

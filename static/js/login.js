@@ -1,4 +1,4 @@
-import { request_path } from "/static/js/config.js?v=13";
+import { request_path } from "/static/js/config.js?v=14";
 
 // adds the action to the form
 document.getElementsByTagName("form")[0].action = request_path + "/auth/auth.php";

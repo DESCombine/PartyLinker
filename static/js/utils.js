@@ -2,7 +2,7 @@
  *  This file is used to house every function that is used in multiple files
  */
 
-import { request_path } from "/static/js/config.js?v=13";
+import { request_path } from "/static/js/config.js?v=14";
 
 /**
  * Cheks if the user doesn't have a token and redirects to the login page

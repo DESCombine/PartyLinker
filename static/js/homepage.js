@@ -1,6 +1,6 @@
-import { request_path } from "/static/js/config.js?v=13";
+import { request_path } from "/static/js/config.js?v=14";
 import { checkError, cleanTemplateList, templateLike, 
-        addEventDescription, loadEvent, showComments, showPartecipations, translatePost } from "/static/js/utils.js?v=13";
+        addEventDescription, loadEvent, showComments, showPartecipations, translatePost } from "/static/js/utils.js?v=14";
 
 /**
  * Loads the followed users currently online
