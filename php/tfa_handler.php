@@ -6,7 +6,7 @@ require_once(getenv("PL_ROOTDIRECTORY") . "php/email_utils.php");
 use User\UserUtility;
 /**
  * This function is used to send the 2FA code to the user
- * $username -> the username of the user that needs to receive the code
+ * @param string $username the username of the user
  */
 function tfa_send($username)
 {
