@@ -1,5 +1,9 @@
 <?php 
     use Firebase\JWT\JWT;
+    /**
+     * This function is used to generate a token for the user
+     * $username -> the username of the user
+     */
     function generate_token($username) {
         $key = getenv("PL_JWTKEY");
         $payload = array(
@@ -8,7 +12,11 @@
         $jwt = JWT::encode($payload, $key, 'HS256');
         return $jwt;
     }
-
+    /**
+     * This function sets the token cookie for the user
+     * $username -> the username of the user
+     * $remember -> if the user wants to be remembered, if off the cookie will expire when the browser is closed, if on the cookie will expire in 1 year
+     */
     function set_token_cookie($username, $remember = "off") {
         $cookie_name = "token";
         $cookie_value = "Bearer ".generate_token($username);

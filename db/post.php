@@ -3,6 +3,19 @@
     namespace Post {
         require_once("dbtable.php");
         require_once("dbdriver.php");
+        /**
+         * Class that represents a post in the database.
+         * @property int $post_id The post's id.
+         * @property int $event_id The event's id.
+         * @property string $username The username of the user that posted the image.
+         * @property string $image The image's path.
+         * @property string $description The post's description.
+         * @property string $posted The date and time the post was made.
+         * @property int $likes The number of likes the post has.
+         * @property int $event_post Whether the post is an event post or not.
+         * @property string $profile_photo The user's profile photo.
+         * @property bool $liked Whether the post was liked by the user or not.
+         */
         class DBPost implements \DBTable{
             private $post_id;
             private $event_id;
@@ -15,6 +28,19 @@
             private $profile_photo;
             private $liked;
 
+            /**
+             * Creates a new instance of DBPost.
+             * @param int $post_id The post's id.
+             * @param int $event_id The event's id.
+             * @param string $username The username of the user that posted the image.
+             * @param string $image The image's path.
+             * @param string $description The post's description.
+             * @param string $posted The date and time the post was made.
+             * @param int $likes The number of likes the post has.
+             * @param int $event_post Whether the post is an event post or not.
+             * @param string $profile_photo The user's profile photo.
+             * @param bool $liked Whether the post was liked by the user or not.
+             */
             public function __construct($post_id = null, $event_id = null, $username = null, $image = null, 
                     $description = null, $posted = null, $likes = null, $event_post = null, $profile_photo = null, $liked = null) {
                 $this->post_id = $post_id;
@@ -29,6 +55,10 @@
                 $this->liked = $liked;
             }
 
+            /**
+             * Returns the object's properties as an associative array.
+             * @return array The object's properties as an associative array.
+             */
             public function jsonSerialize() {
                 return [
                     "post_id" => $this->post_id,
@@ -44,6 +74,10 @@
                 ];
             }
 
+            /**
+             * Inserts the object's properties into the database.
+             * @param \DBDriver $driver The database driver.
+             */
             public function db_serialize($driver) {
                 $sql = "INSERT INTO post (event_id, username, image, description, event_post) 
                         VALUES (?, ?, ?, ?, ?)";
@@ -60,6 +94,17 @@
             }
         }
 
+        /**
+         * Class that represents a comment in the database.
+         * @property int $comment_id The comment's id.
+         * @property int $post_id The post's id.
+         * @property string $username The username of the user that posted the comment.
+         * @property string $profile_photo The user's profile photo.
+         * @property string $content The comment's content.
+         * @property int $likes The number of likes the comment has.
+         * @property bool $liked Whether the comment was liked by the user or not.
+         * @property bool $owner Whether the comment was made by the user or not.
+         */
         class DBComment implements \DBTable {
             private $comment_id;
             private $post_id;
@@ -70,6 +115,18 @@
             private $liked;
             private $owner;
 
+            /**
+             * Creates a new instance of DBComment.
+             * @param int $comment_id The comment's id.
+             * @param int $post_id The post's id.
+             * @param string $username The username of the user that posted the comment.
+             * @param string $profile_photo The user's profile photo.
+             * @param string $content The comment's content.
+             * @param int $likes The number of likes the comment has.
+             * @param bool $liked Whether the comment was liked by the user or not.
+             * @param bool $owner Whether the comment was made by the user or not.
+             * @return void
+             */
             public function __construct($comment_id = null, $post_id = null, $username = null, 
                     $profile_photo = null, $content = null, $likes = null, $liked = null, $owner = null) {
                 $this->comment_id = $comment_id;
@@ -82,6 +139,10 @@
                 $this->owner = $owner;
             }
 
+            /**
+             * Returns the object's properties as an associative array.
+             * @return array The object's properties as an associative array.
+             */
             public function jsonSerialize() {
                 return [
                     "comment_id" => $this->comment_id,
@@ -95,6 +156,10 @@
                 ];
             }
 
+            /**
+             * Inserts the object's properties into the database.
+             * @param \DBDriver $driver The database driver.
+             */
             public function db_serialize($driver) {
                 $sql = "INSERT INTO comment (post_id, username, content) VALUES (?, ?, ?)";
                 try {
@@ -104,6 +169,11 @@
                 }
             }
 
+            /**
+             * Deletes the object's properties from the database.
+             * @param \DBDriver $driver The database driver.
+             * @return void
+             */
             public function db_delete($driver) {
                 $sql = "DELETE FROM comment WHERE comment_id = ?";
                 try {
@@ -118,15 +188,30 @@
             }
         }
 
+        /**
+         * Class that represents a like in the database.
+         * @property int $post_id The post's id.
+         * @property string $username The username of the user that liked the post.
+         */
         class DBPostLike implements \DBTable {
             private $post_id;
             private $username;
 
+            /**
+             * Creates a new instance of DBPostLike.
+             * @param int $post_id The post's id.
+             * @param string $username The username of the user that liked the post.
+             * @return void
+             */
             public function __construct($post_id = null, $username = null) {
                 $this->post_id = $post_id;
                 $this->username = $username;
             }
 
+            /**
+             * Returns the object's properties as an associative array.
+             * @return array The object's properties as an associative array.
+             */
             public function jsonSerialize() {
                 return [
                     "post_id" => $this->post_id,
@@ -134,6 +219,11 @@
                 ];
             }
 
+            /**
+             * Inserts the object's properties into the database.
+             * @param \DBDriver $driver The database driver.
+             * @return void
+             */
             public function db_serialize($driver) {
                 $sql = "INSERT INTO post_like (post_id, username) VALUES (?, ?)";
                 try {
@@ -143,6 +233,11 @@
                 }
             }
 
+            /**
+             * Deletes the object's properties from the database.
+             * @param \DBDriver $driver The database driver.
+             * @return void
+             */
             public function db_delete($driver) {
                 $sql = "DELETE FROM post_like WHERE post_id = ? AND username = ?";
                 try {
@@ -153,15 +248,30 @@
             }
         }
 
+        /**
+         * Class that represents a like in the database.
+         * @property int $comment_id The comment's id.
+         * @property string $username The username of the user that liked the comment.
+         */
         class DBCommentLike implements \DBTable {
             private $comment_id;
             private $username;
 
+            /**
+             * Creates a new instance of DBCommentLike.
+             * @param int $comment_id The comment's id.
+             * @param string $username The username of the user that liked the comment.
+             * @return void
+             */
             public function __construct($comment_id = null, $username = null) {
                 $this->comment_id = $comment_id;
                 $this->username = $username;
             }
 
+            /**
+             * Returns the object's properties as an associative array.
+             * @return array The object's properties as an associative array.
+             */
             public function jsonSerialize() {
                 return [
                     "comment_id" => $this->comment_id,
@@ -169,6 +279,11 @@
                 ];
             }
 
+            /**
+             * Inserts the object's properties into the database.
+             * @param \DBDriver $driver The database driver.
+             * @return void
+             */
             public function db_serialize($driver) {
                 $sql = "INSERT INTO comment_like (comment_id, username) VALUES (?, ?)";
                 try {
@@ -178,6 +293,11 @@
                 }
             }
 
+            /**
+             * Deletes the object's properties from the database.
+             * @param \DBDriver $driver The database driver.
+             * @return void
+             */
             public function db_delete($driver) {
                 $sql = "DELETE FROM comment_like WHERE comment_id = ? AND username = ?";
                 try {
@@ -188,7 +308,16 @@
             }
         }
 
+        /**
+         * Class that provides utility methods for the Post namespace.
+         */
         class PostUtility {
+            /**
+             * Returns a DBPost object from the database with the given post id.
+             * @param \DBDriver $driver The database driver.
+             * @param int $post_id The post's id.
+             * @return DBPost|null The DBPost object.
+             */
             public static function from_db_with_post_id(\DBDriver $driver, $post_id) {
                 $sql = "SELECT * FROM post WHERE post_id = ?";
                 try {
@@ -204,10 +333,25 @@
                         $row["description"], $row["posted"], $row["likes"], $row["event_post"]);
             } 
 
+            /**
+             * Returns a DBPost object from the given form data.
+             * @param int $event_id The event's id.
+             * @param string $username The username of the user that posted the image.
+             * @param string $image The image's path.
+             * @param string $description The post's description.
+             * @param int $event_post Whether the post is an event post or not.
+             * @return DBPost The DBPost object.
+             */
             public static function from_form($event_id, $username, $image, $description, $event_post) {
                 return new DBPost(null, $event_id, $username, $image, $description, null, null, $event_post);
             }
 
+            /**
+             * Returns a DBPost object from the database with the given event id.
+             * @param \DBDriver $driver The database driver.
+             * @param int $event_id The event's id.
+             * @return DBPost|null The DBPost object.
+             */
             public static function from_db_with_event_id(\DBDriver $driver, $event_id) {
                 $sql = "SELECT * FROM post WHERE event_id = ?";
                 try {
@@ -223,6 +367,12 @@
                         $row["description"], $row["posted"], $row["likes"], $row["event_post"]);
             }
 
+            /**
+             * Returns the description of the post with the given post id.
+             * @param \DBDriver $driver The database driver.
+             * @param int $post_id The post's id.
+             * @return string|null The post's description.
+             */
             public static function get_description_with_post_id(\DBDriver $driver, $post_id) {
                 $sql = "SELECT description FROM post WHERE post_id = ?";
                 try {
@@ -237,6 +387,14 @@
                 return $row["description"];
             }
 
+            /**
+             * Returns all posts from the database with the given event id.
+             * @param \DBDriver $driver The database driver.
+             * @param int $event_id The event's id.
+             * @param string $username The username of the user
+             * @return array|null An array of DBPost objects.
+             * @throws \Exception If an error occurs while querying the database.
+             */
             public static function from_db_all_posts_with_event_id(\DBDriver $driver, $event_id, $username) {
                 $sql = "SELECT * FROM post WHERE event_id = ? AND event_post = 0";
                 try {
@@ -263,6 +421,14 @@
                 return $posts;
             }
 
+            /**
+             * Returns all posts from the database with the given username.
+             * @param \DBDriver $driver The database driver.
+             * @param string $username The username of the user.
+             * @param string $watcher The username of the user watching the posts.
+             * @return array|null An array of DBPost objects.
+             * @throws \Exception If an error occurs while querying the database.
+             */
             public static function from_db_with_username(\DBDriver $driver, $username, $watcher) {
                 $sql = "SELECT * FROM post WHERE username = ?";
                 try {
@@ -289,6 +455,14 @@
                 return $posts;
             }
 
+            /**
+             * Returns all posts from the database from the users followed by the given username.
+             * @param \DBDriver $driver The database driver.
+             * @param string $username The username of the user.
+             * @param int $max_posts The maximum number of posts to return.
+             * @return array|null An array of DBPost objects.
+             * @throws \Exception If an error occurs while querying the database.
+             */
             public static function recent_posts_followed(\DBDriver $driver, $username, $max_posts) {
                 $sql = "SELECT P.*, U.profile_photo
                         FROM post P, user U
@@ -322,6 +496,12 @@
                 return $posts;
             }
 
+            /**
+             * Return a comment from the database with the given comment id.
+             * @param \DBDriver $driver The database driver.
+             * @param int $comment_id The comment's id.
+             * @return DBComment|null The DBComment object.
+             */
             public static function comment_with_id(\DBDriver $driver, $comment_id) {
                 $sql = "SELECT * FROM comment WHERE comment_id = ?";
                 try {
@@ -337,6 +517,14 @@
                         null, $row["content"], $row["likes"]);
             }
 
+            /**
+             * Returns all comments from the database with the given post id.
+             * @param \DBDriver $driver The database driver.
+             * @param int $post_id The post's id.
+             * @param string $username The username of the user.
+             * @return array|null An array of DBComment objects.
+             * @throws \Exception If an error occurs while querying the database.
+             */
             public static function comments_with_post(\DBDriver $driver, $post_id, $username) {
                 $sql = "SELECT C.*, U.profile_photo
                         FROM comment C, user U
@@ -375,16 +563,38 @@
                 return $comments;
             }
 
+            /**
+             * Insert a comment into the database.
+             * @param \DBDriver $driver The database driver.
+             * @param int $post_id The post's id.
+             * @param string $username The username of the user.
+             * @param string $content The comment's content.
+             * @return void
+             */
             public static function insert_comment(\DBDriver $driver, $post_id, $username, $content) {
                 $comment = new DBComment(null, $post_id, $username, null, $content);
                 $comment->db_serialize($driver);
             }
 
+            /**
+             * Delete a comment from the database with the given comment id.
+             * @param \DBDriver $driver The database driver.
+             * @param int $comment_id The comment's id.
+             * @return void
+             */
             public static function delete_comment(\DBDriver $driver, $comment_id) {
                 $com = new DBComment($comment_id);
                 $com->db_delete($driver);
             }
 
+            /**
+             * Insert a like into the database.
+             * @param \DBDriver $driver The database driver.
+             * @param int $like_id The like's id.
+             * @param string $username The username of the user.
+             * @param string $type The type of the like.
+             * @return void
+             */
             public static function insert_like(\DBDriver $driver, $like_id, $username, $type) {
                 $sql = "UPDATE";
                 try {
@@ -408,6 +618,14 @@
                 }
             }
 
+            /**
+             * Delete a like from the database.
+             * @param \DBDriver $driver The database driver.
+             * @param int $like_id The like's id.
+             * @param string $username The username of the user.
+             * @param string $type The type of the like.
+             * @return void
+             */
             public static function delete_like(\DBDriver $driver, $like_id, $username, $type) {
                 $sql = "UPDATE";
                 try {
@@ -431,6 +649,13 @@
                 }
             }
 
+            /**
+             * Returns a DBPost object from the database with the given event id.
+             * @param \DBDriver $driver The database driver.
+             * @param int $post_id The post's id.
+             * @param string $username The username of the user.
+             * @return DBPost|null The DBPost object.
+             */
             public static function load_post_event($driver, $event_id, $username) {
                 $sql = "SELECT * FROM post WHERE event_id = ? AND event_post = 1";
                 try {

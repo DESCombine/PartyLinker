@@ -1,5 +1,8 @@
 <?php 
-
+/**
+ * This file is used to allow CORS
+ * It is included in every request that needs to allow CORS
+ */
 if (isset($_SERVER['HTTP_ORIGIN'])) {
     // Decide if the origin in $_SERVER['HTTP_ORIGIN'] is one
     // you want to allow, and if so:

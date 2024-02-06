@@ -6,7 +6,10 @@
     require_once(getenv("PL_ROOTDIRECTORY")."php/email_utils.php");
     use User\UserUtility;
     use Post\PostUtility;
-
+    /**
+     * This file is used to send an email to the user when someone likes their post or comment
+     * $liked -> the id of the post or comment that was liked
+     */
     function like_notify_handler($liked, $type) {
         global $driver;
         global $username;
