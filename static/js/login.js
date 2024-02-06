@@ -19,9 +19,9 @@ window.addEventListener("resize", function(){
 // check url for error
 if(window.location.href.indexOf("?wrongpassword") > -1){
     document.getElementById("error").classList.remove("invisible");
-    document.getElementById("error").innerHTML = "Error! Invalid password";
+    document.getElementById("error").innerHTML = "<p class='text-danger'>Error! Invalid password</p>";
 }
 if (window.location.href.indexOf("?usernotfound") > -1){
     document.getElementById("error").classList.remove("invisible");
-    document.getElementById("error").innerHTML = "Error! Invalid username";
+    document.getElementById("error").innerHTML = "<p class='text-danger'>Error! Invalid username</p>";
 }
