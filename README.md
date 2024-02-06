@@ -5,10 +5,6 @@ Authors:
 - Sanchi Emanuele (emanuele.sanchi@studio.unibo.it)
 - Severi Tommaso (tommaso.severi2@studio.unibo.it)
 
-Docs:
-
-https://docs.google.com/document/d/1C_xu4oAYL0aEz9kDHxQVmgzb6EMx2ZMC8hJkvgZOxFw/edit?hl=it&pli=1
-
 # Setup for local development
 
 I'll assume you already have xampp installed and running
