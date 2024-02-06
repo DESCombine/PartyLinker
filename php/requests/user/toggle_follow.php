@@ -8,6 +8,7 @@
     global $driver;
     global $username;
     $toFollow = $_GET["user"];
+    // Toggle the follow status of the user and send a notification to the user
     try{
         if (UserUtility::toggle_follow($driver, $username, $toFollow)) {
             follow_notify_handler($toFollow);

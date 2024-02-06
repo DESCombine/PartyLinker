@@ -8,7 +8,7 @@
     global $driver;
     $request = json_decode(file_get_contents('php://input'), true);
     $post_id = $request["post_id"];
-
+    // Get the description of the post and the language of the user and return them as a json object to the translation service
     use Post\PostUtility;
     $description = PostUtility::get_description_with_post_id($driver, $post_id);
     use User\UserUtility;

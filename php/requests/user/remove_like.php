@@ -6,6 +6,7 @@
 
     global $driver; 
     global $username;
+    // remove a like from a post
     try {
         $request = json_decode(file_get_contents('php://input'), true);
         $like = $request["like_id"];

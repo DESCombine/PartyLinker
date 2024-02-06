@@ -6,7 +6,7 @@
     
     global $driver;
     global $username;
-
+    // Retrieve the settings of the user and return them as a json object
     $settings = UserUtility::retrieve_settings($driver, $username);
     header('Content-Type: application/json');
     echo json_encode($settings, JSON_PRETTY_PRINT);

@@ -14,10 +14,13 @@
     global $domain;
     global $username;
     $event_id = $_POST["event-id"];
+    // call the function to load the photo on the server
     $image = img_handler($_FILES["image"]);
     $description = $_POST["description"];
+    // call the function to check if the description contains tags and notify the tagged users
     tag_notify_handler($description);
     $event_post = 0;
+    // check if the post is an event post or a normal post
     if ($event_id == 0) {
         $event_post = 1;
         $name = $_POST["event-name"];

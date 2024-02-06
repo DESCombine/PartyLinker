@@ -9,7 +9,7 @@
     }
     
     require_once(getenv("PL_ROOTDIRECTORY")."db/post.php");
-    
+    // Get the user's infos and calculate the number of followers and following and return them as a json object
     global $driver;
     global $username;
     $max_posts = 20;

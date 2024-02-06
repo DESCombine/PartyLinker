@@ -10,7 +10,7 @@
 
     */
 
-
+    // Get datas from the request
     $request = json_decode(file_get_contents('php://input'), true);
     $username = $request["username"];
     $email = $request["email"];
@@ -21,6 +21,7 @@
     $bio = $request["bio"];
     $phone = $request["phone"];
     $password = $request["password"];
+    // check if the username, email and phone are available
     try {
         User\UserUtility::check_if_available($driver, $username, $email, $phone);
 
@@ -37,6 +38,7 @@
         echo json_encode(array("error" => "Phone already taken"));
         exit();
     }
+    // create the user
     try {
         $user = User\UserUtility::from_form($username, $email, $name, $surname, $birth_date, $photo, $bio, $phone, $password);
         $user->db_serialize($driver);

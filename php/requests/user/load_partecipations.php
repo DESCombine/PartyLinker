@@ -6,6 +6,7 @@
     
     global $driver;
     global $username;
+    // Load all the partecipations to the event and return them as a json object
     $event = $_GET['event'];
     $comments = EventUtility::retrieve_partecipations($driver, $event, $username);
     header('Content-Type: application/json');

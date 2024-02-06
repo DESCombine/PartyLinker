@@ -6,6 +6,7 @@
     
     global $driver;
     global $username;
+    // Load the online users that the user follows and return them as a json object
     $users = UserUtility::retrieve_online_followed($driver, $username);
     header('Content-Type: application/json');
     echo json_encode($users, JSON_PRETTY_PRINT);

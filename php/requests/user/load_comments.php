@@ -7,6 +7,7 @@
     global $driver;
     global $username;
     $post = $_GET['post'];
+    // Get the comments of the post and return them as a json object
     $comments = PostUtility::comments_with_post($driver, $post, $username);
     header('Content-Type: application/json');
     echo json_encode($comments, JSON_PRETTY_PRINT);

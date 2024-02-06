@@ -6,7 +6,7 @@
 
     global $username;
     global $driver;
-
+    // Load the posts of the user and return them as a json object
     if(isset($_GET["user"])) {
         $profile_user = $_GET["user"];
     } else {
