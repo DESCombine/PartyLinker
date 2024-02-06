@@ -1,4 +1,4 @@
-import { request_path } from "/static/js/config.js?v=11";
+import { request_path } from "/static/js/config.js?v=13";
 
 // loads form action
 document.getElementsByTagName("form")[0].action = request_path + "/auth/signin.php";

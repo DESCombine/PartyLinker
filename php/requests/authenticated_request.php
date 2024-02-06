@@ -19,5 +19,12 @@
         echo json_encode(array("error" => "No token provided"));
         exit();
     }
-    $username = UserUtility::retrieve_username_from_token($_COOKIE["token"]);
+    try {
+        $username = UserUtility::retrieve_username_from_token($_COOKIE["token"]);
+    } catch (Exception $e) {
+        header('Content-Type: application/json');
+        echo json_encode(array("error" => "Invalid token"));
+        exit();
+    }
+    
 ?>
