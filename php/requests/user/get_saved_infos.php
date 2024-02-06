@@ -6,6 +6,7 @@
     
     global $driver;
     global $username;
+    // Get the user's settings and infos and return them as a json object
     $user = UserUtility::all_infos_with_username($driver, $username);
     header('Content-Type: application/json');
     echo json_encode($user, JSON_PRETTY_PRINT);

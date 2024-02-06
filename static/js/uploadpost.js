@@ -1,4 +1,4 @@
-import { request_path } from "/static/js/config.js?v=11";
+import { request_path } from "/static/js/config.js?v=14";
 import { loadEvent } from "/static/js/utils.js?";
 
 // takes the event_id from the url

@@ -5,6 +5,7 @@
     require_once(getenv("PL_ROOTDIRECTORY")."db/post.php");
 
     global $driver;
+    // Remove a comment from a post
     try {
         $request = json_decode(file_get_contents('php://input'), true);
         $comment = $request["comment_id"];

@@ -6,6 +6,7 @@
 
     global $driver;
     global $username; 
+    // Remove the partecipation of the user to the event
     try {
         $request = json_decode(file_get_contents('php://input'), true);
         $event = $request["event_id"];

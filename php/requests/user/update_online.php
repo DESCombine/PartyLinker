@@ -6,6 +6,7 @@
 
     global $driver;
     global $username;
+    // Update the online status of the user and all the other users
     UserUtility::update_online($driver, $username, 1);
     $onlineUsers = UserUtility::update_timestamps($driver, $username);
     foreach ($onlineUsers as $onlineUser) {

@@ -5,7 +5,7 @@
     <title>PartyLinker - Event</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="/static/css/eventpage.css?v=2">
+    <link rel="stylesheet" type="text/css" href="/static/css/eventpage.css?v=14">
     <link rel="stylesheet" type="text/css" href="/static/css/style.css"/>
     <!-- Font Renner import -->
     <link rel="stylesheet" href="https://indestructibletype-fonthosting.github.io/renner.css" type="text/css">
@@ -44,6 +44,11 @@
                                     <button id="poster-comment-bt" class="btn" data-bs-toggle="modal"
                                         data-bs-target="#comments-modal">
                                         <em class="fa-regular fa-comment"></em>
+                                    </button>
+                                </li>
+                                <li class="list-group-item">
+                                    <button class="btn" id="partecipate-button" data-bs-toggle="modal" data-bs-target="#partecipants-modal">
+                                        <em class="fa-solid fa-users-viewfinder"></em>
                                     </button>
                                 </li>
                             </ol>
@@ -213,6 +218,53 @@
             </div>
         </div>
     </div>
+    <!-- Partecipants modal -->
+    <div class="modal fade" id="partecipants-modal" tabindex="-1" aria-labelledby="partecipantsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable align-items-end align-items-md-center modal-lg">
+            <div class="modal-content h-75">
+                <div class="modal-header justify-content-center">
+                    <div class="row justify-content-end">
+                        <div class="col">
+                            <h2 class="modal-title" id="partecipantsModalLabel"><em class="fa-solid fa-users-gear"></em> Partecipants</h2>
+                        </div>
+                        <div class="col-1">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>  
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <ul class="list-group list-group-flush my-1 overflow-y-auto">
+                            <template>   
+                                <li class="list-group-item">
+                                    <div class="row justify-content-start">
+                                        <div class="col-2 col-lg-1">
+                                            <img src="/static/img/default-profile.png" alt="" class="img-fluid rounded-circle img-thumbnail">
+                                        </div>
+                                        <div class="col">
+                                            <a href="#" class="fs-5 text-dark">Username</a>
+                                        </div>
+                                    </div>
+                                </li>
+                            </template>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer border-top border-black">
+                    <div class="container-fluid text-center">
+                        <div class="d-inline-flex gap-2">
+                            <button class="btn border border-black me-3">
+                                Let's party! <em class="fa-solid fa-face-laugh-squint"></em>
+                            </button>
+                            <button class="btn border border-black ms-3 px-4">
+                                I'm busy <em class="fa-solid fa-face-sad-tear"></em>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Upload Modal -->
     <div class="modal fade" id="upload-modal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -334,8 +386,8 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
     <!-- JS import-->
-    <script src="/static/js/eventpage.js?v=12" type="module"></script>
-    <script src="/static/js/uploadbt.js?v=11" type="module"></script>
+    <script src="/static/js/eventpage.js?v=14" type="module"></script>
+    <script src="/static/js/uploadbt.js?v=14" type="module"></script>
 
 </body>
 

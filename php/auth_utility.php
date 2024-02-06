@@ -2,7 +2,8 @@
     use Firebase\JWT\JWT;
     /**
      * This function is used to generate a token for the user
-     * $username -> the username of the user
+     * @param string $username the username of the user
+     * @return string the token for the user
      */
     function generate_token($username) {
         $key = getenv("PL_JWTKEY");
@@ -14,8 +15,9 @@
     }
     /**
      * This function sets the token cookie for the user
-     * $username -> the username of the user
-     * $remember -> if the user wants to be remembered, if off the cookie will expire when the browser is closed, if on the cookie will expire in 1 year
+     * @param string $username the username of the user
+     * @param string $remember the remember me option
+     * @return void
      */
     function set_token_cookie($username, $remember = "off") {
         $cookie_name = "token";

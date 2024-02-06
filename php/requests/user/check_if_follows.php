@@ -9,6 +9,7 @@
     global $driver;
     global $username;
     $max_posts = 20;
+    // connect to the database and check if the user follows the other user. Then return the result as a json object
     $flag = UserUtility::check_if_follows($driver, $username, $toCheck);
     header('Content-Type: application/json');
     if($flag) {

@@ -6,6 +6,7 @@
 
     global $driver;
     global $username;
+    // insert a new partecipation for the event passed in the request
     try {
         $request = json_decode(file_get_contents('php://input'), true);
         $event = $request["event_id"];

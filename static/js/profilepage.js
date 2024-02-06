@@ -1,5 +1,5 @@
-import { request_path } from "/static/js/config.js?v=11";
-import { loadUserImage, cleanTemplateList, showPhotos } from "/static/js/utils.js?v=12";
+import { request_path } from "/static/js/config.js?v=14";
+import { loadUserImage, cleanTemplateList, showPhotos } from "/static/js/utils.js?v=14";
 
 document.querySelector("#modifyIcon").href = "/modifyprofile/modifyprofile.html";
 const postButton = document.getElementById("buttons").getElementsByTagName("div").item(0);

@@ -7,6 +7,7 @@
     global $driver;
     global $username;
     $ev = $_GET['event'];
+    // Get all the posts of the event and return them as a json object
     $event = PostUtility::from_db_all_posts_with_event_id($driver, $ev, $username);
     header('Content-Type: application/json');
     echo json_encode($event, JSON_PRETTY_PRINT);

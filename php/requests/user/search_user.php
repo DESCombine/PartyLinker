@@ -6,7 +6,7 @@
 
     $query = $_GET['query'];
     global $driver;
-    
+    // Search username in the database and return the results as a json object
     $users = User\UserUtility::from_db_with_username_like($driver, $query);
     echo json_encode($users, JSON_PRETTY_PRINT);
     $driver->close_connection();

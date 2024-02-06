@@ -6,8 +6,9 @@ require_once(getenv("PL_ROOTDIRECTORY") . "db/user.php");
 require_once(getenv("PL_ROOTDIRECTORY") . "php/requests/cors.php");
 require_once(getenv("PL_ROOTDIRECTORY")."php/requests/authenticated_request.php");
 header('Content-Type: application/json');
-//$request = json_decode(file_get_contents('php://input'), true);
+
 global $username;
+// Get the informations from the request
 $name = $_POST["name"];
 $surname = $_POST["surname"];
 $birth_date = $_POST["birthdate"];
@@ -27,6 +28,7 @@ if (isset($_POST["organizer"])) {
 $profilePhoto = null;
 $bannerPhoto = null;
 
+// Call the function to load the photos on the server
 if ($_FILES["profilePhoto"]["name"] != null) {
     $profilePhoto = img_handler($_FILES["profilePhoto"]);
 } else {
@@ -49,12 +51,13 @@ if (isset($_POST["2FA"])) {
 } else {
     $TFA = 0;
 }
-// create user
+
 $user = new User\DBUser();
 if($password != null){
     $user->create_password($password);
     $password = $user->get_password();
 }
+// update the informations of the user
 $user->update_infos($driver, $name, $surname, $birth_date, $email, $phone, $username, $password, $organizer, $profilePhoto, $bannerPhoto, $bio, $language, $notifications, $TFA);
 global $domain;
 echo json_encode(array("message" => "success"), JSON_PRETTY_PRINT);

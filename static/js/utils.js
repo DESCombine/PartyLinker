@@ -2,14 +2,14 @@
  *  This file is used to house every function that is used in multiple files
  */
 
-import { request_path } from "/static/js/config.js?v=11";
+import { request_path } from "/static/js/config.js?v=14";
 
 /**
  * Cheks if the user doesn't have a token and redirects to the login page
  * @param {JSON} response the response from the server
  */
 export function checkError(response) {
-    if (response.error === "No token provided") {
+    if (response.error === "No token provided" || response.error === "Invalid token") {
         window.location.replace("/login/login.html");
     }
 } 

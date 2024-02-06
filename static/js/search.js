@@ -1,5 +1,5 @@
-import { request_path } from "/static/js/config.js?v=11";
-import { cleanTemplateList } from "/static/js/utils.js?v=11";
+import { request_path } from "/static/js/config.js?v=14";
+import { cleanTemplateList } from "/static/js/utils.js?v=14";
 
 // Listens for the searchbar to change and calls the search function
 const searchbar = document.getElementById("searchbar");
