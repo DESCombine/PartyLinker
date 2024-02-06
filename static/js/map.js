@@ -1,4 +1,4 @@
-import { request_path } from "/static/js/config.js?v=9";
+import { request_path } from "/static/js/config.js?v=10";
 
 // Loads all the future and recent events to display on the map
 async function loadEvents() {

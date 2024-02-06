@@ -1,6 +1,6 @@
-import { request_path } from "/static/js/config.js?v=9";
+import { request_path } from "/static/js/config.js?v=10";
 import { showPhotos, loadEvent, showComments, like,
-        translatePost, loadPartecipations, addEventDescription, cleanTemplateList } from "/static/js/utils.js?v=9";
+        translatePost, loadPartecipations, addEventDescription, cleanTemplateList } from "/static/js/utils.js?v=10";
 
 // First the id is taken from the url, then the post and the event informations are loaded
 const event_id = new URLSearchParams(window.location.search).get('id');
