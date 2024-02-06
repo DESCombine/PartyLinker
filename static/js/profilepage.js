@@ -142,6 +142,10 @@ if (user != null) {
         }
     }
     checkFollow();
+    document.getElementById("mobileProfileNav").href = "/profile/";
+    document.getElementById("mobileProfileNav").innerHTML = '<em class="fa-solid fa-user"></em>';
+    document.getElementById("desktopProfileNav").href = "/profile/";
+    document.getElementById("desktopProfileNav").innerHTML = '<em class="fa-solid fa-user"></em>';
 }
 
 function openModal(post) {
