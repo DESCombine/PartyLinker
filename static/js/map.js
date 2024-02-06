@@ -1,6 +1,6 @@
-import { request_path } from "/static/js/config.js?v=9";
+import { request_path } from "/static/js/config.js?v=10";
 
-
+// Loads all the future and recent events to display on the map
 async function loadEvents() {
     const response = await fetch(request_path + "/event/load_recent_future_events.php", {
         method: "GET",
@@ -27,7 +27,9 @@ async function loadEvents() {
 
 }
 
-
+/**
+ * Loads the map with the events
+ */
 async function loadMap() {
     mapboxgl.accessToken = 'pk.eyJ1IjoiZGFuaWxvbWFnbGlhIiwiYSI6ImNscmdtYzVqYTAyejIya21rZnJrOWtsazIifQ.4iM5ZZ26Y945WvEawTztOQ';
     let events = await loadEvents();

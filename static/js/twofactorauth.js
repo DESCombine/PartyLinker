@@ -1,17 +1,17 @@
-import { request_path } from "/static/js/config.js?v=9";
+import { request_path } from "/static/js/config.js?v=10";
 
+// loads form action
 document.getElementsByTagName("form")[0].action = request_path + "/auth/check_tfa.php";
 
+// check url for error
 const urlParams = new URLSearchParams(window.location.search);
 const error = urlParams.get('error');
 const token = urlParams.get('token');
 document.getElementById("tokenInput").setAttribute("value", token);
 document.getElementById("rememberInput").setAttribute("value", urlParams.get('remember'));
-
 if (error) {
     document.getElementById("error").classList.remove("invisible");
 }
-
 
 // when screen is resized
 window.addEventListener("resize", function(){
