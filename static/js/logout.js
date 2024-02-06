@@ -1,5 +1,6 @@
 import { request_path } from "/static/js/config.js?v=9";
 
+// adds the action to the form
 document.getElementsByTagName("form")[0].action = request_path + "/auth/logout.php";
 
 // when screen is resized

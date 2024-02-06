@@ -1,23 +1,45 @@
+/**
+ *  This file is used to house every function that is used in multiple files
+ */
+
 import { request_path } from "/static/js/config.js?v=9";
 
+/**
+ * Cheks if the user doesn't have a token and redirects to the login page
+ * @param {JSON} response the response from the server
+ */
 export function checkError(response) {
     if (response.error === "No token provided") {
         window.location.replace("/login/login.html");
     }
 } 
 
+/**
+ * Loads the user's profile image
+ * @param {int} user_id the user's id
+ * @returns the user's profile image
+ */
 export async function loadUserImage(user_id) {
     const response = await fetch(request_path + "/user/load_user_img.php?user=" + user_id);
     const image = await response.json();
     return image;
 }
 
+/**
+ * Loads an event from its id
+ * @param {int} event_id the event's id
+ * @returns the event
+ */
 export async function loadEvent(event_id) {
     const response = await fetch(request_path + "/user/load_event.php?event=" + event_id);
     const event = await response.json();
     return event;
 }
 
+/**
+ * Checks if the user is an organizer
+ * @returns true if the user is an organizer, false otherwise
+ */
 export async function checkOrganizer() {
     const response = await fetch(request_path + "/user/load_settings.php", {
         method: "GET",
@@ -31,12 +53,22 @@ export async function checkOrganizer() {
     return settings.organizer;
 }
 
+/**
+ * Cleans a list of template elements
+ * @param {Node} list the list to clean
+ */
 export function cleanTemplateList(list) {
     while (list.getElementsByTagName('li').length > 0) {
         list.removeChild(list.lastChild);
     }
 }
 
+/**
+ * Removes and adds an event listener to a button
+ * @param {Node} oldButton the button to replace
+ * @param {Function} fun the function to add 
+ * @returns a copy of the button with the new event listener
+ */
 export function resetEventListener(oldButton, fun) {
     const newButton = oldButton.cloneNode(true);
     oldButton.parentNode.replaceChild(newButton, oldButton);
@@ -44,6 +76,11 @@ export function resetEventListener(oldButton, fun) {
     return newButton;
 }
 
+/**
+ * Adds a description to an event
+ * @param {Node} parent the parent element
+ * @param {JSON} event the event 
+ */
 export function addEventDescription(parent, event) {
     parent.querySelector("p").innerHTML = event.name;
     const infos = parent.querySelector("ol");
@@ -57,6 +94,11 @@ export function addEventDescription(parent, event) {
             <li class="list-group-item"><p>Minimum age: ${event.minimum_age}</p></li>`;
 }
 
+/**
+ * Loads the comments of a post
+ * @param {int} post_id the id of the post
+ * @returns the comments of the post
+ */
 async function loadComments(post_id) {
     const response = await fetch(request_path + "/user/load_comments.php?post=" + post_id, {
         method: "GET",
@@ -69,6 +111,10 @@ async function loadComments(post_id) {
     return comments;
 }
 
+/**
+ * Adds a comment to a post
+ * @param {int} post_id the id of the post
+ */
 async function submitComment(post_id) {
     const modalFooter = document.querySelector("#comments-modal .modal-footer");
     const content = modalFooter.querySelector("input").value;
@@ -88,6 +134,11 @@ async function submitComment(post_id) {
     showComments(post_id);
 }
 
+/**
+ * Removes a comment from a post
+ * @param {int} comment_id the id of the comment
+ * @param {int} post_id the id of the post
+ */
 async function removeComment(comment_id, post_id) {
     await fetch(request_path + "/user/remove_comment.php", {
         method: "POST",
@@ -103,6 +154,10 @@ async function removeComment(comment_id, post_id) {
     showComments(post_id);
 }
 
+/**
+ * Shows the comments of a post
+ * @param {int} post_id the id of the post
+ */
 export async function showComments(post_id) {
     const comModal = document.querySelector("#comments-modal");
     const comments = comModal.querySelector("ol");
@@ -123,11 +178,9 @@ export async function showComments(post_id) {
         }
         clone.querySelector(".likes").innerHTML = comment.likes;
         const likeButton = clone.querySelector(".like-button");
+        likeButton.addEventListener("click", function () { templateLike(comment.comment_id, "comment", !comment.liked)});
         if (comment.liked) {
-            likeButton.addEventListener("click", function () { removeLike(comment.comment_id, "comment") });
             likeButton.innerHTML = "<em class='fa-solid fa-heart'></em>";
-        } else {
-            likeButton.addEventListener("click", function () { addLike(comment.comment_id, "comment") });
         }
         comments.appendChild(clone);
     }
@@ -139,6 +192,11 @@ export async function showComments(post_id) {
     resetEventListener(comment_button, function() { submitComment(post_id); });
 }
 
+/**
+ * Loads the partecipants of an event
+ * @param {int} event_id the id of the event
+ * @returns the partecipants of the event
+ */
 export async function loadPartecipations(event_id) {
     const response = await fetch(request_path + "/user/load_partecipations.php?event=" + event_id, {
         method: "GET",
@@ -151,6 +209,11 @@ export async function loadPartecipations(event_id) {
     return partecipations;
 }
 
+/**
+ * Reacts to a partecipate/busy button click
+ * @param {int} event_id the id of the event
+ * @param {String} request the request to send to the server 
+ */
 async function partecipationClick(event_id, request) {
     await fetch(request_path + request, {
         method: "POST",
@@ -167,6 +230,10 @@ async function partecipationClick(event_id, request) {
     showPartecipations(event_id);
 }
 
+/**
+ * Shows the partecipants of an event
+ * @param {int} event_id the id of the event
+ */
 export async function showPartecipations(event_id) {
     const partModal = document.querySelector("#partecipants-modal")
     const partecipations = partModal.querySelector("ul");
@@ -193,15 +260,28 @@ export async function showPartecipations(event_id) {
             partecipationClick(event_id, "/user/remove_partecipation.php"); }).disabled = !isUserPartecipating;
 }
 
-export async function addLike(like_id, type) {
-    like(like_id, type, "/user/upload_like.php", 1);
+/**
+ * Handles a like button click on a post or comment template
+ * @param {int} like_id the id of the post or comment
+ * @param {String} type the type of the like
+ * @param {Boolean} addOrRemove true if the like is to be added, false if it is to be removed
+ */
+export function templateLike(like_id, type, addOrRemove) {
+    const parent = document.getElementsByName(type+like_id)[0];
+    like(like_id, type, addOrRemove, parent, ".like-button", ".likes");
 }
 
-export async function removeLike(like_id, type) {
-    like(like_id, type, "/user/remove_like.php", -1);
-}
-
-async function like(like_id, type, request, addOrRemove) {
+/**
+ * Removes or adds a like to a post or comment
+ * @param {int} like_id the id of the post or comment
+ * @param {String} type the type of the like
+ * @param {int} addOrRemove true if the like is to be added, false if it is to be removed
+ * @param {Node} parent the parent element of like buttons and likes
+ * @param {String} likeButton_id the id of the like button element
+ * @param {String} likes_id the id of the likes element
+ */
+export async function like(like_id, type, addOrRemove, parent, likeButton_id, likes_id) {
+    const request = addOrRemove ? "/user/upload_like.php" : "/user/remove_like.php";
     await fetch(request_path + request, {
         method: "POST",
         credentials: "include",
@@ -213,37 +293,24 @@ async function like(like_id, type, request, addOrRemove) {
             "type": type
         })
     });
-    const element = document.getElementsByName(type + like_id)[0];
-    const likes = element.querySelector(".likes");
-    const likeButton = element.querySelector(".like-button");
-    likes.innerHTML = parseInt(likes.innerHTML) + addOrRemove;
-    let fun;
-    if (addOrRemove == 1) {
+    const likeButton = parent.querySelector(likeButton_id);
+    const likes = parent.querySelector(likes_id);
+    if (addOrRemove) {
+        likes.innerHTML = parseInt(likes.innerHTML) + 1;
         likeButton.innerHTML = "<em class='fa-solid fa-heart'></em>";
-        fun = function() { removeLike(like_id, type, likeButton, likes); };
     } else {
+        likes.innerHTML = parseInt(likes.innerHTML) - 1;
         likeButton.innerHTML = "<em class='fa-regular fa-heart'></em>";
-        fun = function() { addLike(like_id, type, likeButton, likes); };
     }
+    const fun = function() { like(like_id, type, !addOrRemove, parent, likeButton_id, likes_id); };
     resetEventListener(likeButton, fun);
 }
 
-function createCookie(name, value, days) {
-    let expires;
-
-    if (days) {
-        let date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        expires = "; expires=" + date.toGMTString();
-    }
-    else {
-        expires = "";
-    }
-
-    document.cookie = escape(name) + "=" +
-        escape(value) + expires + "; path=/";
-}
-
+/**
+ * Translates the description of a post
+ * @param {int} post_id the id of the post
+ * @param {Node} textElement the element to translate
+ */
 export async function translatePost(post_id, textElement) {
     const response = await fetch(request_path + "/user/retrieve_translate_datas.php", {
         method: "POST",
@@ -283,6 +350,71 @@ export async function translatePost(post_id, textElement) {
     }
 }
 
+/**
+ * Shows the modal with the post informations
+ * @param {JSON} post the post to show
+ */
+async function showModalPost(post) {
+    const postActions = document.getElementById("post-actions");
+    // clean buttons event listeners
+    document.getElementById("translate").replaceWith(document.getElementById("translate").cloneNode(true));
+    document.getElementById("comments-button").replaceWith(document.getElementById("comments-button").cloneNode(true));
+    document.getElementById("likes-button").replaceWith(document.getElementById("likes-button").cloneNode(true));
+    // show modal
+    document.getElementById("post-user-photo").src = "/static/img/uploads/" + await loadUserImage(post.username);
+    document.getElementById("post-name").innerHTML = post.username;
+    document.getElementById("post-photo").src = "/static/img/uploads/" + post.image;
+    document.getElementById("post-likes").innerHTML = post.likes;
+    document.getElementById("post-description").innerHTML = post.description;
+    document.getElementById("translate").addEventListener("click", function () { translatePost(post.post_id, document.getElementById("post-description")); });
+    const likeButton = postActions.querySelector("#likes-button");
+    likeButton.addEventListener("click", function () { like(post.post_id, "post", !post.liked, document, "#likes-button", "#post-likes") });
+    if (post.liked) {
+        likeButton.innerHTML = "<em class='fa-solid fa-heart'></em>";
+    }
+    postActions.querySelector("#comments-button").addEventListener("click", function() { showComments(post.post_id); });
+    postActions.querySelector("a").href = "/event/eventpage.html?id=" + post.event_id;
+}
+
+/**
+ * Used to show the photos taken at the event 
+ * @param {JSON} photos the photos to show
+ */
+export function showPhotos(photos) {
+    let photo = photos[0];
+    let photosDiv = document.getElementById("photos");
+    let template = document.getElementById("template-photos");
+    if (photos.length == 0) {
+        photosDiv.innerHTML = "No posts to show";
+    } else {
+        photosDiv.innerHTML = "";
+        let dim = 0;
+        for (let photo_index = 0; photo_index < photos.length; photo_index++) {
+            photo = photos[photo_index];
+            let clone = document.importNode(template.content, true);
+            clone.querySelector("img").src = "/static/img/uploads/" + photo.image;
+            clone.querySelector("img").addEventListener("click", function () { showModalPost(photos[photo_index]); });
+            photosDiv.appendChild(clone);
+            dim++;
+        }
+        let i = 0;
+        if (dim % 3 == 1) {
+            i = 2;
+        } else if (dim % 3 == 2) {
+            i = 1;
+        }
+        for (let j = 0; j < i; j++) {
+            let clone = document.importNode(template.content, true);
+            clone.querySelector("div").style.visibility = "hidden";
+            clone.querySelector("div").classList.add("invisible");
+            photosDiv.appendChild(clone);
+        }
+    }
+}
+
+/**
+ * Confirms that the user is online
+ */
 async function confirmOnline() {
     const res = await fetch(request_path + "/user/update_online.php", {
         method: "POST",

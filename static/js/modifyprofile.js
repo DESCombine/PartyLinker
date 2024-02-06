@@ -1,11 +1,12 @@
 import { request_path } from "/static/js/config.js?v=9";
 
+// adds the action to the form
 document.getElementsByTagName("form")[0].action = request_path + "/user/modifyprofile.php";
 
+// when screen is resized
 if (window.matchMedia("(min-width: 767px)").matches) {
     document.getElementsByTagName('img')[0].classList.add('d-none')
 }
-
 window.addEventListener("resize", function () {
     if (window.matchMedia("(min-width: 767px)").matches) {
         document.getElementsByTagName('img')[0].classList.add('d-none')
@@ -16,6 +17,10 @@ window.addEventListener("resize", function () {
     }
 });
 
+/**
+ * Loads the saved informations of the user
+ * @returns the saved informations
+ */
 async function loadSavesInfos() {
     // Get informations from server
     const request_url = request_path + "/user/get_saved_infos.php";
@@ -30,6 +35,9 @@ async function loadSavesInfos() {
     return data;
 }
 
+/**
+ * Shows the saved informations in the form
+ */
 async function showSavedInformations() {
 
     let data = await loadSavesInfos();
