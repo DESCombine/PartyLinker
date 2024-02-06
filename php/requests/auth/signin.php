@@ -1,12 +1,9 @@
 <?php
 require_once(getenv("PL_ROOTDIRECTORY") . "php/bootstrap.php");
-use Firebase\JWT\JWT;
 
 require_once(getenv("PL_ROOTDIRECTORY") . "db/user.php");
 require_once(getenv("PL_ROOTDIRECTORY") . "php/requests/cors.php");
 header('Content-Type: application/json');
-$key = getenv("PL_JWTKEY");
-//$request = json_decode(file_get_contents('php://input'), true);
 $name = $_POST["name"];
 $surname = $_POST["surname"];
 $birth_date = $_POST["birthdate"];

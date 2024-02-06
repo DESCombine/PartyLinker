@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * This requests load from the db the most recent past and future events
+ * It is used in the map to show recent events so that the user can see what events are happening around them
+ */
 require_once(getenv("PL_ROOTDIRECTORY")."php/bootstrap.php");
 use Event\EventUtility;
 require_once(getenv("PL_ROOTDIRECTORY")."php/requests/authenticated_request.php");

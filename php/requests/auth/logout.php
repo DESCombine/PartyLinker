@@ -1,8 +1,6 @@
 <?php
     require_once(getenv("PL_ROOTDIRECTORY")."php/bootstrap.php");
-    use Firebase\JWT\JWT;
     require_once(getenv("PL_ROOTDIRECTORY")."db/user.php");
-    use User\UserUtility;
     require_once(getenv("PL_ROOTDIRECTORY")."php/requests/cors.php");
     global $driver;
     global $domain;
