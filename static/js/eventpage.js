@@ -102,6 +102,9 @@ async function showModalPost(post_id, event_id, username,
 }
 
 function showPhotos(photos) {
+    if (photos == null) {
+        return;
+    }
     let photo = photos[0];
     let photosDiv = document.getElementById("photos");
     let template = document.getElementById("template-photos");
