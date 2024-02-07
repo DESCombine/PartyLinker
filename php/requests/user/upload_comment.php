@@ -17,7 +17,7 @@
         tag_notify_handler($content);
         PostUtility::insert_comment($driver, $post, $username, $content);
         // Send a notification to the user
-        comment_notify_handler($post_id);
+        comment_notify_handler($post);
     } catch (\Exception $e) {
         http_response_code(500);
         echo json_encode(array("message" => "Error while liking post: " . $e->getMessage()));
