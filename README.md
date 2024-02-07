@@ -1,11 +1,26 @@
 # PartyLinker
 
+A simple web application to organize events and the photos taken at them.
+
+A full description of the project can be found in the [project report](docs/PartyLinker.pdf).
+
+The look and feel of the website is described in the [mockup](mockup/mockup.pdf).
+
+Lastly the color palette used in the website can be viewed in [color palette](static/img/palette.png).
+
 Authors:
 - Maglia Danilo (danilo.maglia2@studio.unibo.it)
 - Sanchi Emanuele (emanuele.sanchi@studio.unibo.it)
 - Severi Tommaso (tommaso.severi2@studio.unibo.it)
 
-# Setup for local development
+## Testing
+
+For the sake of testing the site a default user has been created with the following credentials
+
+    username: test
+    password: test
+
+## Setup for local development
 
 I'll assume you already have xampp installed and running
 
