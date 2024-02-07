@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Creato il: Dic 24, 2023 alle 09:51
--- Versione del server: 8.0.35-0ubuntu0.23.10.1
+-- Creato il: Feb 07, 2024 alle 15:59
+-- Versione del server: 8.0.36-0ubuntu0.23.10.1
 -- Versione PHP: 8.2.10-2ubuntu1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -24,78 +24,96 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `event_comment`
+-- Struttura della tabella `comment`
 --
 
-CREATE TABLE `event_comment` (
+CREATE TABLE `comment` (
   `comment_id` int NOT NULL,
-  `event_id` int DEFAULT NULL,
-  `content` varchar(512) DEFAULT NULL,
-  `like` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `post_id` int NOT NULL,
+  `username` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `content` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `likes` int NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `event_partecipation`
+-- Struttura della tabella `comment_like`
 --
 
-CREATE TABLE `event_partecipation` (
-  `event_id` int NOT NULL,
-  `partecipant` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `comment_like` (
+  `comment_id` int NOT NULL,
+  `username` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `event_photo`
+-- Struttura della tabella `event`
 --
 
-CREATE TABLE `event_photo` (
-  `photo_id` int NOT NULL,
+CREATE TABLE `event` (
   `event_id` int NOT NULL,
-  `poster` varchar(30) NOT NULL,
-  `photo` varchar(128) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `posted` timestamp NOT NULL,
-  `like` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Struttura della tabella `event_post`
---
-
-CREATE TABLE `event_post` (
-  `event_id` int NOT NULL,
-  `organizer` varchar(30) NOT NULL,
-  `name` varchar(30) NOT NULL,
-  `description` varchar(255) NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `location` varchar(255) NOT NULL,
-  `image` varchar(128) NOT NULL,
   `starting_date` timestamp NOT NULL,
   `ending_date` timestamp NOT NULL,
-  `posted` timestamp NOT NULL,
-  `like` int NOT NULL,
-  `vip` varchar(255) DEFAULT NULL,
+  `vips` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `max_capacity` int NOT NULL,
-  `price` float DEFAULT NULL,
-  `minimum_age` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `price` float DEFAULT '0',
+  `minimum_age` int DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `photo_comment`
+-- Struttura della tabella `feedback`
 --
 
-CREATE TABLE `photo_comment` (
-  `comment_id` int NOT NULL,
-  `photo_id` int DEFAULT NULL,
-  `content` varchar(512) DEFAULT NULL,
-  `like` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `feedback` (
+  `id` int NOT NULL,
+  `feedback` varchar(512) NOT NULL,
+  `date_time` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `partecipation`
+--
+
+CREATE TABLE `partecipation` (
+  `event_id` int NOT NULL,
+  `username` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `post`
+--
+
+CREATE TABLE `post` (
+  `post_id` int NOT NULL,
+  `event_id` int NOT NULL,
+  `username` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `image` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `posted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `likes` int NOT NULL DEFAULT '0',
+  `event_post` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `post_like`
+--
+
+CREATE TABLE `post_like` (
+  `post_id` int NOT NULL,
+  `username` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -106,7 +124,33 @@ CREATE TABLE `photo_comment` (
 CREATE TABLE `relationship` (
   `follows` varchar(30) NOT NULL,
   `followed` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `settings`
+--
+
+CREATE TABLE `settings` (
+  `username` varchar(30) NOT NULL,
+  `language` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `notifications` tinyint(1) DEFAULT NULL,
+  `2fa` tinyint(1) DEFAULT NULL,
+  `organizer` tinyint(1) DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `tfa_code`
+--
+
+CREATE TABLE `tfa_code` (
+  `token` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `username` varchar(30) NOT NULL,
+  `code` int NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -121,71 +165,66 @@ CREATE TABLE `user` (
   `name` varchar(30) NOT NULL,
   `surname` varchar(30) NOT NULL,
   `birth_date` date NOT NULL,
-  `photo` varchar(128) DEFAULT NULL,
+  `profile_photo` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `background` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `bio` varchar(512) DEFAULT NULL,
-  `phone` varchar(16) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dump dei dati per la tabella `user`
---
-
-INSERT INTO `user` (`username`, `email`, `password`, `name`, `surname`, `birth_date`, `photo`, `bio`, `phone`) VALUES
-('test2', 'test2', '$2y$10$jT1mI4cu5TVZWpmwylH4ZuRjoYbpkkQ3UxGHCxJ8g6GVWq3Jiqe6O', 'test2', 'test2', '2023-12-15', 'test', 'test', 'test');
-
--- --------------------------------------------------------
-
---
--- Struttura della tabella `user_settings`
---
-
-CREATE TABLE `user_settings` (
-  `username` varchar(30) DEFAULT NULL,
-  `language` varchar(2) DEFAULT NULL,
-  `notifications` tinyint(1) DEFAULT NULL,
-  `2fa` tinyint(1) DEFAULT NULL,
-  `organizer` tinyint(1) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `phone` varchar(16) DEFAULT NULL,
+  `online` tinyint(1) NOT NULL,
+  `last_seen` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Indici per le tabelle scaricate
 --
 
 --
--- Indici per le tabelle `event_comment`
+-- Indici per le tabelle `comment`
 --
-ALTER TABLE `event_comment`
+ALTER TABLE `comment`
   ADD PRIMARY KEY (`comment_id`),
-  ADD KEY `event_id` (`event_id`);
+  ADD KEY `post_id` (`post_id`),
+  ADD KEY `username` (`username`);
 
 --
--- Indici per le tabelle `event_partecipation`
+-- Indici per le tabelle `comment_like`
 --
-ALTER TABLE `event_partecipation`
-  ADD KEY `event_id` (`event_id`),
-  ADD KEY `partecipant` (`partecipant`);
+ALTER TABLE `comment_like`
+  ADD KEY `comment_id` (`comment_id`),
+  ADD KEY `username` (`username`);
 
 --
--- Indici per le tabelle `event_photo`
+-- Indici per le tabelle `event`
 --
-ALTER TABLE `event_photo`
-  ADD PRIMARY KEY (`photo_id`),
-  ADD KEY `event_id` (`event_id`),
-  ADD KEY `poster` (`poster`);
+ALTER TABLE `event`
+  ADD PRIMARY KEY (`event_id`);
 
 --
--- Indici per le tabelle `event_post`
+-- Indici per le tabelle `feedback`
 --
-ALTER TABLE `event_post`
-  ADD PRIMARY KEY (`event_id`),
-  ADD KEY `organizer` (`organizer`);
+ALTER TABLE `feedback`
+  ADD PRIMARY KEY (`id`);
 
 --
--- Indici per le tabelle `photo_comment`
+-- Indici per le tabelle `partecipation`
 --
-ALTER TABLE `photo_comment`
-  ADD PRIMARY KEY (`comment_id`),
-  ADD KEY `photo_id` (`photo_id`);
+ALTER TABLE `partecipation`
+  ADD KEY `event_id` (`event_id`) USING BTREE,
+  ADD KEY `username` (`username`) USING BTREE;
+
+--
+-- Indici per le tabelle `post`
+--
+ALTER TABLE `post`
+  ADD PRIMARY KEY (`post_id`),
+  ADD KEY `event_id` (`event_id`) USING BTREE,
+  ADD KEY `username` (`username`) USING BTREE;
+
+--
+-- Indici per le tabelle `post_like`
+--
+ALTER TABLE `post_like`
+  ADD KEY `post_id` (`post_id`),
+  ADD KEY `username` (`username`) USING BTREE;
 
 --
 -- Indici per le tabelle `relationship`
@@ -195,52 +234,76 @@ ALTER TABLE `relationship`
   ADD KEY `followed` (`followed`);
 
 --
+-- Indici per le tabelle `settings`
+--
+ALTER TABLE `settings`
+  ADD PRIMARY KEY (`username`);
+
+--
+-- Indici per le tabelle `tfa_code`
+--
+ALTER TABLE `tfa_code`
+  ADD PRIMARY KEY (`token`),
+  ADD KEY `username` (`username`) USING BTREE;
+
+--
 -- Indici per le tabelle `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`username`);
 
 --
--- Indici per le tabelle `user_settings`
+-- AUTO_INCREMENT per le tabelle scaricate
 --
-ALTER TABLE `user_settings`
-  ADD KEY `username` (`username`);
+
+--
+-- AUTO_INCREMENT per la tabella `comment`
+--
+ALTER TABLE `comment`
+  MODIFY `comment_id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT per la tabella `event`
+--
+ALTER TABLE `event`
+  MODIFY `event_id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT per la tabella `feedback`
+--
+ALTER TABLE `feedback`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT per la tabella `post`
+--
+ALTER TABLE `post`
+  MODIFY `post_id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- Limiti per le tabelle scaricate
 --
 
 --
--- Limiti per la tabella `event_comment`
+-- Limiti per la tabella `comment`
 --
-ALTER TABLE `event_comment`
-  ADD CONSTRAINT `event_comment_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `event_post` (`event_id`);
+ALTER TABLE `comment`
+  ADD CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `post` (`post_id`),
+  ADD CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`username`) REFERENCES `user` (`username`);
 
 --
--- Limiti per la tabella `event_partecipation`
+-- Limiti per la tabella `partecipation`
 --
-ALTER TABLE `event_partecipation`
-  ADD CONSTRAINT `event_partecipation_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `event_post` (`event_id`),
-  ADD CONSTRAINT `event_partecipation_ibfk_2` FOREIGN KEY (`partecipant`) REFERENCES `user` (`username`);
+ALTER TABLE `partecipation`
+  ADD CONSTRAINT `partecipation_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `event` (`event_id`),
+  ADD CONSTRAINT `partecipation_ibfk_2` FOREIGN KEY (`username`) REFERENCES `user` (`username`);
 
 --
--- Limiti per la tabella `event_photo`
+-- Limiti per la tabella `post`
 --
-ALTER TABLE `event_photo`
-  ADD CONSTRAINT `event_photo_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `event_post` (`event_id`),
-  ADD CONSTRAINT `event_photo_ibfk_2` FOREIGN KEY (`poster`) REFERENCES `user` (`username`);
-
---
--- Limiti per la tabella `event_post`
---
-ALTER TABLE `event_post`
-  ADD CONSTRAINT `event_post_ibfk_1` FOREIGN KEY (`organizer`) REFERENCES `user` (`username`);
-
---
--- Limiti per la tabella `photo_comment`
---
-ALTER TABLE `photo_comment`
-  ADD CONSTRAINT `photo_comment_ibfk_1` FOREIGN KEY (`photo_id`) REFERENCES `event_photo` (`photo_id`);
+ALTER TABLE `post`
+  ADD CONSTRAINT `post_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `event` (`event_id`),
+  ADD CONSTRAINT `post_ibfk_2` FOREIGN KEY (`username`) REFERENCES `user` (`username`);
 
 --
 -- Limiti per la tabella `relationship`
@@ -250,10 +313,16 @@ ALTER TABLE `relationship`
   ADD CONSTRAINT `relationship_ibfk_2` FOREIGN KEY (`followed`) REFERENCES `user` (`username`);
 
 --
--- Limiti per la tabella `user_settings`
+-- Limiti per la tabella `settings`
 --
-ALTER TABLE `user_settings`
-  ADD CONSTRAINT `user_settings_ibfk_1` FOREIGN KEY (`username`) REFERENCES `user` (`username`);
+ALTER TABLE `settings`
+  ADD CONSTRAINT `settings_ibfk_1` FOREIGN KEY (`username`) REFERENCES `user` (`username`);
+
+--
+-- Limiti per la tabella `tfa_code`
+--
+ALTER TABLE `tfa_code`
+  ADD CONSTRAINT `tfa_code_ibfk_1` FOREIGN KEY (`username`) REFERENCES `user` (`username`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
